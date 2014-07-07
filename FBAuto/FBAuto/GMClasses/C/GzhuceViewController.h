@@ -54,4 +54,14 @@
 
 @property(nonatomic,strong)UIView *backPickView;//地区选择pickerView后面的背景view
 
+//上传参数 int类型
+//个人
+@property(nonatomic,assign)NSInteger provinceIn;
+@property(nonatomic,assign)NSInteger cityIn;
+//商家
+@property(nonatomic,assign)NSInteger provinceIn1;
+@property(nonatomic,assign)NSInteger cityIn1;
+
+
+
 @end

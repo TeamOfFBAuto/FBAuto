@@ -352,6 +352,9 @@
         _flagRow = row;
         _str1 = _data[row][@"State"];
         NSLog(@"%@",_str1);
+        NSLog(@"%ld",(long)row);
+        self.provinceIn = row*1000;
+        NSLog(@"%ld",(long)self.provinceIn);
         //给控件赋值str1
         if ([_str1 isEqualToString:@"省份"]) {
             _str1 = @"";
@@ -374,6 +377,7 @@
         }
         _str3 = [_str1 stringByAppendingString:_str2];
         NSLog(@"%@",_str3);
+        NSLog(@"%ld",(long)row);
         //给控件赋值str3;
         //self.diqu = _str3;
         self.city = _str2;//上传

@@ -23,6 +23,7 @@
     
 }
 
+//获取用户名
 +(NSString *)getUsername{
     
     NSString *str_devicetoken=[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:USERNAME]];
@@ -33,6 +34,25 @@
     
     
 }
+
+//获取authkey
++(NSString *)getAuthkey{
+    
+    NSString *str_authkey=[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:USERAUTHKEY]];
+    return str_authkey;
+    
+}
+
+
+//获取用户id
++(NSString *)getUid{
+    
+    NSString *str_uid=[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:USERID]];
+    return str_uid;
+    
+}
+
+
 
 
 
