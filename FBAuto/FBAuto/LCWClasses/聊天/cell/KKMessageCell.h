@@ -13,8 +13,8 @@
 @property(nonatomic, retain) UILabel *senderAndTimeLabel;
 @property(nonatomic, retain) UITextView *messageContentView;
 @property(nonatomic, retain) UIImageView *bgImageView;
-@property(nonatomic,retain)OHAttributedLabel *OHLabel;
+@property(nonatomic,retain)UIView *OHLabel;
 
-- (void)loadDataWithDic:(NSDictionary *)dict labelHeight:(CGFloat)labelHeight OHLabel:(OHAttributedLabel *)OHLabel;
+- (void)loadDataWithDic:(NSDictionary *)dict labelHeight:(CGFloat)labelHeight OHLabel:(UIView *)OHLabel;
 
 @end

@@ -14,6 +14,8 @@
 #import <UIKit/UIKit.h>
 #import "NSString+Emoji.h"
 
+typedef void(^ ToolBlock) (int aTag);//aTag, 0 打电话,1 拍照,2 相册
+
 @class CWInputView;
 @protocol CWInputDelegate <NSObject>
 
@@ -26,6 +28,8 @@
     CGFloat initFrameY;//最开始的frame y
     CGFloat current_FrameY;//inputView当前坐标Y
     CGFloat current_KeyBoard_Y;//当前键盘坐标Y
+    
+    ToolBlock toolBlock;
 }
 
 @property(assign,nonatomic)id<CWInputDelegate> delegate;
@@ -45,5 +49,7 @@
 
 //隐藏键盘
 - (BOOL)resignFirstResponder;
+
+- (void)setToolBlock:(ToolBlock)aBlock;
 
 @end

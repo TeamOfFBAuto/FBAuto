@@ -9,6 +9,7 @@
 #import "CWInputView.h"
 //#import "Emoji.h"
 #import "NSString+Emoji.h"
+#import "FBActionSheet.h"
 
 
 // UICode转化为UTF8
@@ -117,7 +118,7 @@
     if (!_toolBtn1) {
         _toolBtn1 = [UIButton buttonWithType:UIButtonTypeCustom];
         [_toolBtn1 setFrame:CGRectMake(1, 1, 40, 48)];
-        [_toolBtn1 addTarget:self action:@selector(swapEmjAndKeyBoard:) forControlEvents:UIControlEventTouchUpInside];
+        [_toolBtn1 addTarget:self action:@selector(tool1Press:) forControlEvents:UIControlEventTouchUpInside];
         [_toolBtn1 setImage:[UIImage imageNamed:@"dianhua40_48"] forState:UIControlStateNormal];
         _toolBtn1.titleLabel.font = [UIFont systemFontOfSize:14];
         [self addSubview:_toolBtn1];
@@ -133,7 +134,7 @@
     if (!_toolBtn2) {
         _toolBtn2 = [UIButton buttonWithType:UIButtonTypeCustom];
         [_toolBtn2 setFrame:CGRectMake(_toolBtn1.right, 1, 40, 48)];
-        [_toolBtn2 addTarget:self action:@selector(swapEmjAndKeyBoard:) forControlEvents:UIControlEventTouchUpInside];
+        [_toolBtn2 addTarget:self action:@selector(tool2Press:) forControlEvents:UIControlEventTouchUpInside];
         [_toolBtn2 setImage:[UIImage imageNamed:@"zhaoxiangji66_48"] forState:UIControlStateNormal];
         _toolBtn2.titleLabel.font = [UIFont systemFontOfSize:14];
         [self addSubview:_toolBtn2];
@@ -141,6 +142,10 @@
     return _toolBtn2;
 }
 
+- (void)setToolBlock:(ToolBlock)aBlock
+{
+    toolBlock = aBlock;
+}
 
 #pragma mark - 事件处理
 
@@ -165,12 +170,47 @@
         [self resignFirstResponder];
     }
 }
+//电话
+- (void)tool1Press:(UIButton *)sender
+{
+    toolBlock(0);
+    
+    [self resignFirstResponder];
+}
+
+//照片
+
+- (void)tool2Press:(UIButton *)sender
+{
+    FBActionSheet *sheet = [[FBActionSheet alloc]initWithFrame:self.superview.frame];
+    [sheet actionBlock:^(NSInteger buttonIndex) {
+        NSLog(@"%ld",(long)buttonIndex);
+        if (buttonIndex == 0) {
+            NSLog(@"拍照");
+            
+            toolBlock(1);
+            
+        }else if (buttonIndex == 1)
+        {
+            NSLog(@"相册");
+            
+            toolBlock(2);
+        }
+        
+    }];
+    
+        [self resignFirstResponder];
+}
+
+
 /**
  *  切换表情与键盘
  */
 - (void)swapEmjAndKeyBoard:(UIButton *)sender
 {
     sender.selected = !sender.selected;
+    
+    
 }
 
 #pragma mark keyboardNotification

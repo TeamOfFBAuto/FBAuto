@@ -52,7 +52,7 @@
     [self.OHLabel removeFromSuperview];
 }
 
-- (void)loadDataWithDic:(NSDictionary *)dict labelHeight:(CGFloat)labelHeight OHLabel:(OHAttributedLabel *)OHLabel
+- (void)loadDataWithDic:(NSDictionary *)dict labelHeight:(CGFloat)labelHeight OHLabel:(UIView *)OHLabel
 {
     self.OHLabel = OHLabel;
     //发送者
@@ -74,13 +74,14 @@
     
     UIImage *bgImage = nil;
     
+    //左侧
     if ([sender isEqualToString:@"you"])
     {
         left = KLEFT;
         
-        bgImage = [[UIImage imageNamed:@"duihuahuang"] stretchableImageWithLeftCapWidth:20 topCapHeight:10];
+        bgImage = [[UIImage imageNamed:@"duihuahuang"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
         
-        dix = 10;
+        dix = 10 - 5;
         
     }else
     {
@@ -88,7 +89,7 @@
         
         bgImage = [[UIImage imageNamed:@"duihuahuang1"] stretchableImageWithLeftCapWidth:10 topCapHeight:10];
         
-        dix = -10;
+        dix = -10 + 5;
     }
     
     

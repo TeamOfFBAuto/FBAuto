@@ -28,7 +28,8 @@
 
 - (IBAction)clickToDial:(id)sender {
     
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"18612389982"]];
+    NSString *num = [[NSString alloc] initWithFormat:@"tel://%@",@"18612389982"];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:num]];
     
 }
 - (IBAction)clickToChat:(id)sender {

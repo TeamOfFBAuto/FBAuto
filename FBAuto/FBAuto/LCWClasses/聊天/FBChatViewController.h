@@ -8,10 +8,15 @@
 
 #import "FBBaseViewController.h"
 
+typedef enum{
+    Message_Normal = 0,//普通文本、表情
+    Message_Image,//图片
+}MESSAGE_TYPE;
+
 /**
  *  聊天、好友信息页
  */
-@interface FBChatViewController : FBBaseViewController<UITableViewDataSource,UITableViewDelegate>
+@interface FBChatViewController : FBBaseViewController<UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 @property(nonatomic,retain)UITableView *table;
 
