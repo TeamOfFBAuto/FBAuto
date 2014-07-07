@@ -160,19 +160,26 @@
 #pragma mark - UITextFieldDelegate
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     
+    NSLog(@"------------------%@",NSStringFromRange(range));
+    
     if (textField.tag == 50) {
         
         NSString *uname = [NSString stringWithFormat:@"%@%@",textField.text,string];
-        if (uname.length>0) {
+        
+        NSLog(@"%lu",(unsigned long)uname.length);
+        
+        if (range.length!=1 || range.location!=0) {
             
             self.userName = uname;
             _placeHolder1.hidden = YES;
         }else{
+            
             _placeHolder1.hidden = NO;
+            
         }
     }else if(textField.tag == 51){
         NSString *passw = [NSString stringWithFormat:@"%@%@",textField.text,string];
-        if (passw.length>0) {
+        if (range.length!=1 || range.location!=0) {
             self.userPassWord = passw;
             _placeHolder2.hidden = YES;
         }else{
@@ -182,6 +189,11 @@
     
     return YES;
 }
+
+
+
+
+
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
     [UIView animateWithDuration:0.3 animations:^{

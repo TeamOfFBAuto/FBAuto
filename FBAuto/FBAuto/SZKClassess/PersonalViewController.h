@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PersonalViewController : FBBaseViewController
+@interface PersonalViewController : FBBaseViewController<UITableViewDelegate,UITableViewDataSource>
+
+{
+    UITableView *_tableView;//主tableview
+}
+
+@property(nonatomic,strong)UIImageView *userFaceImv;
+@property(nonatomic,strong)UILabel *nameLabel;
+@property(nonatomic,strong)UILabel *nameLabel1;
+
 
 @end

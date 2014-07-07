@@ -34,6 +34,11 @@
 			<key>orderHint</key>
 			<integer>7</integer>
 		</dict>
+		<key>Pods-RegexKitLite.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>12</integer>
+		</dict>
 		<key>Pods-SDWebImage.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -62,12 +67,57 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>00098803102042518584B44D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>06E2814B84D54F83B778FC0B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>11E1848B034A45DFA26DE985</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>13ED51420E494232A34C0A5D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1894E3792E51457688A305F9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1E2ED733A3104B059F1DBD42</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3D33DC62366B40D69C05CC2A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5738E2D82E924DCBA386E72F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>7077E71608A24DD183AD672C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>79E9BC5E4D9D47ACAE3D989E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7F60A3613152447F847EF880</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -82,7 +132,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>95716EAD031845E78A4F60DB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>95BCA139D039405C9686F630</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A09047DBE92547898588A1B5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -93,6 +153,11 @@
 			<true/>
 		</dict>
 		<key>A44569B6E0AE4E9D82A923F2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A620686F496848D3960CB079</key>
 		<dict>
 			<key>primary</key>
 			<true/>

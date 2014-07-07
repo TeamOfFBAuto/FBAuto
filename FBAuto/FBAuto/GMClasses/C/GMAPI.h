@@ -15,5 +15,8 @@
 
 +(NSString *)getDeviceToken;
 
++(NSString *)getAuthkey;
+
++(NSString *)getUid;
 
 @end
