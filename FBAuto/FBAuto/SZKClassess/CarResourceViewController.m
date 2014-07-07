@@ -40,23 +40,23 @@
     }
     return self;
 }
--(void)viewWillAppear:(BOOL)animated{
-
-    [super viewWillAppear:YES];
-    if (![GMAPI getUsername].length) {
-        
-        [self presentViewController:[[UINavigationController alloc]initWithRootViewController:[[GloginViewController alloc]init]] animated:NO completion:^{
-        }];
-        
-        
-    }else{
-        NSLog(@"xxname===%@",[GMAPI getUsername]);
-        
-        
-    }
-
-
-}
+//-(void)viewWillAppear:(BOOL)animated{
+//
+//    [super viewWillAppear:YES];
+//    if (![GMAPI getUsername].length) {
+//        
+//        [self presentViewController:[[UINavigationController alloc]initWithRootViewController:[[GloginViewController alloc]init]] animated:NO completion:^{
+//        }];
+//        
+//        
+//    }else{
+//        NSLog(@"xxname===%@",[GMAPI getUsername]);
+//        
+//        
+//    }
+//
+//
+//}
 
 - (void)viewDidLoad
 {
