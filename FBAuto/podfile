@@ -1,0 +1,16 @@
+
+pod 'XMPPFramework', '~> 3.6.4'
+
+
+pod 'JSONKit'
+pod 'ASIHTTPRequest'
+pod "AFNetworking", "~> 2.0"
+pod 'UMeng', '~> 2.2.1'
+pod 'SDWebImage', '~> 3.6'
+pod 'iCarousel', '~> 1.7.6'
+pod 'RegexKitLite', '~> 4.0'
+
+
+
+
+
