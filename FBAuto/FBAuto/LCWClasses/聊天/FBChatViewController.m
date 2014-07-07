@@ -19,6 +19,7 @@
 #import "SCGIFImageView.h"
 #import "Statics.h"
 #import "UIImageView+WebCache.h"
+#import "FBAddFriendsController.h"
 
 
 @interface FBChatViewController ()<CWInputDelegate,OHAttributedLabelDelegate>
@@ -54,12 +55,12 @@
     self.titleLabel.text = @"somebody";
     
     UIButton *rightButton =[[UIButton alloc]initWithFrame:CGRectMake(0,8,30,21.5)];
-    [rightButton addTarget:self action:@selector(clickToBack:) forControlEvents:UIControlEventTouchUpInside];
+    [rightButton addTarget:self action:@selector(clickToHome:) forControlEvents:UIControlEventTouchUpInside];
     [rightButton setImage:[UIImage imageNamed:@"shouye48_44"] forState:UIControlStateNormal];
     UIBarButtonItem *save_item=[[UIBarButtonItem alloc]initWithCustomView:rightButton];
     
     UIButton *rightButton2 =[[UIButton alloc]initWithFrame:CGRectMake(0,8,30,21.5)];
-    [rightButton2 addTarget:self action:@selector(clickToBack:) forControlEvents:UIControlEventTouchUpInside];
+    [rightButton2 addTarget:self action:@selector(clickToAdd:) forControlEvents:UIControlEventTouchUpInside];
     [rightButton2 setImage:[UIImage imageNamed:@"tianjia44_44"] forState:UIControlStateNormal];
     UIBarButtonItem *save_item2=[[UIBarButtonItem alloc]initWithCustomView:rightButton2];
     self.navigationItem.rightBarButtonItems = @[save_item,save_item2];
@@ -87,19 +88,32 @@
     [self createInputView];
 }
 
+#pragma - mark  click事件
+
+- (void)clickToAdd:(UIButton *)btn
+{
+    FBAddFriendsController *add = [[FBAddFriendsController alloc]init];
+    [self.navigationController pushViewController:add animated:YES];
+}
+
+- (void)clickToHome:(UIButton *)btn
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 - (void)testData
 {
-    NSDictionary *dic = @{MESSAGE_SENDER: @"张三",MESSAGE_MSG:@"发送的[大笑]消息有多长呢",MESSAGE_TIME:@"2014-07-04"};
+    NSDictionary *dic = @{MESSAGE_SENDER: @"张三",MESSAGE_MSG:@"发送的[哈哈]消息有多长呢",MESSAGE_TIME:@"2014-07-04"};
     NSDictionary *dic1 = @{MESSAGE_SENDER: @"you",MESSAGE_MSG:@"发送的[抓狂]消息[抓狂]有多长呢",MESSAGE_TIME:@"2014-07-04"};
     NSDictionary *dic2 = @{MESSAGE_SENDER: @"张三",MESSAGE_MSG:@"发送呢",MESSAGE_TIME:@"2014-07-04"};
     NSDictionary *dic3 = @{MESSAGE_SENDER: @"you",MESSAGE_MSG:@"发送[bed凌乱][bed凌乱][bed凌乱][的消息有多长呢",MESSAGE_TIME:@"2014-07-04"};
-    NSDictionary *dic4 = @{MESSAGE_SENDER: @"张三",MESSAGE_MSG:@"发送的的消的消息有的消息有的消息有的发送的消的消息有的消息有的消息有的消息有息有多长呢发送的消的消息有的消息有[抓狂]的消息有的消[大笑][大笑][多长呢发送的消的消息有的消息有的消息有的消息有息有多长呢发送的消的消息有的消息有的消息有的消息有息有多长呢发送的消的消多长呢",MESSAGE_TIME:@"2014-07-04"};
+    NSDictionary *dic4 = @{MESSAGE_SENDER: @"张三",MESSAGE_MSG:@"发送的的消的消息有的消息有的消息有的发送的消的消息有的消息有的消息有的消息[懒得理你]有息有多长呢发送的消的消息有的消息有[抓狂]的消息有的消[大笑][大笑][多长呢发送的消的消息有的消息有的消息有的消[懒得理你]息有息有多长呢发送的消的消息有的消息有的消息有的消息有息有多长呢发送的消的消多长呢",MESSAGE_TIME:@"2014-07-04"};
     
      NSString *test = @"<img height=\"195\" width=\"325\" src=\"http://www0.autoimg.cn/newspic/2013/12/22/620x0_0_2013122223315823282.jpg\"/>>";
     NSDictionary *dic5 = @{MESSAGE_SENDER: @"张三",MESSAGE_MSG:test,MESSAGE_TIME:@"2014-07-04"};
     
     NSDictionary *dic6 = @{MESSAGE_SENDER: @"you",MESSAGE_MSG:@"发送的消息有多长呢",MESSAGE_TIME:@"2014-07-04"};
-    NSDictionary *dic7 = @{MESSAGE_SENDER: @"you",MESSAGE_MSG:@"发送的消的消息有的消息有的消息有的发送的消的消息有的消息有的消息有的消息有息有多长呢发送的消的消息有[抓狂]的消息有的消息有的消息有息有多长呢[抓狂]发送的消的消息有的消息有的消息有的消息有息有多长呢发送的消的消息有的消息有的消息有的消息有息有多长呢发送的消的消息有的消息有的消息有的消息有息有多长呢消息有息有多长呢",MESSAGE_TIME:@"2014-07-04"};
+    NSDictionary *dic7 = @{MESSAGE_SENDER: @"you",MESSAGE_MSG:@"发送的消的消息有的消息有的消息有的发送的消的消息有的消息有的消息有的消息有息有[懒得理你]多长呢发送的消的消息有[抓狂]的消息有的消息有的消息有息有多长呢[抓狂]发送的消的消息有的消息有的消息有的消息有息有多长呢发送的消的消息有的消息有的消息有的消息有息有多长呢[懒得理你]发送的消的消息有的消息有的消息有的消息有息有多长呢消息有息有多长呢",MESSAGE_TIME:@"2014-07-04"};
     
     
    NSString *test1 = @"<img height=\"195\" width=\"325\" src=\"http://c.hiphotos.baidu.com/image/pic/item/32fa828ba61ea8d3ef5adf65950a304e251f5852.jpg\"/>>";

@@ -59,14 +59,17 @@
     switch (btn.tag) {
         case 100:
         {
-            FBMayKnowFriendsController *addFriend = [[FBMayKnowFriendsController alloc]init];
+            
+            FBSearchFriendsController *addFriend = [[FBSearchFriendsController alloc]init];
             [self.navigationController pushViewController:addFriend animated:YES];
+            
         }
             break;
         case 101:
         {
-            FBSearchFriendsController *addFriend = [[FBSearchFriendsController alloc]init];
+            FBMayKnowFriendsController *addFriend = [[FBMayKnowFriendsController alloc]init];
             [self.navigationController pushViewController:addFriend animated:YES];
+            
         }
             break;
             

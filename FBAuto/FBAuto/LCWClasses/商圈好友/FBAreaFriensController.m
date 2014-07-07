@@ -1,12 +1,12 @@
 //
-//  Menu_Advanced.m
+//  FBAreaFriensController.m
 //  FBAuto
 //
-//  Created by lichaowei on 14-6-30.
+//  Created by lichaowei on 14-7-7.
 //  Copyright (c) 2014年 szk. All rights reserved.
 //
 
-#import "Menu_Advanced.h"
+#import "FBAreaFriensController.h"
 #import "FBAutoAPIHeader.h"
 #import "MenuModel.h"
 #import "City.h"
@@ -17,68 +17,50 @@
 #define KTOP 5.0
 #define KBOTTOM 10
 
+@interface FBAreaFriensController ()
 
-@implementation Menu_Advanced
+@end
 
-- (id)initWithFrame:(CGRect)frame
+@implementation FBAreaFriensController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithFrame:frame];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Initialization code
+        // Custom initialization
     }
     return self;
 }
 
-- (id)initWithFrontView:(UIView *)frontView
+- (void)viewDidLoad
 {
-    self = [super init];
-    if (self) {
-        self.frame = [UIScreen mainScreen].bounds;
-        
-        self.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
-        
-        arrowImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, frontView.bottom, 11, KTOP)];
-        arrowImage.backgroundColor = [UIColor clearColor];
-        arrowImage.image = [UIImage imageNamed:@"zhankaijiantou22_10"];
-        [self addSubview:arrowImage];
-        
-        frontV = frontView;
-        
-        sumHeight = self.height - 49 - frontView.bottom - KTOP;
-        
-        table = [[UITableView alloc]initWithFrame:CGRectMake(KLEFT, arrowImage.bottom, self.width - 2 * KLEFT, sumHeight) style:UITableViewStylePlain];
-        
-        table.separatorInset = UIEdgeInsetsMake(10, 10, 0, 10);
-        table.delegate = self;
-        table.dataSource = self;
-        [self addSubview:table];
-        
-        dataArray = MENU_HIGHT_TITLE;
-        [table reloadData];
-        
-        CGRect aFrame = table.frame;
-        aFrame.size.height = 45 * dataArray.count;
-        table.frame = aFrame;
-        
-    }
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
     
-    return self;
+    self.titleLabel.text = @"我的好友";
+    
+    secondTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.width - 2 * KLEFT, self.view.height - (iPhone5 ? 20 : 0) - 44) style:UITableViewStylePlain];
+    
+    secondTable.separatorInset = UIEdgeInsetsMake(0, 10, 0, 10);
+    secondTable.delegate = self;
+    secondTable.dataSource = self;
+    [self.view addSubview:secondTable];
+    
+    [self loadCityData];
 }
 
-- (void)selectBlock:(SelectBlock)aBlock
+- (void)didReceiveMemoryWarning
 {
-    selectBlock = aBlock;
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 #pragma - mark 二级、三级table管理
 
 - (void)loadCityData
 {
-    if (colorTable) {
-        [self insertSubview:colorTable belowSubview:secondTable];
-    }
     
-    __block typeof (Menu_Advanced *)weakSelf = self;
+    __block typeof (FBAreaFriensController *)weakSelf = self;
     
     NSString * path = [[NSBundle mainBundle] pathForResource:@"city.plist" ofType:nil];
     
@@ -133,16 +115,10 @@
     
     if (secondTable == nil) {
         
-        secondTable = [[UITableView alloc]initWithFrame:CGRectMake(320, table.top, 243, sumHeight) style:UITableViewStylePlain];
+        secondTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 220, self.view.height - (iPhone5 ? 20 : 0) - 44) style:UITableViewStylePlain];
         secondTable.delegate = self;
         secondTable.dataSource = self;
-        [self addSubview:secondTable];
-        
-        [UIView animateWithDuration:0.2 animations:^{
-            CGRect aFrame = secondTable.frame;
-            aFrame.origin.x -= 243;
-            secondTable.frame = aFrame;
-        }];
+        [self.view addSubview:secondTable];
         
     }
     
@@ -158,14 +134,14 @@
     
     if (thirdTable == nil) {
         
-        thirdTable = [[UITableView alloc]initWithFrame:CGRectMake(320, table.top, 158, sumHeight) style:UITableViewStylePlain];
+        thirdTable = [[UITableView alloc]initWithFrame:CGRectMake(320, 0, 320 - 270/2.0, self.view.height) style:UITableViewStylePlain];
         thirdTable.delegate = self;
         thirdTable.dataSource = self;
-        [self addSubview:thirdTable];
+        [self.view addSubview:thirdTable];
         
         [UIView animateWithDuration:0.2 animations:^{
             CGRect aFrame = thirdTable.frame;
-            aFrame.origin.x -= 158;
+            aFrame.origin.x -= (320 - 270/2.0);
             thirdTable.frame = aFrame;
         }];
         
@@ -173,50 +149,6 @@
     
     thirdArray = dataArr;
     [thirdTable reloadData];
-}
-
-#pragma - mark 控制颜色相关table
-
-- (void)reloadColorTableWithArray:(NSArray *)colorArr
-{
-    if (colorTable == nil) {
-        
-        colorTable = [[UITableView alloc]initWithFrame:CGRectMake(320, table.top, 243, sumHeight) style:UITableViewStylePlain];
-        colorTable.delegate = self;
-        colorTable.dataSource = self;
-        [self addSubview:colorTable];
-        
-        [UIView animateWithDuration:0.2 animations:^{
-            CGRect aFrame = colorTable.frame;
-            aFrame.origin.x -= 243;
-            colorTable.frame = aFrame;
-        }];
-    }
-    
-    [self bringSubviewToFront:colorTable];
-    colorArray = colorArr;
-    [colorTable reloadData];
-}
-
-
-#pragma - mark 控制视图显示
-
-- (void)showInView:(UIView *)aView
-{
-    [aView addSubview:self];
-    [aView bringSubviewToFront:frontV];
-    
-    //箭头位置
-    CGPoint arrowPoint = arrowImage.center;
-    arrowPoint = CGPointMake(self.width / 10 + (self.width / 5) * self.itemIndex, arrowPoint.y);
-    arrowImage.center = arrowPoint;
-}
-
-- (void)hidden
-{
-    Menu_Button *button = (Menu_Button *)[frontV viewWithTag:100 + _itemIndex];
-    button.selected = NO;
-    [self removeFromSuperview];
 }
 
 #pragma mark-UITableViewDelegate
@@ -228,26 +160,6 @@
     }
     return 1;
 }
-
-- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
-{
-    if (tableView == secondTable) {
-        NSMutableArray *arr = [NSMutableArray arrayWithArray:firstLetterArray];
-        [arr insertObject:@"全" atIndex:0];
-        return arr;
-    }
-    
-    return nil ;
-}
-
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-//{
-//    if (tableView == secondTable) {
-//        NSString *letter = [firstLetterArray objectAtIndex:section];
-//        return letter;
-//    }
-//    return nil;
-//}
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
@@ -262,7 +174,7 @@
         UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 300, 20)];
         [aView addSubview:titleLabel];
         titleLabel.backgroundColor = [UIColor colorWithHexString:@"dcdcdc"];
-        //        titleLabel.te
+//        titleLabel.te
         titleLabel.text = [NSString stringWithFormat:@"  %@",letter];
         
         return aView;
@@ -284,6 +196,7 @@
         if (section == 0) {
             return 1;
         }
+        
         NSString *letter = [firstLetterArray objectAtIndex:section - 1];
         NSArray *arr = [cityDic objectForKey:letter];
         return arr.count;
@@ -292,11 +205,16 @@
     {
         return thirdArray.count;
         
-    }else if (tableView == colorTable)
-    {
-        return colorArray.count;
     }
-    return dataArray.count;
+    return 0;
+}
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+    NSMutableArray *arr = [NSMutableArray arrayWithArray:firstLetterArray];
+    [arr insertObject:@"全" atIndex:0];
+    
+    return arr ;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -313,7 +231,7 @@
     
     if (cell == nil)
     {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        //        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         cell = [[[NSBundle mainBundle]loadNibNamed:@"MenuCell" owner:self options:nil]objectAtIndex:0];
     }
     
@@ -338,22 +256,12 @@
             
             cell.contenLabel.textColor = [UIColor colorWithHexString:@"666666"];
         }
-        
         return cell;
         
     }else if (tableView == thirdTable)
     {
         cell.contenLabel.text = [thirdArray objectAtIndex:indexPath.row];
         
-        
-    }else if (tableView == colorTable)
-    {
-        cell.contenLabel.text = [colorArray objectAtIndex:indexPath.row];
-        
-    }else
-    {
-        cell.contenLabel.text = [dataArray objectAtIndex:indexPath.row];
-        cell.seg_style = Seg_right;
     }
     cell.contenLabel.textColor = [UIColor colorWithHexString:@"666666"];
     
@@ -378,35 +286,8 @@
     }else if (tableView == thirdTable)
     {
         NSString *cityName = [thirdArray objectAtIndex:indexPath.row];
-        selectBlock(blockStyle,cityName);
-        [self hidden];
+
         
-    }else if (tableView == colorTable)
-    {
-        NSString *colorName = [colorArray objectAtIndex:indexPath.row];
-        selectBlock(blockStyle,colorName);
-        [self hidden];
-    }else
-    {
-        if (indexPath.row == 2) {
-            
-            [self loadCityData];
-            
-            blockStyle = Select_Area;
-        }
-        
-        if (indexPath.row == 0) {
-            NSLog(@"外观颜色");
-            
-            [self reloadColorTableWithArray:MENU_HIGHT_OUTSIDE_CORLOR];
-            blockStyle = Select_Out_Color;
-        }
-        
-        if (indexPath.row == 1) {
-            NSLog(@"内饰颜色");
-            [self reloadColorTableWithArray:MENU_HIGHT_INSIDE_CORLOR];
-            blockStyle = Select_In_Color;
-        }
     }
     
 }
@@ -421,15 +302,5 @@
     return 0.01f;
 }
 
-
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    
-}
-
--(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [self hidden];
-}
 
 @end

@@ -11,6 +11,7 @@
 #import "FBFriendCell.h"
 #import "FBAddFriendsController.h"
 #import "FBChatViewController.h"
+#import "FBAreaFriensController.h"
 
 @interface FBFriendsController ()
 
@@ -76,13 +77,13 @@
             break;
         case 101:
         {
-            FBAddFriendsController *addFriend = [[FBAddFriendsController alloc]init];
+            FBAreaFriensController *addFriend = [[FBAreaFriensController alloc]init];
             [self.navigationController pushViewController:addFriend animated:YES];
         }
             break;
         case 102:
         {
-            FBAddFriendsController *addFriend = [[FBAddFriendsController alloc]init];
+            FBChatViewController *addFriend = [[FBChatViewController alloc]init];
             [self.navigationController pushViewController:addFriend animated:YES];
         }
             break;
