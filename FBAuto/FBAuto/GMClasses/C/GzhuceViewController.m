@@ -352,19 +352,18 @@
         _flagRow = row;
         _str1 = _data[row][@"State"];
         NSLog(@"%@",_str1);
-        NSLog(@"%ld",(long)row);
-        self.provinceIn = row*1000;
-        NSLog(@"%ld",(long)self.provinceIn);
+        
         //给控件赋值str1
         if ([_str1 isEqualToString:@"省份"]) {
             _str1 = @"";
         }
-        //self.diqu = _str1;
         if (_gerenTableView.hidden == NO) {
-            self.province = _str1;//上传
+            self.province = _str1;
+            self.provinceIn = (9+row)*100;//上传
         }
         if ((_shangjiaTableView.hidden == NO)) {
             self.province1 = _str1;
+            self.provinceIn1 = (9+row)*100;
         }
         
         _isChooseArea = YES;
@@ -377,15 +376,18 @@
         }
         _str3 = [_str1 stringByAppendingString:_str2];
         NSLog(@"%@",_str3);
-        NSLog(@"%ld",(long)row);
-        //给控件赋值str3;
-        //self.diqu = _str3;
-        self.city = _str2;//上传
+        
+        self.cityIn = self.provinceIn + row;
+        NSLog(@"------------------------%ld",(long)self.cityIn);
+        
+        //上传参数
         if (_gerenTableView.hidden == NO) {
-            self.province1 = _str2;
+            self.city = _str2;
+            self.cityIn = self.provinceIn + row;
         }
         if (_shangjiaTableView.hidden == NO) {
             self.city1 = _str2;
+            self.cityIn1 = self.provinceIn + row;
         }
         _isChooseArea = YES;
         

@@ -59,6 +59,8 @@
         btn.frame = CGRectMake(10+i*105, CGRectGetMaxY(self.userFaceImv.frame)+14, 91, 30);
         btn.backgroundColor = [UIColor orangeColor];
         btn.layer.cornerRadius = 4;
+        btn.tag = 50+i;
+        [btn addTarget:self action:@selector(clickToDetail:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:btn];
     }
     
@@ -149,20 +151,27 @@
 
 
 
-- (void)test
-{
-    UIButton *addPhoto2 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    addPhoto2.frame = CGRectMake(100,100 + 100, 100, 50);
-    [addPhoto2 addTarget:self action:@selector(clickToDetail) forControlEvents:UIControlEventTouchUpInside];
-    [addPhoto2 setTitle:@"商圈" forState:UIControlStateNormal];
-    [self.view addSubview:addPhoto2];
-}
+//- (void)test
+//{
+//    UIButton *addPhoto2 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//    addPhoto2.frame = CGRectMake(100,100 + 100, 100, 50);
+//    [addPhoto2 addTarget:self action:@selector(clickToDetail) forControlEvents:UIControlEventTouchUpInside];
+//    [addPhoto2 setTitle:@"商圈" forState:UIControlStateNormal];
+//    [self.view addSubview:addPhoto2];
+//}
 
-- (void)clickToDetail
+- (void)clickToDetail:(UIButton *)sender
 {
-    FBFriendsController *friends = [[FBFriendsController alloc]init];
-    friends.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:friends animated:YES];
+    if (sender.tag == 50) {//商圈
+        FBFriendsController *friends = [[FBFriendsController alloc]init];
+        friends.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:friends animated:YES];
+    }else if (sender.tag == 51){//消息
+        
+    }else if(sender.tag == 52){//通知
+        
+    }
+    
 }
 
 
