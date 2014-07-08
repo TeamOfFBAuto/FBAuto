@@ -25,6 +25,8 @@
     Menu_Normal *menu_Source;//来源
     Menu_Normal *menu_Timelimit;//期限
     
+    ZkingSearchView *zkingSearchV;
+    
     UIView *menuBgView;
 }
 
@@ -74,7 +76,7 @@
     
     //搜索
     
-    ZkingSearchView *zkingSearchV = [[ZkingSearchView alloc]initWithFrame:CGRectMake(0, (44 - 30)/2.0, 300, 30) imgBG:[UIImage imageNamed:@"sousuo_bg548_58"] shortimgbg:[UIImage imageNamed:@"sousuo_bg548_58"] imgLogo:[UIImage imageNamed:@"sousuo_icon26_26"] placeholder:@"请输入手机号或姓名" searchWidth:275.f ZkingSearchViewBlocs:^(NSString *strSearchText, int tag) {
+    zkingSearchV = [[ZkingSearchView alloc]initWithFrame:CGRectMake(0, (44 - 30)/2.0, 300, 30) imgBG:[UIImage imageNamed:@"sousuo_bg548_58"] shortimgbg:[UIImage imageNamed:@"sousuo_bg548_58"] imgLogo:[UIImage imageNamed:@"sousuo_icon26_26"] placeholder:@"请输入手机号或姓名" searchWidth:275.f ZkingSearchViewBlocs:^(NSString *strSearchText, int tag) {
         
         [self searchFriendWithname:nil thetag:tag];
         
@@ -158,12 +160,6 @@
     detail.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:detail animated:YES];
     
-//    FBDetailController *detail = [[FBDetailController alloc]init];
-//    detail.style = Navigation_Special;
-//    detail.navigationTitle = @"详情";
-//    detail.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:detail animated:YES];
-    
 }
 
 - (void)clickToBigPhoto
@@ -212,6 +208,10 @@
 
 - (void)clickToDo:(Menu_Button *)selectButton
 {
+    //搜索框恢复
+    
+    [zkingSearchV doCancelButton];
+    
     NSInteger aTag = selectButton.tag - 100;
     
     //控制未选项的不显示

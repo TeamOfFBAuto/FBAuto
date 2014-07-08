@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-//static NSString *USERID = @"userId";
-static NSString *JID = @"jid";
-static NSString *PASS= @"pass";
-static NSString *SERVER = @"server";
+static NSString *XMPP_USERID = @"userId";
+static NSString *XMPP_JID = @"jid";
+static NSString *XMPP_PASS= @"pass";
+static NSString *XMPP_SERVER = @"server";
 
-@interface Statics : NSObject
+@interface XMPPStatics : NSObject
 
 +(NSString *)getCurrentTime;
 + (CGFloat)imageValue:(NSString *)html for:(NSString*)string;

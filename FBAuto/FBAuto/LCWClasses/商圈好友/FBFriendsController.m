@@ -163,6 +163,7 @@
 - (void)clickToChat
 {
     FBChatViewController *chat = [[FBChatViewController alloc]init];
+    chat.chatWithUser = @"test2";
     [self.navigationController pushViewController:chat animated:YES];
 }
 

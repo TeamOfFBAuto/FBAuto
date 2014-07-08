@@ -8,10 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		05B651E30AD74BE1BEB43F89 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE98169392244209FCDCF04 /* libPods.a */; };
-		1336BBFC196A3F3A0011B4D9 /* Statics.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BBFB196A3F3A0011B4D9 /* Statics.m */; };
 		1336BC05196A88410011B4D9 /* duihuahuang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1336BC03196A88410011B4D9 /* duihuahuang@2x.png */; };
 		1336BC06196A88410011B4D9 /* duihuahuang1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1336BC04196A88410011B4D9 /* duihuahuang1@2x.png */; };
 		1336BC09196A8CE70011B4D9 /* FBAreaFriensController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC08196A8CE70011B4D9 /* FBAreaFriensController.m */; };
+		1336BC0D196B89A00011B4D9 /* XMPPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC0C196B89A00011B4D9 /* XMPPServer.m */; };
+		1336BC12196B8A4F0011B4D9 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC0F196B8A4F0011B4D9 /* User.m */; };
+		1336BC13196B8A4F0011B4D9 /* Room.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC11196B8A4F0011B4D9 /* Room.m */; };
+		1336BC23196B91F70011B4D9 /* CWInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC1C196B91F70011B4D9 /* CWInputView.m */; };
+		1336BC24196B91F70011B4D9 /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC1F196B91F70011B4D9 /* NSString+Emoji.m */; };
+		1336BC25196B91F70011B4D9 /* SJAvatarBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC22196B91F70011B4D9 /* SJAvatarBrowser.m */; };
+		1336BC28196B921C0011B4D9 /* XMPPStatics.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC27196B921C0011B4D9 /* XMPPStatics.m */; };
+		1336BC2B196B93CC0011B4D9 /* FBChatImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC2A196B93CC0011B4D9 /* FBChatImage.m */; };
 		13737C8119652F1700941746 /* detail_test.png in Resources */ = {isa = PBXBuildFile; fileRef = 13737C8019652F1700941746 /* detail_test.png */; };
 		13737C8E1965420000941746 /* PersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13737C8D1965420000941746 /* PersonalViewController.m */; };
 		138B49F0196552F500B974A5 /* FBFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 138B49EE196552F500B974A5 /* FBFriendCell.m */; };
@@ -24,8 +31,6 @@
 		138B4A1319664ED500B974A5 /* FBSearchFriendsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 138B4A1019664ED500B974A5 /* FBSearchFriendsController.m */; };
 		138B4A1619664F1C00B974A5 /* FBFriendsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 138B4A1519664F1C00B974A5 /* FBFriendsController.m */; };
 		138B4A1A19667E4C00B974A5 /* FBChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 138B4A1919667E4C00B974A5 /* FBChatViewController.m */; };
-		138B4A211966864D00B974A5 /* CWInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 138B4A1D1966864D00B974A5 /* CWInputView.m */; };
-		138B4A221966864D00B974A5 /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = 138B4A201966864D00B974A5 /* NSString+Emoji.m */; };
 		138B4A261966868300B974A5 /* KKMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 138B4A251966868300B974A5 /* KKMessageCell.m */; };
 		138B4A2D1966945F00B974A5 /* RTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 138B4A2C1966945E00B974A5 /* RTLabel.m */; };
 		138B4A30196698AE00B974A5 /* ZSNApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 138B4A2F196698AE00B974A5 /* ZSNApi.m */; };
@@ -308,12 +313,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1336BBFA196A3F3A0011B4D9 /* Statics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Statics.h; sourceTree = "<group>"; };
-		1336BBFB196A3F3A0011B4D9 /* Statics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Statics.m; sourceTree = "<group>"; };
 		1336BC03196A88410011B4D9 /* duihuahuang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "duihuahuang@2x.png"; sourceTree = "<group>"; };
 		1336BC04196A88410011B4D9 /* duihuahuang1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "duihuahuang1@2x.png"; sourceTree = "<group>"; };
 		1336BC07196A8CE70011B4D9 /* FBAreaFriensController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBAreaFriensController.h; sourceTree = "<group>"; };
 		1336BC08196A8CE70011B4D9 /* FBAreaFriensController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBAreaFriensController.m; sourceTree = "<group>"; };
+		1336BC0B196B89A00011B4D9 /* XMPPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPServer.h; sourceTree = "<group>"; };
+		1336BC0C196B89A00011B4D9 /* XMPPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPServer.m; sourceTree = "<group>"; };
+		1336BC0E196B8A4F0011B4D9 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		1336BC0F196B8A4F0011B4D9 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		1336BC10196B8A4F0011B4D9 /* Room.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Room.h; sourceTree = "<group>"; };
+		1336BC11196B8A4F0011B4D9 /* Room.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Room.m; sourceTree = "<group>"; };
+		1336BC1B196B91F70011B4D9 /* CWInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWInputView.h; sourceTree = "<group>"; };
+		1336BC1C196B91F70011B4D9 /* CWInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWInputView.m; sourceTree = "<group>"; };
+		1336BC1E196B91F70011B4D9 /* NSString+Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Emoji.h"; sourceTree = "<group>"; };
+		1336BC1F196B91F70011B4D9 /* NSString+Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Emoji.m"; sourceTree = "<group>"; };
+		1336BC21196B91F70011B4D9 /* SJAvatarBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJAvatarBrowser.h; sourceTree = "<group>"; };
+		1336BC22196B91F70011B4D9 /* SJAvatarBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJAvatarBrowser.m; sourceTree = "<group>"; };
+		1336BC26196B921C0011B4D9 /* XMPPStatics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPStatics.h; sourceTree = "<group>"; };
+		1336BC27196B921C0011B4D9 /* XMPPStatics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPStatics.m; sourceTree = "<group>"; };
+		1336BC29196B93CC0011B4D9 /* FBChatImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBChatImage.h; sourceTree = "<group>"; };
+		1336BC2A196B93CC0011B4D9 /* FBChatImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBChatImage.m; sourceTree = "<group>"; };
 		13737C8019652F1700941746 /* detail_test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detail_test.png; sourceTree = "<group>"; };
 		13737C8C1965420000941746 /* PersonalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalViewController.h; sourceTree = "<group>"; };
 		13737C8D1965420000941746 /* PersonalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalViewController.m; sourceTree = "<group>"; };
@@ -335,10 +354,6 @@
 		138B4A1519664F1C00B974A5 /* FBFriendsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBFriendsController.m; sourceTree = "<group>"; };
 		138B4A1819667E4C00B974A5 /* FBChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBChatViewController.h; sourceTree = "<group>"; };
 		138B4A1919667E4C00B974A5 /* FBChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBChatViewController.m; sourceTree = "<group>"; };
-		138B4A1C1966864D00B974A5 /* CWInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWInputView.h; sourceTree = "<group>"; };
-		138B4A1D1966864D00B974A5 /* CWInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWInputView.m; sourceTree = "<group>"; };
-		138B4A1F1966864D00B974A5 /* NSString+Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Emoji.h"; sourceTree = "<group>"; };
-		138B4A201966864D00B974A5 /* NSString+Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Emoji.m"; sourceTree = "<group>"; };
 		138B4A241966868300B974A5 /* KKMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKMessageCell.h; sourceTree = "<group>"; };
 		138B4A251966868300B974A5 /* KKMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KKMessageCell.m; sourceTree = "<group>"; };
 		138B4A2B1966945E00B974A5 /* RTLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTLabel.h; sourceTree = "<group>"; };
@@ -704,6 +719,60 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1336BC0A196B89940011B4D9 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				1336BC26196B921C0011B4D9 /* XMPPStatics.h */,
+				1336BC27196B921C0011B4D9 /* XMPPStatics.m */,
+				1336BC0B196B89A00011B4D9 /* XMPPServer.h */,
+				1336BC0C196B89A00011B4D9 /* XMPPServer.m */,
+				1336BC0E196B8A4F0011B4D9 /* User.h */,
+				1336BC0F196B8A4F0011B4D9 /* User.m */,
+				1336BC10196B8A4F0011B4D9 /* Room.h */,
+				1336BC11196B8A4F0011B4D9 /* Room.m */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		1336BC19196B91F70011B4D9 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				1336BC29196B93CC0011B4D9 /* FBChatImage.h */,
+				1336BC2A196B93CC0011B4D9 /* FBChatImage.m */,
+				1336BC1A196B91F70011B4D9 /* CWInputView */,
+				1336BC20196B91F70011B4D9 /* SJImageBrowser */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
+		1336BC1A196B91F70011B4D9 /* CWInputView */ = {
+			isa = PBXGroup;
+			children = (
+				1336BC1B196B91F70011B4D9 /* CWInputView.h */,
+				1336BC1C196B91F70011B4D9 /* CWInputView.m */,
+				1336BC1D196B91F70011B4D9 /* NSString+Emoji */,
+			);
+			path = CWInputView;
+			sourceTree = "<group>";
+		};
+		1336BC1D196B91F70011B4D9 /* NSString+Emoji */ = {
+			isa = PBXGroup;
+			children = (
+				1336BC1E196B91F70011B4D9 /* NSString+Emoji.h */,
+				1336BC1F196B91F70011B4D9 /* NSString+Emoji.m */,
+			);
+			path = "NSString+Emoji";
+			sourceTree = "<group>";
+		};
+		1336BC20196B91F70011B4D9 /* SJImageBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				1336BC21196B91F70011B4D9 /* SJAvatarBrowser.h */,
+				1336BC22196B91F70011B4D9 /* SJAvatarBrowser.m */,
+			);
+			path = SJImageBrowser;
+			sourceTree = "<group>";
+		};
 		13737C821965380900941746 /* 商圈好友 */ = {
 			isa = PBXGroup;
 			children = (
@@ -746,36 +815,16 @@
 		138B4A1719667E2500B974A5 /* 聊天 */ = {
 			isa = PBXGroup;
 			children = (
-				1336BBFA196A3F3A0011B4D9 /* Statics.h */,
-				1336BBFB196A3F3A0011B4D9 /* Statics.m */,
+				138B4A3119669B7800B974A5 /* FBChatHeader.h */,
+				1336BC19196B91F70011B4D9 /* views */,
+				1336BC0A196B89940011B4D9 /* Tools */,
 				138B4B011966A51700B974A5 /* RichViewAndGif */,
 				138B4A321966A4BD00B974A5 /* face */,
-				138B4A3119669B7800B974A5 /* FBChatHeader.h */,
 				138B4A231966867600B974A5 /* cell */,
-				138B4A1B1966864D00B974A5 /* CWInputView */,
 				138B4A1819667E4C00B974A5 /* FBChatViewController.h */,
 				138B4A1919667E4C00B974A5 /* FBChatViewController.m */,
 			);
 			path = "聊天";
-			sourceTree = "<group>";
-		};
-		138B4A1B1966864D00B974A5 /* CWInputView */ = {
-			isa = PBXGroup;
-			children = (
-				138B4A1C1966864D00B974A5 /* CWInputView.h */,
-				138B4A1D1966864D00B974A5 /* CWInputView.m */,
-				138B4A1E1966864D00B974A5 /* NSString+Emoji */,
-			);
-			path = CWInputView;
-			sourceTree = "<group>";
-		};
-		138B4A1E1966864D00B974A5 /* NSString+Emoji */ = {
-			isa = PBXGroup;
-			children = (
-				138B4A1F1966864D00B974A5 /* NSString+Emoji.h */,
-				138B4A201966864D00B974A5 /* NSString+Emoji.m */,
-			);
-			path = "NSString+Emoji";
 			sourceTree = "<group>";
 		};
 		138B4A231966867600B974A5 /* cell */ = {
@@ -1938,27 +1987,33 @@
 				13D5E117196513AF00804835 /* FBDetail2Controller.m in Sources */,
 				13D5E07F1962BD5800804835 /* FBBaseViewController.m in Sources */,
 				13D5E0CA1963DB0300804835 /* QBShowImagesScrollView.m in Sources */,
+				1336BC2B196B93CC0011B4D9 /* FBChatImage.m in Sources */,
 				13D5E0F31963E59E00804835 /* DDPageControl.m in Sources */,
 				138B4A1619664F1C00B974A5 /* FBFriendsController.m in Sources */,
 				190BFE21195C362F0098E0F4 /* SzkLoadData.m in Sources */,
+				1336BC24196B91F70011B4D9 /* NSString+Emoji.m in Sources */,
 				13737C8E1965420000941746 /* PersonalViewController.m in Sources */,
 				13D5E0611962A14E00804835 /* MenuModel.m in Sources */,
+				1336BC13196B8A4F0011B4D9 /* Room.m in Sources */,
 				13D5E05D1962A14E00804835 /* MenuCell.m in Sources */,
 				13D5E0881963AAF100804835 /* PhotoImageView.m in Sources */,
 				138B4B141966A65E00B974A5 /* MarkupParser.m in Sources */,
 				13D5E0C51963DB0300804835 /* QBImagePickerController.m in Sources */,
 				13D5E0641962A14E00804835 /* Menu_Button.m in Sources */,
+				1336BC12196B8A4F0011B4D9 /* User.m in Sources */,
 				138B4B1A1966AC7F00B974A5 /* FBHelper.m in Sources */,
 				13D5E0C31963DB0300804835 /* QBImagePickerAssetView.m in Sources */,
+				1336BC0D196B89A00011B4D9 /* XMPPServer.m in Sources */,
 				190BFD4D195AA0FB0098E0F4 /* main.m in Sources */,
+				1336BC25196B91F70011B4D9 /* SJAvatarBrowser.m in Sources */,
 				138B4A0619664E9800B974A5 /* FBFriend2Cell.m in Sources */,
 				E35871ED196A946F0002813C /* GPersonTableViewCell.m in Sources */,
 				138B4B0F1966A51700B974A5 /* OHAttributedLabel.m in Sources */,
 				13D5E0F91964061100804835 /* FBPhotoBrowserController.m in Sources */,
 				13D5E10E1965109700804835 /* FBDetailController.m in Sources */,
 				13D5E0FF196406AA00804835 /* UIView+Frame.m in Sources */,
+				1336BC23196B91F70011B4D9 /* CWInputView.m in Sources */,
 				13D5E1061964F2E700804835 /* AutoDetail.m in Sources */,
-				138B4A221966864D00B974A5 /* NSString+Emoji.m in Sources */,
 				13D5E0DA1963DB9800804835 /* AsyncImageView.m in Sources */,
 				138B49F0196552F500B974A5 /* FBFriendCell.m in Sources */,
 				13D5E0C81963DB0300804835 /* QBImagePickerVideoInfoView.m in Sources */,
@@ -1974,6 +2029,7 @@
 				190BFD7F195AAD480098E0F4 /* CarResourceViewController.m in Sources */,
 				E362357E19657588003B23CC /* GzhuceViewController.m in Sources */,
 				13D5E0C61963DB0300804835 /* QBImagePickerFooterView.m in Sources */,
+				1336BC28196B921C0011B4D9 /* XMPPStatics.m in Sources */,
 				E362358019657588003B23CC /* GuserZhuce.m in Sources */,
 				13D5E0C71963DB0300804835 /* QBImagePickerGroupCell.m in Sources */,
 				13D5E0631962A14E00804835 /* Menu_Advanced.m in Sources */,
@@ -1987,10 +2043,8 @@
 				190BFD85195AAD800098E0F4 /* FindCarViewController.m in Sources */,
 				1336BC09196A8CE70011B4D9 /* FBAreaFriensController.m in Sources */,
 				13D5E0731962A7CA00804835 /* FBActionSheet.m in Sources */,
-				138B4A211966864D00B974A5 /* CWInputView.m in Sources */,
 				13D5DF721961306000804835 /* UIView+Frame.m in Sources */,
 				138B4B0E1966A51700B974A5 /* NSAttributedString+Attributes.m in Sources */,
-				1336BBFC196A3F3A0011B4D9 /* Statics.m in Sources */,
 				190BFD82195AAD6A0098E0F4 /* SendCarViewController.m in Sources */,
 				13D5E0DE1963DBA400804835 /* MyViewController.m in Sources */,
 				138B4A261966868300B974A5 /* KKMessageCell.m in Sources */,

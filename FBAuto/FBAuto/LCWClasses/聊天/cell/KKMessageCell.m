@@ -30,6 +30,7 @@
         //背景图
         bgImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
         bgImageView.backgroundColor = [UIColor clearColor];
+        bgImageView.userInteractionEnabled = YES;
         [self.contentView addSubview:bgImageView];
         
         //聊天信息
@@ -62,7 +63,16 @@
     //时间
     NSString *time = [dict objectForKey:MESSAGE_TIME];
     
-    self.senderAndTimeLabel.text = [NSString stringWithFormat:@"%@ %@", sender, time];
+//    self.senderAndTimeLabel.text = [NSString stringWithFormat:@"%@ %@", sender, time];
+    
+//    NSDateFormatter *date = [[NSDateFormatter alloc] init];
+//    [date setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//    NSDate *compareDate = [date dateFromString:time];
+//    
+//    time = [NSString stringWithFormat:@"%@",compareDate];
+    
+    
+    self.senderAndTimeLabel.text = [NSString stringWithFormat:@"%@",time];
     
     [self.bgImageView addSubview:OHLabel];
     
@@ -75,7 +85,7 @@
     UIImage *bgImage = nil;
     
     //左侧
-    if ([sender isEqualToString:@"you"])
+    if (![sender isEqualToString:@"you"])
     {
         left = KLEFT;
         

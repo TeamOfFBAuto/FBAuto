@@ -6,9 +6,9 @@
 //  Copyright (c) 2012年 无锡恩梯梯数据有限公司. All rights reserved.
 //
 
-#import "Statics.h"
+#import "XMPPStatics.h"
 
-@implementation Statics
+@implementation XMPPStatics
 
 +(NSString *)getCurrentTime{
     

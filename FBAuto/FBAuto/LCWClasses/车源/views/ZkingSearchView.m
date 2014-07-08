@@ -54,10 +54,19 @@
         [_cancelButton addTarget:self action:@selector(doCancelButton) forControlEvents:UIControlEventTouchUpInside];
         _cancelButton.hidden=YES;
         _cancelButton.backgroundColor=[UIColor clearColor];
-        [_cancelButton setTitle:@"取消" forState:UIControlStateNormal];
+        [_cancelButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
+//        [_cancelButton setTitle:@"取消" forState:UIControlStateNormal];
         [_cancelButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         _cancelButton.titleLabel.font=[UIFont systemFontOfSize:15];
         [self addSubview:_cancelButton];
+        
+        cancelLabel = [[UILabel alloc]initWithFrame:CGRectMake(264 + 3 + 5, 0, 40, 30)];
+        cancelLabel.text = @"取消";
+        cancelLabel.font = [UIFont systemFontOfSize:15];
+        cancelLabel.textColor = [UIColor whiteColor];
+        [self addSubview:cancelLabel];
+        
+        cancelLabel.hidden = YES;
         
 
         _aSearchField.frame=CGRectMake(30, (HEIGHT-15)/2, 260, 16);
@@ -65,7 +74,7 @@
         
         _searchLogo.center=CGPointMake(8+_searchLogo.image.size.width/2, HEIGHT/2);
         
-        _cancelButton.frame=CGRectMake(264 + 3, 0, 40, 30);
+        _cancelButton.frame=CGRectMake(264 + 3 - 20, 0, 40+20, 30);
         
        
     }
@@ -89,6 +98,9 @@
 - (void)backToNormal
 {
     _cancelButton.hidden=YES;
+    
+    cancelLabel.hidden = YES;
+    
     _searchBG.image=_imglongbg;
     _searchBG.frame=CGRectMake((self.width-searchBarWidth)/2.0, 0, searchBarWidth, _imglongbg.size.height);
     
@@ -108,6 +120,8 @@
 -(void)textFieldDidBeginEditing:(UITextField *)textField{
 
     _cancelButton.hidden = NO;
+    
+    cancelLabel.hidden = NO;
     
     _searchBG.image=_imgshortbg;
     

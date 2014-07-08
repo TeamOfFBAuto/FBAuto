@@ -20,4 +20,6 @@ typedef enum{
 
 @property(nonatomic,retain)UITableView *table;
 
+@property(nonatomic,retain)NSString *chatWithUser;//交流用户id
+
 @end

@@ -9,6 +9,7 @@
 #import "FBDetail2Controller.h"
 #import "FBPhotoBrowserController.h"
 #import "DDPageControl.h"
+#import "FBChatViewController.h"
 
 @interface FBDetail2Controller ()
 {
@@ -148,7 +149,15 @@
 #pragma - mark 点击事件
 
 - (IBAction)clickToDial:(id)sender {
+    
+    NSString *num = [[NSString alloc] initWithFormat:@"tel://%@",@"18612389982"];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:num]];
 }
 - (IBAction)clickToChat:(id)sender {
+    
+    FBChatViewController *chat = [[FBChatViewController alloc]init];
+    [self.navigationController pushViewController:chat animated:YES];
+    
 }
+
 @end

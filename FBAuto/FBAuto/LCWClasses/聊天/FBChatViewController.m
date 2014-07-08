@@ -17,12 +17,16 @@
 #import "MarkupParser.h"
 #import "OHAttributedLabel.h"
 #import "SCGIFImageView.h"
-#import "Statics.h"
+#import "XMPPStatics.h"
 #import "UIImageView+WebCache.h"
 #import "FBAddFriendsController.h"
 
+#import "XMPPServer.h"
+#import "SJAvatarBrowser.h"
+#import "FBChatImage.h"
 
-@interface FBChatViewController ()<CWInputDelegate,OHAttributedLabelDelegate>
+
+@interface FBChatViewController ()<CWInputDelegate,OHAttributedLabelDelegate,chatDelegate,messageDelegate,UIGestureRecognizerDelegate>
 {
     CWInputView *inputBar;
     
@@ -32,6 +36,8 @@
     NSMutableArray *rowHeights;//所有高度
     NSDictionary *emojiDic;//所有表情
     NSMutableArray *labelArr;//所有label
+    
+    XMPPServer *xmppServer;//xmpp 中心
 }
 
 @end
@@ -52,7 +58,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.titleLabel.text = @"somebody";
+    
+    
+    self.titleLabel.text = self.chatWithUser;
     
     UIButton *rightButton =[[UIButton alloc]initWithFrame:CGRectMake(0,8,30,21.5)];
     [rightButton addTarget:self action:@selector(clickToHome:) forControlEvents:UIControlEventTouchUpInside];
@@ -72,23 +80,141 @@
     [self.view addSubview:_table];
     _table.decelerationRate = 0.8;
     
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(clickToHideKeyboard)];
+//    tap.delegate = self;
+    tap.cancelsTouchesInView = NO;
+    [_table addGestureRecognizer:tap];
+    
+    
+    xmppServer = [XMPPServer shareInstance];
+    
+    xmppServer.chatDelegate = self;
+    xmppServer.messageDelegate = self;
+    
+    if (![xmppServer connect]) {
+        
+//        [xmppServer disconnect];
+        
+        [xmppServer connect];
+    }
+    
+    
     messages = [NSMutableArray array];
     labelArr = [NSMutableArray array];
     rowHeights = [NSMutableArray array];
     
-    [self testData];//测试数据
+//    [self testData];//测试数据
     
 //    [self creatLabelArr];
     
     [self.table reloadData];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:messages.count - 1 inSection:0];;
-    [self.table scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    
+//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:messages.count - 1 inSection:0];;
+//    [self.table scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     
     [self createInputView];
+    
+    [self loadarchivemsg];
+}
+
+#pragma - mark 聊天历史记录
+
+- (void)loadarchivemsg
+{
+    XMPPMessageArchivingCoreDataStorage *storage = [XMPPMessageArchivingCoreDataStorage sharedInstance];
+    NSManagedObjectContext *moc = [storage mainThreadManagedObjectContext];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"XMPPMessageArchiving_Message_CoreDataObject"
+                                                         inManagedObjectContext:moc];
+    NSFetchRequest *request = [[NSFetchRequest alloc]init];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *userName = [defaults objectForKey:XMPP_USERID];
+    NSString *server = [defaults objectForKey:XMPP_SERVER];
+    
+    NSString *chatWithJid = [NSString stringWithFormat:@"%@@%@",self.chatWithUser,server];
+    NSString *currentJid = [NSString stringWithFormat:@"%@@%@",userName,server];
+
+    //bareJidStr 代表与谁聊天
+    //body 内容
+    //streamBareJidStr 当前用户
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(bareJidStr like[cd] %@ )&& (streamBareJidStr like[cd] %@)",chatWithJid,currentJid];
+    
+    [request setPredicate:predicate];
+
+    [request setEntity:entityDescription];
+    NSError *error;
+    NSArray *messages_arc = [moc executeFetchRequest:request error:&error];
+    [self print:[[NSMutableArray alloc]initWithArray:messages_arc]];
+}
+
+- (void)print:(NSMutableArray*)messages_arc{
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+    NSString *path=[paths objectAtIndex:0];
+    NSLog(@"path %@",path);
+    
+    if (messages_arc.count == 0) {
+        return;
+    }
+    
+    @autoreleasepool {
+        for (XMPPMessageArchiving_Message_CoreDataObject *message in messages_arc) {
+            
+            XMPPMessage *message12=[[XMPPMessage alloc]init];
+            message12 = [message message];
+            
+            NSLog(@" kakakka--->message %@",message.timestamp);
+            
+            NSString *msg = [[message12 elementForName:@"body"] stringValue];
+            NSString *from = [[message12 attributeForName:@"from"] stringValue];
+            
+            NSDateFormatter *format = [[NSDateFormatter alloc] init];
+            [format setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+            NSString *time = [format stringFromDate:message.timestamp];
+            
+            if(msg)
+            {
+                NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+                [dict setObject:msg forKey:@"msg"];
+                
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                NSString *userName = [defaults objectForKey:XMPP_USERID];
+
+                if ([from hasPrefix:userName]) {
+                    from = @"you";
+                }
+                [dict setObject:from forKey:@"sender"];
+                
+                //消息接收到的时间
+                [dict setObject:(time ? time : @"") forKey:@"time"];
+                [messages addObject:dict];
+                
+            }
+        }
+        
+        //重新刷新tableView
+        [self.table reloadData];
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:messages.count - 1 inSection:0];;
+        [self.table scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    if ([gestureRecognizer.view isKindOfClass:[FBChatImage class]]) {
+        
+        return NO;
+    }
+    
+    return YES;
 }
 
 #pragma - mark  click事件
+
+- (void)clickToHideKeyboard
+{
+    [inputBar resignFirstResponder];
+}
 
 - (void)clickToAdd:(UIButton *)btn
 {
@@ -134,7 +260,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma - mark 创建richLabel
+#pragma - mark 创建 richLabel 和 imageView
 
 
 /**
@@ -155,12 +281,19 @@
     if (isLocal) { //图片
         
         UIImage *aImage = [dic objectForKey:MESSAGE_MSG];
-        UIImageView *aImageView = [[UIImageView alloc]init];
+        FBChatImage *aImageView = [[FBChatImage alloc]init];
         aImageView.image = aImage;
+        aImageView.userInteractionEnabled = YES;
         [labelArr addObject:aImageView];
         
+        [aImageView showBigImage:^(UIImageView *imageView) {
+            
+            [SJAvatarBrowser showImage:imageView];
+
+        }];
+        
         //最多高度 200,最大宽度 200
-        [Statics updateFrameForImageView:aImageView originalWidth:aImage.size.width originalHeight:aImage.size.height];
+        [XMPPStatics updateFrameForImageView:aImageView originalWidth:aImage.size.width originalHeight:aImage.size.height];
         
         NSNumber *heightNum = [[NSNumber alloc] initWithFloat:aImageView.height];
         [rowHeights addObject:heightNum];
@@ -171,20 +304,27 @@
     
     NSString *msg = [dic objectForKey:MESSAGE_MSG];
     
-    NSString *url = [Statics imageUrl:msg] ;
+    NSString *url = [XMPPStatics imageUrl:msg] ;
     if (![url isEqualToString:@""]) {
         //是图片
-        CGFloat width = [Statics imageValue:msg for:@"width"];
-        CGFloat height = [Statics imageValue:msg for:@"height"];
+        CGFloat width = [XMPPStatics imageValue:msg for:@"width"];
+        CGFloat height = [XMPPStatics imageValue:msg for:@"height"];
         
         
-        UIImageView *aImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, width, height)];
+        FBChatImage *aImageView = [[FBChatImage alloc]initWithFrame:CGRectMake(0, 0, width, height)];
         [labelArr addObject:aImageView];
+        aImageView.userInteractionEnabled = YES;
+        
+        [aImageView showBigImage:^(UIImageView *imageView) {
+            
+            [SJAvatarBrowser showImage:imageView];
+            
+        }];
         
         [aImageView setImageWithURL:[NSURL URLWithString:url] placeholderImage:nil];
         
         //最多高度 200,最大宽度 200
-        [Statics updateFrameForImageView:aImageView originalWidth:width originalHeight:height];
+        [XMPPStatics updateFrameForImageView:aImageView originalWidth:width originalHeight:height];
         
         NSNumber *heightNum = [[NSNumber alloc] initWithFloat:aImageView.height];
         [rowHeights addObject:heightNum];
@@ -272,6 +412,7 @@
     }
 }
 
+
 #pragma - mark OHAttributedLabelDelegate
 
 -(BOOL)attributedLabel:(OHAttributedLabel*)attributedLabel shouldFollowLink:(NSTextCheckingResult*)linkInfo
@@ -346,10 +487,11 @@
     
     [dictionary setObject:@"you" forKey:@"sender"];
     //加入发送时间
-    [dictionary setObject:[Statics getCurrentTime] forKey:@"time"];
+    [dictionary setObject:[XMPPStatics getCurrentTime] forKey:@"time"];
     [dictionary setObject:[NSString stringWithFormat:@"%d",type] forKey:@"type"];
     
     if (aImage) {
+        
         [dictionary setObject:aImage forKey:MESSAGE_MSG];
         [dictionary setObject:[NSNumber numberWithBool:YES] forKey:MESSAGE_MESSAGE_LOCAL];
     }
@@ -361,6 +503,135 @@
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:messages.count - 1 inSection:0];;
     [self.table scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+}
+
+#pragma - mark XMPP发送消息
+
+- (void)xmppSendMessage:(NSString *)messageText
+{
+    //XMPPFramework主要是通过KissXML来生成XML文件
+    //生成<body>文档
+    NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
+    [body setStringValue:messageText];
+    
+    //生成XML消息文档
+    NSXMLElement *mes = [NSXMLElement elementWithName:@"message"];
+    //消息类型
+    [mes addAttributeWithName:@"type" stringValue:@"chat"];
+    //发送给谁
+    
+    NSString *toUser = [NSString stringWithFormat:@"%@@%@",self.chatWithUser,[[NSUserDefaults standardUserDefaults] stringForKey:XMPP_SERVER]];
+    
+    NSLog(@"_chatWithUser %@ server %@",self.chatWithUser,[[NSUserDefaults standardUserDefaults] stringForKey:XMPP_SERVER]);
+    
+    
+    [mes addAttributeWithName:@"to" stringValue:toUser];
+    //由谁发送
+    [mes addAttributeWithName:@"from" stringValue:[[NSUserDefaults standardUserDefaults] stringForKey:XMPP_USERID]];
+    //组合
+    [mes addChild:body];
+    
+    //发送消息
+    [[xmppServer xmppStream] sendElement:mes];
+}
+
+#pragma - mark 输入框点击发送消息 CWInputDelegate
+
+- (void)inputView:(CWInputView *)inputView sendBtn:(UIButton*)sendBtn inputText:(NSString*)text
+{
+    NSLog(@"text %@",text);
+    
+    if (![text isEqualToString:@""] && text.length > 0) {
+        
+        NSLog(@"直接发送");
+        
+        [self xmppAuthenticatedWithMessage:text MessageType:Message_Normal image:nil];
+    }
+}
+
+#pragma - mark 验证是否登录成功,否则自动登录再fasong
+
+- (void)xmppAuthenticatedWithMessage:(NSString *)text MessageType:(MESSAGE_TYPE)type image:(UIImage *)aImage
+{
+    if ([xmppServer.xmppStream isAuthenticated]) {
+        
+        [self localSendMessage:text MessageType:type image:aImage];
+        
+        [self xmppSendMessage:text];
+        
+    }else
+    {
+        [xmppServer login:^(BOOL result) {
+            
+            if (result) {
+                
+                [self localSendMessage:text MessageType:type image:aImage];
+                
+                [self xmppSendMessage:text];
+                
+            }
+            
+        }];
+    }
+}
+
+
+
+#pragma - mark messageDelegate 消息代理 <NSObject>
+
+- (void)newMessage:(NSDictionary *)messageDic
+{
+    NSLog(@"newMessage %@",messageDic);
+    
+    [messages addObject:messageDic];
+    [self.table reloadData];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:messages.count - 1 inSection:0];;
+    [self.table scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+}
+
+#pragma - mark XMPP 用户状态代理 chatDelegate
+
+-(void)userOnline:(User *)user
+{
+    NSLog(@"userOnline:%@  type:%@",user.userName,user.presentType);
+    
+//    //用户上线
+//    
+//    user.jid = [NSString stringWithFormat:@"%@@%@",user.userName,[[NSUserDefaults standardUserDefaults]objectForKey:XMPP_SERVER]];
+//    
+//    [self changeOnlineState:user];
+}
+-(void)userOffline:(User *)user
+{
+    NSLog(@"userOffline %@ %@",user.userName,user.presentType);
+    
+//    user.jid = [NSString stringWithFormat:@"%@@%@",user.userName,[[NSUserDefaults standardUserDefaults]objectForKey:XMPP_SERVER]];
+//    [self changeOnlineState:user];
+}
+
+- (void)friendsArray:(NSArray *)array //好友列表
+{
+    NSLog(@"friendsArray:%@",array);
+}
+
+//改变上线状态
+
+- (void)changeOnlineState:(User *)user
+{
+    NSLog(@"user:%@ changeOnlineState",user);
+}
+
+//用户是否已在列表
+
+- (BOOL)isUserAdded:(User *)user
+{
+//    for (User *aUser in onlineUsers) {
+//        if ([user.userName isEqualToString:aUser.userName]) {
+//            return YES;
+//        }
+//    }
+    return NO;
 }
 
 
@@ -445,25 +716,6 @@
     [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
-#pragma - mark CWInputDelegate
-
-- (void)inputView:(CWInputView *)inputView sendBtn:(UIButton*)sendBtn inputText:(NSString*)text
-{
-    NSLog(@"text %@",text);
-    
-//    //本地输入框中的信息
-//    NSString *message = inputBar.textView.text;
-//    
-//    if (message.length > 0) {
-//        
-//        [self sendMessage:message isGroup:chatStyle];
-//        
-//        [self localSendMessage:message];
-//    }
-    if (text) {
-        [self localSendMessage:text MessageType:Message_Normal image:Nil];
-    }
-}
 
 #pragma - mark 发送图片
 
@@ -532,7 +784,11 @@
         //将二进制数据生成UIImage
         UIImage *image = [UIImage imageWithData:data];
         
-        [self localSendMessage:Nil MessageType:Message_Image image:image];
+//        [self localSendMessage:Nil MessageType:Message_Image image:image];
+        
+        NSString *test = @"<img height=\"195\" width=\"325\" src=\"http://www0.autoimg.cn/newspic/2013/12/22/620x0_0_2013122223315823282.jpg\"/>>";
+        
+        [self xmppAuthenticatedWithMessage:test MessageType:Message_Image image:image];
         
         [picker dismissViewControllerAnimated:NO completion:^{
             
