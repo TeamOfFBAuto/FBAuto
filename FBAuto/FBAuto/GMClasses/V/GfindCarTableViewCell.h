@@ -20,6 +20,8 @@ typedef void (^addViewBlock)();//点击箭头添加选项菜单view
 @property(nonatomic,strong)GfindCarViewController *delegate;//代理
 @property(nonatomic,strong)NSIndexPath *flagIndexPath;//标记
 
+@property(nonatomic,assign)int isGreen;//是否点击 再点一下收起  60开  120收
+
 -(void)setAddviewBlock:(addViewBlock)addviewBlock;
 
 -(CGFloat)loadView:(NSIndexPath*)theIndexPath;//加载控件并返回高度

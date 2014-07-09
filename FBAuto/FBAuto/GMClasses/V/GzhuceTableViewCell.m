@@ -560,7 +560,7 @@
 
 #pragma mark - UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 1) {
+    if (buttonIndex == 0) {
         [self.delegate.navigationController popViewControllerAnimated:YES];
     }
 }

@@ -44,6 +44,7 @@
         view.backgroundColor = [UIColor orangeColor];
         addBtn.backgroundColor = [UIColor greenColor];
         [self.contentView addSubview:view];
+        self.isGreen = 120;
         height = 120;
     }else{
         height = 60;

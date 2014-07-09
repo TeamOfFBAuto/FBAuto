@@ -17,6 +17,7 @@
 
 
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -67,12 +68,18 @@
     
     __weak typeof (self)bself = self;
     __weak typeof (_tableiView)btableview = _tableiView;
+    __weak typeof (cell)bcell = cell;
     
     [cell setAddviewBlock:^{
         
+        NSLog(@"11%@",bself.flagIndexPath);
         bself.flagIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
         
-        NSLog(@"11%@",bself.flagIndexPath);
+        if (bcell.isGreen == 120) {
+            bself.flagIndexPath = [NSIndexPath indexPathForRow:1 inSection:1];
+            bcell.isGreen =60;
+        }
+        
         
         [btableview reloadData];
         
@@ -92,11 +99,10 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     CGFloat height = 0;
     if (_tmpCell) {
-        _tmpCell.delegate = self;
         height = [_tmpCell loadView:indexPath];
     }else{
-        _tmpCell.delegate = self;
         _tmpCell = [[GfindCarTableViewCell alloc]init];
+        _tmpCell.delegate = self;
         height = [_tmpCell loadView:indexPath];
     }
     
