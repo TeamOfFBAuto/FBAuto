@@ -43,11 +43,11 @@ typedef void (^chooseAreaBlock)();//选择地区
 
 //地区
 //个人
-@property(nonatomic,strong)NSString *province;//省份
-@property(nonatomic,strong)NSString *city;//城市
+@property(nonatomic,assign)NSInteger province;//省份
+@property(nonatomic,assign)NSInteger city;//城市
 //商家
-@property(nonatomic,strong)NSString *province1;
-@property(nonatomic,strong)NSString *city1;
+@property(nonatomic,assign)NSInteger province1;
+@property(nonatomic,assign)NSInteger city1;
 
 @property(nonatomic,assign)GzhuceViewController *delegate;
 

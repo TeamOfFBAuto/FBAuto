@@ -14,8 +14,8 @@
 @property(nonatomic,strong)NSString *phone;//手机号
 @property(nonatomic,strong)NSString *password;//密码
 @property(nonatomic,strong)NSString *name;//用户名/商家公司简介
-@property(nonatomic,strong)NSString *province;//省份
-@property(nonatomic,strong)NSString *city;//城市
+@property(nonatomic,assign)NSInteger province;//省份
+@property(nonatomic,assign)NSInteger city;//城市
 @property(nonatomic,strong)NSString *code;//验证码
 @property(nonatomic,strong)NSString *token;//用户token
 @property(nonatomic,strong)NSString *usertype;//用户类型 1个人 2商家

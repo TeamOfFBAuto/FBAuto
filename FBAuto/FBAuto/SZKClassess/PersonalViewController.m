@@ -11,6 +11,8 @@
 #import "FBPhotoBrowserController.h"
 
 #import "GPersonTableViewCell.h"//自定义单元格
+#import "GChangePwViewController.h"//修改密码
+#import "GfindCarViewController.h"//寻车界面
 
 @interface PersonalViewController ()
 
@@ -67,7 +69,7 @@
     
     //展示信息的tableView
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 114, 320, 568-64-164) style:UITableViewStyleGrouped];
-    //_tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
@@ -142,6 +144,55 @@
     if (!cell) {
         cell = [[GPersonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
+    
+    UIView *xiatiao = [[UIView alloc]initWithFrame:CGRectMake(10.5, 43, 299, 1)];
+    xiatiao.backgroundColor = [UIColor whiteColor];
+    [cell.contentView addSubview:xiatiao];
+    
+    if ((indexPath.row == 3 && indexPath.section == 0)||(indexPath.row ==2 && indexPath.section == 1)) {
+        xiatiao.hidden = YES;
+    }
+    
+    [cell dataWithTitleLableWithIndexPath:indexPath];
+    
+    
+    __weak typeof (cell)bcell = cell;
+    
+    [cell setKuangBlock:^(NSInteger index) {
+        NSLog(@"%ld",(long)(index));
+        [UIView animateWithDuration:0.05 animations:^{
+            bcell.kuang.backgroundColor = RGBCOLOR(244, 244, 244);
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.05 animations:^{
+                bcell.kuang.backgroundColor = [UIColor whiteColor];
+            } completion:^(BOOL finished) {
+                
+            }];
+        }];
+        
+        
+        if (index == 5) {//修改密码
+            [self.navigationController pushViewController:[[GChangePwViewController alloc]init] animated:YES];
+        }else if (index == 1){//我的资料
+            
+        }else if (index == 2){//我的车源
+            
+        }else if (index == 3){//我的寻车
+            [self.navigationController pushViewController:[[GfindCarViewController alloc]init] animated:YES];
+            
+        }else if (index == 4){//我的收藏
+            
+        }else if (index == 6){//联系我们
+            
+        }else if (index == 7){//消息设置
+            
+        }
+        
+        
+    }];
+    
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
@@ -151,14 +202,6 @@
 
 
 
-//- (void)test
-//{
-//    UIButton *addPhoto2 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//    addPhoto2.frame = CGRectMake(100,100 + 100, 100, 50);
-//    [addPhoto2 addTarget:self action:@selector(clickToDetail) forControlEvents:UIControlEventTouchUpInside];
-//    [addPhoto2 setTitle:@"商圈" forState:UIControlStateNormal];
-//    [self.view addSubview:addPhoto2];
-//}
 
 - (void)clickToDetail:(UIButton *)sender
 {

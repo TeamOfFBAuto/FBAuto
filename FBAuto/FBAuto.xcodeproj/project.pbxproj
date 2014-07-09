@@ -289,6 +289,7 @@
 		190BFD96195AB15C0098E0F4 /* personalselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 190BFD90195AB15C0098E0F4 /* personalselected@2x.png */; };
 		190BFD99195ABA2D0098E0F4 /* testV@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 190BFD98195ABA2D0098E0F4 /* testV@2x.png */; };
 		190BFE21195C362F0098E0F4 /* SzkLoadData.m in Sources */ = {isa = PBXBuildFile; fileRef = 190BFE20195C362F0098E0F4 /* SzkLoadData.m */; };
+		E3385D2A196BBAED008061FA /* GChangePwViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3385D29196BBAED008061FA /* GChangePwViewController.m */; };
 		E35871ED196A946F0002813C /* GPersonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E35871EC196A946F0002813C /* GPersonTableViewCell.m */; };
 		E35871F6196AA63E0002813C /* duihuahuang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E35871F4196AA63E0002813C /* duihuahuang@2x.png */; };
 		E35871F7196AA63E0002813C /* duihuahuang1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E35871F5196AA63E0002813C /* duihuahuang1@2x.png */; };
@@ -300,6 +301,8 @@
 		E362358119657588003B23CC /* GloginView.m in Sources */ = {isa = PBXBuildFile; fileRef = E362357919657588003B23CC /* GloginView.m */; };
 		E362358219657588003B23CC /* GzhuceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E362357B19657588003B23CC /* GzhuceTableViewCell.m */; };
 		E362358519657FA6003B23CC /* GMAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = E362358419657FA6003B23CC /* GMAPI.m */; };
+		E3FFFCE7196BE19D00596186 /* GfindCarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FFFCE6196BE19D00596186 /* GfindCarViewController.m */; };
+		E3FFFCEA196BE28F00596186 /* GfindCarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FFFCE9196BE28F00596186 /* GfindCarTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -670,6 +673,8 @@
 		190BFE1F195C362F0098E0F4 /* SzkLoadData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SzkLoadData.h; sourceTree = "<group>"; };
 		190BFE20195C362F0098E0F4 /* SzkLoadData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SzkLoadData.m; sourceTree = "<group>"; };
 		2BE98169392244209FCDCF04 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3385D28196BBAED008061FA /* GChangePwViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GChangePwViewController.h; sourceTree = "<group>"; };
+		E3385D29196BBAED008061FA /* GChangePwViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GChangePwViewController.m; sourceTree = "<group>"; };
 		E35871EB196A946F0002813C /* GPersonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPersonTableViewCell.h; sourceTree = "<group>"; };
 		E35871EC196A946F0002813C /* GPersonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPersonTableViewCell.m; sourceTree = "<group>"; };
 		E35871F4196AA63E0002813C /* duihuahuang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "duihuahuang@2x.png"; sourceTree = "<group>"; };
@@ -689,6 +694,10 @@
 		E362357B19657588003B23CC /* GzhuceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GzhuceTableViewCell.m; sourceTree = "<group>"; };
 		E362358319657FA6003B23CC /* GMAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMAPI.h; sourceTree = "<group>"; };
 		E362358419657FA6003B23CC /* GMAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMAPI.m; sourceTree = "<group>"; };
+		E3FFFCE5196BE19D00596186 /* GfindCarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GfindCarViewController.h; sourceTree = "<group>"; };
+		E3FFFCE6196BE19D00596186 /* GfindCarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GfindCarViewController.m; sourceTree = "<group>"; };
+		E3FFFCE8196BE28F00596186 /* GfindCarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GfindCarTableViewCell.h; sourceTree = "<group>"; };
+		E3FFFCE9196BE28F00596186 /* GfindCarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GfindCarTableViewCell.m; sourceTree = "<group>"; };
 		F2B6939735024693BB7F96CA /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1609,6 +1618,10 @@
 				E362357019657588003B23CC /* GloginViewController.m */,
 				E362357119657588003B23CC /* GzhuceViewController.h */,
 				E362357219657588003B23CC /* GzhuceViewController.m */,
+				E3385D28196BBAED008061FA /* GChangePwViewController.h */,
+				E3385D29196BBAED008061FA /* GChangePwViewController.m */,
+				E3FFFCE5196BE19D00596186 /* GfindCarViewController.h */,
+				E3FFFCE6196BE19D00596186 /* GfindCarViewController.m */,
 				E362358319657FA6003B23CC /* GMAPI.h */,
 				E362358419657FA6003B23CC /* GMAPI.m */,
 			);
@@ -1634,6 +1647,8 @@
 				E362357B19657588003B23CC /* GzhuceTableViewCell.m */,
 				E35871EB196A946F0002813C /* GPersonTableViewCell.h */,
 				E35871EC196A946F0002813C /* GPersonTableViewCell.m */,
+				E3FFFCE8196BE28F00596186 /* GfindCarTableViewCell.h */,
+				E3FFFCE9196BE28F00596186 /* GfindCarTableViewCell.m */,
 			);
 			path = V;
 			sourceTree = "<group>";
@@ -1985,7 +2000,9 @@
 				13D5E0601962A14E00804835 /* City.m in Sources */,
 				138B4B111966A51700B974A5 /* SCGIFImageView.m in Sources */,
 				13D5E117196513AF00804835 /* FBDetail2Controller.m in Sources */,
+				E3FFFCE7196BE19D00596186 /* GfindCarViewController.m in Sources */,
 				13D5E07F1962BD5800804835 /* FBBaseViewController.m in Sources */,
+				E3FFFCEA196BE28F00596186 /* GfindCarTableViewCell.m in Sources */,
 				13D5E0CA1963DB0300804835 /* QBShowImagesScrollView.m in Sources */,
 				1336BC2B196B93CC0011B4D9 /* FBChatImage.m in Sources */,
 				13D5E0F31963E59E00804835 /* DDPageControl.m in Sources */,
@@ -2025,6 +2042,7 @@
 				190BFD54195AA0FB0098E0F4 /* FBAuto.xcdatamodeld in Sources */,
 				13D5E0661962A14E00804835 /* ZkingSearchView.m in Sources */,
 				13D5E100196406AA00804835 /* ZoomScrollView.m in Sources */,
+				E3385D2A196BBAED008061FA /* GChangePwViewController.m in Sources */,
 				13D5E0C21963DB0300804835 /* QBImagePickerAssetCell.m in Sources */,
 				190BFD7F195AAD480098E0F4 /* CarResourceViewController.m in Sources */,
 				E362357E19657588003B23CC /* GzhuceViewController.m in Sources */,
