@@ -533,16 +533,16 @@
     if (self.delegate.province && self.delegate.city) {
         tf.text = [self.delegate.province stringByAppendingString:self.delegate.city];
     }
-    self.province = self.delegate.province;
-    self.city = self.delegate.city;
+    self.province = self.delegate.provinceIn;
+    self.city = self.delegate.cityIn;
     
     //商家
     UITextField *tf1 = self.contentTfArray1[2];
     if (self.delegate.province1 && self.delegate.city1) {
         tf1.text = [self.delegate.province1 stringByAppendingString:self.delegate.city1];
     }
-    self.province1 = self.delegate.province1;
-    self.city1 = self.delegate.city1;
+    self.province1 = self.delegate.provinceIn1;
+    self.city1 = self.delegate.cityIn1;
     
 }
 
