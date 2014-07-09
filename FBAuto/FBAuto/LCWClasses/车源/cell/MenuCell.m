@@ -20,7 +20,6 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
-    NSLog(@"selected");
     
     if (_seg_style == Seg_left) {
         self.left_seg_View.hidden = !selected;

@@ -13,6 +13,9 @@
 #import "Menu_Header.h"
 #import "MenuCell.h"
 
+#import "FBCity.h"
+#import "FBCityData.h"
+
 #define KLEFT 0.0
 #define KTOP 5.0
 #define KBOTTOM 10
@@ -69,6 +72,37 @@
 {
     selectBlock = aBlock;
 }
+
+#pragma - mark 获取城市数据
+
+- (void)loadProvince
+{
+    NSArray *cityArr = [FBCityData getAllProvince];
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    
+    for (FBCity *aCity in cityArr) {
+        
+        NSMutableArray *cityGroup = [NSMutableArray arrayWithArray:[dic objectForKey:[aCity.cityName getFirstLetter]]];
+        [cityGroup addObject:aCity];
+        
+        [dic setObject:cityGroup forKey:[aCity.cityName getFirstLetter]];
+    }
+    
+    NSArray *arr = [dic allKeys];
+    
+    arr = [arr sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2){
+        NSComparisonResult result = [obj1 compare:obj2];
+        return result==NSOrderedDescending;
+    }];
+    
+    firstLetterArray = arr;
+    provinceDic = dic;
+    
+    [self reloadSecondTable];
+}
+
+
 
 #pragma - mark 二级、三级table管理
 
@@ -224,7 +258,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     if (tableView == secondTable) {
-        return [cityDic allKeys].count + 1;
+        return firstLetterArray.count + 1;
     }
     return 1;
 }
@@ -284,9 +318,15 @@
         if (section == 0) {
             return 1;
         }
+//        NSString *letter = [firstLetterArray objectAtIndex:section - 1];
+//        NSArray *arr = [cityDic objectForKey:letter];
+//        return arr.count;
+        
         NSString *letter = [firstLetterArray objectAtIndex:section - 1];
-        NSArray *arr = [cityDic objectForKey:letter];
-        return arr.count;
+        
+        NSArray *subCityArr = [provinceDic objectForKey:letter];
+        
+        return subCityArr.count;
         
     }else if (tableView == thirdTable)
     {
@@ -328,12 +368,18 @@
             
         }else
         {
+//            NSString *letter = [firstLetterArray objectAtIndex:indexPath.section - 1];
+//            NSArray *arr = [cityDic objectForKey:letter];
+//            
+//            City *aCity = [arr objectAtIndex:indexPath.row];
+            
             NSString *letter = [firstLetterArray objectAtIndex:indexPath.section - 1];
-            NSArray *arr = [cityDic objectForKey:letter];
             
-            City *aCity = [arr objectAtIndex:indexPath.row];
+            NSArray *subCityArr = [provinceDic objectForKey:letter];
             
-            cell.contenLabel.text = aCity.title;
+            FBCity *aCity = [subCityArr objectAtIndex:indexPath.row];
+            
+            cell.contenLabel.text = aCity.cityName;
             cell.seg_style = Seg_left;
             
             cell.contenLabel.textColor = [UIColor colorWithHexString:@"666666"];
@@ -343,7 +389,9 @@
         
     }else if (tableView == thirdTable)
     {
-        cell.contenLabel.text = [thirdArray objectAtIndex:indexPath.row];
+        
+        FBCity *aCity = [thirdArray objectAtIndex:indexPath.row];
+        cell.contenLabel.text = aCity.cityName;
         
         
     }else if (tableView == colorTable)
@@ -369,15 +417,25 @@
             return;
         }
         
-        NSString *letter = [firstLetterArray objectAtIndex:indexPath.section - 1];
-        NSArray *cities = [cityDic objectForKey:letter];
-        City *aCity = [cities objectAtIndex:indexPath.row];
+//        NSString *letter = [firstLetterArray objectAtIndex:indexPath.section - 1];
+//        NSArray *cities = [cityDic objectForKey:letter];
+//        City *aCity = [cities objectAtIndex:indexPath.row];
+//        
+//        [self reloadThirdTableData:aCity.subCities];
         
-        [self reloadThirdTableData:aCity.subCities];
+        NSString *letter = [firstLetterArray objectAtIndex:indexPath.section - 1];
+        
+        NSArray *subCityArr = [provinceDic objectForKey:letter];
+        
+        FBCity *aCity = [subCityArr objectAtIndex:indexPath.row];
+        
+        [self reloadThirdTableData:[FBCityData getSubCityWithProvinceId:aCity.cityId]];
         
     }else if (tableView == thirdTable)
     {
-        NSString *cityName = [thirdArray objectAtIndex:indexPath.row];
+        FBCity *aCity = [thirdArray objectAtIndex:indexPath.row];
+
+        NSString *cityName = aCity.cityName;
         selectBlock(blockStyle,cityName);
         [self hidden];
         
@@ -390,7 +448,9 @@
     {
         if (indexPath.row == 2) {
             
-            [self loadCityData];
+//            [self loadCityData];
+            
+            [self loadProvince];
             
             blockStyle = Select_Area;
         }

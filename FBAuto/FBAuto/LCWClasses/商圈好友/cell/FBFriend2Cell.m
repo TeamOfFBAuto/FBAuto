@@ -7,6 +7,7 @@
 //
 
 #import "FBFriend2Cell.h"
+#import "FBFriendModel.h"
 
 @implementation FBFriend2Cell
 
@@ -20,6 +21,13 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)getCellData:(FBFriendModel *)aModel
+{
+    self.nameAndTypeL.text = aModel.buddyname;
+    self.phoneNumAndAddressL.text = [NSString stringWithFormat:@"%@(%@)",aModel.phone,aModel.province];
+    [self.iconImageV setImageWithURL:[NSURL URLWithString:aModel.face] placeholderImage:[UIImage imageNamed:@"detail_test"]];
 }
 
 @end

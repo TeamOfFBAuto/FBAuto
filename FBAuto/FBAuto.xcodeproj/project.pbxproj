@@ -23,6 +23,12 @@
 		13737C8E1965420000941746 /* PersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13737C8D1965420000941746 /* PersonalViewController.m */; };
 		138074E3196CDFA300AD3D03 /* LCWTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 138074E2196CDFA300AD3D03 /* LCWTools.m */; };
 		138074E6196CEB3F00AD3D03 /* FBFriendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 138074E5196CEB3F00AD3D03 /* FBFriendModel.m */; };
+		138074E8196D323000AD3D03 /* area.txt in Resources */ = {isa = PBXBuildFile; fileRef = 138074E7196D323000AD3D03 /* area.txt */; };
+		138074EC196D3D4600AD3D03 /* garea.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 138074EB196D3D4600AD3D03 /* garea.sqlite */; };
+		138074F0196D3DA100AD3D03 /* DataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 138074EF196D3DA100AD3D03 /* DataBase.m */; };
+		138074F3196D3E1000AD3D03 /* FBCityData.m in Sources */ = {isa = PBXBuildFile; fileRef = 138074F2196D3E1000AD3D03 /* FBCityData.m */; };
+		138074F6196D3E8200AD3D03 /* FBCity.m in Sources */ = {isa = PBXBuildFile; fileRef = 138074F5196D3E8200AD3D03 /* FBCity.m */; };
+		138074F8196D47FD00AD3D03 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 138074F7196D47FD00AD3D03 /* libsqlite3.0.dylib */; };
 		138B49F0196552F500B974A5 /* FBFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 138B49EE196552F500B974A5 /* FBFriendCell.m */; };
 		138B49F1196552F500B974A5 /* FBFriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 138B49EF196552F500B974A5 /* FBFriendCell.xib */; };
 		138B4A0619664E9800B974A5 /* FBFriend2Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 138B4A0419664E9800B974A5 /* FBFriend2Cell.m */; };
@@ -345,6 +351,15 @@
 		138074E2196CDFA300AD3D03 /* LCWTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCWTools.m; sourceTree = SOURCE_ROOT; };
 		138074E4196CEB3F00AD3D03 /* FBFriendModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBFriendModel.h; sourceTree = SOURCE_ROOT; };
 		138074E5196CEB3F00AD3D03 /* FBFriendModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBFriendModel.m; sourceTree = SOURCE_ROOT; };
+		138074E7196D323000AD3D03 /* area.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = area.txt; sourceTree = "<group>"; };
+		138074EB196D3D4600AD3D03 /* garea.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = garea.sqlite; sourceTree = "<group>"; };
+		138074EE196D3DA100AD3D03 /* DataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataBase.h; sourceTree = "<group>"; };
+		138074EF196D3DA100AD3D03 /* DataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataBase.m; sourceTree = "<group>"; };
+		138074F1196D3E1000AD3D03 /* FBCityData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBCityData.h; sourceTree = "<group>"; };
+		138074F2196D3E1000AD3D03 /* FBCityData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBCityData.m; sourceTree = "<group>"; };
+		138074F4196D3E8200AD3D03 /* FBCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBCity.h; sourceTree = "<group>"; };
+		138074F5196D3E8200AD3D03 /* FBCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBCity.m; sourceTree = "<group>"; };
+		138074F7196D47FD00AD3D03 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		138B49ED196552F500B974A5 /* FBFriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBFriendCell.h; sourceTree = "<group>"; };
 		138B49EE196552F500B974A5 /* FBFriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBFriendCell.m; sourceTree = "<group>"; };
 		138B49EF196552F500B974A5 /* FBFriendCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FBFriendCell.xib; sourceTree = "<group>"; };
@@ -712,6 +727,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				138074F8196D47FD00AD3D03 /* libsqlite3.0.dylib in Frameworks */,
 				190BFD41195AA0FB0098E0F4 /* CoreGraphics.framework in Frameworks */,
 				190BFD45195AA0FB0098E0F4 /* CoreData.framework in Frameworks */,
 				190BFD43195AA0FB0098E0F4 /* UIKit.framework in Frameworks */,
@@ -805,6 +821,17 @@
 				1336BC08196A8CE70011B4D9 /* FBAreaFriensController.m */,
 			);
 			path = "商圈好友";
+			sourceTree = "<group>";
+		};
+		138074ED196D3D9400AD3D03 /* DataBase */ = {
+			isa = PBXGroup;
+			children = (
+				138074EE196D3DA100AD3D03 /* DataBase.h */,
+				138074EF196D3DA100AD3D03 /* DataBase.m */,
+				138074F1196D3E1000AD3D03 /* FBCityData.h */,
+				138074F2196D3E1000AD3D03 /* FBCityData.m */,
+			);
+			path = DataBase;
 			sourceTree = "<group>";
 		};
 		138B49EB196552CE00B974A5 /* cell */ = {
@@ -1212,6 +1239,9 @@
 		13D5E0451962A14E00804835 /* 车源 */ = {
 			isa = PBXGroup;
 			children = (
+				138074ED196D3D9400AD3D03 /* DataBase */,
+				138074EB196D3D4600AD3D03 /* garea.sqlite */,
+				138074E7196D323000AD3D03 /* area.txt */,
 				13D5E04A1962A14E00804835 /* city.plist */,
 				13D5E04B1962A14E00804835 /* Menu_Header.h */,
 				13737C8019652F1700941746 /* detail_test.png */,
@@ -1245,6 +1275,8 @@
 				13D5E0501962A14E00804835 /* MenuModel.m */,
 				13D5E1041964F2E700804835 /* AutoDetail.h */,
 				13D5E1051964F2E700804835 /* AutoDetail.m */,
+				138074F4196D3E8200AD3D03 /* FBCity.h */,
+				138074F5196D3E8200AD3D03 /* FBCity.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -1447,6 +1479,7 @@
 		190BFD3D195AA0FB0098E0F4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				138074F7196D47FD00AD3D03 /* libsqlite3.0.dylib */,
 				190BFD3E195AA0FB0098E0F4 /* Foundation.framework */,
 				190BFD40195AA0FB0098E0F4 /* CoreGraphics.framework */,
 				190BFD42195AA0FB0098E0F4 /* UIKit.framework */,
@@ -1832,6 +1865,7 @@
 				13D5E0101961758E00804835 /* tianjia44_44@2x.png in Resources */,
 				138B4AFA1966A4BD00B974A5 /* face93.png in Resources */,
 				138B4AD51966A4BD00B974A5 /* face6.png in Resources */,
+				138074EC196D3D4600AD3D03 /* garea.sqlite in Resources */,
 				138B4AAF1966A4BD00B974A5 /* face25.png in Resources */,
 				13D5E0011961758E00804835 /* xubxhe_fabu_44_44@2x.png in Resources */,
 				13D5DFDE1961758E00804835 /* dianhua40_46@2x.png in Resources */,
@@ -1846,6 +1880,7 @@
 				138B4AC01966A4BD00B974A5 /* face40.png in Resources */,
 				138B4AA01966A4BD00B974A5 /* face11.png in Resources */,
 				138B4ACE1966A4BD00B974A5 /* face53.png in Resources */,
+				138074E8196D323000AD3D03 /* area.txt in Resources */,
 				138B4ACB1966A4BD00B974A5 /* face50.png in Resources */,
 				138B4AE71966A4BD00B974A5 /* face76.png in Resources */,
 				13D5DFFC1961758E00804835 /* jiantou_down18_10@2x.png in Resources */,
@@ -2045,12 +2080,14 @@
 				13D5E0DA1963DB9800804835 /* AsyncImageView.m in Sources */,
 				138B49F0196552F500B974A5 /* FBFriendCell.m in Sources */,
 				13D5E0C81963DB0300804835 /* QBImagePickerVideoInfoView.m in Sources */,
+				138074F6196D3E8200AD3D03 /* FBCity.m in Sources */,
 				13D5E0651962A14E00804835 /* Menu_Normal.m in Sources */,
 				138B4A2D1966945F00B974A5 /* RTLabel.m in Sources */,
 				13D5E0C11963DB0300804835 /* QBAssetCollectionViewController.m in Sources */,
 				E362358219657588003B23CC /* GzhuceTableViewCell.m in Sources */,
 				13D5E0F61963F70100804835 /* SendCarParamsController.m in Sources */,
 				190BFD54195AA0FB0098E0F4 /* FBAuto.xcdatamodeld in Sources */,
+				138074F0196D3DA100AD3D03 /* DataBase.m in Sources */,
 				13D5E0661962A14E00804835 /* ZkingSearchView.m in Sources */,
 				13D5E100196406AA00804835 /* ZoomScrollView.m in Sources */,
 				E3385D2A196BBAED008061FA /* GChangePwViewController.m in Sources */,
@@ -2068,6 +2105,7 @@
 				E362358519657FA6003B23CC /* GMAPI.m in Sources */,
 				13D5E0C91963DB0300804835 /* QBShowImageDetailViewController.m in Sources */,
 				E362358119657588003B23CC /* GloginView.m in Sources */,
+				138074F3196D3E1000AD3D03 /* FBCityData.m in Sources */,
 				13D5E0DB1963DB9800804835 /* FullyLoaded.m in Sources */,
 				138B4A30196698AE00B974A5 /* ZSNApi.m in Sources */,
 				190BFD85195AAD800098E0F4 /* FindCarViewController.m in Sources */,

@@ -14,8 +14,6 @@ typedef void(^ZkingSearchViewBloc)(NSString *strSearchText,int tag);
 @interface ZkingSearchView : UIView<UITextFieldDelegate,UITextViewDelegate>
 {
     CGFloat searchBarWidth;//搜索框的宽度
-    
-    UILabel *cancelLabel;
 }
 
 @property(nonatomic,strong)UITextField *aSearchField;
@@ -30,6 +28,8 @@ typedef void(^ZkingSearchViewBloc)(NSString *strSearchText,int tag);
 
 
 @property(nonatomic,strong)UIButton *cancelButton;
+
+@property(nonatomic,retain)UILabel *cancelLabel;
 
 @property(nonatomic,assign)BOOL isLeft;//是否靠左
 

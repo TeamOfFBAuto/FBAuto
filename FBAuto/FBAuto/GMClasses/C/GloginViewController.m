@@ -11,7 +11,7 @@
 #import "GzhuceViewController.h"//注册
 #import "GfindPasswViewController.h"//找回密码
 
-
+#import "XMPPStatics.h"
 
 
 @interface GloginViewController ()
@@ -114,11 +114,23 @@
             NSString *username = [datainfo objectForKey:@"name"];
             NSString *authkey = [datainfo objectForKey:@"authkey"];
             
-            [[NSUserDefaults standardUserDefaults]setObject:userid forKey:USERID];
-            [[NSUserDefaults standardUserDefaults]setObject:username forKey:USERNAME];
-            [[NSUserDefaults standardUserDefaults]setObject:authkey forKey:USERAUTHKEY];
+//            NSString *phone = [datainfo objectForKey:@"phone"];
             
-            [[NSUserDefaults standardUserDefaults]synchronize];
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            
+            
+            //聊天使用
+            
+            [defaults setObject:name forKey:XMPP_USERID];
+            [defaults setObject:passw forKey:XMPP_PASS];
+            [defaults setObject:@"60.18.147.4" forKey:XMPP_SERVER];
+            
+            
+            [defaults setObject:userid forKey:USERID];
+            [defaults setObject:username forKey:USERNAME];
+            [defaults setObject:authkey forKey:USERAUTHKEY];
+            
+            [defaults synchronize];
             
             [self dismissViewControllerAnimated:YES completion:^{
                 

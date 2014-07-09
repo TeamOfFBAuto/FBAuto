@@ -25,6 +25,8 @@ typedef void(^SelectBlock) (BlockStyle style, NSString *select);
     UIView *frontV;//需要提前的view
     UIImageView *arrowImage;//箭头
     
+    NSDictionary *provinceDic;//存放省份
+    
     NSMutableDictionary *cityDic;//存储分组城市
     NSArray *firstLetterArray;//分组首字母数据
     

@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+@class FBFriendModel;
 
 @interface FBFriend2Cell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UIImageView *iconImageV;
 @property (strong, nonatomic) IBOutlet UILabel *nameAndTypeL;//(张三(个人))
 @property (strong, nonatomic) IBOutlet UILabel *phoneNumAndAddressL;//(186/(北京))
+
+- (void)getCellData:(FBFriendModel *)aModel;
 
 @end

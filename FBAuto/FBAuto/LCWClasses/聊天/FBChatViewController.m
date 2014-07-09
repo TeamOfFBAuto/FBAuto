@@ -91,7 +91,9 @@
     xmppServer.chatDelegate = self;
     xmppServer.messageDelegate = self;
     
-    if (![xmppServer connect]) {
+    if (![xmppServer.xmppStream isAuthenticated])
+    {
+        [xmppServer disconnect];
         [xmppServer connect];
     }
     
@@ -580,11 +582,19 @@
 {
     NSLog(@"newMessage %@",messageDic);
     
-    [messages addObject:messageDic];
-    [self.table reloadData];
+    NSString *sender = [messageDic objectForKey:@"sender"];
     
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:messages.count - 1 inSection:0];;
-    [self.table scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    NSLog(@"sender %@ chatWith %@",sender,self.chatWithUser);
+    
+    //是当前聊天用户才刷新页面
+    
+    if ([sender hasPrefix:self.chatWithUser]) {
+        [messages addObject:messageDic];
+        [self.table reloadData];
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:messages.count - 1 inSection:0];;
+        [self.table scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
 }
 
 #pragma - mark XMPP 用户状态代理 chatDelegate

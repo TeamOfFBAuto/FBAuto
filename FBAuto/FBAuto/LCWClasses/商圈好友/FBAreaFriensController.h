@@ -13,6 +13,8 @@
 @interface FBAreaFriensController : FBBaseViewController<UITableViewDataSource,UITableViewDelegate>
 {
     NSMutableDictionary *cityDic;//存储分组城市
+    
+    NSDictionary *provinceDic;//存放省份
     NSArray *firstLetterArray;//分组首字母数据
     
     UITableView *secondTable;//二级table

@@ -13,6 +13,9 @@
 #import "Menu_Header.h"
 #import "MenuCell.h"
 
+#import "FBCityData.h"
+#import "FBCity.h"
+
 #define KLEFT 0.0
 #define KTOP 5.0
 #define KBOTTOM 10
@@ -46,7 +49,9 @@
     secondTable.dataSource = self;
     [self.view addSubview:secondTable];
     
-    [self loadCityData];
+//    [self loadCityData];
+    
+    [self loadProvince];
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,75 +60,104 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma - mark 二级、三级table管理
+#pragma - mark 获取城市数据
 
-- (void)loadCityData
+- (void)loadProvince
 {
+    NSArray *cityArr = [FBCityData getAllProvince];
     
-    __block typeof (FBAreaFriensController *)weakSelf = self;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     
-    NSString * path = [[NSBundle mainBundle] pathForResource:@"city.plist" ofType:nil];
-    
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    for (FBCity *aCity in cityArr) {
         
-        NSMutableArray *cityArray = [[NSMutableArray alloc] initWithContentsOfFile:path];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            
-            NSArray *states = [[cityArray objectAtIndex:0]objectForKey:@"states"];
-            
-            [weakSelf groupCityWithArray:states];
-            
-        });
-    });
-}
-
-//城市分组
-
-- (void)groupCityWithArray:(NSArray *)states
-{
-    cityDic = [NSMutableDictionary dictionary];
-    
-    for (NSDictionary *aState in states) {
-        NSString *stateName = [aState objectForKey:@"state"];
-        NSString *firstLetter = [stateName getFirstLetter];
-        NSArray *cities = [aState objectForKey:@"cities"];
-        City *aCity = [[City alloc]initWithTitle:stateName subCities:cities];
-        
-        NSMutableArray *cityGroup = [NSMutableArray arrayWithArray:[cityDic objectForKey:firstLetter]];
+        NSMutableArray *cityGroup = [NSMutableArray arrayWithArray:[dic objectForKey:[aCity.cityName getFirstLetter]]];
         [cityGroup addObject:aCity];
         
-        [cityDic setObject:cityGroup forKey:firstLetter];
+        [dic setObject:cityGroup forKey:[aCity.cityName getFirstLetter]];
     }
     
-    NSArray* arr = [cityDic allKeys];
+    NSArray *arr = [dic allKeys];
+    
     arr = [arr sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2){
         NSComparisonResult result = [obj1 compare:obj2];
         return result==NSOrderedDescending;
     }];
     
     firstLetterArray = arr;
-    
-    [self reloadSecondTable];
-}
-
-//二级table
-
-- (void)reloadSecondTable
-{
-    
-    if (secondTable == nil) {
-        
-        secondTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 220, self.view.height - (iPhone5 ? 20 : 0) - 44) style:UITableViewStylePlain];
-        secondTable.delegate = self;
-        secondTable.dataSource = self;
-        [self.view addSubview:secondTable];
-        
-    }
+    provinceDic = dic;
     
     [secondTable reloadData];
 }
+
+#pragma - mark 二级、三级table管理
+
+//- (void)loadCityData
+//{
+//    
+//    __block typeof (FBAreaFriensController *)weakSelf = self;
+//    
+//    NSString * path = [[NSBundle mainBundle] pathForResource:@"city.plist" ofType:nil];
+//    
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//        
+//        NSMutableArray *cityArray = [[NSMutableArray alloc] initWithContentsOfFile:path];
+//        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            
+//            
+//            NSArray *states = [[cityArray objectAtIndex:0]objectForKey:@"states"];
+//            
+//            [weakSelf groupCityWithArray:states];
+//            
+//        });
+//    });
+//}
+//
+////城市分组
+//
+//- (void)groupCityWithArray:(NSArray *)states
+//{
+//    cityDic = [NSMutableDictionary dictionary];
+//    
+//    for (NSDictionary *aState in states) {
+//        NSString *stateName = [aState objectForKey:@"state"];
+//        NSString *firstLetter = [stateName getFirstLetter];
+//        NSArray *cities = [aState objectForKey:@"cities"];
+//        City *aCity = [[City alloc]initWithTitle:stateName subCities:cities];
+//        
+//        NSMutableArray *cityGroup = [NSMutableArray arrayWithArray:[cityDic objectForKey:firstLetter]];
+//        [cityGroup addObject:aCity];
+//        
+//        [cityDic setObject:cityGroup forKey:firstLetter];
+//    }
+//    
+//    NSArray* arr = [cityDic allKeys];
+//    arr = [arr sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2){
+//        NSComparisonResult result = [obj1 compare:obj2];
+//        return result==NSOrderedDescending;
+//    }];
+//    
+//    firstLetterArray = arr;
+//    
+//    [self reloadSecondTable];
+//}
+//
+////二级table
+//
+//- (void)reloadSecondTable
+//{
+//    
+//    if (secondTable == nil) {
+//        
+//        secondTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 220, self.view.height - (iPhone5 ? 20 : 0) - 44) style:UITableViewStylePlain];
+//        secondTable.delegate = self;
+//        secondTable.dataSource = self;
+//        [self.view addSubview:secondTable];
+//        
+//    }
+//    
+//    [secondTable reloadData];
+//}
 
 
 
@@ -134,7 +168,7 @@
     
     if (thirdTable == nil) {
         
-        thirdTable = [[UITableView alloc]initWithFrame:CGRectMake(320, 0, 320 - 270/2.0, self.view.height) style:UITableViewStylePlain];
+        thirdTable = [[UITableView alloc]initWithFrame:CGRectMake(320, 0, 320 - 270/2.0 + 20, self.view.height) style:UITableViewStylePlain];
         thirdTable.delegate = self;
         thirdTable.dataSource = self;
         [self.view addSubview:thirdTable];
@@ -156,7 +190,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     if (tableView == secondTable) {
-        return [cityDic allKeys].count + 1;
+        return firstLetterArray.count + 1;
     }
     return 1;
 }
@@ -174,7 +208,6 @@
         UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 300, 20)];
         [aView addSubview:titleLabel];
         titleLabel.backgroundColor = [UIColor colorWithHexString:@"dcdcdc"];
-//        titleLabel.te
         titleLabel.text = [NSString stringWithFormat:@"  %@",letter];
         
         return aView;
@@ -198,8 +231,10 @@
         }
         
         NSString *letter = [firstLetterArray objectAtIndex:section - 1];
-        NSArray *arr = [cityDic objectForKey:letter];
-        return arr.count;
+        
+        NSArray *subCityArr = [provinceDic objectForKey:letter];
+    
+        return subCityArr.count;
         
     }else if (tableView == thirdTable)
     {
@@ -247,11 +282,12 @@
         }else
         {
             NSString *letter = [firstLetterArray objectAtIndex:indexPath.section - 1];
-            NSArray *arr = [cityDic objectForKey:letter];
             
-            City *aCity = [arr objectAtIndex:indexPath.row];
+            NSArray *subCityArr = [provinceDic objectForKey:letter];
             
-            cell.contenLabel.text = aCity.title;
+            FBCity *aCity = [subCityArr objectAtIndex:indexPath.row];
+            
+            cell.contenLabel.text = aCity.cityName;
             cell.seg_style = Seg_left;
             
             cell.contenLabel.textColor = [UIColor colorWithHexString:@"666666"];
@@ -260,7 +296,9 @@
         
     }else if (tableView == thirdTable)
     {
-        cell.contenLabel.text = [thirdArray objectAtIndex:indexPath.row];
+        FBCity *aCity = [thirdArray objectAtIndex:indexPath.row];
+        
+        cell.contenLabel.text = aCity.cityName;
         
     }
     cell.contenLabel.textColor = [UIColor colorWithHexString:@"666666"];
@@ -278,14 +316,16 @@
         }
         
         NSString *letter = [firstLetterArray objectAtIndex:indexPath.section - 1];
-        NSArray *cities = [cityDic objectForKey:letter];
-        City *aCity = [cities objectAtIndex:indexPath.row];
         
-        [self reloadThirdTableData:aCity.subCities];
+        NSArray *subCityArr = [provinceDic objectForKey:letter];
+        
+        FBCity *aCity = [subCityArr objectAtIndex:indexPath.row];
+        
+        [self reloadThirdTableData:[FBCityData getSubCityWithProvinceId:aCity.cityId]];
         
     }else if (tableView == thirdTable)
     {
-        NSString *cityName = [thirdArray objectAtIndex:indexPath.row];
+//        NSString *cityName = [thirdArray objectAtIndex:indexPath.row];
 
         
     }

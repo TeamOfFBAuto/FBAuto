@@ -698,7 +698,7 @@
         {
             currentPage--;
             
-            NSLog(@"self.selected -----   %d",self.selectedAssets.count);
+//            NSLog(@"self.selected -----   %d",self.selectedAssets.count);
             
             [self.selectedAssets removeObject:asset];
             

@@ -30,13 +30,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-   
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    [defaults setObject:@"test2" forKey:XMPP_USERID];
-    [defaults setObject:@"123456" forKey:XMPP_PASS];
-    [defaults setObject:@"60.18.147.4" forKey:XMPP_SERVER];
-    [defaults synchronize];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     

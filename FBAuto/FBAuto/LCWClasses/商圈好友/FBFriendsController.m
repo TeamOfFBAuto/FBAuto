@@ -46,12 +46,20 @@
     
     [self getFriendlist];
     
+    //添加好友，测试用
     
 //    LCWTools *tools = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_ADD,[GMAPI getAuthkey],@"1"]];
 //    [tools requestCompletion:^(NSDictionary *result, NSError *erro) {
 //        NSLog(@"---result %@ erro %@",result,[result objectForKey:@"errinfo"]);
 //        }
 //    ];
+    
+    //删除好友
+    
+//    LCWTools *tool = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_DELETE,[GMAPI getAuthkey],@"1"]];
+//    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+//        NSLog(@"---result %@ erro %@",result,[result objectForKey:@"errinfo"]);
+//    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -206,7 +214,7 @@
     
     [cell getCellData:aModel cellBlock:^(NSString *friendInfo) {
         
-        [weakSelf clickToChat];
+        [weakSelf clickToChatWithUser:aModel.phone];
         
     }];
     
@@ -230,10 +238,10 @@
     return 0.01f;
 }
 
-- (void)clickToChat
+- (void)clickToChatWithUser:(NSString *)user
 {
     FBChatViewController *chat = [[FBChatViewController alloc]init];
-    chat.chatWithUser = @"test3";
+    chat.chatWithUser = user;
     [self.navigationController pushViewController:chat animated:YES];
 }
 

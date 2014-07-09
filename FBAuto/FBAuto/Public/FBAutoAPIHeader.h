@@ -12,6 +12,7 @@
 #import "UIView+Frame.h" //布局使用
 #import "NSString+PinYin.h"//获取首字母
 #import "UIColor+ConvertColor.h"//16进制颜色转换
+#import "UIImageView+WebCache.h"
 
 #import "GMAPI.h"//GODLIKE
 
