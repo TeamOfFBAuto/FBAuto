@@ -34,8 +34,9 @@
     [addBtn addTarget:self action:@selector(tianjia) forControlEvents:UIControlEventTouchUpInside];
     
     
-//    NSLog(@"%@",theIndexPath);
-    NSLog(@"delegate - %@",self.delegate);
+    NSLog(@"%@",theIndexPath);
+    
+    NSLog(@"delegate - %@",self.delegate.flagIndexPath);
     
     if (theIndexPath.row == self.delegate.flagIndexPath.row && theIndexPath.section == self.delegate.flagIndexPath.section) {
         

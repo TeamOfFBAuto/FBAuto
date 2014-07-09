@@ -18,7 +18,7 @@ typedef void (^shouTablevBlock)();//收键盘的时候还原tableivew.frame
 
 typedef void (^chooseAreaBlock)();//选择地区
 
-@interface GzhuceTableViewCell : UITableViewCell<UITextFieldDelegate>
+@interface GzhuceTableViewCell : UITableViewCell<UITextFieldDelegate,UIAlertViewDelegate>
 {
     UITableView *_gerenTableView;
     UITableView *_shangjiaTableView;

@@ -23,7 +23,7 @@
     // Do any additional setup after loading the view.
     
     
-    self.flagIndexPath = [NSIndexPath indexPathForRow:1 inSection:1];
+    self.flagIndexPath = [NSIndexPath indexPathForRow:10000 inSection:10000];
     
     self.view.backgroundColor = [UIColor whiteColor];
     

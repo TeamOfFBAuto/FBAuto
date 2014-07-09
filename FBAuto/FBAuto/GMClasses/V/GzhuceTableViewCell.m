@@ -414,29 +414,25 @@
         
         SzkLoadData *netr = [[SzkLoadData alloc]init];
         
-        //验证验证码是否正确
-        NSString *phonestr = guerzhuce.password;
+        NSString *str = [NSString stringWithFormat:FBAUTO_REGISTERED,guerzhuce.phone,guerzhuce.password,guerzhuce.name,guerzhuce.province,guerzhuce.city,1,guerzhuce.code,guerzhuce.token];
         
-        [netr SeturlStr:[NSString stringWithFormat:FBAUTO_YANZHENG_VERIFICATION_CODE,guerzhuce.phone,guerzhuce.code] block:^(NSArray *arrayinfo, NSString *errorindo, NSInteger errcode) {
-            if ([errorindo intValue] == 0) {
-                NSLog(@"手机验证码正确");
-                NSString *str = [NSString stringWithFormat:FBAUTO_REGISTERED,guerzhuce.phone,guerzhuce.password,guerzhuce.name,guerzhuce.province,guerzhuce.city,1,guerzhuce.code,guerzhuce.token];
-                NSLog(@"个人注册接口======= %@",str);
-                [netr SeturlStr:str block:^(NSArray *arrayinfo, NSString *errorindo, NSInteger errcode) {
-                    if (errcode==0) {
-                        NSLog(@"cccarray==%@",arrayinfo);
-                    }else{
-                        UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:errorindo message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                        [alertV show];
-                        
-                    }
-                    
-                    
-                }];
+        NSLog(@"个人注册接口======= %@",str);
+        
+        [netr SeturlStr:str block:^(NSArray *arrayinfo, NSString *errorindo, NSInteger errcode) {
+            
+            if (errcode==0) {
+                UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"注册成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                NSLog(@"cccarray==%@",arrayinfo);
+                
             }else{
-                UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"验证码错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                [al show];
+                
+                UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:errorindo message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [alertV show];
+            
+            
             }
+            
+            
         }];
         
         
@@ -559,6 +555,17 @@
     self.city1 = self.delegate.cityIn1;
     
 }
+
+
+
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        [self.delegate.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+
 
 
 
