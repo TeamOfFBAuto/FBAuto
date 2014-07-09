@@ -23,13 +23,17 @@
     // Do any additional setup after loading the view.
     
     
+    self.flagIndexPath = [NSIndexPath indexPathForRow:1 inSection:1];
     
     self.view.backgroundColor = [UIColor whiteColor];
     
     _tableiView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64)];
     _tableiView.delegate = self;
     _tableiView.dataSource = self;
+    
     [self.view addSubview:_tableiView];
+    
+    
     
 }
 
@@ -47,7 +51,7 @@
     GfindCarTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[GfindCarTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        
+        cell.delegate = self;
         
     }
     
@@ -55,7 +59,7 @@
         [view removeFromSuperview];
     }
     
-    cell.delegate = self;
+    
     
     
     
@@ -77,6 +81,10 @@
     
     [cell loadView:indexPath];
     
+    
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return cell;
 }
 
@@ -92,8 +100,7 @@
         height = [_tmpCell loadView:indexPath];
     }
     
-//    NSLog(@"%@",indexPath);
-//    NSLog(@"--------%ld",(long)height);
+
     
     return height;
 }

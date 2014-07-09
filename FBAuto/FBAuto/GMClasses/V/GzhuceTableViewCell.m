@@ -275,7 +275,13 @@
         
         NSLog(@"%@",tf.text);
         
+        
+        
         NSString *str = [NSString stringWithFormat:FBAUTO_GET_VERIFICATION_CODE,tf.text,1];
+        
+        
+        NSLog(@"手机验证码请求地址:%@",str);
+        
         NSURL *url = [NSURL URLWithString:str];
         NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
         [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {

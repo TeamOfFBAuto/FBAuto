@@ -28,7 +28,7 @@
     NSLog(@"%s",__FUNCTION__);
     CGFloat height = 0;
     UIButton *addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    addBtn.frame = CGRectMake(10, 10, 20, 20);
+    addBtn.frame = CGRectMake(287, 10, 20, 20);
     addBtn.backgroundColor = [UIColor redColor];
     [self.contentView addSubview:addBtn];
     [addBtn addTarget:self action:@selector(tianjia) forControlEvents:UIControlEventTouchUpInside];
@@ -40,6 +40,8 @@
     if (theIndexPath.row == self.delegate.flagIndexPath.row && theIndexPath.section == self.delegate.flagIndexPath.section) {
         
         UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 60, 320, 60)];
+        view.backgroundColor = [UIColor orangeColor];
+        addBtn.backgroundColor = [UIColor greenColor];
         [self.contentView addSubview:view];
         height = 120;
     }else{
