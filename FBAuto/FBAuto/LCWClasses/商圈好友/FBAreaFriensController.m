@@ -7,6 +7,7 @@
 //
 
 #import "FBAreaFriensController.h"
+#import "FBMayKnowFriendsController.h"
 #import "FBAutoAPIHeader.h"
 #import "MenuModel.h"
 #import "City.h"
@@ -325,9 +326,14 @@
         
     }else if (tableView == thirdTable)
     {
-//        NSString *cityName = [thirdArray objectAtIndex:indexPath.row];
-
+        FBCity *aCity = [thirdArray objectAtIndex:indexPath.row];
         
+        FBMayKnowFriendsController *addFriend = [[FBMayKnowFriendsController alloc]init];
+        addFriend.navigationTitle = aCity.cityName;
+        addFriend.isAreaFriend = YES;
+        addFriend.provinceId = [NSString stringWithFormat:@"%d",aCity.provinceId];
+        addFriend.cityId = [NSString stringWithFormat:@"%d",aCity.cityId];
+        [self.navigationController pushViewController:addFriend animated:YES];
     }
     
 }

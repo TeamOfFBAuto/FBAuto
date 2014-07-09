@@ -8,6 +8,7 @@
 
 #import "FBFriend2Cell.h"
 #import "FBFriendModel.h"
+#import "FBCityData.h"
 
 @implementation FBFriend2Cell
 
@@ -26,7 +27,7 @@
 - (void)getCellData:(FBFriendModel *)aModel
 {
     self.nameAndTypeL.text = aModel.buddyname;
-    self.phoneNumAndAddressL.text = [NSString stringWithFormat:@"%@(%@)",aModel.phone,aModel.province];
+    self.phoneNumAndAddressL.text = [NSString stringWithFormat:@"%@(%@)",aModel.phone,[FBCityData cityNameForId:[aModel.province intValue]]];
     [self.iconImageV setImageWithURL:[NSURL URLWithString:aModel.face] placeholderImage:[UIImage imageNamed:@"detail_test"]];
 }
 

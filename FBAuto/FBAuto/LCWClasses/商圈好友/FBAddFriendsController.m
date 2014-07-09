@@ -68,6 +68,7 @@
         case 101:
         {
             FBMayKnowFriendsController *addFriend = [[FBMayKnowFriendsController alloc]init];
+            addFriend.navigationTitle = @"可能认识的人";
             [self.navigationController pushViewController:addFriend animated:YES];
             
         }
