@@ -22,6 +22,7 @@
 		13737C8119652F1700941746 /* detail_test.png in Resources */ = {isa = PBXBuildFile; fileRef = 13737C8019652F1700941746 /* detail_test.png */; };
 		13737C8E1965420000941746 /* PersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13737C8D1965420000941746 /* PersonalViewController.m */; };
 		138074E3196CDFA300AD3D03 /* LCWTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 138074E2196CDFA300AD3D03 /* LCWTools.m */; };
+		138074E6196CEB3F00AD3D03 /* FBFriendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 138074E5196CEB3F00AD3D03 /* FBFriendModel.m */; };
 		138B49F0196552F500B974A5 /* FBFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 138B49EE196552F500B974A5 /* FBFriendCell.m */; };
 		138B49F1196552F500B974A5 /* FBFriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 138B49EF196552F500B974A5 /* FBFriendCell.xib */; };
 		138B4A0619664E9800B974A5 /* FBFriend2Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 138B4A0419664E9800B974A5 /* FBFriend2Cell.m */; };
@@ -342,6 +343,8 @@
 		13737C8D1965420000941746 /* PersonalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalViewController.m; sourceTree = "<group>"; };
 		138074E1196CDFA300AD3D03 /* LCWTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCWTools.h; sourceTree = SOURCE_ROOT; };
 		138074E2196CDFA300AD3D03 /* LCWTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCWTools.m; sourceTree = SOURCE_ROOT; };
+		138074E4196CEB3F00AD3D03 /* FBFriendModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBFriendModel.h; sourceTree = SOURCE_ROOT; };
+		138074E5196CEB3F00AD3D03 /* FBFriendModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBFriendModel.m; sourceTree = SOURCE_ROOT; };
 		138B49ED196552F500B974A5 /* FBFriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBFriendCell.h; sourceTree = "<group>"; };
 		138B49EE196552F500B974A5 /* FBFriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBFriendCell.m; sourceTree = "<group>"; };
 		138B49EF196552F500B974A5 /* FBFriendCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FBFriendCell.xib; sourceTree = "<group>"; };
@@ -820,6 +823,8 @@
 		138B49EC196552CE00B974A5 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				138074E4196CEB3F00AD3D03 /* FBFriendModel.h */,
+				138074E5196CEB3F00AD3D03 /* FBFriendModel.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -2058,6 +2063,7 @@
 				13D5E0C71963DB0300804835 /* QBImagePickerGroupCell.m in Sources */,
 				13D5E0631962A14E00804835 /* Menu_Advanced.m in Sources */,
 				138B4A1219664ED500B974A5 /* FBMayKnowFriendsController.m in Sources */,
+				138074E6196CEB3F00AD3D03 /* FBFriendModel.m in Sources */,
 				13D5E1121965115200804835 /* DetailCell.m in Sources */,
 				E362358519657FA6003B23CC /* GMAPI.m in Sources */,
 				13D5E0C91963DB0300804835 /* QBShowImageDetailViewController.m in Sources */,

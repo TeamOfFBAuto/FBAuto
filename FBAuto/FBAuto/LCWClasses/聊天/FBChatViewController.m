@@ -92,9 +92,6 @@
     xmppServer.messageDelegate = self;
     
     if (![xmppServer connect]) {
-        
-//        [xmppServer disconnect];
-        
         [xmppServer connect];
     }
     

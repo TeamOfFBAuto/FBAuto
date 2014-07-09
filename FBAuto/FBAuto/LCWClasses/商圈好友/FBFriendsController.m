@@ -12,6 +12,7 @@
 #import "FBAddFriendsController.h"
 #import "FBChatViewController.h"
 #import "FBAreaFriensController.h"
+#import "FBFriendModel.h"
 
 @interface FBFriendsController ()
 
@@ -42,6 +43,15 @@
     [self.view addSubview:_table];
     
     _table.tableHeaderView = [self tableHeaderView];
+    
+    [self getFriendlist];
+    
+    LCWTools *tools = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_ADD,[GMAPI getAuthkey],@"2"]];
+    
+    [tools requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"---result %@ erro %@",result,[result objectForKey:@"errinfo"]);
+        }
+    ];
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,6 +59,63 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma - mark 网络请求
+
+- (void)getFriendlist
+{
+    __block typeof (FBFriendsController *)weakSelf = self;
+    
+    LCWTools *tools = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_LIST,[GMAPI getUid]]];
+    
+    [tools requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"result %@ erro %@",result,erro);
+        
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            
+            int erroCode = [[result objectForKey:@"errcode"]intValue];
+            NSString *erroInfo = [result objectForKey:@"errinfo"];
+            
+            if (erroCode != 0) {
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:erroInfo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [alert show];
+                
+                return ;
+            }
+            
+            NSArray *dataInfo = [result objectForKey:@"datainfo"];
+            NSMutableArray *dataArr = [NSMutableArray arrayWithCapacity:dataInfo.count];
+            for (NSDictionary *aDic in dataInfo) {
+                FBFriendModel *aFriend = [[FBFriendModel alloc]initWithDictionary:aDic];
+                [dataArr addObject:aFriend];
+            }
+            
+            [weakSelf groupForFriends:dataArr];
+            
+        }
+    }];
+}
+
+//首字母进行分组
+- (void)groupForFriends:(NSMutableArray *)friendsArr
+{
+    friendsDic = [NSMutableDictionary dictionary];//如： key:A ; value:数组
+    firstLetterArr = [NSMutableArray array];
+    
+    for (FBFriendModel *aModel in friendsArr)
+    {
+        NSString *firstLetter = [aModel.buddyname getFirstLetter];
+        
+        [firstLetterArr addObject:firstLetter];
+        
+        NSMutableArray *groupArr = [NSMutableArray arrayWithArray:[friendsDic objectForKey:firstLetter]];
+        [groupArr addObject:aModel];
+        [friendsDic setObject:groupArr forKey:firstLetter];
+    }
+    
+    [self.table reloadData];
+}
+
 #pragma - mark 创建headerView
 
 - (UIView *)tableHeaderView
@@ -97,19 +164,19 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return @"A";
+    return [firstLetterArr objectAtIndex:section];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 5;
+    return [firstLetterArr count];
 }
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    return _dataArray.count;
-    return 4;
+    NSArray *arr = [friendsDic objectForKey:[firstLetterArr objectAtIndex:section]];
+    return [arr count];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -131,13 +198,15 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    cell.textLabel.text = [_dataArray objectAtIndex:indexPath.row];
-    cell.textLabel.font = [UIFont systemFontOfSize:14];
+    NSArray *arr = [friendsDic objectForKey:[firstLetterArr objectAtIndex:indexPath.section]];
+    FBFriendModel *aModel = [arr objectAtIndex:indexPath.row];
     
     __block typeof(FBFriendsController *)weakSelf = self;
     
-    [cell getCellData:@"hhe" cellBlock:^(NSString *friendInfo) {
+    [cell getCellData:aModel cellBlock:^(NSString *friendInfo) {
+        
         [weakSelf clickToChat];
+        
     }];
     
     return cell;

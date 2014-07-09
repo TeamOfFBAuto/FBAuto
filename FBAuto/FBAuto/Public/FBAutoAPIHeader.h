@@ -91,7 +91,7 @@ alpha:(a)]
 #define FBAUTO_FRIEND_LIST @"http://fbautoapp.fblife.com/index.php?c=interface&a=getbuddy&uid=%@" //用户id
 
 //添加好友
-#define FBAUTO_FRIEDN_ADD @"http://fbautoapp.fblife.com/index.php?c=interface&a=addbuddy&authkey=%@&buddyid=%@" //好友uid
+#define FBAUTO_FRIEND_ADD @"http://fbautoapp.fblife.com/index.php?c=interface&a=addbuddy&authkey=%@&buddyid=%@" //好友uid
 
 //搜索好友
 #define FBAUTO_FRIEND_SEARCH @"http://fbautoapp.fblife.com/index.php?c=interface&a=searchbuddy&authkey=%@&keyword=%@" //关键字

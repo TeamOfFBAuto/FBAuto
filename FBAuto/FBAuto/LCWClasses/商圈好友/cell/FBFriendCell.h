@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+@class FBFriendModel;
 
 typedef void(^ CellBlock) (NSString *friendInfo);
 
 @interface FBFriendCell : UITableViewCell
 {
     CellBlock cellBlock;
+    NSString *chatWithUser;//对话对象
+    NSString *phoneNum;//电话
 }
 
 @property (strong, nonatomic) IBOutlet UIView *bgView;
@@ -25,6 +28,6 @@ typedef void(^ CellBlock) (NSString *friendInfo);
 - (IBAction)clickToDial:(id)sender;//电话
 - (IBAction)clickToChat:(id)sender;
 
-- (void)getCellData:(NSString *)test cellBlock:(CellBlock)aCellBlock;
+- (void)getCellData:(FBFriendModel *)aModel cellBlock:(CellBlock)aCellBlock;
 
 @end

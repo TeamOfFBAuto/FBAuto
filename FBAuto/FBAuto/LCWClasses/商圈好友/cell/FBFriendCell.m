@@ -7,6 +7,8 @@
 //
 
 #import "FBFriendCell.h"
+#import "FBFriendModel.h"
+#import "UIImageView+WebCache.h"
 
 @implementation FBFriendCell
 
@@ -28,21 +30,29 @@
 
 - (IBAction)clickToDial:(id)sender {
     
-    NSString *num = [[NSString alloc] initWithFormat:@"tel://%@",@"18612389982"];
+    NSString *num = [[NSString alloc] initWithFormat:@"tel://%@",phoneNum];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:num]];
     
 }
 - (IBAction)clickToChat:(id)sender {
-    cellBlock(@"okoko");
+    
+    cellBlock(chatWithUser);
 }
 
 /**
  *  赋值
  */
 
-- (void)getCellData:(NSString *)test cellBlock:(CellBlock)aCellBlock
+- (void)getCellData:(FBFriendModel *)aModel cellBlock:(CellBlock)aCellBlock
 {
     cellBlock = aCellBlock;
+    chatWithUser = aModel.phone;
+    phoneNum = aModel.phone;
+    
+    self.nameLabel.text = aModel.buddyname;
+    self.phoneNumLabel.text = aModel.phone;
+    self.addressLabel.text = aModel.province;
+    [self.iconImage setImageWithURL:[NSURL URLWithString:aModel.face] placeholderImage:[UIImage imageNamed:@"detail_test"]];
 }
 
 @end
