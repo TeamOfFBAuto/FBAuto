@@ -21,6 +21,7 @@
 		1336BC2B196B93CC0011B4D9 /* FBChatImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC2A196B93CC0011B4D9 /* FBChatImage.m */; };
 		13737C8119652F1700941746 /* detail_test.png in Resources */ = {isa = PBXBuildFile; fileRef = 13737C8019652F1700941746 /* detail_test.png */; };
 		13737C8E1965420000941746 /* PersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13737C8D1965420000941746 /* PersonalViewController.m */; };
+		138074E3196CDFA300AD3D03 /* LCWTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 138074E2196CDFA300AD3D03 /* LCWTools.m */; };
 		138B49F0196552F500B974A5 /* FBFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 138B49EE196552F500B974A5 /* FBFriendCell.m */; };
 		138B49F1196552F500B974A5 /* FBFriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 138B49EF196552F500B974A5 /* FBFriendCell.xib */; };
 		138B4A0619664E9800B974A5 /* FBFriend2Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 138B4A0419664E9800B974A5 /* FBFriend2Cell.m */; };
@@ -339,6 +340,8 @@
 		13737C8019652F1700941746 /* detail_test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detail_test.png; sourceTree = "<group>"; };
 		13737C8C1965420000941746 /* PersonalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalViewController.h; sourceTree = "<group>"; };
 		13737C8D1965420000941746 /* PersonalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalViewController.m; sourceTree = "<group>"; };
+		138074E1196CDFA300AD3D03 /* LCWTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCWTools.h; sourceTree = SOURCE_ROOT; };
+		138074E2196CDFA300AD3D03 /* LCWTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCWTools.m; sourceTree = SOURCE_ROOT; };
 		138B49ED196552F500B974A5 /* FBFriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBFriendCell.h; sourceTree = "<group>"; };
 		138B49EE196552F500B974A5 /* FBFriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBFriendCell.m; sourceTree = "<group>"; };
 		138B49EF196552F500B974A5 /* FBFriendCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FBFriendCell.xib; sourceTree = "<group>"; };
@@ -1558,6 +1561,8 @@
 		190BFD77195AA9FA0098E0F4 /* LCWAPI */ = {
 			isa = PBXGroup;
 			children = (
+				138074E1196CDFA300AD3D03 /* LCWTools.h */,
+				138074E2196CDFA300AD3D03 /* LCWTools.m */,
 			);
 			path = LCWAPI;
 			sourceTree = "<group>";
@@ -1999,6 +2004,7 @@
 				13D5E0771962B2B000804835 /* UIColor+ConvertColor.m in Sources */,
 				13D5E0601962A14E00804835 /* City.m in Sources */,
 				138B4B111966A51700B974A5 /* SCGIFImageView.m in Sources */,
+				138074E3196CDFA300AD3D03 /* LCWTools.m in Sources */,
 				13D5E117196513AF00804835 /* FBDetail2Controller.m in Sources */,
 				E3FFFCE7196BE19D00596186 /* GfindCarViewController.m in Sources */,
 				13D5E07F1962BD5800804835 /* FBBaseViewController.m in Sources */,
@@ -2139,7 +2145,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -2171,7 +2177,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

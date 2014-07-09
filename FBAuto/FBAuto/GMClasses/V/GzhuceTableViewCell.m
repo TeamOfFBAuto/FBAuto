@@ -280,6 +280,9 @@
         NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
         [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
             
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            NSLog(@"%@ %@",dic,[dic objectForKey:@"errinfo"]);
+            
         }];
         
         NSLog(@"%s",__FUNCTION__);

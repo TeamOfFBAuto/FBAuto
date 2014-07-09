@@ -103,11 +103,11 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        NSLog(@"%@",dic);
+        NSLog(@"%@ %@",dic,[dic objectForKey:@"errinfo"]);
         
         
         
-        if (![dic objectForKey:@"errcode"]) {
+        if ([[dic objectForKey:@"errcode"] intValue] == 0) {
             
             NSDictionary *datainfo = [dic objectForKey:@"datainfo"];
             NSString *userid = [datainfo objectForKey:@"uid"];
@@ -118,6 +118,7 @@
             [[NSUserDefaults standardUserDefaults]setObject:username forKey:USERNAME];
             [[NSUserDefaults standardUserDefaults]setObject:authkey forKey:USERAUTHKEY];
             
+            [[NSUserDefaults standardUserDefaults]synchronize];
             
             [self dismissViewControllerAnimated:YES completion:^{
                 

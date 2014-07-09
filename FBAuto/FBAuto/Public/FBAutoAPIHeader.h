@@ -85,8 +85,25 @@ alpha:(a)]
 //找回密码
 #define FBAUTO_MODIFY_FIND_PASSWORD @"http://fbautoapp.fblife.com/index.php?c=interface&a=resetpass&phone=%@&code=%@&password=%@"
 
+//好友API=================
 
+//好友列表
+#define FBAUTO_FRIEND_LIST @"http://fbautoapp.fblife.com/index.php?c=interface&a=getbuddy&uid=%@" //用户id
 
+//添加好友
+#define FBAUTO_FRIEDN_ADD @"http://fbautoapp.fblife.com/index.php?c=interface&a=addbuddy&authkey=%@&buddyid=%@" //好友uid
+
+//搜索好友
+#define FBAUTO_FRIEND_SEARCH @"http://fbautoapp.fblife.com/index.php?c=interface&a=searchbuddy&authkey=%@&keyword=%@" //关键字
+
+//获取通讯录好友
+#define FBAUTO_FRIEND_ADDRESSBOOK @"http://fbautoapp.fblife.com/index.php?c=interface&a=getphonemember&authkey=%@&phone=%@&rname=%@"  //authkey : 加密的用户信息 phone : 通讯录电话，用逗号隔开 rname : 通讯录人名，用逗号隔开
+
+//按地区获取好友
+#define FBAUTO_FRIEND_AREA @"http://fbautoapp.fblife.com/index.php?c=interface&a=getareabuddy&authkey=%@&province=%@&city=%@"  //province : 省份id，不能为空  city : 城市id，可以为空
+
+//删除好友
+#define FBAUTO_FRIEND_DELETE @"http://fbautoapp.fblife.com/index.php?c=interface&a=delbuddy&authkey=%@&buddyid=%@"//好友uid
 
 
 #endif
