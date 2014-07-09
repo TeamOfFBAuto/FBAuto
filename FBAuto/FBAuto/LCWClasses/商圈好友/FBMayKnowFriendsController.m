@@ -58,10 +58,12 @@
 
 - (void)getFriendlistWithAreaId:(NSString *)cityId provinceId:(NSString *)provinceId
 {
+    NSLog(@"provinceId %@",provinceId);
+    
     __block typeof (FBMayKnowFriendsController *)weakSelf = self;
     
     
-    LCWTools *tools = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_AREA,[GMAPI getUid],provinceId,cityId]];
+    LCWTools *tools = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_AREA,[GMAPI getAuthkey],provinceId,cityId]];
     
     [tools requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@ erro %@",result,[result objectForKey:@"errinfo"]);
@@ -89,6 +91,39 @@
         }
     }];
 }
+
+/**
+ *  添加好友
+ *
+ *  @param friendId userId
+ */
+- (void)addFriend:(NSString *)friendId
+{
+    NSLog(@"provinceId %@",friendId);
+    
+//    __block typeof (FBMayKnowFriendsController *)weakSelf = self;
+    
+    
+    LCWTools *tools = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_ADD,[GMAPI getAuthkey],friendId]];
+    
+    [tools requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"result %@ erro %@",result,[result objectForKey:@"errinfo"]);
+        
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            
+            int erroCode = [[result objectForKey:@"errcode"]intValue];
+            NSString *erroInfo = [result objectForKey:@"errinfo"];
+            
+            if (erroCode != 0) {
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:erroInfo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [alert show];
+                
+                return ;
+            }
+        }
+    }];
+}
+
 
 - (void)reloadData:(NSArray *)arr
 {
@@ -139,19 +174,22 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //    NSString *select = [_dataArray objectAtIndex:indexPath.row];
-    //    self.selectLabel.text = select;
-    //    [self clickToBack:nil];
+    FBFriendModel *aModel = [_dataArray objectAtIndex:indexPath.row];
+    
+    NSString *message = [NSString stringWithFormat:@"是否添加%@为好友",aModel.buddyname];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:message delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"添加好友", nil];
+    alert.tag = [aModel.uid intValue] + 100;
+    
+    [alert show];
 }
 
-//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-//{
-//    return [UIView new];
-//}
-//
-//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-//{
-//    return 0.01f;
-//}
+#pragma - mark UIAlertViewDelegate <NSObject>
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        [self addFriend:[NSString stringWithFormat:@"%ld",alertView.tag - 100]];
+    }
+}
 
 @end

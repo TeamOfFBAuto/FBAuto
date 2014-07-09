@@ -588,7 +588,7 @@
     
     //是当前聊天用户才刷新页面
     
-    if ([sender hasPrefix:self.chatWithUser]) {
+    if (sender && [sender hasPrefix:(self.chatWithUser ? self.chatWithUser : @"")]) {
         [messages addObject:messageDic];
         [self.table reloadData];
         
