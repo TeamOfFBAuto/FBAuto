@@ -32,6 +32,8 @@
     _tableiView.delegate = self;
     _tableiView.dataSource = self;
     
+    _tableiView.separatorColor = [UIColor whiteColor];
+    
     [self.view addSubview:_tableiView];
     
     
@@ -91,6 +93,9 @@
     
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    cell.separatorInset = UIEdgeInsetsZero;
+    
     
     return cell;
 }

@@ -13,6 +13,10 @@
 #import "GPersonTableViewCell.h"//自定义单元格
 #import "GChangePwViewController.h"//修改密码
 #import "GfindCarViewController.h"//寻车界面
+#import "GpersonTZViewController.h"//通知
+#import "GMessageSViewController.h"//消息设置
+#import "GmarkViewController.h"//我的收藏
+
 
 @interface PersonalViewController ()
 
@@ -176,16 +180,22 @@
         }else if (index == 1){//我的资料
             
         }else if (index == 2){//我的车源
+            GfindCarViewController *mm = [[GfindCarViewController alloc]init];
+            mm.gtype = 2;
+            [self.navigationController pushViewController:mm animated:YES];
             
         }else if (index == 3){//我的寻车
-            [self.navigationController pushViewController:[[GfindCarViewController alloc]init] animated:YES];
+            GfindCarViewController *gg = [[GfindCarViewController alloc]init];
+            gg.gtype = 3;
+            [self.navigationController pushViewController:gg animated:YES];
             
         }else if (index == 4){//我的收藏
+            [self.navigationController pushViewController:[[GmarkViewController alloc]init] animated:YES];
             
         }else if (index == 6){//联系我们
             
         }else if (index == 7){//消息设置
-            
+            [self.navigationController pushViewController:[[GMessageSViewController alloc]init]animated:YES];
         }
         
         
@@ -212,7 +222,7 @@
     }else if (sender.tag == 51){//消息
         
     }else if(sender.tag == 52){//通知
-        
+        [self.navigationController pushViewController:[[GpersonTZViewController alloc]init] animated:YES];
     }
     
 }

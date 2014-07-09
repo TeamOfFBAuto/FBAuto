@@ -6,6 +6,7 @@
 //  Copyright (c) 2014年 szk. All rights reserved.
 //
 
+//注册时的用户对象类
 #import <Foundation/Foundation.h>
 
 @interface GuserZhuce : NSObject

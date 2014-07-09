@@ -298,6 +298,12 @@
 		190BFD99195ABA2D0098E0F4 /* testV@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 190BFD98195ABA2D0098E0F4 /* testV@2x.png */; };
 		190BFE21195C362F0098E0F4 /* SzkLoadData.m in Sources */ = {isa = PBXBuildFile; fileRef = 190BFE20195C362F0098E0F4 /* SzkLoadData.m */; };
 		E3385D2A196BBAED008061FA /* GChangePwViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3385D29196BBAED008061FA /* GChangePwViewController.m */; };
+		E33ECB05196D211200DDD72D /* GpersonTZViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E33ECB04196D211200DDD72D /* GpersonTZViewController.m */; };
+		E33ECB08196D230A00DDD72D /* GptzTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E33ECB07196D230A00DDD72D /* GptzTableViewCell.m */; };
+		E33ECB0C196D25CD00DDD72D /* GTimeSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = E33ECB0B196D25CD00DDD72D /* GTimeSwitch.m */; };
+		E33ECB0F196D279B00DDD72D /* GMessageSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E33ECB0E196D279B00DDD72D /* GMessageSViewController.m */; };
+		E33ECB53196D4BF700DDD72D /* GmarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E33ECB52196D4BF700DDD72D /* GmarkViewController.m */; };
+		E33ECB56196D4D1600DDD72D /* GmarkTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E33ECB55196D4D1600DDD72D /* GmarkTableViewCell.m */; };
 		E35871ED196A946F0002813C /* GPersonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E35871EC196A946F0002813C /* GPersonTableViewCell.m */; };
 		E35871F6196AA63E0002813C /* duihuahuang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E35871F4196AA63E0002813C /* duihuahuang@2x.png */; };
 		E35871F7196AA63E0002813C /* duihuahuang1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E35871F5196AA63E0002813C /* duihuahuang1@2x.png */; };
@@ -696,6 +702,18 @@
 		2BE98169392244209FCDCF04 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3385D28196BBAED008061FA /* GChangePwViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GChangePwViewController.h; sourceTree = "<group>"; };
 		E3385D29196BBAED008061FA /* GChangePwViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GChangePwViewController.m; sourceTree = "<group>"; };
+		E33ECB03196D211200DDD72D /* GpersonTZViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GpersonTZViewController.h; sourceTree = "<group>"; };
+		E33ECB04196D211200DDD72D /* GpersonTZViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GpersonTZViewController.m; sourceTree = "<group>"; };
+		E33ECB06196D230A00DDD72D /* GptzTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GptzTableViewCell.h; sourceTree = "<group>"; };
+		E33ECB07196D230A00DDD72D /* GptzTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GptzTableViewCell.m; sourceTree = "<group>"; };
+		E33ECB0A196D25CD00DDD72D /* GTimeSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTimeSwitch.h; sourceTree = "<group>"; };
+		E33ECB0B196D25CD00DDD72D /* GTimeSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTimeSwitch.m; sourceTree = "<group>"; };
+		E33ECB0D196D279B00DDD72D /* GMessageSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMessageSViewController.h; sourceTree = "<group>"; };
+		E33ECB0E196D279B00DDD72D /* GMessageSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMessageSViewController.m; sourceTree = "<group>"; };
+		E33ECB51196D4BF700DDD72D /* GmarkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmarkViewController.h; sourceTree = "<group>"; };
+		E33ECB52196D4BF700DDD72D /* GmarkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmarkViewController.m; sourceTree = "<group>"; };
+		E33ECB54196D4D1600DDD72D /* GmarkTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmarkTableViewCell.h; sourceTree = "<group>"; };
+		E33ECB55196D4D1600DDD72D /* GmarkTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmarkTableViewCell.m; sourceTree = "<group>"; };
 		E35871EB196A946F0002813C /* GPersonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPersonTableViewCell.h; sourceTree = "<group>"; };
 		E35871EC196A946F0002813C /* GPersonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPersonTableViewCell.m; sourceTree = "<group>"; };
 		E35871F4196AA63E0002813C /* duihuahuang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "duihuahuang@2x.png"; sourceTree = "<group>"; };
@@ -1642,9 +1660,19 @@
 			path = LoginC;
 			sourceTree = "<group>";
 		};
+		E33ECB09196D25AE00DDD72D /* GUtils */ = {
+			isa = PBXGroup;
+			children = (
+				E33ECB0A196D25CD00DDD72D /* GTimeSwitch.h */,
+				E33ECB0B196D25CD00DDD72D /* GTimeSwitch.m */,
+			);
+			path = GUtils;
+			sourceTree = "<group>";
+		};
 		E362356B19657588003B23CC /* GMClasses */ = {
 			isa = PBXGroup;
 			children = (
+				E33ECB09196D25AE00DDD72D /* GUtils */,
 				E362356C19657588003B23CC /* C */,
 				E362357319657588003B23CC /* M */,
 				E362357719657588003B23CC /* V */,
@@ -1665,6 +1693,12 @@
 				E3385D29196BBAED008061FA /* GChangePwViewController.m */,
 				E3FFFCE5196BE19D00596186 /* GfindCarViewController.h */,
 				E3FFFCE6196BE19D00596186 /* GfindCarViewController.m */,
+				E33ECB03196D211200DDD72D /* GpersonTZViewController.h */,
+				E33ECB04196D211200DDD72D /* GpersonTZViewController.m */,
+				E33ECB0D196D279B00DDD72D /* GMessageSViewController.h */,
+				E33ECB0E196D279B00DDD72D /* GMessageSViewController.m */,
+				E33ECB51196D4BF700DDD72D /* GmarkViewController.h */,
+				E33ECB52196D4BF700DDD72D /* GmarkViewController.m */,
 				E362358319657FA6003B23CC /* GMAPI.h */,
 				E362358419657FA6003B23CC /* GMAPI.m */,
 			);
@@ -1692,6 +1726,10 @@
 				E35871EC196A946F0002813C /* GPersonTableViewCell.m */,
 				E3FFFCE8196BE28F00596186 /* GfindCarTableViewCell.h */,
 				E3FFFCE9196BE28F00596186 /* GfindCarTableViewCell.m */,
+				E33ECB06196D230A00DDD72D /* GptzTableViewCell.h */,
+				E33ECB07196D230A00DDD72D /* GptzTableViewCell.m */,
+				E33ECB54196D4D1600DDD72D /* GmarkTableViewCell.h */,
+				E33ECB55196D4D1600DDD72D /* GmarkTableViewCell.m */,
 			);
 			path = V;
 			sourceTree = "<group>";
@@ -2033,6 +2071,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				138B4A1119664ED500B974A5 /* FBAddFriendsController.m in Sources */,
+				E33ECB08196D230A00DDD72D /* GptzTableViewCell.m in Sources */,
 				E362357D19657588003B23CC /* GloginViewController.m in Sources */,
 				138B4A1A19667E4C00B974A5 /* FBChatViewController.m in Sources */,
 				138B4A0A19664EC100B974A5 /* Section_Button.m in Sources */,
@@ -2057,7 +2096,9 @@
 				1336BC24196B91F70011B4D9 /* NSString+Emoji.m in Sources */,
 				13737C8E1965420000941746 /* PersonalViewController.m in Sources */,
 				13D5E0611962A14E00804835 /* MenuModel.m in Sources */,
+				E33ECB05196D211200DDD72D /* GpersonTZViewController.m in Sources */,
 				1336BC13196B8A4F0011B4D9 /* Room.m in Sources */,
+				E33ECB0C196D25CD00DDD72D /* GTimeSwitch.m in Sources */,
 				13D5E05D1962A14E00804835 /* MenuCell.m in Sources */,
 				13D5E0881963AAF100804835 /* PhotoImageView.m in Sources */,
 				138B4B141966A65E00B974A5 /* MarkupParser.m in Sources */,
@@ -2085,6 +2126,7 @@
 				138B4A2D1966945F00B974A5 /* RTLabel.m in Sources */,
 				13D5E0C11963DB0300804835 /* QBAssetCollectionViewController.m in Sources */,
 				E362358219657588003B23CC /* GzhuceTableViewCell.m in Sources */,
+				E33ECB53196D4BF700DDD72D /* GmarkViewController.m in Sources */,
 				13D5E0F61963F70100804835 /* SendCarParamsController.m in Sources */,
 				190BFD54195AA0FB0098E0F4 /* FBAuto.xcdatamodeld in Sources */,
 				138074F0196D3DA100AD3D03 /* DataBase.m in Sources */,
@@ -2100,6 +2142,7 @@
 				13D5E0C71963DB0300804835 /* QBImagePickerGroupCell.m in Sources */,
 				13D5E0631962A14E00804835 /* Menu_Advanced.m in Sources */,
 				138B4A1219664ED500B974A5 /* FBMayKnowFriendsController.m in Sources */,
+				E33ECB56196D4D1600DDD72D /* GmarkTableViewCell.m in Sources */,
 				138074E6196CEB3F00AD3D03 /* FBFriendModel.m in Sources */,
 				13D5E1121965115200804835 /* DetailCell.m in Sources */,
 				E362358519657FA6003B23CC /* GMAPI.m in Sources */,
@@ -2108,6 +2151,7 @@
 				138074F3196D3E1000AD3D03 /* FBCityData.m in Sources */,
 				13D5E0DB1963DB9800804835 /* FullyLoaded.m in Sources */,
 				138B4A30196698AE00B974A5 /* ZSNApi.m in Sources */,
+				E33ECB0F196D279B00DDD72D /* GMessageSViewController.m in Sources */,
 				190BFD85195AAD800098E0F4 /* FindCarViewController.m in Sources */,
 				1336BC09196A8CE70011B4D9 /* FBAreaFriensController.m in Sources */,
 				13D5E0731962A7CA00804835 /* FBActionSheet.m in Sources */,

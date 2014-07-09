@@ -21,6 +21,8 @@
 
 @property(nonatomic,strong)NSIndexPath *flagIndexPath;//用于标记有菜单的cell
 
+@property(nonatomic,assign)int gtype;//寻车：3         车源：2
+
 
 
 @end
