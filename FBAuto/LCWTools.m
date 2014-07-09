@@ -23,7 +23,7 @@
     return dataBlock;
 }
 
-- (id)initWithUrl:(NSString *)url
+- (id)initWithUrl:(NSString *)url 
 {
     self = [super init];
     if (self) {

@@ -46,12 +46,12 @@
     
     [self getFriendlist];
     
-    LCWTools *tools = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_ADD,[GMAPI getAuthkey],@"2"]];
     
-    [tools requestCompletion:^(NSDictionary *result, NSError *erro) {
-        NSLog(@"---result %@ erro %@",result,[result objectForKey:@"errinfo"]);
-        }
-    ];
+//    LCWTools *tools = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_ADD,[GMAPI getAuthkey],@"1"]];
+//    [tools requestCompletion:^(NSDictionary *result, NSError *erro) {
+//        NSLog(@"---result %@ erro %@",result,[result objectForKey:@"errinfo"]);
+//        }
+//    ];
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,6 +65,7 @@
 - (void)getFriendlist
 {
     __block typeof (FBFriendsController *)weakSelf = self;
+    
     
     LCWTools *tools = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_LIST,[GMAPI getUid]]];
     
