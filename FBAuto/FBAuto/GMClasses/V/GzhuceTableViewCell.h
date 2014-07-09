@@ -52,6 +52,8 @@ typedef void (^chooseAreaBlock)();//选择地区
 @property(nonatomic,assign)GzhuceViewController *delegate;
 
 
+
+
 //block
 @property(nonatomic,copy)tfBlock tfBlock;
 @property(nonatomic,copy)cellBlock cellBlock;
