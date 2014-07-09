@@ -33,7 +33,7 @@
    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    [defaults setObject:@"test3" forKey:XMPP_USERID];
+    [defaults setObject:@"test2" forKey:XMPP_USERID];
     [defaults setObject:@"123456" forKey:XMPP_PASS];
     [defaults setObject:@"60.18.147.4" forKey:XMPP_SERVER];
     [defaults synchronize];
