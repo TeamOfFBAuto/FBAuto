@@ -108,6 +108,17 @@
         
         
         if (![dic objectForKey:@"errcode"]) {
+            
+            NSDictionary *datainfo = [dic objectForKey:@"datainfo"];
+            NSString *userid = [datainfo objectForKey:@"uid"];
+            NSString *username = [datainfo objectForKey:@"name"];
+            NSString *authkey = [datainfo objectForKey:@"authkey"];
+            
+            [[NSUserDefaults standardUserDefaults]setObject:userid forKey:USERID];
+            [[NSUserDefaults standardUserDefaults]setObject:username forKey:USERNAME];
+            [[NSUserDefaults standardUserDefaults]setObject:authkey forKey:USERAUTHKEY];
+            
+            
             [self dismissViewControllerAnimated:YES completion:^{
                 
             }];
