@@ -16,6 +16,7 @@
 #import "GpersonTZViewController.h"//通知
 #import "GMessageSViewController.h"//消息设置
 #import "GmarkViewController.h"//我的收藏
+#import "GperInfoViewController.h"//我的资料
 
 
 @interface PersonalViewController ()
@@ -59,9 +60,16 @@
     self.nameLabel1.font = [UIFont systemFontOfSize:13];
     [self.view addSubview:self.nameLabel1];
     
+    
+    
+    NSArray *titileArray = @[@"商圈",@"消息",@"通知"];
+    
     //商圈 消息 通知
     for (int i = 0; i<3; i++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn setTitle:titileArray[i] forState:UIControlStateNormal];
+        btn.titleLabel.font = [UIFont systemFontOfSize:13];
+        [btn setTitleEdgeInsets:UIEdgeInsetsMake(8, 43, 8, 22)];
         btn.frame = CGRectMake(10+i*105, CGRectGetMaxY(self.userFaceImv.frame)+14, 91, 30);
         btn.backgroundColor = [UIColor orangeColor];
         btn.layer.cornerRadius = 4;
@@ -178,6 +186,7 @@
         if (index == 5) {//修改密码
             [self.navigationController pushViewController:[[GChangePwViewController alloc]init] animated:YES];
         }else if (index == 1){//我的资料
+            [self.navigationController pushViewController:[[GperInfoViewController alloc]init] animated:YES];
             
         }else if (index == 2){//我的车源
             GfindCarViewController *mm = [[GfindCarViewController alloc]init];

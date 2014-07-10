@@ -53,6 +53,9 @@
     return 60;
 }
 
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 20;
+}
 
 
 

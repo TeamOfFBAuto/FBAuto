@@ -304,6 +304,8 @@
 		E33ECB0F196D279B00DDD72D /* GMessageSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E33ECB0E196D279B00DDD72D /* GMessageSViewController.m */; };
 		E33ECB53196D4BF700DDD72D /* GmarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E33ECB52196D4BF700DDD72D /* GmarkViewController.m */; };
 		E33ECB56196D4D1600DDD72D /* GmarkTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E33ECB55196D4D1600DDD72D /* GmarkTableViewCell.m */; };
+		E34B749E196E2E5A00451C65 /* GperInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E34B749D196E2E5A00451C65 /* GperInfoViewController.m */; };
+		E34B74A1196E341A00451C65 /* GperInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E34B74A0196E341A00451C65 /* GperInfoTableViewCell.m */; };
 		E35871ED196A946F0002813C /* GPersonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E35871EC196A946F0002813C /* GPersonTableViewCell.m */; };
 		E35871F6196AA63E0002813C /* duihuahuang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E35871F4196AA63E0002813C /* duihuahuang@2x.png */; };
 		E35871F7196AA63E0002813C /* duihuahuang1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E35871F5196AA63E0002813C /* duihuahuang1@2x.png */; };
@@ -714,6 +716,10 @@
 		E33ECB52196D4BF700DDD72D /* GmarkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmarkViewController.m; sourceTree = "<group>"; };
 		E33ECB54196D4D1600DDD72D /* GmarkTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmarkTableViewCell.h; sourceTree = "<group>"; };
 		E33ECB55196D4D1600DDD72D /* GmarkTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmarkTableViewCell.m; sourceTree = "<group>"; };
+		E34B749C196E2E5A00451C65 /* GperInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GperInfoViewController.h; sourceTree = "<group>"; };
+		E34B749D196E2E5A00451C65 /* GperInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GperInfoViewController.m; sourceTree = "<group>"; };
+		E34B749F196E341A00451C65 /* GperInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GperInfoTableViewCell.h; sourceTree = "<group>"; };
+		E34B74A0196E341A00451C65 /* GperInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GperInfoTableViewCell.m; sourceTree = "<group>"; };
 		E35871EB196A946F0002813C /* GPersonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPersonTableViewCell.h; sourceTree = "<group>"; };
 		E35871EC196A946F0002813C /* GPersonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPersonTableViewCell.m; sourceTree = "<group>"; };
 		E35871F4196AA63E0002813C /* duihuahuang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "duihuahuang@2x.png"; sourceTree = "<group>"; };
@@ -1699,6 +1705,8 @@
 				E33ECB0E196D279B00DDD72D /* GMessageSViewController.m */,
 				E33ECB51196D4BF700DDD72D /* GmarkViewController.h */,
 				E33ECB52196D4BF700DDD72D /* GmarkViewController.m */,
+				E34B749C196E2E5A00451C65 /* GperInfoViewController.h */,
+				E34B749D196E2E5A00451C65 /* GperInfoViewController.m */,
 				E362358319657FA6003B23CC /* GMAPI.h */,
 				E362358419657FA6003B23CC /* GMAPI.m */,
 			);
@@ -1730,6 +1738,8 @@
 				E33ECB07196D230A00DDD72D /* GptzTableViewCell.m */,
 				E33ECB54196D4D1600DDD72D /* GmarkTableViewCell.h */,
 				E33ECB55196D4D1600DDD72D /* GmarkTableViewCell.m */,
+				E34B749F196E341A00451C65 /* GperInfoTableViewCell.h */,
+				E34B74A0196E341A00451C65 /* GperInfoTableViewCell.m */,
 			);
 			path = V;
 			sourceTree = "<group>";
@@ -2117,6 +2127,7 @@
 				13D5E10E1965109700804835 /* FBDetailController.m in Sources */,
 				13D5E0FF196406AA00804835 /* UIView+Frame.m in Sources */,
 				1336BC23196B91F70011B4D9 /* CWInputView.m in Sources */,
+				E34B74A1196E341A00451C65 /* GperInfoTableViewCell.m in Sources */,
 				13D5E1061964F2E700804835 /* AutoDetail.m in Sources */,
 				13D5E0DA1963DB9800804835 /* AsyncImageView.m in Sources */,
 				138B49F0196552F500B974A5 /* FBFriendCell.m in Sources */,
@@ -2140,6 +2151,7 @@
 				1336BC28196B921C0011B4D9 /* XMPPStatics.m in Sources */,
 				E362358019657588003B23CC /* GuserZhuce.m in Sources */,
 				13D5E0C71963DB0300804835 /* QBImagePickerGroupCell.m in Sources */,
+				E34B749E196E2E5A00451C65 /* GperInfoViewController.m in Sources */,
 				13D5E0631962A14E00804835 /* Menu_Advanced.m in Sources */,
 				138B4A1219664ED500B974A5 /* FBMayKnowFriendsController.m in Sources */,
 				E33ECB56196D4D1600DDD72D /* GmarkTableViewCell.m in Sources */,
