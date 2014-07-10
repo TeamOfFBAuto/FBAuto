@@ -16,6 +16,8 @@
 #import "XMPPMessageArchivingCoreDataStorage.h"
 #import "XMPPMessageArchiving.h"
 
+#import "XMPPSASLAuthentication.h"
+
 
 //聊天室相关
 typedef void(^ roomBackBlock)(id);
@@ -56,6 +58,7 @@ typedef void(^ friendAction) (id);
 @property (nonatomic,retain)XMPPReconnect *xmppReconnect;
 @property (nonatomic,retain)XMPPMessageArchivingCoreDataStorage *xmppMessageArchivingCoreDataStorage;
 @property (nonatomic,retain)XMPPMessageArchiving *xmppMessageArchivingModule;
+@property (nonatomic,retain)XMPPPlainAuthentication *xmppPlainAutentication;
 
 @property (nonatomic,assign)id<chatDelegate>chatDelegate;
 @property (nonatomic,assign)id<messageDelegate>messageDelegate;

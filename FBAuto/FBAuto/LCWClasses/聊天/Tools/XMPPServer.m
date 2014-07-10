@@ -8,6 +8,7 @@
 
 #import "XMPPServer.h"
 
+
 /**
  *  先建立连接，然后进行秘密验证，验证通过后上线
  */
@@ -67,6 +68,10 @@
     [_xmppMessageArchivingModule setClientSideMessageArchivingOnly:YES];
     [_xmppMessageArchivingModule activate:_xmppStream];
     [_xmppMessageArchivingModule addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    
+    //验证密码使用
+    
+    self.xmppPlainAutentication = [[XMPPPlainAuthentication alloc]initWithStream:[self xmppStream] password:PWD];
 }
 
 //是否连接
@@ -176,7 +181,13 @@
     isOpen = YES;
     NSError *error = nil;
     //验证密码
-    [[self xmppStream] authenticateWithPassword:PWD error:&error];
+//    [[self xmppStream] authenticateWithPassword:PWD error:&error];
+    
+    //验证最好使用以下方法,上述方法可能被弃用
+    
+    [[self xmppStream]authenticate:_xmppPlainAutentication error:nil];
+    
+    NSLog(@"authenticate Erro %@",error);
 }
 
 //验证通过
@@ -472,11 +483,14 @@
 
 - (void)xmppReconnect:(XMPPReconnect *)sender didDetectAccidentalDisconnect:(SCNetworkReachabilityFlags)connectionFlags
 {
-    
+    NSLog(@"didDetectAccidentalDisconnect %d",connectionFlags);
 }
 
 - (BOOL)xmppReconnect:(XMPPReconnect *)sender shouldAttemptAutoReconnect:(SCNetworkReachabilityFlags)reachabilityFlags
 {
+    
+    NSLog(@"shouldAttemptAutoReconnect %d",reachabilityFlags);
+    
     return YES;
 }
 

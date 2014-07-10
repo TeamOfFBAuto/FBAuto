@@ -13,6 +13,7 @@
 #import "NSString+PinYin.h"//获取首字母
 #import "UIColor+ConvertColor.h"//16进制颜色转换
 #import "UIImageView+WebCache.h"
+#import "EGORefreshTableHeaderView.h"//下拉刷新
 
 #import "GMAPI.h"//GODLIKE
 #import "SzkAPI.h"
