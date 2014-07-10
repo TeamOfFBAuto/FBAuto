@@ -54,9 +54,9 @@
 //        }
 //    ];
     
-    //删除好友
-    
-//    LCWTools *tool = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_DELETE,[GMAPI getAuthkey],@"1"]];
+//    //删除好友
+//    
+//    LCWTools *tool = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_DELETE,[GMAPI getAuthkey],@"1"]isPost:NO postData:nil];
 //    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
 //        NSLog(@"---result %@ erro %@",result,[result objectForKey:@"errinfo"]);
 //    }];
@@ -75,7 +75,7 @@
     __block typeof (FBFriendsController *)weakSelf = self;
     
     
-    LCWTools *tools = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_LIST,[GMAPI getUid]]];
+    LCWTools *tools = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_LIST,[GMAPI getUid]]isPost:NO postData:nil];
     
     [tools requestCompletion:^(NSDictionary *result, NSError *erro) {
         NSLog(@"result %@ erro %@",result,erro);

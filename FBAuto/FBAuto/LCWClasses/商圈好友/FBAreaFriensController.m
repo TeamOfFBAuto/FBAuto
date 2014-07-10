@@ -188,6 +188,11 @@
         cityName = @"全市";
     }
     
+    if ([provinceName hasSuffix:@"行政区"]) {
+        
+        cityName = @"全区";
+    }
+    
     FBCity *newCity = [[FBCity alloc]initSubcityWithName:cityName cityId:0 provinceId:0];
     newCity.provinceId = provinceId;
     
@@ -367,6 +372,5 @@
 {
     return 0.01f;
 }
-
 
 @end

@@ -29,6 +29,7 @@
 		138074F3196D3E1000AD3D03 /* FBCityData.m in Sources */ = {isa = PBXBuildFile; fileRef = 138074F2196D3E1000AD3D03 /* FBCityData.m */; };
 		138074F6196D3E8200AD3D03 /* FBCity.m in Sources */ = {isa = PBXBuildFile; fileRef = 138074F5196D3E8200AD3D03 /* FBCity.m */; };
 		138074F8196D47FD00AD3D03 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 138074F7196D47FD00AD3D03 /* libsqlite3.0.dylib */; };
+		138074FB196E317700AD3D03 /* SzkAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 138074FA196E317700AD3D03 /* SzkAPI.m */; };
 		138B49F0196552F500B974A5 /* FBFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 138B49EE196552F500B974A5 /* FBFriendCell.m */; };
 		138B49F1196552F500B974A5 /* FBFriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 138B49EF196552F500B974A5 /* FBFriendCell.xib */; };
 		138B4A0619664E9800B974A5 /* FBFriend2Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 138B4A0419664E9800B974A5 /* FBFriend2Cell.m */; };
@@ -368,6 +369,8 @@
 		138074F4196D3E8200AD3D03 /* FBCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBCity.h; sourceTree = "<group>"; };
 		138074F5196D3E8200AD3D03 /* FBCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBCity.m; sourceTree = "<group>"; };
 		138074F7196D47FD00AD3D03 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		138074F9196E317700AD3D03 /* SzkAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SzkAPI.h; sourceTree = "<group>"; };
+		138074FA196E317700AD3D03 /* SzkAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SzkAPI.m; sourceTree = "<group>"; };
 		138B49ED196552F500B974A5 /* FBFriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBFriendCell.h; sourceTree = "<group>"; };
 		138B49EE196552F500B974A5 /* FBFriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBFriendCell.m; sourceTree = "<group>"; };
 		138B49EF196552F500B974A5 /* FBFriendCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FBFriendCell.xib; sourceTree = "<group>"; };
@@ -1614,6 +1617,8 @@
 		190BFD76195AA9D70098E0F4 /* SZKAPI */ = {
 			isa = PBXGroup;
 			children = (
+				138074F9196E317700AD3D03 /* SzkAPI.h */,
+				138074FA196E317700AD3D03 /* SzkAPI.m */,
 				190BFE1F195C362F0098E0F4 /* SzkLoadData.h */,
 				190BFE20195C362F0098E0F4 /* SzkLoadData.m */,
 			);
@@ -2090,6 +2095,7 @@
 				E362357C19657588003B23CC /* GfindPasswViewController.m in Sources */,
 				13D5DF7E19615A3500804835 /* NSString+PinYin.m in Sources */,
 				13D5E0621962A14E00804835 /* FBSearchView.m in Sources */,
+				138074FB196E317700AD3D03 /* SzkAPI.m in Sources */,
 				13D5E0771962B2B000804835 /* UIColor+ConvertColor.m in Sources */,
 				13D5E0601962A14E00804835 /* City.m in Sources */,
 				138B4B111966A51700B974A5 /* SCGIFImageView.m in Sources */,

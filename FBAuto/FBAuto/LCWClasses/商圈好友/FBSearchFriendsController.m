@@ -75,7 +75,7 @@
 
 - (void)searchFriendWithKeyword:(NSString *)keyWord
 {
-    LCWTools *tools = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_SEARCH,[GMAPI getAuthkey],keyWord]];
+    LCWTools *tools = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_SEARCH,[GMAPI getAuthkey],keyWord] isPost:NO postData:nil];
     
     __block typeof (FBSearchFriendsController *)weakSelf = self;
     

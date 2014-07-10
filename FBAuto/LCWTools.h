@@ -14,13 +14,27 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 {
     urlRequestBlock urlBlock;
     NSString *requestUrl;
+    NSData *requestData;
+    BOOL isPostRequest;//是否是post请求
 }
 + (id)shareInstance;
 
-- (id)initWithUrl:(NSString *)url;
 
-- (void)requestWithUrl:(NSString *)url completion:(void(^)(NSDictionary *result,NSError *erro))completionBlock;
-- (void)requestCompletion:(void(^)(NSDictionary *result,NSError *erro))completionBlock;
+/**
+ *  网络请求
+ */
+- (id)initWithUrl:(NSString *)url isPost:(BOOL)isPost postData:(NSData *)postData;//初始化请求
+
+- (void)requestCompletion:(void(^)(NSDictionary *result,NSError *erro))completionBlock;//处理请求结果
+
+/**
+ *  验证 邮箱、电话等
+ */
+
++ (BOOL)isValidateEmail:(NSString *)email;
++ (BOOL)isValidateName:(NSString *)userName;
++ (BOOL)isValidatePwd:(NSString *)pwdString;
++ (BOOL)isValidateMobile:(NSString *)mobileNum;
 
 
 @end

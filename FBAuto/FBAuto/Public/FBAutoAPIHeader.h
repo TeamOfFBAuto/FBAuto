@@ -15,6 +15,7 @@
 #import "UIImageView+WebCache.h"
 
 #import "GMAPI.h"//GODLIKE
+#import "SzkAPI.h"
 
 
 //保存用户信息

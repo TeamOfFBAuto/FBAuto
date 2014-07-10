@@ -187,7 +187,31 @@
 
 //三级table
 
-- (void)reloadThirdTableData:(NSArray *)dataArr
+//- (void)reloadThirdTableData:(NSArray *)dataArr
+//{
+//    
+//    if (thirdTable == nil) {
+//        
+//        thirdTable = [[UITableView alloc]initWithFrame:CGRectMake(320, table.top, 158, sumHeight) style:UITableViewStylePlain];
+//        thirdTable.delegate = self;
+//        thirdTable.dataSource = self;
+//        [self addSubview:thirdTable];
+//        
+//        [UIView animateWithDuration:0.2 animations:^{
+//            CGRect aFrame = thirdTable.frame;
+//            aFrame.origin.x -= 158;
+//            thirdTable.frame = aFrame;
+//        }];
+//        
+//    }
+//    
+//    thirdArray = dataArr;
+//    [thirdTable reloadData];
+//}
+
+//三级table
+
+- (void)reloadThirdTableData:(NSArray *)dataArr provinceName:(NSString *)provinceName provinceId:(int)provinceId
 {
     
     if (thirdTable == nil) {
@@ -205,9 +229,27 @@
         
     }
     
-    thirdArray = dataArr;
+    NSString *cityName = @"全省";
+    if ([provinceName hasSuffix:@"市"]) {
+        
+        cityName = @"全市";
+    }
+    
+    if ([provinceName hasSuffix:@"行政区"]) {
+        
+        cityName = @"全区";
+    }
+    
+    FBCity *newCity = [[FBCity alloc]initSubcityWithName:cityName cityId:0 provinceId:0];
+    newCity.provinceId = provinceId;
+    
+    NSMutableArray *newArr = [NSMutableArray arrayWithObject:newCity];
+    [newArr addObjectsFromArray:dataArr];
+    
+    thirdArray = newArr;
     [thirdTable reloadData];
 }
+
 
 #pragma - mark 控制颜色相关table
 
@@ -429,7 +471,7 @@
         
         FBCity *aCity = [subCityArr objectAtIndex:indexPath.row];
         
-        [self reloadThirdTableData:[FBCityData getSubCityWithProvinceId:aCity.cityId]];
+        [self reloadThirdTableData:[FBCityData getSubCityWithProvinceId:aCity.cityId] provinceName:aCity.cityName provinceId:aCity.provinceId];
         
     }else if (tableView == thirdTable)
     {
