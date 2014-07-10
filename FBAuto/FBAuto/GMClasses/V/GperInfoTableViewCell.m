@@ -7,6 +7,9 @@
 //
 
 #import "GperInfoTableViewCell.h"
+#import "GperInfoViewController.h"
+
+#import "GjjxxViewController.h"//简介 和 详细的界面
 
 @implementation GperInfoTableViewCell
 
@@ -35,45 +38,86 @@
 -(CGFloat)loadViewWithIndexPath:(NSIndexPath*)theIndexPath{
     CGFloat height = 0;
     
-    NSArray *titleArray = @[@"头像",@"姓名",@"地区",@"手机号",@"详细地址",@"简介"];
     
-    //左右两个竖条
-    for (int i = 0; i<2; i++) {
-        UIView *shuView = [[UIView alloc]initWithFrame:CGRectMake(9.5+i*300, 0, 0.5, 44)];
-        if (theIndexPath.row == 0) {
-            shuView.frame = CGRectMake(9.5+i*300, 15, 0.5, 60);//竖条
-            UIView *hengtiao = [[UIView alloc]initWithFrame:CGRectMake(10, 14.5+i*60, 300, 0.5)];
-            hengtiao.backgroundColor = RGBCOLOR(220, 220, 220);
-            [self.contentView addSubview:hengtiao];
-        }
-        shuView.backgroundColor = RGBCOLOR(220, 220, 220);
-        [self.contentView addSubview:shuView];
-    }
+    NSArray *titleArray = @[@"姓名",@"地区",@"手机号",@"详细地址",@"简介"];
     
     
     
-    //titile
-    UILabel *titleLabel  = [[UILabel alloc]initWithFrame:CGRectMake(22, 15, 53, 14)];
-    titleLabel.font = [UIFont systemFontOfSize:13];
-    if (theIndexPath.row == 0) {
-        titleLabel.frame = CGRectMake(22, 40, 53, 14);
-    }
-    titleLabel.text = titleArray[theIndexPath.row];
-    [self.contentView addSubview:titleLabel];
-    
-    
-    
-    
-    
-    
-    if (theIndexPath.row == 0) {
-        height = 94;
-    }else{
+    if (theIndexPath.section == 0) {//头像
+        
+        height = 95;
+        
+        //框
+        UIButton *kuang = [[UIButton alloc]initWithFrame:CGRectMake(10, 15, 300, 64)];
+        kuang.layer.borderWidth = 0.5;
+        kuang.layer.borderColor = [RGBCOLOR(220, 220, 220)CGColor];
+        
+        //title
+        UILabel *titielLabel = [[UILabel alloc]initWithFrame:CGRectMake(22, 40, 30, 15)];
+        titielLabel.font = [UIFont systemFontOfSize:15];
+        titielLabel.text = @"头像";
+        
+        //头像imageview
+        UIImageView *touxiangImv = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(titielLabel.frame)+187, 25, 45, 45)];
+        touxiangImv.backgroundColor = [UIColor redColor];
+        
+        
+        
+        //添加视图
+        [self.contentView addSubview:kuang];
+        [self.contentView addSubview:titielLabel];
+        [self.contentView addSubview:touxiangImv];
+        
+        
+    }else if (theIndexPath.section == 1){//详细信息
+        
         height = 44;
+        
+        //框
+        UIButton *kuang = [[UIButton alloc]initWithFrame:CGRectMake(10, 0, 300, 44)];
+        kuang.layer.borderWidth = 0.5;
+        kuang.layer.borderColor = [RGBCOLOR(220, 220, 220)CGColor];
+        
+        //遮挡底部边框重合的部分
+        UIView *diview = [[UIView alloc]initWithFrame:CGRectMake(10, 44, 300, 0.5)];
+        diview.backgroundColor = [UIColor whiteColor];
+        
+        //title
+        UILabel *titleLable = [[UILabel alloc]initWithFrame:CGRectMake(22, 15, 60, 15)];
+        titleLable.font = [UIFont systemFontOfSize:15];
+        titleLable.text = titleArray[theIndexPath.row];
+        
+        
+        //添加视图
+        [self.contentView addSubview:kuang];
+        [self.contentView addSubview:titleLable];
+        [self.contentView addSubview:diview];
+        
+        
+        //功能
+        if (theIndexPath.row == 3 || theIndexPath.row == 4) {
+            [kuang addTarget:self action:@selector(tui) forControlEvents:UIControlEventTouchUpInside];
+        }
+        
+        
+        
+        
+        
     }
+    
+    
+    
+    
+    
     
     
     return height;
+}
+
+
+
+-(void)tui{
+    [self.delegate.navigationController pushViewController:[[GjjxxViewController alloc]init] animated:YES];
 }
 
 

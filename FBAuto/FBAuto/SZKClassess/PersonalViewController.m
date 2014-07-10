@@ -17,6 +17,7 @@
 #import "GMessageSViewController.h"//消息设置
 #import "GmarkViewController.h"//我的收藏
 #import "GperInfoViewController.h"//我的资料
+#import "GlxwmViewController.h"//联系我们
 
 
 @interface PersonalViewController ()
@@ -202,7 +203,7 @@
             [self.navigationController pushViewController:[[GmarkViewController alloc]init] animated:YES];
             
         }else if (index == 6){//联系我们
-            
+            [self.navigationController pushViewController:[[GlxwmViewController alloc]init] animated:YES];
         }else if (index == 7){//消息设置
             [self.navigationController pushViewController:[[GMessageSViewController alloc]init]animated:YES];
         }

@@ -9,6 +9,8 @@
 #import "GperInfoViewController.h"
 #import "GperInfoTableViewCell.h"
 
+
+
 @interface GperInfoViewController ()
 
 @end
@@ -24,11 +26,11 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    _tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 314) style:UITableViewStylePlain];
+    _tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 315) style:UITableViewStylePlain];
     _tableview.delegate = self;
     _tableview.dataSource = self;
     _tableview.scrollEnabled = NO;
-    _tableview.separatorColor = RGBCOLOR(220, 220, 220);
+    _tableview.separatorStyle = UITableViewCellSelectionStyleNone;
     [self.view addSubview:_tableview];
     
     
@@ -50,21 +52,25 @@
     if (!cell) {
         cell = [[GperInfoTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    
+    cell.delegate = self;
     [cell loadViewWithIndexPath:indexPath];
-    
-    cell.separatorInset = UIEdgeInsetsMake(0, 10, 300, 10);
-    cell.selectedBackgroundView = [[UIView alloc]initWithFrame:CGRectMake(10, 0, 300, 44)];
-    if (indexPath.row == 0) {
-        cell.selectedBackgroundView = [[UIView alloc]initWithFrame:CGRectMake(10, 0, 300, 60)];
-    }
-    cell.selectedBackgroundView.backgroundColor = RGBCOLOR(244, 244, 244);
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 2;
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 6;
+    NSInteger num = 0;
+    if (section == 0) {
+        num = 1;
+    }else if (section == 1){
+        num = 5;
+    }
+    return num;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
