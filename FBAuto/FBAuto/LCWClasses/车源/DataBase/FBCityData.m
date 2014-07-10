@@ -56,8 +56,6 @@
         while (sqlite3_step(stmt) == SQLITE_ROW) {
             const unsigned char *cityName = sqlite3_column_text(stmt, 0);
             int cityId = sqlite3_column_int(stmt, 1);
-//            int provinceId = sqlite3_column_int(stmt, 3);
-            
             FBCity *province = [[FBCity alloc]initProvinceWithName:[NSString stringWithUTF8String:(const char *)cityName] provinceId:cityId];
             [subCityArray addObject:province];
         }

@@ -139,6 +139,18 @@
     
     [self test];
     // Do any additional setup after loading the view.
+    
+    [self getCarData];
+}
+
+#pragma - mark 获取车型数据
+
+- (void)getCarData
+{
+    LCWTools *tools = [[LCWTools alloc]initWithUrl:FBAUTO_CARSOURCE_CARTYPE isPost:NO postData:nil];
+    [tools requestCompletion:^(NSDictionary *result, NSError *erro) {
+//        NSLog(@"result %@",result);
+    }];
 }
 
 

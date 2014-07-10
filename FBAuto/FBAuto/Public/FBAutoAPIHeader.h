@@ -108,5 +108,7 @@ alpha:(a)]
 //删除好友
 #define FBAUTO_FRIEND_DELETE @"http://fbautoapp.fblife.com/index.php?c=interface&a=delbuddy&authkey=%@&buddyid=%@"//好友uid
 
+#define FBAUTO_CARSOURCE_CARTYPE @"http://fbautoapp.fblife.com/index.php?c=interface&a=getcardata"//车型数据
+
 
 #endif

@@ -181,7 +181,7 @@
         
         
         self.isHaveMoreData = NO;
-        [self performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1];
+        [self performSelector:@selector(finishReloadigData) withObject:nil afterDelay:0.5];
         
         return;
     }
@@ -227,24 +227,8 @@
             }
         }
         
-        
-        
-        //重新刷新tableView
-//        [self.table reloadData];
-        
-//        if (messages_arc.count >= 5) {
-//            
-//            self.isHaveMoreData = YES;
-//        }else
-//        {
-//            self.isHaveMoreData = NO;
-//        }
-        
         self.isHaveMoreData = YES;
-        
-        [self performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1];
-        
-//        [self finishReloadigData];
+        [self performSelector:@selector(finishReloadigData) withObject:nil afterDelay:0.5];
         
         if (_reloading) {
             return;

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		05B651E30AD74BE1BEB43F89 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE98169392244209FCDCF04 /* libPods.a */; };
-		1336BC05196A88410011B4D9 /* duihuahuang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1336BC03196A88410011B4D9 /* duihuahuang@2x.png */; };
 		1336BC06196A88410011B4D9 /* duihuahuang1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1336BC04196A88410011B4D9 /* duihuahuang1@2x.png */; };
 		1336BC09196A8CE70011B4D9 /* FBAreaFriensController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC08196A8CE70011B4D9 /* FBAreaFriensController.m */; };
 		1336BC0D196B89A00011B4D9 /* XMPPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC0C196B89A00011B4D9 /* XMPPServer.m */; };
@@ -340,7 +339,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1336BC03196A88410011B4D9 /* duihuahuang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "duihuahuang@2x.png"; sourceTree = "<group>"; };
 		1336BC04196A88410011B4D9 /* duihuahuang1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "duihuahuang1@2x.png"; sourceTree = "<group>"; };
 		1336BC07196A8CE70011B4D9 /* FBAreaFriensController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBAreaFriensController.h; sourceTree = "<group>"; };
 		1336BC08196A8CE70011B4D9 /* FBAreaFriensController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBAreaFriensController.m; sourceTree = "<group>"; };
@@ -1156,7 +1154,6 @@
 		13D5DF9C1961758E00804835 /* FBAuto_chat */ = {
 			isa = PBXGroup;
 			children = (
-				1336BC03196A88410011B4D9 /* duihuahuang@2x.png */,
 				1336BC04196A88410011B4D9 /* duihuahuang1@2x.png */,
 				E35871F4196AA63E0002813C /* duihuahuang@2x.png */,
 				E35871F5196AA63E0002813C /* duihuahuang1@2x.png */,
@@ -2011,7 +2008,6 @@
 				138B4AEE1966A4BD00B974A5 /* face82.png in Resources */,
 				138B4AF61966A4BD00B974A5 /* face9.png in Resources */,
 				138B4ADF1966A4BD00B974A5 /* face69.png in Resources */,
-				1336BC05196A88410011B4D9 /* duihuahuang@2x.png in Resources */,
 				138B4AF11966A4BD00B974A5 /* face85.png in Resources */,
 				138B4B0D1966A51700B974A5 /* emotionImage.plist in Resources */,
 				13D5E01F1961758E00804835 /* weixin72_72@2x.png in Resources */,
