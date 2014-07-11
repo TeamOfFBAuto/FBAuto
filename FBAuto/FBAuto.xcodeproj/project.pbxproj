@@ -313,6 +313,8 @@
 		E34B74A4196E923000451C65 /* GjjxxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E34B74A3196E923000451C65 /* GjjxxViewController.m */; };
 		E34B74A7196E974100451C65 /* GHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E34B74A6196E974100451C65 /* GHolderTextView.m */; };
 		E34B74AA196E983700451C65 /* GlxwmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E34B74A9196E983700451C65 /* GlxwmViewController.m */; };
+		E351A0C3196F943800C78CFE /* GyhzyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E351A0C2196F943800C78CFE /* GyhzyTableViewCell.m */; };
+		E351A0C6196FB91800C78CFE /* UILabel+GautoMatchedText.m in Sources */ = {isa = PBXBuildFile; fileRef = E351A0C5196FB91800C78CFE /* UILabel+GautoMatchedText.m */; };
 		E35871ED196A946F0002813C /* GPersonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E35871EC196A946F0002813C /* GPersonTableViewCell.m */; };
 		E35871F6196AA63E0002813C /* duihuahuang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E35871F4196AA63E0002813C /* duihuahuang@2x.png */; };
 		E35871F7196AA63E0002813C /* duihuahuang1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E35871F5196AA63E0002813C /* duihuahuang1@2x.png */; };
@@ -324,6 +326,7 @@
 		E362358119657588003B23CC /* GloginView.m in Sources */ = {isa = PBXBuildFile; fileRef = E362357919657588003B23CC /* GloginView.m */; };
 		E362358219657588003B23CC /* GzhuceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E362357B19657588003B23CC /* GzhuceTableViewCell.m */; };
 		E362358519657FA6003B23CC /* GMAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = E362358419657FA6003B23CC /* GMAPI.m */; };
+		E38087F3196F898200435E53 /* GyhzyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E38087F2196F898200435E53 /* GyhzyViewController.m */; };
 		E3FFFCE7196BE19D00596186 /* GfindCarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FFFCE6196BE19D00596186 /* GfindCarViewController.m */; };
 		E3FFFCEA196BE28F00596186 /* GfindCarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FFFCE9196BE28F00596186 /* GfindCarTableViewCell.m */; };
 /* End PBXBuildFile section */
@@ -740,6 +743,10 @@
 		E34B74A6196E974100451C65 /* GHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHolderTextView.m; sourceTree = "<group>"; };
 		E34B74A8196E983700451C65 /* GlxwmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlxwmViewController.h; sourceTree = "<group>"; };
 		E34B74A9196E983700451C65 /* GlxwmViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlxwmViewController.m; sourceTree = "<group>"; };
+		E351A0C1196F943800C78CFE /* GyhzyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GyhzyTableViewCell.h; sourceTree = "<group>"; };
+		E351A0C2196F943800C78CFE /* GyhzyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GyhzyTableViewCell.m; sourceTree = "<group>"; };
+		E351A0C4196FB91800C78CFE /* UILabel+GautoMatchedText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+GautoMatchedText.h"; sourceTree = "<group>"; };
+		E351A0C5196FB91800C78CFE /* UILabel+GautoMatchedText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+GautoMatchedText.m"; sourceTree = "<group>"; };
 		E35871EB196A946F0002813C /* GPersonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPersonTableViewCell.h; sourceTree = "<group>"; };
 		E35871EC196A946F0002813C /* GPersonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPersonTableViewCell.m; sourceTree = "<group>"; };
 		E35871F4196AA63E0002813C /* duihuahuang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "duihuahuang@2x.png"; sourceTree = "<group>"; };
@@ -759,6 +766,8 @@
 		E362357B19657588003B23CC /* GzhuceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GzhuceTableViewCell.m; sourceTree = "<group>"; };
 		E362358319657FA6003B23CC /* GMAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMAPI.h; sourceTree = "<group>"; };
 		E362358419657FA6003B23CC /* GMAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMAPI.m; sourceTree = "<group>"; };
+		E38087F1196F898200435E53 /* GyhzyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GyhzyViewController.h; sourceTree = "<group>"; };
+		E38087F2196F898200435E53 /* GyhzyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GyhzyViewController.m; sourceTree = "<group>"; };
 		E3FFFCE5196BE19D00596186 /* GfindCarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GfindCarViewController.h; sourceTree = "<group>"; };
 		E3FFFCE6196BE19D00596186 /* GfindCarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GfindCarViewController.m; sourceTree = "<group>"; };
 		E3FFFCE8196BE28F00596186 /* GfindCarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GfindCarTableViewCell.h; sourceTree = "<group>"; };
@@ -1705,6 +1714,8 @@
 		E33ECB09196D25AE00DDD72D /* GUtils */ = {
 			isa = PBXGroup;
 			children = (
+				E351A0C4196FB91800C78CFE /* UILabel+GautoMatchedText.h */,
+				E351A0C5196FB91800C78CFE /* UILabel+GautoMatchedText.m */,
 				E34B74A5196E974100451C65 /* GHolderTextView.h */,
 				E34B74A6196E974100451C65 /* GHolderTextView.m */,
 				E33ECB0A196D25CD00DDD72D /* GTimeSwitch.h */,
@@ -1749,6 +1760,8 @@
 				E34B74A3196E923000451C65 /* GjjxxViewController.m */,
 				E34B74A8196E983700451C65 /* GlxwmViewController.h */,
 				E34B74A9196E983700451C65 /* GlxwmViewController.m */,
+				E38087F1196F898200435E53 /* GyhzyViewController.h */,
+				E38087F2196F898200435E53 /* GyhzyViewController.m */,
 				E362358319657FA6003B23CC /* GMAPI.h */,
 				E362358419657FA6003B23CC /* GMAPI.m */,
 			);
@@ -1782,6 +1795,8 @@
 				E33ECB55196D4D1600DDD72D /* GmarkTableViewCell.m */,
 				E34B749F196E341A00451C65 /* GperInfoTableViewCell.h */,
 				E34B74A0196E341A00451C65 /* GperInfoTableViewCell.m */,
+				E351A0C1196F943800C78CFE /* GyhzyTableViewCell.h */,
+				E351A0C2196F943800C78CFE /* GyhzyTableViewCell.m */,
 			);
 			path = V;
 			sourceTree = "<group>";
@@ -2148,6 +2163,8 @@
 				1336BC2B196B93CC0011B4D9 /* FBChatImage.m in Sources */,
 				13D5E0F31963E59E00804835 /* DDPageControl.m in Sources */,
 				138B4A1619664F1C00B974A5 /* FBFriendsController.m in Sources */,
+				E351A0C6196FB91800C78CFE /* UILabel+GautoMatchedText.m in Sources */,
+				E38087F3196F898200435E53 /* GyhzyViewController.m in Sources */,
 				190BFE21195C362F0098E0F4 /* SzkLoadData.m in Sources */,
 				1336BC24196B91F70011B4D9 /* NSString+Emoji.m in Sources */,
 				13737C8E1965420000941746 /* PersonalViewController.m in Sources */,
@@ -2197,6 +2214,7 @@
 				190BFD7F195AAD480098E0F4 /* CarResourceViewController.m in Sources */,
 				E362357E19657588003B23CC /* GzhuceViewController.m in Sources */,
 				13D5E0C61963DB0300804835 /* QBImagePickerFooterView.m in Sources */,
+				E351A0C3196F943800C78CFE /* GyhzyTableViewCell.m in Sources */,
 				1336BC28196B921C0011B4D9 /* XMPPStatics.m in Sources */,
 				E362358019657588003B23CC /* GuserZhuce.m in Sources */,
 				13D5E0C71963DB0300804835 /* QBImagePickerGroupCell.m in Sources */,
