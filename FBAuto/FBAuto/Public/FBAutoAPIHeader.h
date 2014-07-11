@@ -15,6 +15,8 @@
 #import "UIImageView+WebCache.h"
 #import "EGORefreshTableHeaderView.h"//下拉刷新
 
+#import "UILabel+GautoMatchedText.h"//文字自适应高度
+
 #import "GMAPI.h"//GODLIKE
 #import "SzkAPI.h"
 

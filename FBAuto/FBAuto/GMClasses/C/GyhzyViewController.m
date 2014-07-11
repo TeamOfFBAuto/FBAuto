@@ -47,7 +47,13 @@
         cell = [[GyhzyTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
+    for (UIView *view in cell.contentView.subviews) {
+        [view removeFromSuperview];
+    }
+    
     [cell loadViewWithIndexPath:indexPath];
+    
+    cell.separatorInset = UIEdgeInsetsZero;
     
     return cell;
 }

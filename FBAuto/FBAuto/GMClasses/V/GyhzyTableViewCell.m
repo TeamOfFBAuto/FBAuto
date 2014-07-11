@@ -59,10 +59,63 @@
         height = 65;
         
     }else if (theIndexPath.row == 1){//电话 地址
+        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 12, 30, 13)];
+        titleLabel.font = [UIFont systemFontOfSize:13];
+        titleLabel.text = @"电话:";
+        [self.contentView addSubview:titleLabel];
+        
+        UILabel *titleLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(titleLabel.frame)+10, 30, 13)];
+        titleLabel1.font = [UIFont systemFontOfSize:13];
+        titleLabel1.text = @"地址:";
+        [self.contentView addSubview:titleLabel1];
+        
+        height = CGRectGetMaxY(titleLabel1.frame)+10;
         
         
     }else if (theIndexPath.row == 2){//简介
+        UILabel *titelLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 12, 30, 13)];
+        titelLabel.font = [UIFont systemFontOfSize:13];
+        titelLabel.text = @"简介:";
+        titelLabel.backgroundColor = [UIColor orangeColor];
+        [self.contentView addSubview:titelLabel];
         
+        //简介内容label
+        UILabel *contentLabel = [[UILabel alloc]initWithFrame:CGRectZero];
+        contentLabel.textColor = RGBCOLOR(149, 149, 149);
+        contentLabel.font = [UIFont systemFontOfSize:12];
+        contentLabel.text = @"fjsdal;;;;;;;;;lksdfjienklnitopb;lkbkg;ogotpklg;klg;tk;t;kg;g";
+        [contentLabel setMatchedFrame4LabelWithOrigin:CGPointMake(CGRectGetMaxX(titelLabel.frame)+10, 12) width:266];
+        height = contentLabel.frame.size.height +20;
+        [self.contentView addSubview:contentLabel];
+        
+        
+    }else if(theIndexPath.row == 3){//在售车源 标题
+        UILabel *tLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 15, 60, 12)];
+        tLabel.font = [UIFont systemFontOfSize:12];
+        tLabel.text = @"在售车源:";
+        [self.contentView addSubview:tLabel];
+        height = 42;
+    }else{
+        //车名
+        UILabel *tLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 13, 216, 16)];
+        tLabel.backgroundColor = [UIColor grayColor];
+        //tLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:16];
+        tLabel.text = @"奥迪Q5 豪华型";
+        [self.contentView addSubview:tLabel];
+        
+        //价钱
+        UILabel *pLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(tLabel.frame)+5, 13, 80, 16)];
+        pLabel.font = [UIFont systemFontOfSize:15];
+        pLabel.textAlignment = NSTextAlignmentRight;
+        pLabel.textColor = [UIColor redColor];
+        pLabel.backgroundColor = [UIColor grayColor];
+        pLabel.text = @"100.00万元";
+        [self.contentView addSubview:pLabel];
+        
+        
+        
+        
+        height = 84;
     }
     
     return height;

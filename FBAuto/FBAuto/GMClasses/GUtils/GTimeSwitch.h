@@ -6,6 +6,8 @@
 //  Copyright (c) 2014年 szk. All rights reserved.
 //
 
+
+//时间格式转换
 #import <Foundation/Foundation.h>
 
 @interface GTimeSwitch : NSObject
