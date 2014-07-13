@@ -10,6 +10,8 @@
 #import "GperInfoTableViewCell.h"
 
 
+#import "SzkLoadData.h"//网络请求类
+
 
 @interface GperInfoViewController ()
 
@@ -17,7 +19,10 @@
 
 @implementation GperInfoViewController
 
-
+- (void)dealloc
+{
+    NSLog(@"%s",__FUNCTION__);
+}
 
 - (void)viewDidLoad
 {
@@ -26,6 +31,7 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
+    //主tableview
     _tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 315) style:UITableViewStylePlain];
     _tableview.delegate = self;
     _tableview.dataSource = self;
@@ -33,6 +39,9 @@
     _tableview.separatorStyle = UITableViewCellSelectionStyleNone;
     [self.view addSubview:_tableview];
     
+    
+    //请求网络数据
+    [self prepareNetData];
     
     
     
@@ -43,6 +52,21 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+
+-(void)prepareNetData{
+    SzkLoadData *aaa = [[SzkLoadData alloc]init];
+    //请求地址str
+    NSString *str = [NSString stringWithFormat:FBAUTO_GET_USER_INFORMATION,[GMAPI getUid]];
+    NSLog(@"请求用户信息接口 %@",str);
+    [aaa SeturlStr:str block:^(NSArray *arrayinfo, NSString *errorindo, NSInteger errcode) {
+        if ([errorindo isEqualToString:@"noerror"]) {
+            
+        }
+    }];
+}
+
 
 
 #pragma mark - UITableViewDataSource && UITableViewDelegate

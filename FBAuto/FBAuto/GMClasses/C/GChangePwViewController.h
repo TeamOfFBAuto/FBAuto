@@ -6,6 +6,7 @@
 //  Copyright (c) 2014年 szk. All rights reserved.
 //
 
+//修改密码界面
 #import <UIKit/UIKit.h>
 
 @interface GChangePwViewController : UIViewController

@@ -85,13 +85,21 @@
         //title
         UILabel *titleLable = [[UILabel alloc]initWithFrame:CGRectMake(22, 15, 60, 15)];
         titleLable.font = [UIFont systemFontOfSize:15];
+        titleLable.backgroundColor = [UIColor grayColor];
         titleLable.text = titleArray[theIndexPath.row];
+        
+        
+        //内容label
+        UILabel *contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(titleLable.frame)+130, titleLable.frame.origin.y, 90, titleLable.frame.size.height)];
+        contentLabel.font = [UIFont systemFontOfSize:15];
+        contentLabel.backgroundColor = [UIColor redColor];
         
         
         //添加视图
         [self.contentView addSubview:kuang];
         [self.contentView addSubview:titleLable];
         [self.contentView addSubview:diview];
+        [self.contentView addSubview:contentLabel];
         
         
         //功能
@@ -113,6 +121,8 @@
     
     return height;
 }
+
+
 
 
 

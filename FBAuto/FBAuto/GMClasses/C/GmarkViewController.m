@@ -15,6 +15,11 @@
 
 @implementation GmarkViewController
 
+- (void)dealloc
+{
+    NSLog(@"%s",__FUNCTION__);
+}
+
 
 - (void)viewDidLoad
 {

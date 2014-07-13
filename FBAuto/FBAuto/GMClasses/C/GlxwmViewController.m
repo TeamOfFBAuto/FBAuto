@@ -14,7 +14,10 @@
 
 @implementation GlxwmViewController
 
-
+- (void)dealloc
+{
+    NSLog(@"%s",__FUNCTION__);
+}
 
 - (void)viewDidLoad
 {
