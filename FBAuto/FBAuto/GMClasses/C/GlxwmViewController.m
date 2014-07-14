@@ -26,6 +26,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     
+    NSLog(@"%s",__FUNCTION__);
     
     
  

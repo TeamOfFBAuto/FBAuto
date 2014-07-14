@@ -33,7 +33,7 @@
     self.navigationController.navigationBarHidden = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     
-    
+    NSLog(@"%s",__FUNCTION__);
     
     //分配内存
     self.contenTfArray = [[NSMutableArray alloc]init];

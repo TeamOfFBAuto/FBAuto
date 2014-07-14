@@ -26,6 +26,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    NSLog(@"%s",__FUNCTION__);
     
     self.flagIndexPath = [NSIndexPath indexPathForRow:10000 inSection:10000];
     

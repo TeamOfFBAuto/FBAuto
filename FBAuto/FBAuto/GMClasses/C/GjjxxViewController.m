@@ -25,6 +25,7 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     
+    NSLog(@"%s",__FUNCTION__);
     
     UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(gsave)];
     self.navigationItem.rightBarButtonItem = rightBtn;

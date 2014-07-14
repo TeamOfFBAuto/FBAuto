@@ -301,6 +301,9 @@
 		190BFD96195AB15C0098E0F4 /* personalselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 190BFD90195AB15C0098E0F4 /* personalselected@2x.png */; };
 		190BFD99195ABA2D0098E0F4 /* testV@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 190BFD98195ABA2D0098E0F4 /* testV@2x.png */; };
 		190BFE21195C362F0098E0F4 /* SzkLoadData.m in Sources */ = {isa = PBXBuildFile; fileRef = 190BFE20195C362F0098E0F4 /* SzkLoadData.m */; };
+		E31F538D19737DDC00540124 /* GmLoadData.m in Sources */ = {isa = PBXBuildFile; fileRef = E31F538C19737DDC00540124 /* GmLoadData.m */; };
+		E31F53951974044A00540124 /* MLImageCrop.m in Sources */ = {isa = PBXBuildFile; fileRef = E31F53941974044A00540124 /* MLImageCrop.m */; };
+		E31F5398197405DC00540124 /* GlocalUserImage.m in Sources */ = {isa = PBXBuildFile; fileRef = E31F5397197405DC00540124 /* GlocalUserImage.m */; };
 		E3385D2A196BBAED008061FA /* GChangePwViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3385D29196BBAED008061FA /* GChangePwViewController.m */; };
 		E33ECB05196D211200DDD72D /* GpersonTZViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E33ECB04196D211200DDD72D /* GpersonTZViewController.m */; };
 		E33ECB08196D230A00DDD72D /* GptzTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E33ECB07196D230A00DDD72D /* GptzTableViewCell.m */; };
@@ -719,6 +722,12 @@
 		190BFE1F195C362F0098E0F4 /* SzkLoadData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SzkLoadData.h; sourceTree = "<group>"; };
 		190BFE20195C362F0098E0F4 /* SzkLoadData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SzkLoadData.m; sourceTree = "<group>"; };
 		2BE98169392244209FCDCF04 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E31F538B19737DDC00540124 /* GmLoadData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmLoadData.h; sourceTree = "<group>"; };
+		E31F538C19737DDC00540124 /* GmLoadData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmLoadData.m; sourceTree = "<group>"; };
+		E31F53931974044A00540124 /* MLImageCrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLImageCrop.h; sourceTree = "<group>"; };
+		E31F53941974044A00540124 /* MLImageCrop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLImageCrop.m; sourceTree = "<group>"; };
+		E31F5396197405DC00540124 /* GlocalUserImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlocalUserImage.h; sourceTree = "<group>"; };
+		E31F5397197405DC00540124 /* GlocalUserImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlocalUserImage.m; sourceTree = "<group>"; };
 		E3385D28196BBAED008061FA /* GChangePwViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GChangePwViewController.h; sourceTree = "<group>"; };
 		E3385D29196BBAED008061FA /* GChangePwViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GChangePwViewController.m; sourceTree = "<group>"; };
 		E33ECB03196D211200DDD72D /* GpersonTZViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GpersonTZViewController.h; sourceTree = "<group>"; };
@@ -1714,12 +1723,18 @@
 		E33ECB09196D25AE00DDD72D /* GUtils */ = {
 			isa = PBXGroup;
 			children = (
+				E31F53931974044A00540124 /* MLImageCrop.h */,
+				E31F53941974044A00540124 /* MLImageCrop.m */,
 				E351A0C4196FB91800C78CFE /* UILabel+GautoMatchedText.h */,
 				E351A0C5196FB91800C78CFE /* UILabel+GautoMatchedText.m */,
 				E34B74A5196E974100451C65 /* GHolderTextView.h */,
 				E34B74A6196E974100451C65 /* GHolderTextView.m */,
 				E33ECB0A196D25CD00DDD72D /* GTimeSwitch.h */,
 				E33ECB0B196D25CD00DDD72D /* GTimeSwitch.m */,
+				E31F538B19737DDC00540124 /* GmLoadData.h */,
+				E31F538C19737DDC00540124 /* GmLoadData.m */,
+				E31F5396197405DC00540124 /* GlocalUserImage.h */,
+				E31F5397197405DC00540124 /* GlocalUserImage.m */,
 			);
 			path = GUtils;
 			sourceTree = "<group>";
@@ -2154,11 +2169,13 @@
 				13D5E0601962A14E00804835 /* City.m in Sources */,
 				138B4B111966A51700B974A5 /* SCGIFImageView.m in Sources */,
 				E34B74A4196E923000451C65 /* GjjxxViewController.m in Sources */,
+				E31F5398197405DC00540124 /* GlocalUserImage.m in Sources */,
 				138074E3196CDFA300AD3D03 /* LCWTools.m in Sources */,
 				13D5E117196513AF00804835 /* FBDetail2Controller.m in Sources */,
 				E3FFFCE7196BE19D00596186 /* GfindCarViewController.m in Sources */,
 				13D5E07F1962BD5800804835 /* FBBaseViewController.m in Sources */,
 				E3FFFCEA196BE28F00596186 /* GfindCarTableViewCell.m in Sources */,
+				E31F53951974044A00540124 /* MLImageCrop.m in Sources */,
 				13D5E0CA1963DB0300804835 /* QBShowImagesScrollView.m in Sources */,
 				1336BC2B196B93CC0011B4D9 /* FBChatImage.m in Sources */,
 				13D5E0F31963E59E00804835 /* DDPageControl.m in Sources */,
@@ -2201,6 +2218,7 @@
 				13D5E0651962A14E00804835 /* Menu_Normal.m in Sources */,
 				138B4A2D1966945F00B974A5 /* RTLabel.m in Sources */,
 				13D5E0C11963DB0300804835 /* QBAssetCollectionViewController.m in Sources */,
+				E31F538D19737DDC00540124 /* GmLoadData.m in Sources */,
 				E362358219657588003B23CC /* GzhuceTableViewCell.m in Sources */,
 				E33ECB53196D4BF700DDD72D /* GmarkViewController.m in Sources */,
 				13D5E0F61963F70100804835 /* SendCarParamsController.m in Sources */,

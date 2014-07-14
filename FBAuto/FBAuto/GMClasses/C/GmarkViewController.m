@@ -27,6 +27,8 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     
+    NSLog(@"%s",__FUNCTION__);
+    
     _tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64-44) style:UITableViewStylePlain];
     _tableview.delegate = self;
     _tableview.dataSource = self;

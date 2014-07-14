@@ -25,6 +25,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    
+    NSLog(@"%s",__FUNCTION__);
+    
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 569-64-44) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;

@@ -53,7 +53,7 @@
     // Do any additional setup after loading the view.
     
     
-    
+    NSLog(@"%s",__FUNCTION__);
     
     GloginView *gloginView = [[GloginView alloc]initWithFrame:CGRectMake(0, 0, 320, 568)];
     self.gloginView = gloginView;

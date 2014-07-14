@@ -29,6 +29,7 @@
     
     self.tfArray = [NSMutableArray arrayWithCapacity:1];
     
+    NSLog(@"%s",__FUNCTION__);
     
     //点击回收键盘
     UIControl *backControl = [[UIControl alloc]initWithFrame:CGRectMake(0, 0, 320, 568)];

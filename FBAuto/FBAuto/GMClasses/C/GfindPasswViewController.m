@@ -31,6 +31,8 @@
     self.navigationController.navigationBarHidden = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     
+    NSLog(@"%s",__FUNCTION__);
+    
     if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0)) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
@@ -111,7 +113,6 @@
     [_yanzhengBtn setTitle:[NSString stringWithFormat:@"%d秒后重新发送",_timeNum] forState:UIControlStateNormal];
     
     
-    
 }
 
 
@@ -127,6 +128,7 @@
         [_timer invalidate];
         _yanzhengBtn.userInteractionEnabled = YES;
     }
+    
 }
 
 
@@ -143,7 +145,6 @@
             UIAlertView *aler = [[UIAlertView alloc]initWithTitle:@"重置成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [aler show];
         }else{
-            
             UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:errorindo message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alertV show];
             
