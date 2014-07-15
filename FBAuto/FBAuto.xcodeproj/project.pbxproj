@@ -329,6 +329,9 @@
 		E362358119657588003B23CC /* GloginView.m in Sources */ = {isa = PBXBuildFile; fileRef = E362357919657588003B23CC /* GloginView.m */; };
 		E362358219657588003B23CC /* GzhuceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E362357B19657588003B23CC /* GzhuceTableViewCell.m */; };
 		E362358519657FA6003B23CC /* GMAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = E362358419657FA6003B23CC /* GMAPI.m */; };
+		E37D2C9C1974CFA500EBA627 /* shanchu_button_600_100@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37D2C991974CFA500EBA627 /* shanchu_button_600_100@2x.png */; };
+		E37D2C9D1974CFA500EBA627 /* xuanze_down_44_44@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37D2C9A1974CFA500EBA627 /* xuanze_down_44_44@2x.png */; };
+		E37D2C9E1974CFA500EBA627 /* xuanze_up_44_44@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37D2C9B1974CFA500EBA627 /* xuanze_up_44_44@2x.png */; };
 		E38087F3196F898200435E53 /* GyhzyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E38087F2196F898200435E53 /* GyhzyViewController.m */; };
 		E3FFFCE7196BE19D00596186 /* GfindCarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FFFCE6196BE19D00596186 /* GfindCarViewController.m */; };
 		E3FFFCEA196BE28F00596186 /* GfindCarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FFFCE9196BE28F00596186 /* GfindCarTableViewCell.m */; };
@@ -775,6 +778,9 @@
 		E362357B19657588003B23CC /* GzhuceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GzhuceTableViewCell.m; sourceTree = "<group>"; };
 		E362358319657FA6003B23CC /* GMAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMAPI.h; sourceTree = "<group>"; };
 		E362358419657FA6003B23CC /* GMAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMAPI.m; sourceTree = "<group>"; };
+		E37D2C991974CFA500EBA627 /* shanchu_button_600_100@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shanchu_button_600_100@2x.png"; sourceTree = "<group>"; };
+		E37D2C9A1974CFA500EBA627 /* xuanze_down_44_44@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xuanze_down_44_44@2x.png"; sourceTree = "<group>"; };
+		E37D2C9B1974CFA500EBA627 /* xuanze_up_44_44@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xuanze_up_44_44@2x.png"; sourceTree = "<group>"; };
 		E38087F1196F898200435E53 /* GyhzyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GyhzyViewController.h; sourceTree = "<group>"; };
 		E38087F2196F898200435E53 /* GyhzyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GyhzyViewController.m; sourceTree = "<group>"; };
 		E3FFFCE5196BE19D00596186 /* GfindCarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GfindCarViewController.h; sourceTree = "<group>"; };
@@ -1786,6 +1792,9 @@
 		E362357319657588003B23CC /* M */ = {
 			isa = PBXGroup;
 			children = (
+				E37D2C991974CFA500EBA627 /* shanchu_button_600_100@2x.png */,
+				E37D2C9A1974CFA500EBA627 /* xuanze_down_44_44@2x.png */,
+				E37D2C9B1974CFA500EBA627 /* xuanze_up_44_44@2x.png */,
 				E362357419657588003B23CC /* area.plist */,
 				E362357519657588003B23CC /* GuserZhuce.h */,
 				E362357619657588003B23CC /* GuserZhuce.m */,
@@ -1941,6 +1950,7 @@
 				13737C8119652F1700941746 /* detail_test.png in Resources */,
 				138B4AE31966A4BD00B974A5 /* face72.gif in Resources */,
 				138B49F1196552F500B974A5 /* FBFriendCell.xib in Resources */,
+				E37D2C9E1974CFA500EBA627 /* xuanze_up_44_44@2x.png in Resources */,
 				138B4A9C1966A4BD00B974A5 /* face100.gif in Resources */,
 				13D5E0091961758E00804835 /* haoyou_liaotian46_46@2x.png in Resources */,
 				138B4AAA1966A4BD00B974A5 /* face20.png in Resources */,
@@ -1972,6 +1982,7 @@
 				138B4AB51966A4BD00B974A5 /* face30.png in Resources */,
 				138B4AC81966A4BD00B974A5 /* face48.png in Resources */,
 				138B4AAD1966A4BD00B974A5 /* face23.png in Resources */,
+				E37D2C9D1974CFA500EBA627 /* xuanze_down_44_44@2x.png in Resources */,
 				138B4AE41966A4BD00B974A5 /* face73.png in Resources */,
 				138B4ADC1966A4BD00B974A5 /* face66.png in Resources */,
 				138B4AB41966A4BD00B974A5 /* face3.png in Resources */,
@@ -1985,6 +1996,7 @@
 				138B4AD11966A4BD00B974A5 /* face56.png in Resources */,
 				138B4AC21966A4BD00B974A5 /* face42.png in Resources */,
 				13D5E0101961758E00804835 /* tianjia44_44@2x.png in Resources */,
+				E37D2C9C1974CFA500EBA627 /* shanchu_button_600_100@2x.png in Resources */,
 				138B4AFA1966A4BD00B974A5 /* face93.png in Resources */,
 				138B4AD51966A4BD00B974A5 /* face6.png in Resources */,
 				138074EC196D3D4600AD3D03 /* garea.sqlite in Resources */,
