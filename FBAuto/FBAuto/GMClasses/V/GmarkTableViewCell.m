@@ -52,9 +52,26 @@
     _noDelWhView = [[UIView alloc]initWithFrame:CGRectMake(50, 0, 0.5, 60)];
     _noDelWhView.backgroundColor = [UIColor whiteColor];
     
+    //车源分类titleLabel
+    UILabel *tLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 24, 25, 13)];
+    tLabel.backgroundColor = [UIColor redColor];
+    tLabel.font = [UIFont systemFontOfSize:12];
+    
+    //车源信息
+    UILabel *cLabel = [[UILabel alloc]initWithFrame:CGRectMake(65, 23, 240, 14)];
+    cLabel.font = [UIFont systemFontOfSize:13];
+    cLabel.backgroundColor = [UIColor redColor];
+    
+    
+    
+    
+    
+    
+    //添加视图
     [self.contentView addSubview:_DelWhView];
     [self.contentView addSubview:_noDelWhView];
-    
+    [self.contentView addSubview:tLabel];
+    [self.contentView addSubview:cLabel];
     
     NSLog(@" delegate  ----- %d",self.delegate.delType);
     
@@ -62,9 +79,12 @@
     if (self.delegate.delType == 2) {//不是删除
         _DelWhView.hidden = YES;
         _noDelWhView.hidden = NO;
+        tLabel.frame = CGRectMake(15, 24, 25, 13);
     }else if (self.delegate.delType == 3){//删除
         _noDelWhView.hidden = YES;
         _DelWhView.hidden = NO;
+        tLabel.frame = CGRectMake(52, 24, 25, 13);
+        cLabel.frame = CGRectMake(105, 23, 200, 14);
         
         
         //添加选择图标

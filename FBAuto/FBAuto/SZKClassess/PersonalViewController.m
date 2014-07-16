@@ -204,7 +204,9 @@
             [self.navigationController pushViewController:gg animated:YES];
             
         }else if (index == 4){//我的收藏
-            [self.navigationController pushViewController:[[GmarkViewController alloc]init] animated:YES];
+            GmarkViewController *gmarkvc = [[GmarkViewController alloc]init];
+            gmarkvc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:gmarkvc animated:YES];
             
         }else if (index == 6){//联系我们
             //[self.navigationController pushViewController:[[GlxwmViewController alloc]init] animated:YES];
