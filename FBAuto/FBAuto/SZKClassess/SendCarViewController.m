@@ -23,9 +23,11 @@
 
 #import "GloginViewController.h"
 
+#import "ASIFormDataRequest.h"
+
 #define KFistSectionHeight 110 //上部分高度
 
-@interface SendCarViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,QBImagePickerControllerDelegate,UIScrollViewDelegate>
+@interface SendCarViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,QBImagePickerControllerDelegate,UIScrollViewDelegate,UITextFieldDelegate>
 {
     UIImageView *navigationBgView;
     
@@ -43,6 +45,8 @@
     DDPageControl *pageControl;
     
     QBImagePickerController * imagePickerController;
+    
+    UITextField *priceTF;
 }
 
 @end
@@ -96,18 +100,11 @@
     [self createFirstSection];
     [self createSecondSection];
     
-    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(clickToHideKeyboard)];
+    tap.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:tap];
 }
 
-
-- (void)clickToTest:(UIButton *)button
-{
-    FBBaseViewController *base = [[FBBaseViewController alloc]init];
-    base.hidesBottomBarWhenPushed = YES;
-    base.navigationTitle = @"发布";
-    base.style = Navigation_Special;
-    [self.navigationController pushViewController:base animated:YES];
-}
 
 - (void)didReceiveMemoryWarning
 
@@ -115,6 +112,118 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma - mark 图片上传
+
+#define TT_CACHE_EXPIRATION_AGE_NEVER     (1.0 / 0.0)   // inf
+- (void)postImages:(NSArray *)allImages
+{
+    NSString* url = [NSString stringWithFormat:FBAUTO_CARSOURCE_ADD_PIC];
+    
+    NSString *newUrl = [url stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString: newUrl]];
+    [request setRequestMethod:@"POST"];
+    request.timeOutSeconds = 30.f;
+    request.cachePolicy = TT_CACHE_EXPIRATION_AGE_NEVER;
+    request.cacheStoragePolicy = ASICacheForSessionDurationCacheStoragePolicy;
+    
+    [request setShouldAttemptPersistentConnection:YES];
+    [request setResponseEncoding:NSUTF8StringEncoding];
+    [request setPostFormat:ASIMultipartFormDataPostFormat];
+    
+    request.delegate = self;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
+        
+        NSData* data;
+
+        NSMutableData *myRequestData=[NSMutableData data];
+        
+        for (int i = 0;i < allImages.count; i++)
+        {
+            UIImage *image=[allImages objectAtIndex:i];
+            
+            UIImage * newImage = [SzkAPI scaleToSizeWithImage:image size:CGSizeMake(image.size.width>1024?1024:image.size.width,image.size.width>1024?image.size.height*1024/image.size.width:image.size.height)];
+            
+            data = UIImageJPEGRepresentation(newImage,0.5);
+            
+            [request addRequestHeader:@"Content-Length" value:[NSString stringWithFormat:@"%lu", (unsigned long)[myRequestData length]]];
+            
+            NSLog(@"---->图片大小:%lu",(unsigned long)[data length]);
+            
+            //设置http body
+            
+            [request addData:data withFileName:[NSString stringWithFormat:@"quan_img[%d].png",i] andContentType:@"image/PNG" forKey:@"photo"];
+            
+            [request addPostValue:[GMAPI getAuthkey] forKey:@"authkey"];
+    
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // 更新界面
+            
+            [request startAsynchronous];
+        });
+    });
+}
+
+- (void)requestStarted:(ASIHTTPRequest *)request
+{
+    NSLog(@"requestStarted %@",request.responseString);
+}
+- (void)request:(ASIHTTPRequest *)request didReceiveResponseHeaders:(NSDictionary *)responseHeaders
+{
+    NSLog(@"didReceiveResponseHeaders %@",responseHeaders);
+}
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    NSLog(@"requestFinished %@",request.responseString);
+    
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.responseData options:0 error:nil];
+    
+    NSLog(@"dic %@ %@",dic,[dic objectForKey:@"errinfo"]);
+}
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    NSLog(@"requestFailed %@",request.responseString);
+}
+
+
+
+
+#pragma - mark 价格输入框
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect aFrame = bigBgScroll.frame;
+        aFrame.origin.y = - 100.f;
+        bigBgScroll.frame = aFrame;
+    }];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect aFrame = bigBgScroll.frame;
+        aFrame.origin.y = 0.f;
+        bigBgScroll.frame = aFrame;
+    }];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [priceTF resignFirstResponder];
+    return YES;
+}
+
+- (void)clickToHideKeyboard
+{
+    [priceTF resignFirstResponder];
+}
+
+
 
 #pragma - mark 创建 PageControl
 
@@ -431,12 +540,38 @@
     secondBgView.layer.borderColor = [UIColor colorWithHexString:@"b4b4b4"].CGColor;
     [bigBgScroll addSubview:secondBgView];
     
-    NSArray *titles = @[@"车型",@"规格",@"期现",@"外观颜色",@"内饰颜色",@"价格"];
-    for (int i = 0; i < 6; i ++) {
+    NSArray *titles = @[@"车型",@"规格",@"期现",@"外观颜色",@"内饰颜色"];
+    for (int i = 0; i < 5; i ++) {
         Section_Button *btn = [[Section_Button alloc]initWithFrame:CGRectMake(0, 45 * i, secondBgView.width, 45) title:[titles objectAtIndex:i] target:self action:@selector(clickToParams:) sectionStyle:Section_Normal image:nil];
         btn.tag = 100 + i;
         [secondBgView addSubview:btn];
     }
+    
+    //价格特殊处理，需要输入
+    
+    UILabel *priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 45*5, 100, 45.f)];
+    priceLabel.backgroundColor = [UIColor clearColor];
+    priceLabel.text = @"价格";
+    priceLabel.textAlignment = NSTextAlignmentLeft;
+    priceLabel.font = [UIFont systemFontOfSize:14];
+    priceLabel.textColor = [UIColor blackColor];
+    [secondBgView addSubview:priceLabel];
+    
+    priceTF = [[UITextField alloc]initWithFrame:CGRectMake(80 - 10, 45 * 5, 175, 45)];
+    priceTF.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    priceTF.delegate = self;
+    priceTF.backgroundColor = [UIColor clearColor];
+    [secondBgView addSubview:priceTF];
+    
+    UILabel *hintLabel = [[UILabel alloc]initWithFrame:CGRectMake(300 - 35 - 10, 45 * 5, 35, 45.f)];
+    hintLabel.backgroundColor = [UIColor clearColor];
+    hintLabel.text = @"万元";
+    hintLabel.textAlignment = NSTextAlignmentRight;
+    hintLabel.font = [UIFont systemFontOfSize:14];
+    hintLabel.textColor = [UIColor colorWithHexString:@"c7c7cc"];
+    [secondBgView addSubview:hintLabel];
+    
+    //发布按钮
     
     publish = [UIButton buttonWithType:UIButtonTypeCustom];
     publish.frame = CGRectMake(10, secondBgView.bottom + 16, 300, 50);
@@ -453,15 +588,13 @@
 
 - (void)clickToParams:(Section_Button *)btn
 {
-    NSLog(@"... %ld",btn.tag);
-    
     DATASTYLE aStyle = 0;
     NSString *title = @"";
     
     switch (btn.tag) {
         case 100:
         {
-            aStyle = Data_Car_Model;
+            aStyle = Data_Car_Brand;
             title = @"车型";
         }
             break;
@@ -512,9 +645,10 @@
 
 - (void)clickToPublish:(UIButton *)btn
 {
-    NSLog(@"%ld",btn.tag);
-    
-    [self clickToTest:nil];
+    if (photosArray.count > 0) {
+        
+        [self postImages:photosArray];
+    }
 }
 
 #pragma - mark imagePicker 代理

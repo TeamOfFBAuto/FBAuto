@@ -93,7 +93,7 @@
 
 - (void)hidden
 {
-    Menu_Button *button = (Menu_Button *)[frontV viewWithTag:100 + _itemIndex];
+    Menu_Button *button = (Menu_Button *)[frontV viewWithTag:1000 + _itemIndex];
     button.selected = NO;
     [self removeFromSuperview];
 }
@@ -138,9 +138,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *select = [dataArray objectAtIndex:indexPath.row];
-    
-    selectBlock(selectStyle,select);
+    selectBlock(selectStyle,[NSString stringWithFormat:@"%d",indexPath.row]);
     
     [self hidden];
 }

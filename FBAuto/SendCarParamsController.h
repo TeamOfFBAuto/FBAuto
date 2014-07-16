@@ -14,8 +14,9 @@
 
 typedef enum{
     
-    Data_Car_Series = 0,//车系
-    Data_Car_Model, //车型
+    Data_Car_Brand = 0,//品牌
+    Data_Car_Type, //车型
+    Data_Car_Style,//车款
     Data_Standard, //规格
     Data_Price,//价格
     Data_Timelimit, //期限
@@ -32,5 +33,6 @@ typedef enum{
 @property(nonatomic,retain)UITableView *table;
 @property(nonatomic,assign)DATASTYLE dataStyle;
 @property(nonatomic,retain)UILabel *selectLabel;//选中label
+@property(nonatomic,retain)NSString *lastLevelId;//上一级id
 
 @end

@@ -19,6 +19,7 @@
 
 #import "GMAPI.h"//GODLIKE
 #import "SzkAPI.h"
+#import "LCWTools.h"
 
 
 //保存用户信息
@@ -32,8 +33,6 @@
 #define USERAUTHKEY @"userauthkey"
 
 #define DEVICETOKEN @"devicetoken"
-
-
 
 
 //颜色
@@ -110,7 +109,25 @@ alpha:(a)]
 //删除好友
 #define FBAUTO_FRIEND_DELETE @"http://fbautoapp.fblife.com/index.php?c=interface&a=delbuddy&authkey=%@&buddyid=%@"//好友uid
 
+
+//车源API================
+
 #define FBAUTO_CARSOURCE_CARTYPE @"http://fbautoapp.fblife.com/index.php?c=interface&a=getcardata"//车型数据
 
+#define FBAUTO_CARSOURCE_LIST @"http://fbautoapp.fblife.com/index.php?c=interface&a=getcheyuan"//车源列表
+
+#define FBAUTO_CARSOURCE_ADD_PIC @"http://fbautoapp.fblife.com/index.php?c=interface&a=addpic"//添加图片
+
+#define FBAUTO_CARSOURCE_ADD_SOURCE @"http://fbautoapp.fblife.com/index.php?c=interface&a=addcheyuan"//添加车源
+
+#define FBAUTO_CARSOURCE_SINGLE_SOURE @"http://fbautoapp.fblife.com/index.php?c=interface&a=getsinglecheyuan&cid=%@"//获取单个车源
+
+#define FBAUTO_CARSOURCE_SEARCH @"http://fbautoapp.fblife.com/index.php?c=interface&a=searchcheyuan&keyword=%@"//搜索车源
+
+#define FBAUTO_CARSOURCE_MYSELF @"http://fbautoapp.fblife.com/index.php?c=interface&a=getmycheyuan&authkey=%@"//获取我的车源
+
+#define FBAUTO_CARSOURCE_DELETE @"http://fbautoapp.fblife.com/index.php?c=interface&a=delcheyuan&authkey=%@&cid=%d" //删除车源
+
+#define FBAUTO_CARSOURCE_EDIT @"http://fbautoapp.fblife.com/index.php?c=interface&a=editcheyuan"//修改车源信息
 
 #endif

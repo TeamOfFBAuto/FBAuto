@@ -19,7 +19,7 @@ typedef enum {
     Menu_Timelimit//期限
 }MenuStyle;
 
-typedef void(^SelectNormalBlock) (MenuStyle style, NSString *select);
+typedef void(^SelectNormalBlock) (MenuStyle style, NSString *selectId);
 
 @interface Menu_Normal : UIView<UITableViewDataSource,UITableViewDelegate>
 {

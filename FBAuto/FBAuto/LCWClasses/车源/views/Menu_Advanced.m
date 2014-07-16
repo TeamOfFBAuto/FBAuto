@@ -73,6 +73,11 @@
     selectBlock = aBlock;
 }
 
+- (void)selectCityBlock:(SelectCityBlock)aCityBlock
+{
+    cityBlock = aCityBlock;
+}
+
 #pragma - mark 获取城市数据
 
 - (void)loadProvince
@@ -290,7 +295,7 @@
 
 - (void)hidden
 {
-    Menu_Button *button = (Menu_Button *)[frontV viewWithTag:100 + _itemIndex];
+    Menu_Button *button = (Menu_Button *)[frontV viewWithTag:1000 + _itemIndex];
     button.selected = NO;
     [self removeFromSuperview];
 }
@@ -459,12 +464,6 @@
             return;
         }
         
-//        NSString *letter = [firstLetterArray objectAtIndex:indexPath.section - 1];
-//        NSArray *cities = [cityDic objectForKey:letter];
-//        City *aCity = [cities objectAtIndex:indexPath.row];
-//        
-//        [self reloadThirdTableData:aCity.subCities];
-        
         NSString *letter = [firstLetterArray objectAtIndex:indexPath.section - 1];
         
         NSArray *subCityArr = [provinceDic objectForKey:letter];
@@ -478,19 +477,22 @@
         FBCity *aCity = [thirdArray objectAtIndex:indexPath.row];
 
         NSString *cityName = aCity.cityName;
-        selectBlock(blockStyle,cityName);
+        NSString *provinceId = [NSString stringWithFormat:@"%d",aCity.provinceId];
+        NSString *cityId = [NSString stringWithFormat:@"%d",aCity.cityId];
+        
+        cityBlock(cityName,provinceId,cityId);
+
         [self hidden];
         
     }else if (tableView == colorTable)
     {
         NSString *colorName = [colorArray objectAtIndex:indexPath.row];
-        selectBlock(blockStyle,colorName);
+        selectBlock(blockStyle,colorName,[NSString stringWithFormat:@"%d",indexPath.row]);
         [self hidden];
+        
     }else
     {
         if (indexPath.row == 2) {
-            
-//            [self loadCityData];
             
             [self loadProvince];
             

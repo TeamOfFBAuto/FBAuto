@@ -18,7 +18,9 @@ typedef enum {
     Select_In_Color//内饰颜色
 }BlockStyle;
 
-typedef void(^SelectBlock) (BlockStyle style, NSString *select);
+typedef void(^SelectBlock) (BlockStyle style,NSString *colorName,NSString *colorId);
+
+typedef void(^SelectCityBlock) (NSString *cityName,NSString *provinceId,NSString *cityId);
 
 @interface Menu_Advanced : UIView<UITableViewDataSource,UITableViewDelegate>
 {
@@ -44,6 +46,7 @@ typedef void(^SelectBlock) (BlockStyle style, NSString *select);
     
     CGFloat sumHeight;//总高度
     SelectBlock selectBlock;
+    SelectCityBlock cityBlock;
     
     BlockStyle blockStyle;//一级的上一次选择
 }
@@ -55,5 +58,6 @@ typedef void(^SelectBlock) (BlockStyle style, NSString *select);
 - (void)hidden;
 
 - (void)selectBlock:(SelectBlock)aBlock;
+- (void)selectCityBlock:(SelectCityBlock)aCityBlock;
 
 @end

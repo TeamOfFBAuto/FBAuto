@@ -7,6 +7,11 @@
 //
 
 #import "LCWTools.h"
+#import "AppDelegate.h"
+
+#import "CarBrand.h"
+#import "CarType.h"
+#import "CarStyle.h"
 
 @implementation LCWTools
 
@@ -67,6 +72,7 @@
        
     }];
 }
+
 
 #pragma - mark 验证邮箱、电话等有效性
 
@@ -142,5 +148,127 @@
     }
 }
 
+#pragma - mark CoreData数据管理
+
+- (NSManagedObjectContext *)context
+{
+    return ((AppDelegate *)[[UIApplication sharedApplication]delegate]).managedObjectContext;
+}
+
+#pragma - mark 插入数据
+
+//插入数据
+- (void)insertDataClassType:(NSString *)classType dataArray:(NSMutableArray*)dataArray unique:(NSString *)unique
+{
+    NSLog(@"insertDataClassType----> %@",classType);
+    
+    if([classType isEqualToString:CARSOURCE_BRAND_INSERT])
+    {
+        [self insertCarBrand:dataArray unique:unique];
+        
+    }else if ([classType isEqualToString:CARSOURCE_STYLE_INSETT])
+    {
+        
+        
+    }else if([classType isEqualToString:CARSOURCE_TYPE_INSETT])
+    {
+        
+    }
+}
+
+- (void)insertCarBrand:(NSArray *)dataArray unique:(NSString *)unique
+{
+    NSManagedObjectContext *context = [self context];
+    
+    for (CarBrand *aBrand in dataArray) {
+        CarBrand *aEntityMenu = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([CarBrand class]) inManagedObjectContext:context];
+        
+        aEntityMenu = aBrand;
+        
+        
+        NSError *erro;
+        if (![context save:&erro]) {
+            NSLog(@"FirstMenu 保存失败：%@",erro);
+        }else
+        {
+            NSLog(@"FirstMenu 保存成功");
+        }
+    }
+}
+
+#pragma - mark 查询数据
+
+//查询
+- (NSArray*)queryDataClassType:(NSString *)classType pageSize:(int)pageSize andOffset:(int)currentPage unique:(NSString *)unique
+{
+    if([classType isEqualToString:CARSOURCE_BRAND_QUERY])
+    {
+        return [self queryCarBrand];
+        
+    }else if ([classType isEqualToString:CARSOURCE_TYPE_QUERY])
+    {
+        return [self queryCarTypeUnique:unique];
+        
+    }else if ([classType isEqualToString:CARSOURCE_STYLE_QUERY])
+    {
+        return [self queryCarStyleUnique:unique];
+        
+    }
+    return nil;
+}
+
+//车品牌
+- (NSArray*)queryCarBrand
+{
+    NSManagedObjectContext *context = [self context];
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([CarBrand class]) inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSError *error;
+    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    
+    return fetchedObjects;
+}
+
+//车型
+- (NSArray*)queryCarTypeUnique:(NSString *)unique
+{
+    NSManagedObjectContext *context = [self context];
+    
+    NSPredicate *predicate = [NSPredicate
+                              predicateWithFormat:@"parentId like[cd] %@",unique];
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    
+    [fetchRequest setPredicate:predicate];
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([CarType class]) inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSError *error;
+    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    
+    return fetchedObjects;
+}
+
+//车款
+- (NSArray*)queryCarStyleUnique:(NSString *)unique
+{
+    NSManagedObjectContext *context = [self context];
+    
+    NSPredicate *predicate = [NSPredicate
+                              predicateWithFormat:@"parentId like[cd] %@",unique];
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    
+    [fetchRequest setPredicate:predicate];
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([CarStyle class]) inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSError *error;
+    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    
+    return fetchedObjects;
+}
 
 @end
