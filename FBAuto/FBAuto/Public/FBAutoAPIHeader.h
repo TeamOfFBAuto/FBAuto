@@ -84,7 +84,7 @@ alpha:(a)]
 #define FBAUTO_MODIFY_ADDRESS @"http://fbautoapp.fblife.com/index.php?c=interface&a=edituser&authkey=%@&address=%@&op=address"
 
 //修改个人信息-用户头像
-#define FBAUTO_MODIFY_HEADER_IMAGE @"http://fbautoapp.fblife.com/index.php?c=interface&a=edituser&op=headimg&authkey=%@&headimg=%@"
+#define FBAUTO_MODIFY_HEADER_IMAGE @"http://fbautoapp.fblife.com/index.php?c=interface&a=edituser&op=headimg&authkey=%@"
 
 //找回密码
 #define FBAUTO_MODIFY_FIND_PASSWORD @"http://fbautoapp.fblife.com/index.php?c=interface&a=resetpass&phone=%@&code=%@&password=%@"

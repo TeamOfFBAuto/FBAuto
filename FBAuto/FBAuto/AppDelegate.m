@@ -18,6 +18,10 @@
 #import "PersonalViewController.h"//个人中心
 
 
+
+#import "ASIHTTPRequest.h"
+
+
 #import "XMPPServer.h"
 
 
@@ -222,5 +226,41 @@
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
+
+
+
+
+
+#pragma mark - 上传的代理回调方法
+-(void)requestFinished:(ASIHTTPRequest *)request
+{
+    NSLog(@"上传完成");
+    
+    if (request.tag == 123)//上传用户头像
+    {
+        NSLog(@"走了555");
+        NSDictionary * dic = [[NSDictionary alloc] initWithDictionary:[request.responseData objectFromJSONData]];
+        NSLog(@"tupiandic==%@",dic);
+        
+        if ([[dic objectForKey:@"errcode"]intValue] == 0) {
+            NSString *str = @"no";
+            [[NSUserDefaults standardUserDefaults]setObject:str forKey:@"gIsUpFace"];
+            
+        }else{
+            NSString *str = @"yes";
+            [[NSUserDefaults standardUserDefaults]setObject:str forKey:@"gIsUpFace"];
+        }
+        //发通知
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"chagePersonalInformation" object:nil];
+        
+    }
+    
+}
+
+
+
+
+
+
 
 @end
