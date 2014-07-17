@@ -110,11 +110,21 @@
         
         [UIView animateWithDuration:0.5 animations:^{
             secondTable.alpha = 1.0f;
+        } completion:^(BOOL finished) {
+            table.hidden = YES;
         }];
         
     }
     
     [secondTable reloadData];
+    
+    CGSize contentSize = secondTable.contentSize;
+    if (contentSize.height < sumHeight) {
+        
+        CGRect aFrame = secondTable.frame;
+        aFrame.size.height = contentSize.height;
+        secondTable.frame = aFrame;
+    }
 }
 
 
@@ -134,12 +144,23 @@
         
         [UIView animateWithDuration:0.2 animations:^{
             thirdTable.alpha = 1.0f;
+        } completion:^(BOOL finished) {
+           
+            secondTable.hidden = YES;
         }];
         
     }
     
     thirdArray = dataArr;
     [thirdTable reloadData];
+    
+    CGSize contentSize = thirdTable.contentSize;
+    if (contentSize.height < sumHeight) {
+        
+        CGRect aFrame = thirdTable.frame;
+        aFrame.size.height = contentSize.height;
+        thirdTable.frame = aFrame;
+    }
 }
 
 
@@ -255,7 +276,6 @@
     if (cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-//        cell = [[[NSBundle mainBundle]loadNibNamed:@"MenuCell" owner:self options:nil]objectAtIndex:0];
     }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -399,10 +419,12 @@
     if (sender.tag == 10000) {
         [secondTable removeFromSuperview];
         secondTable = nil;
+        table.hidden = NO;
     }else
     {
         [thirdTable removeFromSuperview];
         thirdTable = nil;
+        secondTable.hidden = NO;
     }
     
 }

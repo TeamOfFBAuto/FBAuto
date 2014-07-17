@@ -596,7 +596,8 @@
             
             _page --;
             
-            [_table finishReloadigData];
+            [_table performSelector:@selector(finishReloadigData) withObject:nil afterDelay:0.5];
+//            [_table finishReloadigData];
         }
         
     }];
@@ -627,18 +628,14 @@
         
         _dataArray = dataArr;
         
-        NSLog(@"走着了");
-        
     }else
     {
         NSMutableArray *newArr = [NSMutableArray arrayWithArray:_dataArray];
         [newArr addObjectsFromArray:dataArr];
         _dataArray = newArr;
-        
-        NSLog(@"走着了 22");
     }
     
-    [_table finishReloadigData];
+    [_table performSelector:@selector(finishReloadigData) withObject:nil afterDelay:0.5];
 }
 - (void)clickToDetail:(NSString *)carId
 {

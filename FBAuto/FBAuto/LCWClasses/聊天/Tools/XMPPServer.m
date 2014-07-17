@@ -417,7 +417,7 @@
         
         if ([@"query" isEqualToString:query.name]) {
             
-            NSMutableArray *userArray = [NSMutableArray array];
+//            NSMutableArray *userArray = [NSMutableArray array];
             
             NSArray *items = [query children];
             

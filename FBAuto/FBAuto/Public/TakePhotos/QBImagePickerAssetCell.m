@@ -192,7 +192,7 @@
 -(void)pushToPreViewControllerWith:(QBImagePickerAssetView *)assetView
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(PushToPreviewControllerAtIndex:WitCell:)]) {
-        [self.delegate PushToPreviewControllerAtIndex:(assetView.tag-1) WitCell:self];
+        [self.delegate PushToPreviewControllerAtIndex:((int)assetView.tag-1) WitCell:self];
     }
 }
 

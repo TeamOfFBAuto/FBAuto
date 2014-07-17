@@ -52,7 +52,7 @@
     self.nameLabel.text = aModel.buddyname;
     self.phoneNumLabel.text = aModel.phone;
     self.addressLabel.text = [FBCityData cityNameForId:[aModel.province intValue]];
-    [self.iconImage setImageWithURL:[NSURL URLWithString:aModel.face] placeholderImage:[UIImage imageNamed:@"detail_test"]];
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:aModel.face] placeholderImage:[UIImage imageNamed:@"detail_test"]];
 }
 
 @end

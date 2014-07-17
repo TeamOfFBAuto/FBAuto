@@ -487,7 +487,7 @@
     }else if (tableView == colorTable)
     {
         NSString *colorName = [colorArray objectAtIndex:indexPath.row];
-        selectBlock(blockStyle,colorName,[NSString stringWithFormat:@"%d",indexPath.row]);
+        selectBlock(blockStyle,colorName,[NSString stringWithFormat:@"%ld",indexPath.row]);
         [self hidden];
         
     }else

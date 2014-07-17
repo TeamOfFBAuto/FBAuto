@@ -45,7 +45,7 @@
     
     UIColor * cc = RGBCOLOR(91,138,59);
     
-    NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
+    NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:NSShadowAttributeName,NSFontAttributeName,NSShadowAttributeName,nil]];
     
     
     self.navigationController.navigationBar.titleTextAttributes = dict;

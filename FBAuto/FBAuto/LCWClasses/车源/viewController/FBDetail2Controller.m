@@ -82,7 +82,7 @@
         self.car_outColor_Label.text = [dic objectForKey:@"color_out"];
         self.car_inColor_label.text = [dic objectForKey:@"color_in"];
         self.car_standard_label.text = [dic objectForKey:@"carfrom"];
-        self.car_time_label.text = [dic objectForKey:@"dateline"];
+        self.car_time_label.text = [LCWTools timechange2:[dic objectForKey:@"dateline"]];
         self.car_detail_label.text = [dic objectForKey:@"cardiscrib"];
         
         //商家信息

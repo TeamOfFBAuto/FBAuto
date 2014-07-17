@@ -79,7 +79,7 @@ typedef void(^ friendAction) (id);
 
 - (void)login:(loginAction)loginBack;//登录
 
-- (void)friendAction: (friendAction *)friend_Back;
+//- (void)friendAction: (friendAction *)friend_Back;
 
 @end
 

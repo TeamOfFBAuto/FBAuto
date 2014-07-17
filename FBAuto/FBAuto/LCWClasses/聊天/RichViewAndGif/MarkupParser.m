@@ -149,7 +149,7 @@ static CGFloat widthCallback( void* ref ){
                   width, @"width",
                   height, @"height",
                   fileName, @"fileName",
-                  [NSNumber numberWithInt:[string length]], @"location",
+                  [NSNumber numberWithInt:(int)[string length]], @"location",
                   nil]];
                 
                 //render empty space for drawing the image in the text //1给callbacks指定回调函数

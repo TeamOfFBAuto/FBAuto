@@ -28,7 +28,7 @@
 {
     self.nameAndTypeL.text = aModel.buddyname;
     self.phoneNumAndAddressL.text = [NSString stringWithFormat:@"%@(%@)",aModel.phone,[FBCityData cityNameForId:[aModel.province intValue]]];
-    [self.iconImageV setImageWithURL:[NSURL URLWithString:aModel.face] placeholderImage:[UIImage imageNamed:@"detail_test"]];
+    [self.iconImageV sd_setImageWithURL:[NSURL URLWithString:aModel.face] placeholderImage:[UIImage imageNamed:@"detail_test"]];
 }
 
 @end
