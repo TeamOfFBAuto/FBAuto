@@ -277,45 +277,48 @@
     
     
     //ASI上传
-    //[self test];
+    [self test];
     
     [_tableview reloadData];
     
 }
 
-//-(void)test{
-//    
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        
-//        NSString* fullURL = [NSString stringWithFormat:@"http://quan.fblife.com/index.php?c=interface&a=updatehead&authkey=%@",[GMAPI getAuthkey]];
-//        
-//        NSLog(@"上传图片请求的地址===%@",fullURL);
-//        
-//        request__ = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:fullURL]];
-//        AppDelegate *_appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
-//        request__.delegate = _appDelegate;
-//        request__.tag = 123;
-//        
-//        //得到图片的data
-//        NSData* data;
-//        //获取图片质量
-//        NSMutableData *myRequestData=[NSMutableData data];
-//        [request__ setPostFormat:ASIMultipartFormDataPostFormat];
-//        data = UIImageJPEGRepresentation(self.userUpFaceImage,0.5);
-//        NSLog(@"xxxx===%@",data);
-//        [request__ addRequestHeader:@"uphead" value:[NSString stringWithFormat:@"%d", [myRequestData length]]];
-//        //设置http body
-//        [request__ addData:data withFileName:[NSString stringWithFormat:@"boris.png"] andContentType:@"image/PNG" forKey:[NSString stringWithFormat:@"uphead"]];
-//        
-//        [request__ setRequestMethod:@"POST"];
-//        request__.cachePolicy = TT_CACHE_EXPIRATION_AGE_NEVER;
-//        request__.cacheStoragePolicy = ASICacheForSessionDurationCacheStoragePolicy;
-//        [request__ startAsynchronous];
-//        
-//    });
-//    
-//    
-//}
+
+#pragma mark - 上传头像
+#define TT_CACHE_EXPIRATION_AGE_NEVER     (1.0 / 0.0)
+-(void)test{
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        NSString* fullURL = [NSString stringWithFormat:FBAUTO_MODIFY_HEADER_IMAGE,[GMAPI getAuthkey]];
+        
+        NSLog(@"上传图片请求的地址===%@",fullURL);
+        
+        request__ = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:fullURL]];
+        AppDelegate *_appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+        request__.delegate = _appDelegate;
+        request__.tag = 123;
+        
+        //得到图片的data
+        NSData* data;
+        //获取图片质量
+        NSMutableData *myRequestData=[NSMutableData data];
+        [request__ setPostFormat:ASIMultipartFormDataPostFormat];
+        data = UIImageJPEGRepresentation(self.userUpFaceImage,0.5);
+        NSLog(@"xxxx===%@",data);
+        [request__ addRequestHeader:@"uphead" value:[NSString stringWithFormat:@"%lu", (unsigned long)[myRequestData length]]];
+        //设置http body
+        [request__ addData:data withFileName:[NSString stringWithFormat:@"boris.png"] andContentType:@"image/PNG" forKey:[NSString stringWithFormat:@"headimg"]];
+        
+        [request__ setRequestMethod:@"POST"];
+        request__.cachePolicy = TT_CACHE_EXPIRATION_AGE_NEVER;
+        request__.cacheStoragePolicy = ASICacheForSessionDurationCacheStoragePolicy;
+        [request__ startAsynchronous];
+        
+    });
+    
+    
+}
 
 
 @end

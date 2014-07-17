@@ -18,6 +18,9 @@
 #import "ASIFormDataRequest.h"
 
 
+//上传代理类
+#import "AppDelegate.h"
+
 @class GperInfoTableViewCell;
 
 @interface GperInfoViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,MLImageCropDelegate,ASIHTTPRequestDelegate>
@@ -27,7 +30,7 @@
     
     GperInfoTableViewCell *_tmpCell;//临时cell用户获取单元格高度
     
-    
+    ASIFormDataRequest *request__;//tap==123 上传头像
 }
 
 @property(nonatomic,strong)NSString *userName;//用户名
