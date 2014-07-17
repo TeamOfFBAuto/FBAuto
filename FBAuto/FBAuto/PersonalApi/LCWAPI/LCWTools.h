@@ -14,6 +14,8 @@
 
 #define ERROR_INFO @"ERRO_INFO" //错误信息
 
+#define NEED_REQUEST_CAR_BRAND @"NEED_REQUEST_CAR_BRAND" //需要请求车型数据
+
 typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 
 @interface LCWTools : NSObject<NSURLConnectionDelegate,NSURLConnectionDataDelegate>
@@ -40,6 +42,7 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 + (void)alertText:(NSString *)text;
 +(NSString *)timechange:(NSString *)placetime;
 +(NSString *)timechange2:(NSString *)placetime;
++ (void)showMBProgressWithText:(NSString *)text addToView:(UIView *)aView;
 
 /**
  *  验证 邮箱、电话等

@@ -169,7 +169,7 @@
         [self refreshUI];
 
     }failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
+        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
     }];
     
 }

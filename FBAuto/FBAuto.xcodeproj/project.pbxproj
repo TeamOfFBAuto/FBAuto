@@ -167,6 +167,7 @@
 		1391EF0A1977A1FF00FDC52A /* GloadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391EF091977A1FF00FDC52A /* GloadingView.m */; };
 		1391EF171977A4AF00FDC52A /* LCWTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391EF161977A4AF00FDC52A /* LCWTools.m */; };
 		1391EF1A1977A4CC00FDC52A /* RefreshTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391EF191977A4CC00FDC52A /* RefreshTableView.m */; };
+		1391EF1D1977FC6D00FDC52A /* CarClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391EF1C1977FC6D00FDC52A /* CarClass.m */; };
 		13D5DF721961306000804835 /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D5DF711961306000804835 /* UIView+Frame.m */; };
 		13D5DF7E19615A3500804835 /* NSString+PinYin.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D5DF7D19615A3500804835 /* NSString+PinYin.m */; };
 		13D5DFD91961758E00804835 /* fangdajing_icon36_36@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13D5DF831961758E00804835 /* fangdajing_icon36_36@2x.png */; };
@@ -562,6 +563,8 @@
 		1391EF161977A4AF00FDC52A /* LCWTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCWTools.m; sourceTree = "<group>"; };
 		1391EF181977A4CC00FDC52A /* RefreshTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefreshTableView.h; sourceTree = "<group>"; };
 		1391EF191977A4CC00FDC52A /* RefreshTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefreshTableView.m; sourceTree = "<group>"; };
+		1391EF1B1977FC6D00FDC52A /* CarClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarClass.h; sourceTree = "<group>"; };
+		1391EF1C1977FC6D00FDC52A /* CarClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarClass.m; sourceTree = "<group>"; };
 		13D5DF701961306000804835 /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Frame.h"; sourceTree = "<group>"; };
 		13D5DF711961306000804835 /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Frame.m"; sourceTree = "<group>"; };
 		13D5DF7C19615A3500804835 /* NSString+PinYin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PinYin.h"; sourceTree = "<group>"; };
@@ -1401,6 +1404,8 @@
 				137FEB0B1974D48100CDBD89 /* CarType.m */,
 				137FEB071974D48100CDBD89 /* CarBrand.h */,
 				137FEB081974D48100CDBD89 /* CarBrand.m */,
+				1391EF1B1977FC6D00FDC52A /* CarClass.h */,
+				1391EF1C1977FC6D00FDC52A /* CarClass.m */,
 				137FEB041974D48100CDBD89 /* CarStyle.h */,
 				137FEB051974D48100CDBD89 /* CarStyle.m */,
 				13D5E04D1962A14E00804835 /* City.h */,
@@ -2252,6 +2257,7 @@
 				190BFE21195C362F0098E0F4 /* SzkLoadData.m in Sources */,
 				1336BC24196B91F70011B4D9 /* NSString+Emoji.m in Sources */,
 				13737C8E1965420000941746 /* PersonalViewController.m in Sources */,
+				1391EF1D1977FC6D00FDC52A /* CarClass.m in Sources */,
 				13D5E0611962A14E00804835 /* MenuModel.m in Sources */,
 				E33ECB05196D211200DDD72D /* GpersonTZViewController.m in Sources */,
 				1336BC13196B8A4F0011B4D9 /* Room.m in Sources */,

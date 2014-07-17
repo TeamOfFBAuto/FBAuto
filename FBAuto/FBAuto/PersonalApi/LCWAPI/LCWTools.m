@@ -74,8 +74,8 @@
                 NSString *erroInfo = [dic objectForKey:@"errinfo"];
                 
                 if (erroCode != 0) {
-                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:erroInfo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                    [alert show];
+//                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:erroInfo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//                    [alert show];
                     
                     NSDictionary *failDic = @{ERROR_INFO:erroInfo};
                     failBlock(failDic,connectionError);
@@ -113,68 +113,6 @@
     }];
 
 }
-
-
-//- (void)requestCompletion:(void(^)(NSDictionary *result,NSError *erro))completionBlock
-//{
-//    successBlock = completionBlock;
-//    
-//    NSString *newStr = [requestUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-//    
-//    NSLog(@"requestUrl %@",newStr);
-//    NSURL *urlS = [NSURL URLWithString:newStr];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urlS cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:2];
-//    
-//    if (isPostRequest) {
-//        
-//        [request setHTTPMethod:@"POST"];
-//        
-//        [request setHTTPBody:requestData];
-//    }
-//    
-//    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-//        
-//        if (data.length > 0) {
-//            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-//            
-//            NSLog(@"response :%@",response);
-//            
-//            if ([dic isKindOfClass:[NSDictionary class]]) {
-//                
-//                int erroCode = [[dic objectForKey:@"errcode"]intValue];
-//                NSString *erroInfo = [dic objectForKey:@"errinfo"];
-//                
-//                if (erroCode != 0) {
-//                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:erroInfo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//                    [alert show];
-//                    
-//                    return ;
-//                }else
-//                {
-//                    successBlock(dic,connectionError);//传递的已经是没有错误的结果
-//                }
-//            }
-//            
-//        }else
-//        {
-//            NSLog(@"data 为空 connectionError %@",connectionError);
-//            
-//            switch (connectionError.code) {
-//                case NSURLErrorNotConnectedToInternet:
-////                    [self showMBProgressWithText:@"无网络连接"];
-//                    break;
-//                case NSURLErrorTimedOut:
-////                    [self showMBProgressWithText:@"网络连接超时"];
-//                    break;
-//                default:
-////                    [self showMBProgressWithText:@"网络未知错误"];
-//                    break;
-//            }
-//        }
-//       
-//    }];
-//}
-
 
 #pragma - mark 验证邮箱、电话等有效性
 
@@ -268,6 +206,8 @@
 
 #pragma - mark 小工具
 
+//时间线转化
+
 +(NSString *)timechange:(NSString *)placetime
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
@@ -290,6 +230,7 @@
     return confromTimespStr;
 }
 
+//alert 提示
 
 + (void)alertText:(NSString *)text
 {
@@ -297,6 +238,17 @@
     [alert show];
 }
 
+
++ (void)showMBProgressWithText:(NSString *)text addToView:(UIView *)aView
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:aView animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = text;
+    hud.margin = 20.f;
+    hud.yOffset = 150.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:1.5];
+}
 
 #pragma - mark CoreData数据管理
 

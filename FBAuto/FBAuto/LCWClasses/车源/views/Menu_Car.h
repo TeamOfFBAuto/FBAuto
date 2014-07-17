@@ -38,6 +38,8 @@ typedef void(^SelectCarBlock) (NSString *select);
     NSString *brandId;//当前id
     NSString *typeId;
     
+    BOOL _needRefresh;//需要刷新数据
+    
 }
 @property(nonatomic,assign)NSInteger itemIndex;//第几个item,用于控制箭头位置
 
@@ -45,5 +47,7 @@ typedef void(^SelectCarBlock) (NSString *select);
 - (void)hidden;
 - (id)initWithFrontView:(UIView *)frontView;
 - (void)selectBlock:(SelectCarBlock)aBlock;
+
+- (void)reloadFirstTable;
 
 @end

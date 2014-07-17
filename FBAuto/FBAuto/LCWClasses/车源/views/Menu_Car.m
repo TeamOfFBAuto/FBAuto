@@ -177,6 +177,8 @@
     CGPoint arrowPoint = arrowImage.center;
     arrowPoint = CGPointMake(self.width / 10 + (self.width / 5) * 0, arrowPoint.y);
     arrowImage.center = arrowPoint;
+    
+    [self reloadFirstTable];
 }
 
 - (void)hidden

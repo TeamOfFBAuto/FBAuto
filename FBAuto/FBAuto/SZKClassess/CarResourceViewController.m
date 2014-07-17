@@ -2,7 +2,7 @@
 //  CarResourceViewController.m
 //  FBAuto
 //
-//  Created by 史忠坤 on 14-6-25.
+//  Created by lcw on 14-6-25.
 //  Copyright (c) 2014年 szk. All rights reserved.
 //
 
@@ -70,6 +70,8 @@
     NSArray *_dataArray;
     
     UIView *maskView;//遮罩
+    
+    BOOL _needRefreshCarBrand;//是否需要更新车型数据
 }
 
 @end
@@ -94,6 +96,13 @@
         
     }else{
         NSLog(@"xxname===%@",[GMAPI getUsername]);
+    }
+    
+    //定时更新
+    
+    if ([self needGetCarTypeData]) {
+        
+        [self getCarData];
     }
 }
 
@@ -141,31 +150,24 @@
     
     [self createMask];
     
-    //定时更新
+    [_table showRefreshHeader:YES];
     
-    if ([self needGetCarTypeData]) {
-        
-        [self getCarData];
-    }
-    
-    
-    _car = @"000000000";
-    _spot_future = 0;
-    _color_out = 0;
-    _color_in = 0;
-    _carfrom = 0;
-    _usertype = 0;
-    _province = 0;
-    _city = 0;
-    _page = 1;
-    
-    [self getCarSourceList];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getCarBrandData:) name:NEED_REQUEST_CAR_BRAND object:nil];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma - mark 根据通知获取车型数据
+
+- (void)getCarBrandData:(NSNotification *)notification
+{
+    _needRefreshCarBrand = YES;
+    
+    [self getCarData];
 }
 
 #pragma - mark 搜索遮罩
@@ -341,11 +343,15 @@
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failDic %@",failDic);
+        
         if (_table.isReloadData) {
             
             _searchPage --;
             
-            [_table finishReloadigData];
+            [_table performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+        }else
+        {
+           [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
         }
     }];
 
@@ -405,14 +411,22 @@
             }
             
             __weak typeof(CarResourceViewController *)weakSelf = self;
+            __weak typeof (Menu_Car *)weak_menu_car = menu_Car;
             
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                
                 
                 [weakSelf localCardata:result];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                        [weak_menu_car reloadFirstTable];
+                });
             });
         }
     }failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"failDic %@",failDic);
+        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
     }];
 }
 
@@ -592,12 +606,14 @@
     }failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failDic %@",failDic);
+        
+        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
+        
         if (_table.isReloadData) {
             
             _page --;
             
-            [_table performSelector:@selector(finishReloadigData) withObject:nil afterDelay:0.5];
-//            [_table finishReloadigData];
+            [_table performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
         }
         
     }];
@@ -635,7 +651,7 @@
         _dataArray = newArr;
     }
     
-    [_table performSelector:@selector(finishReloadigData) withObject:nil afterDelay:0.5];
+    [_table performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
 }
 - (void)clickToDetail:(NSString *)carId
 {
@@ -937,8 +953,10 @@
         cell.contentView.backgroundColor = [UIColor whiteColor];
     }
     
-    CarSourceClass *aCar = [_dataArray objectAtIndex:indexPath.row];
-    [cell setCellDataWithModel:aCar];
+    if (indexPath.row < _dataArray.count) {
+        CarSourceClass *aCar = [_dataArray objectAtIndex:indexPath.row];
+        [cell setCellDataWithModel:aCar];
+    }
     
     return cell;
     

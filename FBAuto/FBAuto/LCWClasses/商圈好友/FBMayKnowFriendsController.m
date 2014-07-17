@@ -135,6 +135,7 @@
         
     }failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"failDic %@",failDic);
+        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
     }];
     
 }
@@ -183,6 +184,7 @@
         }
     }failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"failDic %@",failDic);
+        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
     }];
 }
 
@@ -217,6 +219,7 @@
         }
     }failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"failDic %@",failDic);
+        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
     }];
 }
 
