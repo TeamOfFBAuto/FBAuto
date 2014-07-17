@@ -11,6 +11,8 @@
 
 #import "GjjxxViewController.h"//简介 和 详细的界面
 
+#import "GlocalUserImage.h"
+
 @implementation GperInfoTableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -70,6 +72,16 @@
         UIImageView *touxiangImv = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(titielLabel.frame)+187, 25, 45, 45)];
         touxiangImv.backgroundColor = RGBCOLOR(180, 180, 180);
         
+        if ([GlocalUserImage getUserFaceImage]) {
+            touxiangImv.image = [GlocalUserImage getUserFaceImage];
+        }else{
+            [touxiangImv setImageWithURL:[NSURL URLWithString:self.delegate.headimage] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+                NSData *data = UIImageJPEGRepresentation(image, 0.5);
+                [GlocalUserImage setUserFaceImageWithData:data];
+                
+            }];
+        }
+        
         
         //添加视图
         [self.contentView addSubview:kuang];
@@ -126,20 +138,18 @@
         
         //功能
         if (theIndexPath.row == 3 || theIndexPath.row == 4) {//详细地址 简介
-            [kuang addTarget:self action:@selector(tui) forControlEvents:UIControlEventTouchUpInside];
+            if (theIndexPath.row == 3) {//详细地址
+                kuang.tag = 3;
+                [kuang addTarget:self action:@selector(tui:) forControlEvents:UIControlEventTouchUpInside];
+            }else if (theIndexPath.row == 4){//简介
+                kuang.tag = 4;
+                [kuang addTarget:self action:@selector(tui:) forControlEvents:UIControlEventTouchUpInside];
+            }
+            
         }
         
-        
-        
-        
-        
+
     }
-    
-    
-    
-    
-    
-    
     
     return height;
 }
@@ -148,8 +158,10 @@
 
 
 //简介 和 详细信息 推的界面
--(void)tui{
-    [self.delegate.navigationController pushViewController:[[GjjxxViewController alloc]init] animated:YES];
+-(void)tui:(UIButton *)sender{
+    GjjxxViewController *aaa = [[GjjxxViewController alloc]init];
+    aaa.gtype = (int)sender.tag;
+    [self.delegate.navigationController pushViewController:aaa animated:YES];
 }
 
 

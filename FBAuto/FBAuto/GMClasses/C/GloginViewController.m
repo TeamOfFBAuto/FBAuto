@@ -129,6 +129,8 @@
             [defaults setObject:userid forKey:USERID];
             [defaults setObject:username forKey:USERNAME];
             [defaults setObject:authkey forKey:USERAUTHKEY];
+            [defaults setObject:passw forKey:USERPASSWORD];
+            
             
             [defaults synchronize];
             

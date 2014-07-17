@@ -45,6 +45,14 @@
     _tableview.separatorStyle = UITableViewCellSelectionStyleNone;
     [self.view addSubview:_tableview];
     
+    
+    
+    //接收通知
+    [[NSNotificationCenter defaultCenter]
+     
+     addObserver:self selector:@selector(prepareNetData) name:FBAUTO_CHANGEPERSONALINFO object:nil];
+    
+    
     //请求网络数据
     [self prepareNetData];
 
@@ -79,9 +87,15 @@
         
         //地址
         self.address = [NSString stringWithFormat:@"%@",[dataInfo objectForKey:@"address"]];
+        NSLog(@"%@",self.address);
         
         //简介
         self.jianjie = [NSString stringWithFormat:@"%@",[dataInfo objectForKey:@"intro"]];
+        NSLog(@"%@",self.jianjie);
+        
+        //头像
+        self.headimage = [NSString stringWithFormat:@"%@",[dataInfo objectForKey:@"headimage"]];
+        
         
         
         [_tableview reloadData];
@@ -101,6 +115,10 @@
         cell = [[GperInfoTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     cell.delegate = self;
+    
+    for (UIView *view in cell.contentView.subviews) {
+        [view removeFromSuperview];
+    }
     [cell loadViewWithIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     

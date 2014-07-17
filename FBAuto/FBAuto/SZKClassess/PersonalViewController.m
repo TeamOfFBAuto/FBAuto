@@ -18,7 +18,8 @@
 #import "GmarkViewController.h"//我的收藏
 #import "GperInfoViewController.h"//我的资料
 #import "GlxwmViewController.h"//联系我们
-
+#import "GmLoadData.h"//网路请求类
+#import "GlocalUserImage.h"//本地化图片
 
 //测试
 #import "GyhzyViewController.h"//用户主页
@@ -51,30 +52,37 @@
     
     //头像
     self.userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake(10, 15, 45, 45)];
-    self.userFaceImv.backgroundColor = [UIColor redColor];
+    self.userFaceImv.backgroundColor = [UIColor grayColor];
+    
     [self.view addSubview:self.userFaceImv];
     
     //公司名称
-    self.nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImv.frame)+10, CGRectGetMinY(self.userFaceImv.frame)+5, 245, 15)];
-    self.nameLabel.font = [UIFont systemFontOfSize:15];
-    self.nameLabel.backgroundColor = [UIColor orangeColor];
+    self.nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.userFaceImv.frame)+10, CGRectGetMinY(self.userFaceImv.frame)+4, 245, 17)];
+    self.nameLabel.font = [UIFont systemFontOfSize:14];
     [self.view addSubview:self.nameLabel];
     
-    self.nameLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(self.nameLabel.frame.origin.x, CGRectGetMaxY(self.nameLabel.frame)+6, 245, 13)];
-    self.nameLabel1.backgroundColor = [UIColor purpleColor];
+    //公司全称
+    self.nameLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(self.nameLabel.frame.origin.x, CGRectGetMaxY(self.nameLabel.frame)+6, 245, 14)];
     self.nameLabel1.font = [UIFont systemFontOfSize:13];
     [self.view addSubview:self.nameLabel1];
     
     
     
     NSArray *titileArray = @[@"商圈",@"消息",@"通知"];
+    NSArray *imageArray = @[[UIImage imageNamed:@"shangquam182_58.png"],[UIImage imageNamed:@"xiaoxi182_58.png"],[UIImage imageNamed:@"tongzhi182_58.png"]];
+    
     
     //商圈 消息 通知
     for (int i = 0; i<3; i++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        //文字
         [btn setTitle:titileArray[i] forState:UIControlStateNormal];
         btn.titleLabel.font = [UIFont systemFontOfSize:13];
         [btn setTitleEdgeInsets:UIEdgeInsetsMake(8, 43, 8, 22)];
+        //图片
+        [btn setBackgroundImage:imageArray[i] forState:UIControlStateNormal];
+        
+        //frame
         btn.frame = CGRectMake(10+i*105, CGRectGetMaxY(self.userFaceImv.frame)+14, 91, 30);
         btn.backgroundColor = [UIColor orangeColor];
         btn.layer.cornerRadius = 4;
@@ -93,8 +101,8 @@
     
     
     
-    
-    //[self test];
+    //请求网络数据
+    [self prepareNetData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -102,6 +110,33 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+
+#pragma mark - 请求网络数据
+-(void)prepareNetData{
+    GmLoadData *gmloadData = [[GmLoadData alloc]init];
+    [gmloadData SeturlStr:[NSString stringWithFormat:FBAUTO_GET_USER_INFORMATION,[GMAPI getUid]] block:^(NSDictionary *dataInfo, NSString *errorinfo, NSInteger errcode) {
+        if (errcode == 0) {
+            NSLog(@"请求用户信息成功");
+            //公司头像
+            [self.userFaceImv setImageWithURL:[NSURL URLWithString:[dataInfo objectForKey:@"headimage"]] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+                [GlocalUserImage setUserFaceImageWithData:UIImageJPEGRepresentation(image, 0.5)];
+                
+            }];
+            //公司名称
+            self.nameLabel.text = [dataInfo objectForKey:@"name"];
+            NSLog(@"公司名称：%@",self.nameLabel);
+            self.nameLabel1.text = [dataInfo objectForKey:@"fullname"];
+            NSLog(@"公司全称：%@",self.nameLabel1);
+            [self.view reloadInputViews];
+        }else{
+            NSLog(@"请求用户信息失败");
+            NSLog(@"%@",errorinfo);
+        }
+    }];
+}
+
 
 
 #pragma mark - UITableViewDelegate && UITableViewDataSource
@@ -162,6 +197,14 @@
         cell = [[GPersonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
+    for (UIView *view in cell.contentView.subviews) {
+        [view removeFromSuperview];
+    }
+    
+    //添加控件
+    [cell loadViewWithIndexPath:indexPath];
+    
+    //遮挡重叠的黑线
     UIView *xiatiao = [[UIView alloc]initWithFrame:CGRectMake(10.5, 43, 299, 1)];
     xiatiao.backgroundColor = [UIColor whiteColor];
     [cell.contentView addSubview:xiatiao];
@@ -170,6 +213,7 @@
         xiatiao.hidden = YES;
     }
     
+    //给titleLabel赋值
     [cell dataWithTitleLableWithIndexPath:indexPath];
     
     
@@ -187,9 +231,12 @@
             }];
         }];
         
+        NSLog(@"%ld",(long)index);
         
         if (index == 5) {//修改密码
+            
             [self.navigationController pushViewController:[[GChangePwViewController alloc]init] animated:YES];
+            
         }else if (index == 1){//我的资料
             [self.navigationController pushViewController:[[GperInfoViewController alloc]init] animated:YES];
             

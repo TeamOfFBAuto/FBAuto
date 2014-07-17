@@ -9,6 +9,8 @@
 //个人中心点击修改密码跳转的页面
 #import "GChangePwViewController.h"
 
+#import "GmLoadData.h"//网络请求类
+
 @interface GChangePwViewController ()
 
 @end
@@ -93,9 +95,36 @@
 //修改按钮
 -(void)xiugai{
     NSLog(@"%s",__FUNCTION__);
+    UITextField *nTf = self.tfArray[0];//新密码tf
+    UITextField *nTf1 = self.tfArray[1];//新密码tf1
+    //NSString *oldPs = [GMAPI getUserPassWord];//老密码
+    if ([nTf.text isEqualToString:nTf1.text]) {
+        [self testWithNewPsw:nTf.text];
+    }else{
+        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"两次输入结果不一致" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [al show];
+    }
+    
+    
 }
 
-
+-(void)testWithNewPsw:(NSString *)pw{
+    NSString *newPassWord = [pw stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    GmLoadData *_test=[[GmLoadData alloc]init];
+    NSString *str = [NSString stringWithFormat:FBAUTO_MODIFY_PASSWORD,[GMAPI getAuthkey],newPassWord];
+    
+    //get
+    [_test SeturlStr:str block:^(NSDictionary *dataInfo, NSString *errorinfo, NSInteger errcode) {
+        if (errcode == 0) {
+            NSLog(@"修改密码成功");
+            UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"修改密码成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [al show];
+        }else{
+            NSLog(@"修改密码失败 == %@",errorinfo);
+        }
+    }];
+}
 
 - (void)didReceiveMemoryWarning
 {

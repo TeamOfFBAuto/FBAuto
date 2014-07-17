@@ -16,23 +16,6 @@
     if (self) {
         // Initialization code
         
-        viewTag++;
-        
-        
-        self.kuang = [[UIView alloc]initWithFrame:CGRectMake(10, 0, 300, 44)];
-        self.kuang.layer.borderWidth = 0.5;
-        self.kuang.layer.borderColor = [RGBCOLOR(220, 220, 220)CGColor];
-        [self.contentView addSubview:self.kuang];
-        self.kuang.tag = viewTag;
-        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gdoTap:)];
-        [self.kuang addGestureRecognizer:tap];
-        
-        self.titileLabel= [[UILabel alloc]initWithFrame:CGRectMake(12, 14, 60, 17)];
-        self.titileLabel.font = [UIFont systemFontOfSize:15];
-        //self.titileLabel.backgroundColor = [UIColor orangeColor];
-        [self.contentView addSubview:self.titileLabel];
-        
-        
     }
     return self;
 }
@@ -43,6 +26,38 @@
     _kuangBlock = kuangBlock;
 }
 
+
+
+
+//加载控件
+-(void)loadViewWithIndexPath:(NSIndexPath *)theIndexPatch{
+    viewTag++;
+    
+    //背景框
+    self.kuang = [[UIView alloc]initWithFrame:CGRectMake(10, 0, 300, 44)];
+    self.kuang.layer.borderWidth = 0.5;
+    self.kuang.layer.borderColor = [RGBCOLOR(220, 220, 220)CGColor];
+    [self.contentView addSubview:self.kuang];
+    //设置背景框的tag值
+    if (theIndexPatch.section == 0) {
+        self.kuang.tag = theIndexPatch.row+1;//1 2 3 4
+    }else if (theIndexPatch.section == 1){
+        self.kuang.tag = theIndexPatch.row +5;//5 6 7
+    }
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gdoTap:)];
+    [self.kuang addGestureRecognizer:tap];
+    
+    //标题lable
+    self.titileLabel= [[UILabel alloc]initWithFrame:CGRectMake(22, 14, 60, 17)];
+    self.titileLabel.font = [UIFont systemFontOfSize:15];
+    [self.contentView addSubview:self.titileLabel];
+    
+    
+    //箭头
+    UIImageView *jiantou = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.titileLabel.frame)+210, 18, 5, 9)];
+    [jiantou setImage:[UIImage imageNamed:@"jiantou_hui10_18.png"]];
+    [self.contentView addSubview:jiantou];
+}
 
 
 //给标题赋值

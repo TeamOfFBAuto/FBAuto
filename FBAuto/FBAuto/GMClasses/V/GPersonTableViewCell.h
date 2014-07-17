@@ -26,5 +26,8 @@ typedef void (^kuangBlock)(NSInteger index);
 //block的set方法
 -(void)setKuangBlock:(kuangBlock)kuangBlock;
 
+//加载控件
+-(void)loadViewWithIndexPath:(NSIndexPath *)theIndexPatch;
+
 
 @end

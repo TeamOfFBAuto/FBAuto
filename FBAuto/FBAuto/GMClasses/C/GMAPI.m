@@ -53,6 +53,12 @@
 }
 
 
+//获取用户密码
++(NSString *)getUserPassWord{
+    NSString *str_password = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:USERPASSWORD]];
+    return str_password;
+}
+
 
 
 

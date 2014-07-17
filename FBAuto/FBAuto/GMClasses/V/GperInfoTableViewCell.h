@@ -13,7 +13,6 @@ typedef void (^userFaceBlock)();//头像点击block
 
 @interface GperInfoTableViewCell : UITableViewCell
 
-
 @property(nonatomic,assign)GperInfoViewController *delegate;//推简介和详细的界面
 
 //block

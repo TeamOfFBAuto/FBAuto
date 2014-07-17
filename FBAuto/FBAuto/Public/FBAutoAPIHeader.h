@@ -35,6 +35,7 @@
 
 #define DEVICETOKEN @"devicetoken"
 
+#define USERPASSWORD @"userpassword"
 
 //颜色
 
@@ -89,6 +90,9 @@ alpha:(a)]
 
 //找回密码
 #define FBAUTO_MODIFY_FIND_PASSWORD @"http://fbautoapp.fblife.com/index.php?c=interface&a=resetpass&phone=%@&code=%@&password=%@"
+
+//修改完用户信息发送的通知
+#define FBAUTO_CHANGEPERSONALINFO @"changePersonalInfoMation"
 
 //好友API=================
 

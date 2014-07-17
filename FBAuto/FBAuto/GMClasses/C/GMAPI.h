@@ -19,4 +19,6 @@
 
 +(NSString *)getUid;
 
++(NSString *)getUserPassWord;
+
 @end
