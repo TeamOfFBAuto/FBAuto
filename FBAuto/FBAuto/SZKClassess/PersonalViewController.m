@@ -120,10 +120,10 @@
         if (errcode == 0) {
             NSLog(@"请求用户信息成功");
             //公司头像
-            [self.userFaceImv setImageWithURL:[NSURL URLWithString:[dataInfo objectForKey:@"headimage"]] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+            [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:[dataInfo objectForKey:@"headimage"]] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                 [GlocalUserImage setUserFaceImageWithData:UIImageJPEGRepresentation(image, 0.5)];
-                
             }];
+            
             //公司名称
             self.nameLabel.text = [dataInfo objectForKey:@"name"];
             NSLog(@"公司名称：%@",self.nameLabel);

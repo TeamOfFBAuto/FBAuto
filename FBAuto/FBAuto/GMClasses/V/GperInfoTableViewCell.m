@@ -13,6 +13,10 @@
 
 #import "GlocalUserImage.h"
 
+#import "UIImageView+AFNetworking.h"
+
+
+
 @implementation GperInfoTableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -75,10 +79,9 @@
         if ([GlocalUserImage getUserFaceImage]) {
             touxiangImv.image = [GlocalUserImage getUserFaceImage];
         }else{
-            [touxiangImv setImageWithURL:[NSURL URLWithString:self.delegate.headimage] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+            [touxiangImv sd_setImageWithURL:[NSURL URLWithString:self.delegate.headimage] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                 NSData *data = UIImageJPEGRepresentation(image, 0.5);
                 [GlocalUserImage setUserFaceImageWithData:data];
-                
             }];
         }
         
