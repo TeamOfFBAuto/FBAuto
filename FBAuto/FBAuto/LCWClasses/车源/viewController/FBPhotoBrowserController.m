@@ -45,11 +45,14 @@
     
     for (int i = 0; i < _imagesArray.count; i ++) {
         ZoomScrollView *aImageView = [[ZoomScrollView alloc]initWithFrame:CGRectMake(320 * i, 0, 320, bgScroll.height)];
-        aImageView.imageView.image = [_imagesArray objectAtIndex:i];
+        
+        [aImageView.imageView sd_setImageWithURL:[NSURL URLWithString:[_imagesArray objectAtIndex:i]] placeholderImage:[UIImage imageNamed:@"detail_test"]];
+        
         [bgScroll addSubview:aImageView];
     }
     
-    self.titleLabel.text = [NSString stringWithFormat:@"%d/%lu",self.showIndex,(unsigned long)_imagesArray.count];
+    bgScroll.contentOffset = CGPointMake(320 * self.showIndex, 0);
+    self.titleLabel.text = [NSString stringWithFormat:@"%d/%lu",self.showIndex + 1,(unsigned long)_imagesArray.count];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -58,6 +61,7 @@
     NSInteger index = offsetX / 320 + 1;
     
     self.titleLabel.text = [NSString stringWithFormat:@"%ld/%lu",(long)index,(unsigned long)_imagesArray.count];
+    NSLog(@"hh");
 }
 
 - (void)didReceiveMemoryWarning

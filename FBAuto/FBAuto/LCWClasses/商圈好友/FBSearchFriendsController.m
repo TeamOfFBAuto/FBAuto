@@ -79,7 +79,8 @@
     
     __block typeof (FBSearchFriendsController *)weakSelf = self;
     
-    [tools requestCompletion:^(NSDictionary *result, NSError *erro) {
+    
+    [tools requestCompletion:^(NSDictionary *result, NSError *erro){
         
         if ([result isKindOfClass:[NSDictionary class]]) {
             
@@ -106,6 +107,8 @@
             
         }
 
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"failDic %@",failDic);
     }];
 }
 

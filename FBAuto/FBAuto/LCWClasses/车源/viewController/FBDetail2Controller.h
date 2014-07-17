@@ -26,16 +26,17 @@
 @property (strong, nonatomic) IBOutlet UILabel *car_detail_label;
 
 //商家信息
+@property (strong, nonatomic) IBOutlet UIImageView *headImage;
 
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UIButton *saleTypeBtn;//商家类型
 @property (strong, nonatomic) IBOutlet UILabel *phoneNumLabel;
 @property (strong, nonatomic) IBOutlet UILabel *addressLabel;
 
+@property (nonatomic,retain)NSString *carId;//车源信息id
+
 - (IBAction)clickToDial:(id)sender;//打电话
 - (IBAction)clickToChat:(id)sender;//聊天
 
-
-@property(nonatomic,retain)NSArray *imagesArray;
 
 @end

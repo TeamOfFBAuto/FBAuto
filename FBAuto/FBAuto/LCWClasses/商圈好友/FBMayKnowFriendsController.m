@@ -133,6 +133,8 @@
             [weakSelf reloadData:dataArr];
         }
         
+    }failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"failDic %@",failDic);
     }];
     
 }
@@ -179,6 +181,8 @@
             
             [weakSelf reloadData:dataArr];
         }
+    }failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"failDic %@",failDic);
     }];
 }
 
@@ -211,6 +215,8 @@
                 return ;
             }
         }
+    }failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"failDic %@",failDic);
     }];
 }
 

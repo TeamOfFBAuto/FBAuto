@@ -14,6 +14,7 @@
 #import "UIColor+ConvertColor.h"//16进制颜色转换
 #import "UIImageView+WebCache.h"
 #import "EGORefreshTableHeaderView.h"//下拉刷新
+#import "MBProgressHUD.h"
 
 #import "UILabel+GautoMatchedText.h"//文字自适应高度
 
@@ -122,7 +123,7 @@ alpha:(a)]
 
 #define FBAUTO_CARSOURCE_SINGLE_SOURE @"http://fbautoapp.fblife.com/index.php?c=interface&a=getsinglecheyuan&cid=%@"//获取单个车源
 
-#define FBAUTO_CARSOURCE_SEARCH @"http://fbautoapp.fblife.com/index.php?c=interface&a=searchcheyuan&keyword=%@"//搜索车源
+#define FBAUTO_CARSOURCE_SEARCH @"http://fbautoapp.fblife.com/index.php?c=interface&a=searchcheyuan&keyword=%@&page=%d&ps=%d"//搜索车源
 
 #define FBAUTO_CARSOURCE_MYSELF @"http://fbautoapp.fblife.com/index.php?c=interface&a=getmycheyuan&authkey=%@"//获取我的车源
 

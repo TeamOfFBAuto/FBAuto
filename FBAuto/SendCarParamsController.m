@@ -54,41 +54,58 @@
         case Data_Standard:
         {
             title = @"规格";
-            self.dataArray = MENU_STANDARD;
+            self.dataArray = MENU_STANDARD_2;
         }
             break;
         case Data_Timelimit:
         {
             title = @"期限";
-            self.dataArray = MENU_TIMELIMIT;
+            self.dataArray = MENU_TIMELIMIT_2;
         }
             break;
         case Data_Color_Out:
         {
             title = @"外观颜色";
-            self.dataArray = MENU_HIGHT_OUTSIDE_CORLOR;
+            self.dataArray = MENU_HIGHT_OUTSIDE_CORLOR_2;
         }
             break;
         case Data_Color_In:
         {
             title = @"内饰颜色";
-            self.dataArray = MENU_HIGHT_INSIDE_CORLOR;
+            self.dataArray = MENU_HIGHT_INSIDE_CORLOR_2;
         }
             break;
         case Data_Car_Type:
         {
-            NSArray *typeArr = [[[LCWTools alloc]init]queryDataClassType:CARSOURCE_TYPE_QUERY pageSize:0 andOffset:0 unique:self.lastLevelId];
+            NSArray *typeArr = [[[LCWTools alloc]init]queryDataClassType:CARSOURCE_TYPE_QUERY pageSize:0 andOffset:0 unique:self.brandId];
             
             self.dataArray = typeArr;
             
-            [self.table reloadData];
+//            [self.table reloadData];
+        }
+            break;
+        case Data_Car_Style:
+        {
+            NSArray *styteArr = [[[LCWTools alloc]init]queryDataClassType:CARSOURCE_STYLE_QUERY pageSize:0 andOffset:0 unique:self.typeId];
+            
+            self.dataArray = styteArr;
+            
+//            [self.table reloadData];
+            
         }
             break;
             
         default:
             break;
     }
+    
+    [self.table reloadData];
 
+}
+
+- (void)selectParamBlock:(SelectParamsBlock)aBlock
+{
+    selectBlock = aBlock;
 }
 
 - (void)didReceiveMemoryWarning
@@ -231,6 +248,20 @@
             cell.textLabel.text = aType.typeName;
 
         }
+    }else if (self.dataStyle == Data_Car_Style)
+    {
+        if (indexPath.row == 0) {
+            cell.textLabel.text = @"不限";
+        }else
+        {
+            CarStyle *aStyle = [self.dataArray objectAtIndex:indexPath.row - 1];
+            
+            cell.textLabel.text = aStyle.styleName;
+            
+        }
+    }else
+    {
+        cell.textLabel.text = [self.dataArray objectAtIndex:indexPath.row];
     }
     
     return cell;
@@ -254,7 +285,13 @@
         base.dataStyle = Data_Car_Type;
         base.selectLabel = self.selectLabel;
         
-        base.lastLevelId = aBrand.brandId;
+        base.brandId = aBrand.brandId;
+        
+        [base selectParamBlock:^(DATASTYLE style, NSString *paramName, NSString *paramId) {
+            
+            selectBlock(style,paramName,paramId);
+            
+        }];
         
         [self.navigationController pushViewController:base animated:YES];
         
@@ -262,10 +299,66 @@
         
         return;
         
+    }else if (self.dataStyle == Data_Car_Type) {
+        
+        if (indexPath.row == 0) {
+            
+            
+            NSString *car = [NSString stringWithFormat:@"%@%@%@",self.brandId,@"000",@"000"];
+            selectBlock(self.dataStyle,@"不限",car);
+            
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            
+        }else
+        {
+            CarType *aType = [self.dataArray objectAtIndex:indexPath.row - 1];
+            
+            SendCarParamsController *base = [[SendCarParamsController alloc]init];
+            base.hidesBottomBarWhenPushed = YES;
+            base.navigationTitle = aType.typeName;
+            base.dataStyle = Data_Car_Style;
+            base.selectLabel = self.selectLabel;
+            base.brandId = self.brandId;
+            base.typeId = aType.typeId;
+            
+            [base selectParamBlock:^(DATASTYLE style, NSString *paramName, NSString *paramId) {
+                
+                selectBlock(style,paramName,paramId);
+                
+            }];
+            
+            [self.navigationController pushViewController:base animated:YES];
+            
+        }
+        
+        return;
+        
+    }else if (self.dataStyle == Data_Car_Style) {
+        
+        if (indexPath.row == 0) {
+            
+            
+            NSString *car = [NSString stringWithFormat:@"%@%@%@",self.brandId,self.typeId,@"000"];
+            selectBlock(self.dataStyle,@"不限",car);
+            
+        }else
+        {
+            CarStyle *aStyle = [self.dataArray objectAtIndex:indexPath.row - 1];
+            
+            NSString *car = [NSString stringWithFormat:@"%@%@%@",self.brandId,self.typeId,aStyle.styleId];
+            selectBlock(self.dataStyle,aStyle.styleName,car);
+        }
+        
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        
+        return;
+        
     }
     
     NSString *select = [_dataArray objectAtIndex:indexPath.row];
-    self.selectLabel.text = select;
+    
+    selectBlock(self.dataStyle,select,[NSString stringWithFormat:@"%ld",(long)indexPath.row + 1]);
+    
     [self clickToBack:nil];
 }
 

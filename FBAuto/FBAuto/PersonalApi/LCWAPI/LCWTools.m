@@ -27,6 +27,9 @@
     return dataBlock;
 }
 
+
+#pragma - mark 网络数据请求
+
 - (id)initWithUrl:(NSString *)url isPost:(BOOL)isPost postData:(NSData *)postData//post
 {
     self = [super init];
@@ -41,13 +44,13 @@
     return self;
 }
 
-- (void)requestCompletion:(void(^)(NSDictionary *result,NSError *erro))completionBlock
-{
-    urlBlock = completionBlock;
+- (void)requestCompletion:(void(^)(NSDictionary *result,NSError *erro))completionBlock failBlock:(void(^)(NSDictionary *failDic,NSError *erro))failedBlock{
+    successBlock = completionBlock;
+    failBlock = failedBlock;
     
     NSString *newStr = [requestUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    NSLog(@"requestUrl %@",requestUrl);
+    NSLog(@"requestUrl %@",newStr);
     NSURL *urlS = [NSURL URLWithString:newStr];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urlS cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:2];
     
@@ -64,17 +67,132 @@
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             
             NSLog(@"response :%@",response);
-            urlBlock(dic,connectionError);
+            
+            if ([dic isKindOfClass:[NSDictionary class]]) {
+                
+                int erroCode = [[dic objectForKey:@"errcode"]intValue];
+                NSString *erroInfo = [dic objectForKey:@"errinfo"];
+                
+                if (erroCode != 0) {
+                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:erroInfo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    [alert show];
+                    
+                    NSDictionary *failDic = @{ERROR_INFO:erroInfo};
+                    failBlock(failDic,connectionError);
+                    
+                    return ;
+                }else
+                {
+                    successBlock(dic,connectionError);//传递的已经是没有错误的结果
+                }
+            }
+            
         }else
         {
-            NSLog(@"data 为空");
+            NSLog(@"data 为空 connectionError %@",connectionError);
+            
+            NSString *errInfo = @"网络有问题,请检查网络";
+            switch (connectionError.code) {
+                case NSURLErrorNotConnectedToInternet:
+                    
+                    errInfo = @"无网络连接";
+                    break;
+                case NSURLErrorTimedOut:
+                    
+                    errInfo = @"网络连接超时";
+                    break;
+                default:
+                    break;
+            }
+            
+            NSDictionary *failDic = @{ERROR_INFO: errInfo};
+            failBlock(failDic,connectionError);
+            
         }
-       
+        
     }];
+
 }
 
 
+//- (void)requestCompletion:(void(^)(NSDictionary *result,NSError *erro))completionBlock
+//{
+//    successBlock = completionBlock;
+//    
+//    NSString *newStr = [requestUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//    
+//    NSLog(@"requestUrl %@",newStr);
+//    NSURL *urlS = [NSURL URLWithString:newStr];
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urlS cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:2];
+//    
+//    if (isPostRequest) {
+//        
+//        [request setHTTPMethod:@"POST"];
+//        
+//        [request setHTTPBody:requestData];
+//    }
+//    
+//    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+//        
+//        if (data.length > 0) {
+//            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+//            
+//            NSLog(@"response :%@",response);
+//            
+//            if ([dic isKindOfClass:[NSDictionary class]]) {
+//                
+//                int erroCode = [[dic objectForKey:@"errcode"]intValue];
+//                NSString *erroInfo = [dic objectForKey:@"errinfo"];
+//                
+//                if (erroCode != 0) {
+//                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:erroInfo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//                    [alert show];
+//                    
+//                    return ;
+//                }else
+//                {
+//                    successBlock(dic,connectionError);//传递的已经是没有错误的结果
+//                }
+//            }
+//            
+//        }else
+//        {
+//            NSLog(@"data 为空 connectionError %@",connectionError);
+//            
+//            switch (connectionError.code) {
+//                case NSURLErrorNotConnectedToInternet:
+////                    [self showMBProgressWithText:@"无网络连接"];
+//                    break;
+//                case NSURLErrorTimedOut:
+////                    [self showMBProgressWithText:@"网络连接超时"];
+//                    break;
+//                default:
+////                    [self showMBProgressWithText:@"网络未知错误"];
+//                    break;
+//            }
+//        }
+//       
+//    }];
+//}
+
+
 #pragma - mark 验证邮箱、电话等有效性
+
+/*匹配正整数*/
++ (BOOL)isValidateInt:(NSString *)digit
+{
+    NSString * digitalRegex = @"^[1-9]\\d*$";
+    NSPredicate * digitalTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",digitalRegex];
+    return [digitalTest evaluateWithObject:digit];
+}
+
+/*匹配整浮点数*/
++ (BOOL)isValidateFloat:(NSString *)digit
+{
+    NSString * digitalRegex = @"^[1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*$";
+    NSPredicate * digitalTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",digitalRegex];
+    return [digitalTest evaluateWithObject:digit];
+}
 
 /*邮箱*/
 + (BOOL)isValidateEmail:(NSString *)email
@@ -147,6 +265,15 @@
         return NO;
     }
 }
+
+#pragma - mark 小工具
+
++ (void)alertText:(NSString *)text
+{
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:text delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
+}
+
 
 #pragma - mark CoreData数据管理
 

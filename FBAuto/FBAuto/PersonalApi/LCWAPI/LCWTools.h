@@ -7,14 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "XMPPStatics.h"
+#import "RefreshTableView.h"
 
 #define FBAUTO_CARSOURCE_TIME @"FBAUTO_CARSOURE_TIME"//车型数据请求时间
+
+#define ERROR_INFO @"ERRO_INFO" //错误信息
 
 typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 
 @interface LCWTools : NSObject<NSURLConnectionDelegate,NSURLConnectionDataDelegate>
 {
-    urlRequestBlock urlBlock;
+    urlRequestBlock successBlock;
+    urlRequestBlock failBlock;
     NSString *requestUrl;
     NSData *requestData;
     BOOL isPostRequest;//是否是post请求
@@ -27,12 +32,22 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
  */
 - (id)initWithUrl:(NSString *)url isPost:(BOOL)isPost postData:(NSData *)postData;//初始化请求
 
-- (void)requestCompletion:(void(^)(NSDictionary *result,NSError *erro))completionBlock;//处理请求结果
+//- (void)requestCompletion:(void(^)(NSDictionary *result,NSError *erro))completionBlock;//处理请求结果
+
+- (void)requestCompletion:(void(^)(NSDictionary *result,NSError *erro))completionBlock failBlock:(void(^)(NSDictionary *failDic,NSError *erro))failedBlock;//处理请求结果
+
+
+#pragma - mark 小工具
+
++ (void)alertText:(NSString *)text;
+
 
 /**
  *  验证 邮箱、电话等
  */
 
++ (BOOL)isValidateInt:(NSString *)digit;
++ (BOOL)isValidateFloat:(NSString *)digit;
 + (BOOL)isValidateEmail:(NSString *)email;
 + (BOOL)isValidateName:(NSString *)userName;
 + (BOOL)isValidatePwd:(NSString *)pwdString;

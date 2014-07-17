@@ -25,7 +25,6 @@
 		137FEB091974D48100CDBD89 /* CarBrand.m in Sources */ = {isa = PBXBuildFile; fileRef = 137FEB081974D48100CDBD89 /* CarBrand.m */; };
 		137FEB0C1974D48100CDBD89 /* CarType.m in Sources */ = {isa = PBXBuildFile; fileRef = 137FEB0B1974D48100CDBD89 /* CarType.m */; };
 		137FEB0F1974FB4800CDBD89 /* Menu_Car.m in Sources */ = {isa = PBXBuildFile; fileRef = 137FEB0E1974FB4800CDBD89 /* Menu_Car.m */; };
-		138074E3196CDFA300AD3D03 /* LCWTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 138074E2196CDFA300AD3D03 /* LCWTools.m */; };
 		138074E6196CEB3F00AD3D03 /* FBFriendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 138074E5196CEB3F00AD3D03 /* FBFriendModel.m */; };
 		138074EC196D3D4600AD3D03 /* garea.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 138074EB196D3D4600AD3D03 /* garea.sqlite */; };
 		138074F0196D3DA100AD3D03 /* DataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 138074EF196D3DA100AD3D03 /* DataBase.m */; };
@@ -160,6 +159,14 @@
 		138B4B111966A51700B974A5 /* SCGIFImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 138B4B0B1966A51700B974A5 /* SCGIFImageView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		138B4B141966A65E00B974A5 /* MarkupParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 138B4B131966A65E00B974A5 /* MarkupParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		138B4B1A1966AC7F00B974A5 /* FBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 138B4B191966AC7F00B974A5 /* FBHelper.m */; };
+		1391EEFD19764B4600FDC52A /* CarSourceClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391EEFC19764B4600FDC52A /* CarSourceClass.m */; };
+		1391EF01197670E300FDC52A /* CarSourceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391EEFF197670E300FDC52A /* CarSourceCell.m */; };
+		1391EF02197670E300FDC52A /* CarSourceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1391EF00197670E300FDC52A /* CarSourceCell.xib */; };
+		1391EF05197776A300FDC52A /* ClickImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391EF04197776A300FDC52A /* ClickImageView.m */; };
+		1391EF071977925300FDC52A /* logIn_close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1391EF061977925300FDC52A /* logIn_close@2x.png */; };
+		1391EF0A1977A1FF00FDC52A /* GloadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391EF091977A1FF00FDC52A /* GloadingView.m */; };
+		1391EF171977A4AF00FDC52A /* LCWTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391EF161977A4AF00FDC52A /* LCWTools.m */; };
+		1391EF1A1977A4CC00FDC52A /* RefreshTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391EF191977A4CC00FDC52A /* RefreshTableView.m */; };
 		13D5DF721961306000804835 /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D5DF711961306000804835 /* UIView+Frame.m */; };
 		13D5DF7E19615A3500804835 /* NSString+PinYin.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D5DF7D19615A3500804835 /* NSString+PinYin.m */; };
 		13D5DFD91961758E00804835 /* fangdajing_icon36_36@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13D5DF831961758E00804835 /* fangdajing_icon36_36@2x.png */; };
@@ -383,8 +390,6 @@
 		137FEB0B1974D48100CDBD89 /* CarType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarType.m; sourceTree = "<group>"; };
 		137FEB0D1974FB4800CDBD89 /* Menu_Car.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Menu_Car.h; sourceTree = "<group>"; };
 		137FEB0E1974FB4800CDBD89 /* Menu_Car.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Menu_Car.m; sourceTree = "<group>"; };
-		138074E1196CDFA300AD3D03 /* LCWTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCWTools.h; sourceTree = SOURCE_ROOT; };
-		138074E2196CDFA300AD3D03 /* LCWTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCWTools.m; sourceTree = SOURCE_ROOT; };
 		138074E4196CEB3F00AD3D03 /* FBFriendModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBFriendModel.h; sourceTree = SOURCE_ROOT; };
 		138074E5196CEB3F00AD3D03 /* FBFriendModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBFriendModel.m; sourceTree = SOURCE_ROOT; };
 		138074EB196D3D4600AD3D03 /* garea.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; name = garea.sqlite; path = ../garea.sqlite; sourceTree = "<group>"; };
@@ -543,6 +548,20 @@
 		138B4B131966A65E00B974A5 /* MarkupParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkupParser.m; sourceTree = "<group>"; };
 		138B4B181966AC7F00B974A5 /* FBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBHelper.h; sourceTree = "<group>"; };
 		138B4B191966AC7F00B974A5 /* FBHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBHelper.m; sourceTree = "<group>"; };
+		1391EEFB19764B4600FDC52A /* CarSourceClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarSourceClass.h; sourceTree = "<group>"; };
+		1391EEFC19764B4600FDC52A /* CarSourceClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarSourceClass.m; sourceTree = "<group>"; };
+		1391EEFE197670E300FDC52A /* CarSourceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarSourceCell.h; sourceTree = "<group>"; };
+		1391EEFF197670E300FDC52A /* CarSourceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarSourceCell.m; sourceTree = "<group>"; };
+		1391EF00197670E300FDC52A /* CarSourceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CarSourceCell.xib; sourceTree = "<group>"; };
+		1391EF03197776A300FDC52A /* ClickImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClickImageView.h; sourceTree = "<group>"; };
+		1391EF04197776A300FDC52A /* ClickImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClickImageView.m; sourceTree = "<group>"; };
+		1391EF061977925300FDC52A /* logIn_close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logIn_close@2x.png"; sourceTree = "<group>"; };
+		1391EF081977A1FF00FDC52A /* GloadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GloadingView.h; sourceTree = "<group>"; };
+		1391EF091977A1FF00FDC52A /* GloadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GloadingView.m; sourceTree = "<group>"; };
+		1391EF151977A4AF00FDC52A /* LCWTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCWTools.h; sourceTree = "<group>"; };
+		1391EF161977A4AF00FDC52A /* LCWTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCWTools.m; sourceTree = "<group>"; };
+		1391EF181977A4CC00FDC52A /* RefreshTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefreshTableView.h; sourceTree = "<group>"; };
+		1391EF191977A4CC00FDC52A /* RefreshTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefreshTableView.m; sourceTree = "<group>"; };
 		13D5DF701961306000804835 /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Frame.h"; sourceTree = "<group>"; };
 		13D5DF711961306000804835 /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Frame.m"; sourceTree = "<group>"; };
 		13D5DF7C19615A3500804835 /* NSString+PinYin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PinYin.h"; sourceTree = "<group>"; };
@@ -919,6 +938,8 @@
 		138074FC196E74A500AD3D03 /* EGORefresh */ = {
 			isa = PBXGroup;
 			children = (
+				1391EF081977A1FF00FDC52A /* GloadingView.h */,
+				1391EF091977A1FF00FDC52A /* GloadingView.m */,
 				13807503196E751F00AD3D03 /* bluedown@2x.png */,
 				13807504196E751F00AD3D03 /* blueup@2x.png */,
 				138074FD196E74A500AD3D03 /* EGORefreshTableFooterView.h */,
@@ -1111,6 +1132,17 @@
 				138B4B0B1966A51700B974A5 /* SCGIFImageView.m */,
 			);
 			path = RichViewAndGif;
+			sourceTree = "<group>";
+		};
+		1391EF141977A48400FDC52A /* LCWAPI */ = {
+			isa = PBXGroup;
+			children = (
+				1391EF181977A4CC00FDC52A /* RefreshTableView.h */,
+				1391EF191977A4CC00FDC52A /* RefreshTableView.m */,
+				1391EF151977A4AF00FDC52A /* LCWTools.h */,
+				1391EF161977A4AF00FDC52A /* LCWTools.m */,
+			);
+			path = LCWAPI;
 			sourceTree = "<group>";
 		};
 		13D5DF6919612C9800804835 /* LCWClasses */ = {
@@ -1354,6 +1386,9 @@
 				13D5E10F1965115200804835 /* DetailCell.h */,
 				13D5E1101965115200804835 /* DetailCell.m */,
 				13D5E1111965115200804835 /* DetailCell.xib */,
+				1391EEFE197670E300FDC52A /* CarSourceCell.h */,
+				1391EEFF197670E300FDC52A /* CarSourceCell.m */,
+				1391EF00197670E300FDC52A /* CarSourceCell.xib */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -1361,6 +1396,7 @@
 		13D5E04C1962A14E00804835 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				190BFD97195AB5630098E0F4 /* LoginC */,
 				137FEB0A1974D48100CDBD89 /* CarType.h */,
 				137FEB0B1974D48100CDBD89 /* CarType.m */,
 				137FEB071974D48100CDBD89 /* CarBrand.h */,
@@ -1375,6 +1411,8 @@
 				13D5E1051964F2E700804835 /* AutoDetail.m */,
 				138074F4196D3E8200AD3D03 /* FBCity.h */,
 				138074F5196D3E8200AD3D03 /* FBCity.m */,
+				1391EEFB19764B4600FDC52A /* CarSourceClass.h */,
+				1391EEFC19764B4600FDC52A /* CarSourceClass.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -1394,6 +1432,8 @@
 				13D5E05B1962A14E00804835 /* ZkingSearchView.m */,
 				137FEB0D1974FB4800CDBD89 /* Menu_Car.h */,
 				137FEB0E1974FB4800CDBD89 /* Menu_Car.m */,
+				1391EF03197776A300FDC52A /* ClickImageView.h */,
+				1391EF04197776A300FDC52A /* ClickImageView.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -1524,6 +1564,7 @@
 		13D5E0DF1963E19300804835 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				1391EF061977925300FDC52A /* logIn_close@2x.png */,
 				13D5E0EE1963E1ED00804835 /* duihao-up-46_46@2x.png */,
 				13D5E0E01963E19300804835 /* bg-10_88@2x.png */,
 				13D5E0E11963E19300804835 /* duihao-doun-46_46@2x.png */,
@@ -1682,7 +1723,7 @@
 		190BFD75195AA9BB0098E0F4 /* PersonalApi */ = {
 			isa = PBXGroup;
 			children = (
-				190BFD77195AA9FA0098E0F4 /* LCWAPI */,
+				1391EF141977A48400FDC52A /* LCWAPI */,
 				190BFD76195AA9D70098E0F4 /* SZKAPI */,
 			);
 			path = PersonalApi;
@@ -1699,20 +1740,10 @@
 			path = SZKAPI;
 			sourceTree = "<group>";
 		};
-		190BFD77195AA9FA0098E0F4 /* LCWAPI */ = {
-			isa = PBXGroup;
-			children = (
-				138074E1196CDFA300AD3D03 /* LCWTools.h */,
-				138074E2196CDFA300AD3D03 /* LCWTools.m */,
-			);
-			path = LCWAPI;
-			sourceTree = "<group>";
-		};
 		190BFD79195AAAAE0098E0F4 /* SZKClassess */ = {
 			isa = PBXGroup;
 			children = (
 				137FEB021974C9E700CDBD89 /* carData1.rtfd */,
-				190BFD97195AB5630098E0F4 /* LoginC */,
 				190BFD7D195AAD480098E0F4 /* CarResourceViewController.h */,
 				190BFD7E195AAD480098E0F4 /* CarResourceViewController.m */,
 				190BFD80195AAD6A0098E0F4 /* SendCarViewController.h */,
@@ -1743,7 +1774,8 @@
 			isa = PBXGroup;
 			children = (
 			);
-			path = LoginC;
+			name = LoginC;
+			path = ../../../SZKClassess/LoginC;
 			sourceTree = "<group>";
 		};
 		E33ECB09196D25AE00DDD72D /* GUtils */ = {
@@ -2021,11 +2053,13 @@
 				138B4AD51966A4BD00B974A5 /* face6.png in Resources */,
 				138074EC196D3D4600AD3D03 /* garea.sqlite in Resources */,
 				138B4AAF1966A4BD00B974A5 /* face25.png in Resources */,
+				1391EF02197670E300FDC52A /* CarSourceCell.xib in Resources */,
 				13D5E0011961758E00804835 /* xubxhe_fabu_44_44@2x.png in Resources */,
 				13D5DFDE1961758E00804835 /* dianhua40_46@2x.png in Resources */,
 				13D5DFEB1961758E00804835 /* xiala_sanjiao_down14_8@2x.png in Resources */,
 				138B4AE51966A4BD00B974A5 /* face74.png in Resources */,
 				13D5E0151961758E00804835 /* denglu_botton600_100@2x.png in Resources */,
+				1391EF071977925300FDC52A /* logIn_close@2x.png in Resources */,
 				13D5E00C1961758E00804835 /* shangquam182_58@2x.png in Resources */,
 				138B4A9E1966A4BD00B974A5 /* face102.png in Resources */,
 				138B4AB01966A4BD00B974A5 /* face26.png in Resources */,
@@ -2203,7 +2237,7 @@
 				138B4B111966A51700B974A5 /* SCGIFImageView.m in Sources */,
 				E34B74A4196E923000451C65 /* GjjxxViewController.m in Sources */,
 				E31F5398197405DC00540124 /* GlocalUserImage.m in Sources */,
-				138074E3196CDFA300AD3D03 /* LCWTools.m in Sources */,
+				1391EF01197670E300FDC52A /* CarSourceCell.m in Sources */,
 				13D5E117196513AF00804835 /* FBDetail2Controller.m in Sources */,
 				E3FFFCE7196BE19D00596186 /* GfindCarViewController.m in Sources */,
 				13D5E07F1962BD5800804835 /* FBBaseViewController.m in Sources */,
@@ -2221,9 +2255,11 @@
 				13D5E0611962A14E00804835 /* MenuModel.m in Sources */,
 				E33ECB05196D211200DDD72D /* GpersonTZViewController.m in Sources */,
 				1336BC13196B8A4F0011B4D9 /* Room.m in Sources */,
+				1391EEFD19764B4600FDC52A /* CarSourceClass.m in Sources */,
 				E33ECB0C196D25CD00DDD72D /* GTimeSwitch.m in Sources */,
 				13D5E05D1962A14E00804835 /* MenuCell.m in Sources */,
 				13D5E0881963AAF100804835 /* PhotoImageView.m in Sources */,
+				1391EF0A1977A1FF00FDC52A /* GloadingView.m in Sources */,
 				138B4B141966A65E00B974A5 /* MarkupParser.m in Sources */,
 				13D5E0C51963DB0300804835 /* QBImagePickerController.m in Sources */,
 				13D5E0641962A14E00804835 /* Menu_Button.m in Sources */,
@@ -2242,6 +2278,7 @@
 				13D5E0FF196406AA00804835 /* UIView+Frame.m in Sources */,
 				E34B74A7196E974100451C65 /* GHolderTextView.m in Sources */,
 				1336BC23196B91F70011B4D9 /* CWInputView.m in Sources */,
+				1391EF1A1977A4CC00FDC52A /* RefreshTableView.m in Sources */,
 				E34B74A1196E341A00451C65 /* GperInfoTableViewCell.m in Sources */,
 				13D5E1061964F2E700804835 /* AutoDetail.m in Sources */,
 				13D5E0DA1963DB9800804835 /* AsyncImageView.m in Sources */,
@@ -2252,6 +2289,7 @@
 				138B4A2D1966945F00B974A5 /* RTLabel.m in Sources */,
 				13D5E0C11963DB0300804835 /* QBAssetCollectionViewController.m in Sources */,
 				E31F538D19737DDC00540124 /* GmLoadData.m in Sources */,
+				1391EF05197776A300FDC52A /* ClickImageView.m in Sources */,
 				E362358219657588003B23CC /* GzhuceTableViewCell.m in Sources */,
 				E33ECB53196D4BF700DDD72D /* GmarkViewController.m in Sources */,
 				13D5E0F61963F70100804835 /* SendCarParamsController.m in Sources */,
@@ -2290,6 +2328,7 @@
 				13D5DF721961306000804835 /* UIView+Frame.m in Sources */,
 				138B4B0E1966A51700B974A5 /* NSAttributedString+Attributes.m in Sources */,
 				190BFD82195AAD6A0098E0F4 /* SendCarViewController.m in Sources */,
+				1391EF171977A4AF00FDC52A /* LCWTools.m in Sources */,
 				137FEB061974D48100CDBD89 /* CarStyle.m in Sources */,
 				13D5E0DE1963DBA400804835 /* MyViewController.m in Sources */,
 				138B4A261966868300B974A5 /* KKMessageCell.m in Sources */,

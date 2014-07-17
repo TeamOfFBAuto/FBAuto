@@ -102,6 +102,8 @@
             [weakSelf groupForFriends:dataArr];
             
         }
+    }failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"failDic %@",failDic);
     }];
 }
 

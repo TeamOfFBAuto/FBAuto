@@ -10,10 +10,12 @@
 #import "FBPhotoBrowserController.h"
 #import "DDPageControl.h"
 #import "FBChatViewController.h"
+#import "ClickImageView.h"
 
 @interface FBDetail2Controller ()
 {
     DDPageControl *pageControl;
+    NSArray *imageUrlsArray;
 }
 
 @end
@@ -43,8 +45,7 @@
     thirdFrame.origin.y = self.view.bottom - 75 - 44 - (iPhone5 ? 20 : 0);
     self.thirdBgView.frame = thirdFrame;
     
-    self.imagesArray = @[@"geren_down46_46",@"haoyou_dianhua40_46",@"geren_down46_46",@"haoyou_dianhua40_46",@"haoyou_dianhua40_46",@"geren_down46_46",@"haoyou_dianhua40_46",@"haoyou_dianhua40_46",@"geren_down46_46",@"haoyou_dianhua40_46"];
-    [self createFirstSection];
+    [self getSingleCarInfoWithId:self.carId];
 }
 
 - (void)didReceiveMemoryWarning
@@ -53,25 +54,96 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma - mark 网络请求
+
+- (void)getSingleCarInfoWithId:(NSString *)carId
+{
+    NSString *url = [NSString stringWithFormat:FBAUTO_CARSOURCE_SINGLE_SOURE,carId];
+    
+    NSLog(@"单个车源信息 %@",url);
+    
+    LCWTools *tool = [[LCWTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"单个车源发布 result %@, erro%@",result,[result objectForKey:@"errinfo"]);
+        
+        NSArray *dataInfo = [result objectForKey:@"datainfo"];
+        
+        if (dataInfo.count == 0) {
+            return ;
+        }
+        
+        NSDictionary *dic = [dataInfo objectAtIndex:0];
+        
+        //参数
+        self.car_modle_label.text = [dic objectForKey:@"car_name"];
+        self.car_realPrice_label.text = [NSString stringWithFormat:@"%@万元",[dic objectForKey:@"price"]];
+        self.car_timelimit_label.text = [dic objectForKey:@"spot_future"];
+        self.car_outColor_Label.text = [dic objectForKey:@"color_out"];
+        self.car_inColor_label.text = [dic objectForKey:@"color_in"];
+        self.car_standard_label.text = [dic objectForKey:@"carfrom"];
+        self.car_time_label.text = [dic objectForKey:@"dateline"];
+        self.car_detail_label.text = [dic objectForKey:@"cardiscrib"];
+        
+        //商家信息
+
+        self.nameLabel.text = [dic objectForKey:@"username"];
+        self.saleTypeBtn.titleLabel.text = [dic objectForKey:@"usertype"];//商家类型
+        self.phoneNumLabel.text = [dic objectForKey:@"phone"];
+        self.addressLabel.text = [NSString stringWithFormat:@"%@%@",[dic objectForKey:@"province"],[dic objectForKey:@"city"]];
+        
+        [self.headImage sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"phone"]] placeholderImage:[UIImage imageNamed:@"detail_test"]];
+        
+        //车辆图片
+        
+        NSArray *image = [dic objectForKey:@"image"];
+        NSMutableArray *imageUrls = [NSMutableArray arrayWithCapacity:image.count];
+
+        for (NSDictionary *aImageDic in image) {
+            
+            NSString *url = [aImageDic objectForKey:@"link"];
+            [imageUrls addObject:url];
+        }
+        
+        [self createFirstSectionWithImageUrls:imageUrls];
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"failDic %@",failDic);
+    }];
+}
+
 #pragma - mark 图片部分
 
-- (void)createFirstSection
+- (void)createFirstSectionWithImageUrls:(NSArray *)imageUrls
 {
+    imageUrlsArray = imageUrls;
+    
     CGFloat aWidth = (photosScroll.width - 14)/ 3;
-    for (int i = 0; i < self.imagesArray.count; i ++) {
-        UIButton *imageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    for (int i = 0; i < imageUrls.count; i ++) {
         
-        [imageBtn setImage:[UIImage imageNamed:[_imagesArray objectAtIndex:i]] forState:UIControlStateNormal];
-        imageBtn.tag = 100 + i;
-        imageBtn.layer.borderWidth = 2;
-        [imageBtn addTarget:self action:@selector(clickToBigPhoto:) forControlEvents:UIControlEventTouchUpInside];
-        imageBtn.frame = CGRectMake((aWidth + 7) * i, 0, aWidth, 80);
-        [photosScroll addSubview:imageBtn];
+        ClickImageView *clickImage = [[ClickImageView alloc]initWithFrame:CGRectMake((aWidth + 7) * i, 0, aWidth, 80) target:self action:@selector(clickToBigPhoto:)];
+        
+        [clickImage sd_setImageWithURL:[NSURL URLWithString:[imageUrls objectAtIndex:i]] placeholderImage:[UIImage imageNamed:@"detail_test"]];
+        
+        clickImage.tag = 100 + i;
+        
+        [photosScroll addSubview:clickImage];
+        
     }
     
-    photosScroll.contentSize = CGSizeMake(aWidth * _imagesArray.count + 7 * (_imagesArray.count - 1), 80);
+    photosScroll.contentSize = CGSizeMake(aWidth * imageUrls.count + 7 * (imageUrls.count - 1), 80);
     
-    [self createPageControlSumPages:(int)_imagesArray.count];
+    [self createPageControlSumPages:(int)imageUrls.count];
+    
+    if (imageUrls.count <= 2) {
+        
+        CGRect aFrame = photosScroll.frame;
+        aFrame.size.width = aWidth * imageUrls.count;
+        photosScroll.frame = aFrame;
+        
+        photosScroll.center = CGPointMake(150, photosScroll.center.y);
+    }
 }
 
 
@@ -106,11 +178,11 @@
 
 #pragma - mark click 事件
 
-- (void)clickToBigPhoto:(UIButton *)btn
+- (void)clickToBigPhoto:(ClickImageView *)btn
 {
     FBPhotoBrowserController *browser = [[FBPhotoBrowserController alloc]init];
-    browser.imagesArray = @[[UIImage imageNamed:@"geren_down46_46"],[UIImage imageNamed:@"haoyou_dianhua40_46"]];
-    browser.showIndex = 1;
+    browser.imagesArray = imageUrlsArray;
+    browser.showIndex = (int)btn.tag - 100;
     browser.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:browser animated:YES];
 }
@@ -135,7 +207,7 @@
 }
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    NSLog(@"%f",scrollView.contentOffset.x);
+//    NSLog(@"%f",scrollView.contentOffset.x);
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)aScrollView
@@ -143,19 +215,27 @@
 	// if we are animating (triggered by clicking on the page control), we update the page control
 	[pageControl updateCurrentPageDisplay] ;
     
-    NSLog(@"%f",aScrollView.contentOffset.x);
+//    NSLog(@"%f",aScrollView.contentOffset.x);
 }
 
 #pragma - mark 点击事件
 
 - (IBAction)clickToDial:(id)sender {
     
-    NSString *num = [[NSString alloc] initWithFormat:@"tel://%@",@"18612389982"];
+    NSString *num = [[NSString alloc] initWithFormat:@"tel://%@",self.phoneNumLabel.text];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:num]];
 }
 - (IBAction)clickToChat:(id)sender {
     
+    if ([self.phoneNumLabel.text isEqualToString:[[NSUserDefaults standardUserDefaults]stringForKey:XMPP_USERID]]) {
+        
+        [LCWTools alertText:@"本人发布信息"];
+        return;
+    }
+    
     FBChatViewController *chat = [[FBChatViewController alloc]init];
+    chat.chatWithUser = self.phoneNumLabel.text;
+    
     [self.navigationController pushViewController:chat animated:YES];
     
 }

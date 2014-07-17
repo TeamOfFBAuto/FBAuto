@@ -46,7 +46,22 @@
     
     QBImagePickerController * imagePickerController;
     
-    UITextField *priceTF;
+    UITextField *priceTF;//价格输入
+    UITextField *descriptionTF;//车源描述输入
+    
+    //车源列表参数
+    NSString *_car;//  车型id
+    NSString *_price;// 价格
+    int _spot_future;// 现货或者期货id
+    int _color_out;// 外观颜色id
+    int _color_in;// 内饰颜色id
+    int _carfrom;// 汽车规格id（美规，中规）
+    NSString *_cardiscrib;// 车源描述
+    NSString *_photo;// 图片id（用逗号隔开）
+    
+    BOOL isShowKeyboard;//键盘是否已经显示
+    
+    MBProgressHUD *loadingHub;
 }
 
 @end
@@ -103,6 +118,11 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(clickToHideKeyboard)];
     tap.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tap];
+    
+    loadingHub = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+	[self.navigationController.view addSubview:loadingHub];
+	loadingHub.labelText = @"发布中...";
+
 }
 
 
@@ -113,117 +133,214 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)showMBProgressWithText:(NSString *)text
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = text;
+    hud.margin = 10.f;
+    hud.yOffset = 150.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:1];
+}
+
+#pragma - mark 网络请求
+
+#pragma - mark 发布车源
+
+- (void)publishCarSource
+{
+    
+    NSString *descrip = descriptionTF.text;
+    descrip = descrip ? descrip : @"无";
+    NSString *url = [NSString stringWithFormat:@"%@&authkey=%@&car=%@&spot_future=%d&color_out=%d&color_in=%d&carfrom=%d&cardiscrib=%@&price=%@&photo=%@",FBAUTO_CARSOURCE_ADD_SOURCE,[GMAPI getAuthkey],_car,_spot_future,_color_out,_color_in,_carfrom,descrip,priceTF.text,_photo];
+    
+    NSLog(@"车源列表 %@",url);
+    
+    LCWTools *tool = [[LCWTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"车源发布 result %@, erro%@",result,[result objectForKey:@"errinfo"]);
+        
+        [loadingHub hide:NO];
+        
+        [self showMBProgressWithText:@"车源信息发布成功"];
+        
+        [self refreshUI];
+
+    }failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+    }];
+    
+}
+
+#pragma - mark 发布成功之后 UI复原
+
+- (void)refreshUI
+{
+    
+    [photosArray removeAllObjects];
+    
+    for (PhotoImageView *aImageV in photoViewArray) {
+        [aImageV removeFromSuperview];
+    }
+    [photoViewArray removeAllObjects];
+
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        if (photosArray.count == 0) {
+            [self moveAddPhotoBtnToLeft:NO];
+            [self controlPageControlDisplay:NO showPage:0 sumPage:0];
+        }
+    }];
+    
+    CGSize scrollSize = photosScroll.contentSize;
+    scrollSize.width = photoViewArray.count * (90 + 15);
+    photosScroll.contentSize = scrollSize;
+    
+    
+    priceTF.text = @"";
+    descriptionTF.text = @"";
+    
+    for (int i = 0; i < 5; i ++) {
+        Section_Button *btn = (Section_Button *)[secondBgView viewWithTag:100 + i];
+        btn.contentLabel.text = @"";
+    }
+}
+
 #pragma - mark 图片上传
 
-#define TT_CACHE_EXPIRATION_AGE_NEVER     (1.0 / 0.0)   // inf
 - (void)postImages:(NSArray *)allImages
 {
+    [loadingHub show:YES];
+    
     NSString* url = [NSString stringWithFormat:FBAUTO_CARSOURCE_ADD_PIC];
     
-    NSString *newUrl = [url stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    ASIFormDataRequest *uploadImageRequest= [ ASIFormDataRequest requestWithURL : [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] ]];
     
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString: newUrl]];
-    [request setRequestMethod:@"POST"];
-    request.timeOutSeconds = 30.f;
-    request.cachePolicy = TT_CACHE_EXPIRATION_AGE_NEVER;
-    request.cacheStoragePolicy = ASICacheForSessionDurationCacheStoragePolicy;
+    [uploadImageRequest setStringEncoding:NSUTF8StringEncoding];
     
-    [request setShouldAttemptPersistentConnection:YES];
-    [request setResponseEncoding:NSUTF8StringEncoding];
-    [request setPostFormat:ASIMultipartFormDataPostFormat];
+    [uploadImageRequest setRequestMethod:@"POST"];
     
-    request.delegate = self;
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
-        
-        NSData* data;
+    [uploadImageRequest setResponseEncoding:NSUTF8StringEncoding];
 
-        NSMutableData *myRequestData=[NSMutableData data];
-        
-        for (int i = 0;i < allImages.count; i++)
-        {
-            UIImage *image=[allImages objectAtIndex:i];
-            
-            UIImage * newImage = [SzkAPI scaleToSizeWithImage:image size:CGSizeMake(image.size.width>1024?1024:image.size.width,image.size.width>1024?image.size.height*1024/image.size.width:image.size.height)];
-            
-            data = UIImageJPEGRepresentation(newImage,0.5);
-            
-            [request addRequestHeader:@"Content-Length" value:[NSString stringWithFormat:@"%lu", (unsigned long)[myRequestData length]]];
-            
-            NSLog(@"---->图片大小:%lu",(unsigned long)[data length]);
-            
-            //设置http body
-            
-            [request addData:data withFileName:[NSString stringWithFormat:@"quan_img[%d].png",i] andContentType:@"image/PNG" forKey:@"photo"];
-            
-            [request addPostValue:[GMAPI getAuthkey] forKey:@"authkey"];
+    [uploadImageRequest setPostValue:[GMAPI getAuthkey] forKey:@"authkey"];
     
+    [uploadImageRequest setPostFormat:ASIMultipartFormDataPostFormat];
+    
+    for (int i = 0;i < allImages.count; i ++)
+        
+    {
+        UIImage *eImage  = [allImages objectAtIndex:i];
+        
+        
+        UIImage * newImage = [SzkAPI scaleToSizeWithImage:eImage size:CGSizeMake(eImage.size.width>1024?1024:eImage.size.width,eImage.size.width>1024?eImage.size.height*1024/eImage.size.width:eImage.size.height)];
+        
+        NSData *imageData=UIImageJPEGRepresentation(newImage,0.5);
+        
+        NSString *photoName=[NSString stringWithFormat:@"FBAuto%d.png",i];
+        
+        NSLog(@"photoName:%@",photoName);
+        
+        NSLog(@"图片大小:%ld",[imageData length]);
+        
+        [uploadImageRequest addData:imageData withFileName:photoName andContentType:@"image/png" forKey:@"photo[]"];
+    }
+    
+    [uploadImageRequest setDelegate : self ];
+    
+    [uploadImageRequest startAsynchronous];
+    
+    __weak typeof(ASIFormDataRequest *)weakRequst = uploadImageRequest;
+    //完成
+    [uploadImageRequest setCompletionBlock:^{
+        
+        NSDictionary *result = [NSJSONSerialization JSONObjectWithData:weakRequst.responseData options:0 error:nil];
+        
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            
+            int erroCode = [[result objectForKey:@"errcode"]intValue];
+            NSString *erroInfo = [result objectForKey:@"errinfo"];
+            
+            [loadingHub hide:YES];
+            
+            if (erroCode != 0) {
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:erroInfo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [alert show];
+                
+                return ;
+            }
+            
+            NSArray *dataInfo = [result objectForKey:@"datainfo"];
+            NSMutableArray *imageIdArr = [NSMutableArray arrayWithCapacity:dataInfo.count];
+            
+            for (NSDictionary *imageDic in dataInfo) {
+                NSString *imageId = [imageDic objectForKey:@"imageid"];
+                [imageIdArr addObject:imageId];
+            }
+            
+            _photo = [imageIdArr componentsJoinedByString:@","];
+            
+            __weak typeof(SendCarViewController *)weakSelf = self;
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                
+                [weakSelf publishCarSource];
+                
+            });
         }
+
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // 更新界面
-            
-            [request startAsynchronous];
-        });
-    });
-}
-
-- (void)requestStarted:(ASIHTTPRequest *)request
-{
-    NSLog(@"requestStarted %@",request.responseString);
-}
-- (void)request:(ASIHTTPRequest *)request didReceiveResponseHeaders:(NSDictionary *)responseHeaders
-{
-    NSLog(@"didReceiveResponseHeaders %@",responseHeaders);
-}
-- (void)requestFinished:(ASIHTTPRequest *)request
-{
-    NSLog(@"requestFinished %@",request.responseString);
+    }];
     
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.responseData options:0 error:nil];
-    
-    NSLog(@"dic %@ %@",dic,[dic objectForKey:@"errinfo"]);
-}
-- (void)requestFailed:(ASIHTTPRequest *)request
-{
-    NSLog(@"requestFailed %@",request.responseString);
-}
+    //失败
+    [uploadImageRequest setFailedBlock:^{
+        
+        NSLog(@"uploadFail %@",weakRequst.responseString);
+        
+    }];
 
-
+}
 
 
 #pragma - mark 价格输入框
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
+    isShowKeyboard = YES;
+    
     [UIView animateWithDuration:0.5 animations:^{
-        CGRect aFrame = bigBgScroll.frame;
-        aFrame.origin.y = - 100.f;
-        bigBgScroll.frame = aFrame;
+        
+        bigBgScroll.contentOffset = CGPointMake(0, 200);
     }];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
+    if (isShowKeyboard) {
+        return;
+    }
     [UIView animateWithDuration:0.5 animations:^{
-        CGRect aFrame = bigBgScroll.frame;
-        aFrame.origin.y = 0.f;
-        bigBgScroll.frame = aFrame;
+        
+        bigBgScroll.contentOffset = CGPointMake(0, 0);
     }];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    isShowKeyboard = NO;
     [priceTF resignFirstResponder];
+    [descriptionTF resignFirstResponder];
     return YES;
 }
 
 - (void)clickToHideKeyboard
 {
+    isShowKeyboard = NO;
     [priceTF resignFirstResponder];
+    [descriptionTF resignFirstResponder];
 }
-
-
 
 #pragma - mark 创建 PageControl
 
@@ -534,7 +651,7 @@
 
 - (void)createSecondSection
 {
-    secondBgView = [[UIView alloc]initWithFrame:CGRectMake(10, firstBgView.bottom, 320 - 20, 45 * 6)];
+    secondBgView = [[UIView alloc]initWithFrame:CGRectMake(10, firstBgView.bottom, 320 - 20, 45 * 7)];
     secondBgView.backgroundColor = [UIColor clearColor];
     secondBgView.layer.borderWidth = 1.0;
     secondBgView.layer.borderColor = [UIColor colorWithHexString:@"b4b4b4"].CGColor;
@@ -549,13 +666,11 @@
     
     //价格特殊处理，需要输入
     
-    UILabel *priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 45*5, 100, 45.f)];
-    priceLabel.backgroundColor = [UIColor clearColor];
-    priceLabel.text = @"价格";
-    priceLabel.textAlignment = NSTextAlignmentLeft;
-    priceLabel.font = [UIFont systemFontOfSize:14];
-    priceLabel.textColor = [UIColor blackColor];
-    [secondBgView addSubview:priceLabel];
+    UIView *line1 = [[UIView alloc]initWithFrame:CGRectMake(0, 45*5, 300, 0.5)];
+    line1.backgroundColor = [UIColor colorWithHexString:@"b4b4b4"];
+    [secondBgView addSubview:line1];
+    
+    [secondBgView addSubview:[self createLabelFrame:CGRectMake(10, 45*5, 100, 45.f) text:@"价格" alignMent:NSTextAlignmentLeft textColor:[UIColor blackColor]]];
     
     priceTF = [[UITextField alloc]initWithFrame:CGRectMake(80 - 10, 45 * 5, 175, 45)];
     priceTF.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
@@ -563,13 +678,21 @@
     priceTF.backgroundColor = [UIColor clearColor];
     [secondBgView addSubview:priceTF];
     
-    UILabel *hintLabel = [[UILabel alloc]initWithFrame:CGRectMake(300 - 35 - 10, 45 * 5, 35, 45.f)];
-    hintLabel.backgroundColor = [UIColor clearColor];
-    hintLabel.text = @"万元";
-    hintLabel.textAlignment = NSTextAlignmentRight;
-    hintLabel.font = [UIFont systemFontOfSize:14];
-    hintLabel.textColor = [UIColor colorWithHexString:@"c7c7cc"];
-    [secondBgView addSubview:hintLabel];
+    [secondBgView addSubview:[self createLabelFrame:CGRectMake(300 - 35 - 10, 45 * 5, 35, 45.f) text:@"万元" alignMent:NSTextAlignmentRight textColor:[UIColor colorWithHexString:@"c7c7cc"]]];
+    
+    //车源描述，需要输入
+    
+    UIView *line2 = [[UIView alloc]initWithFrame:CGRectMake(0, 45*6, 300, 1)];
+    line2.backgroundColor = [UIColor colorWithHexString:@"b4b4b4"];
+    [secondBgView addSubview:line2];
+    
+    [secondBgView addSubview:[self createLabelFrame:CGRectMake(10, 45*6, 100, 45.f) text:@"车源描述" alignMent:NSTextAlignmentLeft textColor:[UIColor blackColor]]];
+    
+    descriptionTF = [[UITextField alloc]initWithFrame:CGRectMake(80 - 10, 45 * 6, 175, 45)];
+    descriptionTF.delegate = self;
+    descriptionTF.backgroundColor = [UIColor clearColor];
+    [secondBgView addSubview:descriptionTF];
+
     
     //发布按钮
     
@@ -582,6 +705,18 @@
     
     bigBgScroll.contentSize = CGSizeMake(320, firstBgView.height + secondBgView.height + 16 + publish.height + 10);
 }
+
+- (UILabel *)createLabelFrame:(CGRect)aFrame text:(NSString *)text alignMent:(NSTextAlignment)align textColor:(UIColor *)color
+{
+    UILabel *priceLabel = [[UILabel alloc]initWithFrame:aFrame];
+    priceLabel.backgroundColor = [UIColor clearColor];
+    priceLabel.text = text;
+    priceLabel.textAlignment = align;
+    priceLabel.font = [UIFont systemFontOfSize:14];
+    priceLabel.textColor = color;
+    return priceLabel;
+}
+
 
 
 #pragma - mark 进入发布车源参数页面
@@ -638,6 +773,48 @@
     base.navigationTitle = title;
     base.dataStyle = aStyle;
     base.selectLabel = btn.contentLabel;
+    
+    [base selectParamBlock:^(DATASTYLE style, NSString *paramName, NSString *paramId) {
+        NSLog(@"paramName %@ %@",paramName,paramId);
+        
+        btn.contentLabel.text = paramName;
+        
+        switch (style) {
+            case Data_Car_Brand:
+            case Data_Car_Type:
+            case Data_Car_Style:
+            {
+                _car = paramId;
+            }
+                break;
+            case Data_Standard:
+            {
+                _carfrom = [paramId intValue];
+            }
+                break;
+            case Data_Timelimit:
+            {
+                _spot_future = [paramId intValue];
+            }
+                break;
+            case Data_Color_Out:
+            {
+                _color_out = [paramId intValue];
+            }
+                break;
+            case Data_Color_In:
+            {
+                _color_in = [paramId intValue];
+            }
+                break;
+                
+            default:
+                break;
+        }
+
+        
+    }];
+    
     [self.navigationController pushViewController:base animated:YES];
 }
 
@@ -645,10 +822,70 @@
 
 - (void)clickToPublish:(UIButton *)btn
 {
-    if (photosArray.count > 0) {
+    if (photosArray.count <= 0)
+    {
+        [self alertText:@"图片不能为空"];
+        
+        return;
+    }
+    
+    Section_Button *btn1 = (Section_Button *)[secondBgView viewWithTag:100];
+    
+    if (btn1.contentLabel.text == nil || [btn1.contentLabel.text isEqualToString:@""])
+    {
+        [self alertText:@"请选择车型"];
+
+        return;
+    }
+    
+    for (int i = 0; i < 5; i ++) {
+        
+        Section_Button *btn1 = (Section_Button *)[secondBgView viewWithTag:100 + i];
+        
+        if (btn1.contentLabel.text == nil || [btn1.contentLabel.text isEqualToString:@""])
+        {
+            if (i == 0) {
+                
+                [self alertText:@"请选择车型"];
+                
+            }else if (i == 1)
+            {
+                [self alertText:@"请选择规格"];
+                
+            }else if (i == 2)
+            {
+                [self alertText:@"请选择期限"];
+                
+            }else if (i == 3)
+            {
+                [self alertText:@"请选择外观颜色"];
+                
+            }else if (i == 4)
+            {
+                [self alertText:@"请选择内饰颜色"];
+            }
+            
+            return;
+        }
+    }
+    
+    
+    if ([LCWTools isValidateFloat:priceTF.text] || [LCWTools isValidateInt:priceTF.text]) {
+        
+        NSLog(@"%@有效数字",priceTF.text);
         
         [self postImages:photosArray];
+        
+    }else
+    {
+        [self alertText:@"价格需要输入有效数字"];
     }
+}
+
+- (void)alertText:(NSString *)text
+{
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:text delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 #pragma - mark imagePicker 代理

@@ -25,14 +25,22 @@ typedef enum{
     
 }DATASTYLE;
 
-//typedef void(^ selectParams) (da);
+typedef void(^ SelectParamsBlock) (DATASTYLE style,NSString *paramName,NSString *paramId);
 
 @interface SendCarParamsController : FBBaseViewController<UITableViewDataSource,UITableViewDelegate>
+{
+    SelectParamsBlock selectBlock;
+}
 
 @property(nonatomic,retain)NSArray *dataArray;
 @property(nonatomic,retain)UITableView *table;
 @property(nonatomic,assign)DATASTYLE dataStyle;
 @property(nonatomic,retain)UILabel *selectLabel;//选中label
 @property(nonatomic,retain)NSString *lastLevelId;//上一级id
+@property(nonatomic,retain)NSString *brandId;
+@property(nonatomic,retain)NSString *typeId;//
+
+- (void)selectParamBlock:(SelectParamsBlock)aBlock;
+
 
 @end
