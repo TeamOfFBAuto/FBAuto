@@ -32,7 +32,6 @@
     NSLog(@"%s",__FUNCTION__);
     
     
-    
     self.view.backgroundColor = [UIColor whiteColor];
     
     
@@ -67,6 +66,9 @@
     //http://fbautoapp.fblife.com/index.php?c=interface&a=getmycheyuan&authkey=VWMHKVFzUWYBdAAuAWdRJgdz
     GmLoadData *gmloadData = [[GmLoadData alloc]init];
     
+    [gmloadData SeturlStr:[NSString stringWithFormat:@"http://fbautoapp.fblife.com/index.php?c=interface&a=getmycheyuan&authkey=%@",[GMAPI getAuthkey]] block:^(NSDictionary *dataInfo, NSString *errorinfo, NSInteger errcode) {
+        
+    }];
     
     
 }
@@ -115,6 +117,8 @@
         //把flag加到数组里
         NSArray *indexPathArray = @[bself.flagIndexPath];
         
+        
+        
         //如果last有值 并且和flag不同 就加到数组里
         if (bself.lastIndexPath && (bself.lastIndexPath.row!=bself.flagIndexPath.row || bself.lastIndexPath.section != bself.flagIndexPath.section)) {
             indexPathArray = @[bself.lastIndexPath,bself.flagIndexPath];
@@ -122,13 +126,19 @@
         
         //单元格高度标示 
         if (bself.flagHeight == 120) {
-            bself.flagHeight = 60;
+            if (bself.lastIndexPath.row == bself.lastIndexPath.row && bself.lastIndexPath.section == bself.flagIndexPath.section) {//flag和last相同
+                bself.flagHeight = 60;
+            }else{
+                bself.flagHeight =120;
+            }
         }else if (bself.flagHeight == 60){
             bself.flagHeight = 120;
         }
         
         
-        
+        for (NSIndexPath *indexPath in indexPathArray) {
+            NSLog(@"------%@",indexPath);
+        }
         
         
         [btableview reloadRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationFade];

@@ -439,6 +439,8 @@
                 
             }else{
                 
+                NSLog(@"%@",errorindo);
+                
                 UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:errorindo message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [alertV show];
             

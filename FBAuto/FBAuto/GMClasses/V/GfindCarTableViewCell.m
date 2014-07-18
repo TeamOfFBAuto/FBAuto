@@ -70,19 +70,25 @@
     [addBtn addTarget:self action:@selector(tianjia) forControlEvents:UIControlEventTouchUpInside];
     
     if (theIndexPath.row == self.delegate.flagIndexPath.row && theIndexPath.section == self.delegate.flagIndexPath.section) {
+        
+        
         if (self.delegate.flagHeight == 60) {//正常
             if (_shanchuView) {
                 [_shanchuView removeFromSuperview];
             }
             height = 60;
         }else if (self.delegate.flagHeight == 120){//删除界面
+            
             [addBtn setImage:[UIImage imageNamed:@"jiantou_up18_10.png"] forState:UIControlStateNormal];
             _shanchuView = [[UIView alloc]initWithFrame:CGRectMake(0, 60, 320, 60)];
             _shanchuView.backgroundColor = [UIColor redColor];
             [self.contentView addSubview:addBtn];
             height = 120;
         }
+        
     }else if (theIndexPath.row == self.delegate.lastIndexPath.row && theIndexPath.section == self.delegate.lastIndexPath.section){
+        
+        
         [addBtn setImage:[UIImage imageNamed:@"jiantou_down18_10.png"] forState:UIControlStateNormal];
         height = 60;
         if (_shanchuView) {
@@ -94,6 +100,7 @@
     
         
     NSLog(@"%f",height);
+    
     return height;
 }
 

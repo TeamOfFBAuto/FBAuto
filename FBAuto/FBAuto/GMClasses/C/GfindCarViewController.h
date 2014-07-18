@@ -11,7 +11,7 @@
 #import <UIKit/UIKit.h>
 @class GfindCarTableViewCell;
 
-@interface GfindCarViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface GfindCarViewController : FBBaseViewController<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_tableiView;//主tablevew
     GfindCarTableViewCell *_tmpCell;//用户获取单元格高度的cell对象
