@@ -41,7 +41,7 @@
 //根据type加载控件
 -(void)configViewWithType:(NSString *)theType{
     if ([theType isEqualToString:@"geren"]) {//个人注册================================================
-        //非配内存
+        //分配内存
         self.contenTfArray = [NSMutableArray arrayWithCapacity:1];
         
         //标题数组
@@ -270,55 +270,66 @@
     
     
     if (sender.tag == 70) {//个人短信验证
-        _yanzhengBtn.userInteractionEnabled = NO;
         UITextField *tf = self.contenTfArray[4];
-        
-        NSLog(@"%@",tf.text);
-        
-        
-        
-        NSString *str = [NSString stringWithFormat:FBAUTO_GET_VERIFICATION_CODE,tf.text,1];
-        
-        
-        NSLog(@"手机验证码请求地址:%@",str);
-        
-        NSURL *url = [NSURL URLWithString:str];
-        NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-        [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if (tf.text.length <11) {//判断手机号是否正确
+            UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请输入正确的手机号码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [al show];
+        }else{
+            _yanzhengBtn.userInteractionEnabled = NO;
             
-            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-            NSLog(@"%@ %@",dic,[dic objectForKey:@"errinfo"]);
             
-        }];
-        
-        NSLog(@"%s",__FUNCTION__);
-        _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeBtnTitle) userInfo:nil repeats:YES];
-        [_timer fire];
-        
-        _timeNum = 60;
-        
-        [_yanzhengBtn setTitle:[NSString stringWithFormat:@"%d秒后重新发送",_timeNum] forState:UIControlStateNormal];
+            NSLog(@"%@",tf.text);
+            
+            
+            
+            NSString *str = [NSString stringWithFormat:FBAUTO_GET_VERIFICATION_CODE,tf.text,1];
+            
+            
+            NSLog(@"手机验证码请求地址:%@",str);
+            
+            NSURL *url = [NSURL URLWithString:str];
+            NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+            [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                
+                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+                NSLog(@"%@ %@",dic,[dic objectForKey:@"errinfo"]);
+                
+            }];
+            
+            NSLog(@"%s",__FUNCTION__);
+            _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeBtnTitle) userInfo:nil repeats:YES];
+            [_timer fire];
+            
+            _timeNum = 60;
+            
+            [_yanzhengBtn setTitle:[NSString stringWithFormat:@"%d秒后重新发送",_timeNum] forState:UIControlStateNormal];
+        }
         
         
     }else if(sender.tag == 71){//商家短信验证
         
         
-        UITextField *tf = self.contenTfArray[6];
-        
-        NSLog(@"%@",tf.text);
-        
-        NSString *str = [NSString stringWithFormat:FBAUTO_GET_VERIFICATION_CODE,tf.text,1];
-        NSURL *url = [NSURL URLWithString:str];
-        NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-        [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        UITextField *tf = self.contentTfArray1[6];
+        if (tf.text.length < 11) {
+            UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请输入正确的手机号码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [al show];
+        }else{
+            NSLog(@"%@",tf.text);
+            _yanzhengBtn1.userInteractionEnabled = NO;
+            NSString *str = [NSString stringWithFormat:FBAUTO_GET_VERIFICATION_CODE,tf.text,1];
+            NSURL *url = [NSURL URLWithString:str];
+            NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+            [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                
+            }];
             
-        }];
+            NSLog(@"%s",__FUNCTION__);
+            _timer1 = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeBtnTitle1) userInfo:nil repeats:YES];
+            [_timer1 fire];
+            _timeNum1 = 60;
+            [_yanzhengBtn1 setTitle:[NSString stringWithFormat:@"%d秒后重新发送",_timeNum1] forState:UIControlStateNormal];
+        }
         
-        NSLog(@"%s",__FUNCTION__);
-        _timer1 = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeBtnTitle1) userInfo:nil repeats:YES];
-        [_timer1 fire];
-        _timeNum1 = 60;
-        [_yanzhengBtn1 setTitle:[NSString stringWithFormat:@"%d秒后重新发送",_timeNum1] forState:UIControlStateNormal];
     }
     
     
@@ -422,6 +433,8 @@
             
             if (errcode==0) {
                 UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"注册成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [al show];
+                
                 NSLog(@"cccarray==%@",arrayinfo);
                 
             }else{

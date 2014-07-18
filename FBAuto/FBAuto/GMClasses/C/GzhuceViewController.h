@@ -37,6 +37,12 @@
     
     BOOL _isChooseArea;//是否修改了地区
     
+    
+    
+    
+    UIButton *_btn1;
+    UIButton *_btn2;
+    
 }
 
 
@@ -61,6 +67,7 @@
 //商家
 @property(nonatomic,assign)NSInteger provinceIn1;
 @property(nonatomic,assign)NSInteger cityIn1;
+
 
 
 

@@ -58,23 +58,24 @@
     self.navigationController.navigationBar.alpha = 1;
     
     //个人注册
-    UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn1 setTitle:@"个人注册" forState:UIControlStateNormal];
-    [btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [btn1 setTitleColor:[UIColor orangeColor] forState:UIControlStateSelected];
-    btn1.frame = CGRectMake(0, 64, 160, 50);
-    [btn1 addTarget:self action:@selector(gerenzhuce) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btn1];
+    _btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_btn1 setTitle:@"个人注册" forState:UIControlStateNormal];
+    [_btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _btn1.frame = CGRectMake(0, 64, 160, 50);
+    _btn1.backgroundColor = [UIColor whiteColor];
+    [_btn1 setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    [_btn1 addTarget:self action:@selector(gerenzhuce:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_btn1];
     
     
     //商家注册
-    UIButton *btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn2 setTitle:@"商家注册" forState:UIControlStateNormal];
-    [btn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [btn2 setTitleColor:[UIColor orangeColor] forState:UIControlStateSelected];
-    btn2.frame = CGRectMake(160, 64, 160, 50);
-    [btn2 addTarget:self action:@selector(shagnjiazhuce) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btn2];
+    _btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_btn2 setTitle:@"商家注册" forState:UIControlStateNormal];
+    [_btn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _btn2.frame = CGRectMake(160, 64, 160, 50);
+    _btn2.backgroundColor = RGBCOLOR(238, 238, 238);
+    [_btn2 addTarget:self action:@selector(shagnjiazhuce:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_btn2];
     
     
     //个人注册
@@ -125,16 +126,37 @@
 
 
 //个人注册
--(void)gerenzhuce{
+-(void)gerenzhuce:(UIButton *)sender{
     _gerenTableView.hidden = NO;
     _shangjiaTableView.hidden = YES;
+    
+    //个人按钮
+    [_btn1 setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    _btn1.backgroundColor = [UIColor whiteColor];
+    
+    //商家按钮
+    [_btn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _btn2.backgroundColor = RGBCOLOR(238, 238, 238);
+    
+    
     self.navigationItem.title = @"经纪人注册";
 }
 
 //商家注册
--(void)shagnjiazhuce{
+-(void)shagnjiazhuce:(UIButton *)sender{
     _shangjiaTableView.hidden = NO;
     _gerenTableView.hidden = YES;
+    
+    //商家按钮
+    [_btn2 setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];//字体颜色
+    _btn2.backgroundColor = [UIColor whiteColor];//背景色
+    
+    //个人按钮
+    [_btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];//字体颜色
+    _btn1.backgroundColor = RGBCOLOR(238, 238, 238);//背景色
+    
+    
+    
     self.navigationItem.title = @"商家注册";
 }
 

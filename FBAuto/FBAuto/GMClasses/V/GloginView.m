@@ -63,6 +63,7 @@
         
         //密码
         self.passWordTf = [[UITextField alloc]initWithFrame:CGRectMake(15, 60, 275, 45)];
+        self.passWordTf.keyboardType = UIKeyboardTypeASCIICapable;
         self.passWordTf.delegate = self;
         self.passWordTf.tag = 51;
         
@@ -204,29 +205,6 @@
     return YES;
 }
 
-
-
-
-
-////键盘出现
-//- (void) keyboardWasShown:(NSNotification *) notif{
-//    
-//    NSDictionary *info = [notif userInfo];
-//    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-//    CGSize keyboardSize = [value CGRectValue].size;
-//    NSLog(@"%f %f",keyboardSize.width,keyboardSize.height);
-//    //NSLog(@"%.2f",self.keyboardeHight);//获取键盘高度
-//    
-//    
-//    [UIView animateWithDuration:0.3 animations:^{
-//        self.Row3backView.frame = Frame_row3Up;
-//    } completion:^(BOOL finished) {
-//        
-//    }];
-//    
-//    
-//    
-//}
 
 
 
