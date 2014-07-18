@@ -17,7 +17,7 @@
 @property (nonatomic, retain) NSString * parentId;
 @property (nonatomic, retain) NSString * typeId;
 @property (nonatomic, retain) NSString * typeName;
-@property (nonatomic, retain) NSString * firstLetter;
+@property (nonatomic, retain) NSString * typeFirstLetter;
 
 //@property (nonatomic, retain) NSString * parentId;
 @property (nonatomic, retain) NSString * styleId;

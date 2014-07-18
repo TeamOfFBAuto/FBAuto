@@ -598,6 +598,7 @@
         imagePickerController = nil;
     }
     
+    
     imagePickerController = [[QBImagePickerController alloc] init];
     imagePickerController.delegate = self;
     imagePickerController.allowsMultipleSelection = YES;
@@ -636,7 +637,7 @@
         
         [self presentViewController:picker animated:YES completion:^{
             if (IOS7_OR_LATER) {
-                ((AppDelegate *)[[UIApplication sharedApplication] delegate]).statusBar.hidden = YES;
+                ((AppDelegate *)[[UIApplication sharedApplication] delegate]).statusBarBack.hidden = YES;
             }
         }];
     }else

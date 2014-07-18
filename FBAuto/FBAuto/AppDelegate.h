@@ -7,12 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Reachability.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
+{
+//    UIWindow *statusBarBack;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 
 @property (nonatomic,retain)UIView *statusBar;
+
+@property (nonatomic,retain)UIWindow *statusBarBack;
+
+@property (nonatomic,retain)Reachability *hostReach;//网络监控
+@property (nonatomic,assign)BOOL isReachable;//在其他页面可根据此判断当前网络是否可用
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;

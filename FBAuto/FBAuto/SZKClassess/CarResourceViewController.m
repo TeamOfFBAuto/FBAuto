@@ -28,6 +28,8 @@
 #import "CarSourceCell.h"
 #import "CarSourceClass.h"
 
+#import "CarClass.h"
+
 #define KPageSize  10 //每页条数
 
 #define CAR_LIST @"CAR_LIST" //车源列表
@@ -97,6 +99,12 @@
     }else{
         NSLog(@"xxname===%@",[GMAPI getUsername]);
     }
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     
     //定时更新
     
@@ -437,6 +445,10 @@
     
     //品牌、车型、车款
     
+    NSMutableArray *brand_Arr = [NSMutableArray arrayWithCapacity:dataInfo.count];//品牌
+    NSMutableArray *type_arr = [NSMutableArray array];//车型
+    NSMutableArray *style_arr = [NSMutableArray array];//车款
+    
     //dataInfo为数组,有效数据从下标为1开始
     for (int i = 1; i < dataInfo.count; i ++) {
         
@@ -450,22 +462,9 @@
         NSString *firstLetter = [brandArr objectAtIndex:0];
         NSString *brandName = [brandArr objectAtIndex:1];
         
-        
-//        NSLog(@"品牌-------id:%@ 名称: %@ 首字母:%@",[self carCodeForIndex:i],brandName,firstLetter);
-        CarBrand *aEntityMenu = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([CarBrand class]) inManagedObjectContext:[self context]];
-        
-        aEntityMenu.brandId = [self carCodeForIndex:i];
-        aEntityMenu.brandName = brandName;
-        aEntityMenu.brandFirstLetter = firstLetter;
-        
-        NSError *erro;
-        if (![[self context] save:&erro]) {
-//            NSLog(@"brand 保存失败：%@",erro);
-        }else
-        {
-//            NSLog(@"brand 保存成功");
-        }
-        
+        CarClass *aCarBrand = [[CarClass alloc]initWithBrandId:[self carCodeForIndex:i] brandName:brandName brandFirstName:firstLetter];
+        [brand_Arr addObject:aCarBrand];
+
         
         for (int j = 1; j < carTypeArray.count; j ++) {
             
@@ -477,45 +476,24 @@
             NSString *styleArrFirstLetter = [styleArr objectAtIndex:0];
             NSString *styleName = [styleArr objectAtIndex:1];
             
-//            NSLog(@"车型：：id:%@ 车型名称:%@",[self carCodeForIndex:j],styleName);
-            
-            
-            CarType *aType = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([CarType class]) inManagedObjectContext:[self context]];
-            aType.parentId = [self carCodeForIndex:i];
-            aType.typeId = [self carCodeForIndex:j];
-            aType.typeName = styleName;
-            aType.firstLetter = styleArrFirstLetter;
-            
-            NSError *erro;
-            if (![[self context] save:&erro]) {
-//                NSLog(@"type 保存失败：%@",erro);
-            }else
-            {
-//                NSLog(@"type 保存成功");
-            }
+            CarClass *aClassType = [[CarClass alloc]initWithParentId:[self carCodeForIndex:i] typeId:[self carCodeForIndex:j] typeName:styleName firstLetter:styleArrFirstLetter];
+            [type_arr addObject:aClassType];
             
             
             for (int k = 1; k < carStyleArray.count; k ++) {
                 
                 NSString *carStyle = [carStyleArray objectAtIndex:k];
                 
-//                NSLog(@"车款id:%@ 车款名称:%@",[self carCodeForIndex:k],carStyle);
-                
-                CarStyle *aType = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([CarStyle class]) inManagedObjectContext:[self context]];
-                aType.parentId = [self carCodeForIndex:j];
-                aType.styleId = [self carCodeForIndex:k];
-                aType.styleName = carStyle;
-                
-                NSError *erro;
-                if (![[self context] save:&erro]) {
-//                    NSLog(@"style 保存失败：%@",erro);
-                }else
-                {
-                    NSLog(@"style 保存成功");
-                }
+                CarClass *aCarStyle = [[CarClass alloc]initWithParentId:[self carCodeForIndex:j] styleId:[self carCodeForIndex:k] styleName:carStyle];
+                [style_arr addObject:aCarStyle];
+
             }
         }
     }
+    
+    [[[LCWTools alloc]init]insertDataClassType:CARSOURCE_BRAND_INSERT dataArray:brand_Arr unique:nil];
+    [[[LCWTools alloc]init]insertDataClassType:CARSOURCE_TYPE_INSETT dataArray:type_arr unique:nil];
+    [[[LCWTools alloc]init]insertDataClassType:CARSOURCE_STYLE_INSETT dataArray:style_arr unique:nil];
     
     NSLog(@"车型数据保存完成");
     
@@ -577,7 +555,8 @@
     LCWTools *tool = [[LCWTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
-        NSLog(@"车源列表 result %@, erro%@",result,[result objectForKey:@"errinfo"]);
+        NSLog(@"车源列表erro%@",[result objectForKey:@"errinfo"]);
+//        NSLog(@"车源列表 result %@",result);
         
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
         int total = [[dataInfo objectForKey:@"total"]intValue];

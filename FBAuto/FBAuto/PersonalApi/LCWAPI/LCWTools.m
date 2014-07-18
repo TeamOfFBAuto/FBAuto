@@ -13,6 +13,8 @@
 #import "CarType.h"
 #import "CarStyle.h"
 
+#import "CarClass.h"
+
 @implementation LCWTools
 
 + (id)shareInstance
@@ -252,10 +254,81 @@
 
 #pragma - mark CoreData数据管理
 
-- (NSManagedObjectContext *)context
+@synthesize managedObjectContext = _managedObjectContext;
+@synthesize managedObjectModel = _managedObjectModel;
+@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+
+- (void)saveContext
 {
-    return ((AppDelegate *)[[UIApplication sharedApplication]delegate]).managedObjectContext;
+    NSError *error = nil;
+    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
+    if (managedObjectContext != nil) {
+        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+    }
 }
+
+#pragma mark - Core Data stack
+
+// Returns the managed object context for the application.
+// If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
+- (NSManagedObjectContext *)managedObjectContext
+{
+    if (_managedObjectContext != nil) {
+        return _managedObjectContext;
+    }
+    
+    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+    if (coordinator != nil) {
+        _managedObjectContext = [[NSManagedObjectContext alloc] init];
+        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+    }
+    return _managedObjectContext;
+}
+
+// Returns the managed object model for the application.
+// If the model doesn't already exist, it is created from the application's model.
+- (NSManagedObjectModel *)managedObjectModel
+{
+    if (_managedObjectModel != nil) {
+        return _managedObjectModel;
+    }
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"FBAuto" withExtension:@"momd"];
+    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    return _managedObjectModel;
+}
+
+// Returns the persistent store coordinator for the application.
+// If the coordinator doesn't already exist, it is created and the application's store added to it.
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
+{
+    if (_persistentStoreCoordinator != nil) {
+        return _persistentStoreCoordinator;
+    }
+    
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"FBAuto.sqlite"];
+    
+    NSError *error = nil;
+    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    return _persistentStoreCoordinator;
+}
+
+#pragma mark - Application's Documents directory
+
+- (NSURL *)applicationDocumentsDirectory
+{
+    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
 
 #pragma - mark 插入数据
 
@@ -268,34 +341,193 @@
     {
         [self insertCarBrand:dataArray unique:unique];
         
-    }else if ([classType isEqualToString:CARSOURCE_STYLE_INSETT])
+    }else if ([classType isEqualToString:CARSOURCE_TYPE_INSETT])
     {
+        [self insertCarType:dataArray unique:unique];
         
-        
-    }else if([classType isEqualToString:CARSOURCE_TYPE_INSETT])
+    }else if([classType isEqualToString:CARSOURCE_STYLE_INSETT])
     {
-        
+        [self insertCarStyle:dataArray unique:unique];
     }
 }
 
 - (void)insertCarBrand:(NSArray *)dataArray unique:(NSString *)unique
 {
-    NSManagedObjectContext *context = [self context];
+    NSManagedObjectContext *context = [self managedObjectContext];
     
-    for (CarBrand *aBrand in dataArray) {
-        CarBrand *aEntityMenu = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([CarBrand class]) inManagedObjectContext:context];
+    for (int i = 0; i < dataArray.count; i ++) {
+        CarClass *aBrand = [dataArray objectAtIndex:i];
         
-        aEntityMenu = aBrand;
-        
-        
-        NSError *erro;
-        if (![context save:&erro]) {
-            NSLog(@"FirstMenu 保存失败：%@",erro);
-        }else
-        {
-            NSLog(@"FirstMenu 保存成功");
+        if (i % 100 == 0) {
+            
+            sleep(0.001);
         }
+        
+//        if (![self existEntityUnique:aBrand.brandId parentId:nil type:CARSOURCE_BRAND_EXIST]) {
+        
+            CarBrand *aEntityMenu = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([CarBrand class]) inManagedObjectContext:context];
+            
+            aEntityMenu.brandId = aBrand.brandId;
+            aEntityMenu.brandName = aBrand.brandName;
+            aEntityMenu.brandFirstLetter = aBrand.brandFirstLetter;
+            
+            NSError *erro;
+            if (![context save:&erro]) {
+                NSLog(@"CarBrand 保存失败：%@",erro);
+            }else
+            {
+                NSLog(@"CarBrand 保存成功");
+            }
+            
+//        }else
+//        {
+//            NSLog(@"brand存在");
+//        }
+
     }
+    
+//    for (CarClass *aBrand in dataArray) {
+//        
+//        
+//        if (![self existEntityUnique:aBrand.brandId type:CARSOURCE_BRAND_EXIST]) {
+//            
+//            CarBrand *aEntityMenu = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([CarBrand class]) inManagedObjectContext:context];
+//            
+//            aEntityMenu.brandId = aBrand.brandId;
+//            aEntityMenu.brandName = aBrand.brandName;
+//            aEntityMenu.brandFirstLetter = aBrand.brandFirstLetter;
+//            
+//            NSError *erro;
+//            if (![context save:&erro]) {
+//                NSLog(@"CarBrand 保存失败：%@",erro);
+//            }else
+//            {
+//                NSLog(@"CarBrand 保存成功");
+//            }
+//            
+//        }else
+//        {
+//            NSLog(@"brand存在");
+//        }
+//        
+//    }
+}
+
+- (void)insertCarType:(NSArray *)dataArray unique:(NSString *)unique
+{
+    NSManagedObjectContext *context = [self managedObjectContext];
+    
+    for (int i = 0; i < dataArray.count; i ++) {
+        
+        if (i % 100 == 0) {
+            
+            sleep(0.001);
+        }
+        
+        CarClass *aBrand = [dataArray objectAtIndex:i];
+        
+//        if (![self existEntityUnique:aBrand.typeName parentId:nil type:CARSOURCE_TYPE_EXIST]) {
+            CarType *aEntityMenu = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([CarType class]) inManagedObjectContext:context];
+            
+            aEntityMenu.typeId = aBrand.typeId;
+            aEntityMenu.parentId = aBrand.parentId;
+            aEntityMenu.firstLetter = aBrand.typeFirstLetter;
+            aEntityMenu.typeName = aBrand.typeName;
+            
+            NSError *erro;
+            if (![context save:&erro]) {
+                NSLog(@"CarType 保存失败：%@",erro);
+            }else
+            {
+                NSLog(@"CarType 保存成功");
+            }
+//        }else
+//        {
+//            NSLog(@"type存在");
+//        }
+
+    }
+    
+//    for (CarClass *aBrand in dataArray) {
+//        
+//        if (![self existEntityUnique:aBrand.typeId type:CARSOURCE_TYPE_EXIST]) {
+//            CarType *aEntityMenu = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([CarType class]) inManagedObjectContext:context];
+//            
+//            aEntityMenu.typeId = aBrand.typeId;
+//            aEntityMenu.parentId = aBrand.parentId;
+//            aEntityMenu.firstLetter = aBrand.typeFirstLetter;
+//            aEntityMenu.typeName = aBrand.typeName;
+//            
+//            NSError *erro;
+//            if (![context save:&erro]) {
+//                NSLog(@"CarType 保存失败：%@",erro);
+//            }else
+//            {
+//                NSLog(@"CarType 保存成功");
+//            }
+//        }else
+//        {
+//            NSLog(@"type存在");
+//        }
+//    }
+}
+
+- (void)insertCarStyle:(NSArray *)dataArray unique:(NSString *)unique
+{
+    NSManagedObjectContext *context = [self managedObjectContext];
+    
+    for (int i = 0; i < dataArray.count; i ++) {
+        
+        if (i % 100 == 0) {
+            
+            sleep(0.001);
+        }
+        
+        CarClass *aBrand = [dataArray objectAtIndex:i];
+        
+//        if (![self existEntityUnique:aBrand.styleName parentId:nil type:CARSOURCE_STYLE_EXIST]) {
+        
+            CarStyle *aEntityMenu = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([CarStyle class]) inManagedObjectContext:context];
+            
+            aEntityMenu.parentId = aBrand.parentId;
+            aEntityMenu.styleId = aBrand.styleId;
+            aEntityMenu.styleName = aBrand.styleName;
+            
+            NSError *erro;
+            if (![context save:&erro]) {
+                NSLog(@"CarStyle 保存失败：%@",erro);
+            }else
+            {
+                NSLog(@"CarStyle 保存成功");
+            }
+//        }else
+//        {
+//            NSLog(@"style存在");
+//        }
+    }
+    
+//    for (CarClass *aBrand in dataArray) {
+//        
+//        if (![self existEntityUnique:aBrand.styleId type:CARSOURCE_STYLE_EXIST]) {
+//            
+//            CarStyle *aEntityMenu = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([CarStyle class]) inManagedObjectContext:context];
+//            
+//            aEntityMenu.parentId = aBrand.parentId;
+//            aEntityMenu.styleId = aBrand.styleId;
+//            aEntityMenu.styleName = aBrand.styleName;
+//            
+//            NSError *erro;
+//            if (![context save:&erro]) {
+//                NSLog(@"CarStyle 保存失败：%@",erro);
+//            }else
+//            {
+//                NSLog(@"CarStyle 保存成功");
+//            }
+//        }else
+//        {
+//            NSLog(@"style存在");
+//        }
+//    }
 }
 
 #pragma - mark 查询数据
@@ -319,6 +551,14 @@
     return nil;
 }
 
+//查询数据的时候使用，不然查出的数据会dealloc
+
+- (NSManagedObjectContext *)context
+{
+    return ((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext;
+}
+
+#pragma - mark 查询 车品牌、车型、车款
 //车品牌
 - (NSArray*)queryCarBrand
 {
@@ -371,6 +611,72 @@
     NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
     
     return fetchedObjects;
+}
+
+#pragma - mark 判断 车品牌、车型、车款是否已存在
+
+//车品牌是否存在
+- (BOOL)brandUnique:(NSString *)unique
+{
+    NSManagedObjectContext *context = [self context];
+    
+    NSPredicate *predicate = [NSPredicate
+                              predicateWithFormat:@"brandId like[cd] %@",unique];
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    
+    [fetchRequest setPredicate:predicate];
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([CarBrand class]) inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSError *error;
+    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    if (fetchedObjects.count > 0) {
+        return YES;
+    }
+    
+    return NO;
+}
+
+#pragma - mark 车品牌、车型、车款是否存在
+
+- (BOOL)existEntityUnique:(NSString *)unique parentId:(NSString *)parentId type:(NSString *)type
+{
+    NSManagedObjectContext *context = [self context];
+    
+    unique = (unique != nil) ? unique : @"";
+    NSString *entityName = nil;
+    NSPredicate *predicate = nil;
+    if ([type isEqualToString:CARSOURCE_BRAND_EXIST]) {
+        
+        predicate = [NSPredicate predicateWithFormat:@"brandId like[cd] %@",unique];
+        entityName = NSStringFromClass([CarBrand class]);
+        
+    }else if ([type isEqualToString:CARSOURCE_TYPE_EXIST])
+    {
+        predicate = [NSPredicate predicateWithFormat:@"typeName like[cd] %@",unique];
+        entityName = NSStringFromClass([CarType class]);
+        
+    }else if ([type isEqualToString:CARSOURCE_STYLE_EXIST])
+    {
+        predicate = [NSPredicate predicateWithFormat:@"styleName like[cd] %@",unique];
+        entityName = NSStringFromClass([CarStyle class]);
+    }
+    
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    
+    [fetchRequest setPredicate:predicate];
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSError *error;
+    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    if (fetchedObjects.count > 0) {
+        return YES;
+    }
+    
+    return NO;
 }
 
 @end

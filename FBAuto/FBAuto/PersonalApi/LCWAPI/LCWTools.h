@@ -74,6 +74,18 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 #define CARSOURCE_STYLE_QUERY @"CARSOURCE_STYLE_QUERY"
 #define CARSOURCE_STYLE_DELETE @"CARSOURCE_STYLE_DELETE"
 
+//是否存在
+#define CARSOURCE_BRAND_EXIST @"CARSOURCE_BRAND_EXIST"
+#define CARSOURCE_TYPE_EXIST @"CARSOURCE_TYPE_EXIST"
+#define CARSOURCE_STYLE_EXIST @"CARSOURCE_STYLE_EXIST"
+
+@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
+@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
+- (void)saveContext;
+- (NSURL *)applicationDocumentsDirectory;
+
 - (void)insertDataClassType:(NSString *)classType dataArray:(NSMutableArray*)dataArray unique:(NSString *)unique;
 //查询
 - (NSArray*)queryDataClassType:(NSString *)classType pageSize:(int)pageSize andOffset:(int)currentPage unique:(NSString *)unique;

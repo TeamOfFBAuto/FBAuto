@@ -44,6 +44,8 @@
     self.xmppStream = [[XMPPStream alloc]init];
     [_xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
     
+    _xmppStream.enableBackgroundingOnSocket = YES;//允许后台模式
+    
     //重连接
     
     self.xmppReconnect = [[XMPPReconnect alloc]init];
@@ -150,6 +152,34 @@
     [self connect];
 }
 
+- (void)loginTimes:(int)times loginBack:(loginAction)login_Back//多次联系登录
+{
+    loginBack = login_Back;
+    
+    if ([self.xmppStream isAuthenticated])
+    {
+        login_Back(YES);
+        return;
+    }
+    for (int i = 0; i < times; i ++) {
+        
+        [[XMPPServer shareInstance]login:^(BOOL result) {
+            if (result) {
+                NSLog(@"连接并且登录成功");
+                
+                login_Back(YES);
+                
+                return ;
+            }else
+            {
+                NSLog(@"连接登录不成功");
+                login_Back(NO);
+                sleep(1);
+            }
+        }];
+    }
+}
+
 #pragma - mark 查询已存在房间
 
 - (void)getExistRooms:(roomBackBlock)roomBack
@@ -204,6 +234,10 @@
 - (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error
 {
     NSLog(@"didNotAuthenticate: %@",error);
+    
+    if (loginBack) {
+        loginBack(NO);
+    }
 }
 
 //监控消息接收
@@ -227,6 +261,21 @@
         if (self.messageDelegate && [_messageDelegate respondsToSelector:@selector(newMessage:)]) {
             [_messageDelegate newMessage:dict];
         }
+        
+        //消息提示
+        
+//        //程序运行在前台，消息正常显示
+//        if (![[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
+//        {
+//            
+//        }else{//如果程序在后台运行，收到消息以通知类型来显示
+            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+            localNotification.alertAction = @"Ok";
+            localNotification.alertBody = [NSString stringWithFormat:@"From: %@\n\n%@",from,msg];//通知主体
+            localNotification.soundName = @"crunch.wav";//通知声音
+            localNotification.applicationIconBadgeNumber = 2;//标记数
+            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];//发送通知
+//        }
     }
 }
 

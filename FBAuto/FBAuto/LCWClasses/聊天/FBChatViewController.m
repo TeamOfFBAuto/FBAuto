@@ -104,17 +104,37 @@
     {
         NSLog(@"未认证");
         
-        if (![xmppServer.xmppStream isConnected]) {
-            
-            NSLog(@"未连接");
-            [xmppServer connect];
-        }else
-        {
-            NSError *error;
-            [xmppServer.xmppStream authenticate:xmppServer.xmppPlainAutentication error:&error];
-            NSLog(@"kk erro %@",error);
+        for (int i = 0; i < 10; i ++) {
+            [[XMPPServer shareInstance]login:^(BOOL result) {
+                if (result) {
+                    NSLog(@"连接并且登录成功");
+                    
+                    return ;
+                }else
+                {
+                    NSLog(@"连接登录不成功");
+                }
+            }];
         }
+        
     }
+    
+    
+//    if (![xmppServer.xmppStream isAuthenticated])
+//    {
+//        NSLog(@"未认证");
+//        
+//        if (![xmppServer.xmppStream isConnected]) {
+//            
+//            NSLog(@"未连接");
+//            [xmppServer connect];
+//        }else
+//        {
+//            NSError *error;
+//            [xmppServer.xmppStream authenticate:xmppServer.xmppPlainAutentication error:&error];
+//            NSLog(@"kk erro %@",error);
+//        }
+//    }
     
     
     messages = [NSMutableArray array];

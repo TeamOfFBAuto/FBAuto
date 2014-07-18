@@ -45,9 +45,12 @@
     
     UIColor * cc = RGBCOLOR(91,138,59);
     
-    NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:NSShadowAttributeName,NSFontAttributeName,NSShadowAttributeName,nil]];
     
+//    NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:NSShadowAttributeName,NSFontAttributeName,NSShadowAttributeName,nil]];
     
+    NSDictionary * dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:cc,[UIFont systemFontOfSize:20],[UIColor clearColor],nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont,UITextAttributeTextShadowColor,nil]];
+    
+//
     self.navigationController.navigationBar.titleTextAttributes = dict;
 }
 
@@ -57,7 +60,9 @@
 {
     [super viewDidLoad];
     
-    self.edgesForExtendedLayout = UIRectEdgeNone;
+    if (IOS7_OR_LATER) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
     
     self.view.backgroundColor = RGBCOLOR(214,214,214);
 	

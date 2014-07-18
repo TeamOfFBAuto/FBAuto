@@ -76,7 +76,7 @@
     
   //  tabbar.tabBar.selectionIndicatorImage = [UIImage imageNamed:@"background_image.png"];
     
-    [[UITabBar appearance] setTintColor:RGBCOLOR(232, 128, 24)];
+    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:232.0/255.0f green:128/255.0f blue:24/255.0f alpha:1]];
     
     tabbar.viewControllers = [NSArray arrayWithObjects:navc1,navc2,navc3,navc4,nil];
 
@@ -88,20 +88,69 @@
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
     
+    self.statusBarBack = [[UIWindow alloc]initWithFrame:[UIApplication sharedApplication].statusBarFrame];
+    
+    _statusBarBack.backgroundColor = [UIColor blackColor];
+    
+    [_statusBarBack setWindowLevel:UIWindowLevelStatusBar-1];
+    
+    [_statusBarBack makeKeyAndVisible];
+    
+    
+    //开启网络状况的监听
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    self.hostReach = [Reachability reachabilityWithHostname:@"http://fbautoapp.fblife.com"];
+    
+    //开始监听，会启动一个run loop
+    
+    [self.hostReach startNotifier];
+    
 
     self.window.rootViewController=tabbar;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    //将状态栏设置成自定义颜色
+    return YES;
+}
+
+#pragma - mark 监控网络状态
+
+-(void)reachabilityChanged:(NSNotification *)note
+{
     
-    if (IOS7_OR_LATER) {
+    Reachability *currReach = [note object];
+    
+    NSParameterAssert([currReach isKindOfClass:[Reachability class]]);
+    
+    //对连接改变做出响应处理动作
+    
+    NetworkStatus status = [currReach currentReachabilityStatus];
+    
+    //如果没有连接到网络就弹出提醒实况
+    
+    self.isReachable = YES;
+    
+    if(status == NotReachable)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络连接异常" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+        [alert show];
+        
+        self.isReachable = NO;
+        
+        return;
     }
     
-    return YES;
+    if (status == ReachableViaWiFi || status == ReachableViaWWAN) {
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络连接信息" message:@"网络连接正常" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        
+//        [alert show];
+        
+        self.isReachable = YES;
+        
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -123,7 +172,29 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    [[XMPPServer shareInstance]connect];//连接
+//    [[XMPPServer shareInstance]connect];//连接
+    
+//    for (int i = 0; i < 10; i ++) {
+//        [[XMPPServer shareInstance]login:^(BOOL result) {
+//            if (result) {
+//                NSLog(@"连接并且登录成功");
+//                
+//                return ;
+//            }else
+//            {
+//                NSLog(@"连接登录不成功");
+//            }
+//        }];
+//    }
+    
+    [[XMPPServer shareInstance]loginTimes:10 loginBack:^(BOOL result) {
+        if (result) {
+            NSLog(@"连接并且登录成功");
+        }else{
+            NSLog(@"连接登录不成功");
+        }
+    }];
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

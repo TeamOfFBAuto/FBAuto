@@ -92,7 +92,7 @@
         self.phoneNumLabel.text = [dic objectForKey:@"phone"];
         self.addressLabel.text = [NSString stringWithFormat:@"%@%@",[dic objectForKey:@"province"],[dic objectForKey:@"city"]];
         
-        [self.headImage sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"phone"]] placeholderImage:[UIImage imageNamed:@"detail_test"]];
+        [self.headImage sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"headimage"]] placeholderImage:[UIImage imageNamed:@"detail_test"]];
         
         //车辆图片
         

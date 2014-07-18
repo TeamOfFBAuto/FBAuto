@@ -81,6 +81,9 @@ typedef void(^ friendAction) (id);
 
 //- (void)friendAction: (friendAction *)friend_Back;
 
+- (void)loginTimes:(int)times loginBack:(loginAction)loginBack;//多次联系登录
+
+
 @end
 
 
