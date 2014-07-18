@@ -59,32 +59,35 @@
     [self.contentView addSubview:tLabel];
     
     
-    
-    
-    
-    
-    
-    
+    height = 60;
     
     //操作按钮
     UIButton *addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    addBtn.frame = CGRectMake(287, 10, 20, 20);
-    addBtn.backgroundColor = [UIColor redColor];
+    [addBtn setImage:[UIImage imageNamed:@"jiantou_down18_10.png"] forState:UIControlStateNormal];
+    [addBtn setImageEdgeInsets:UIEdgeInsetsMake(7.5, 5, 7.5, 5)];
+    addBtn.frame = CGRectMake(287, 20, 20, 20);
     [self.contentView addSubview:addBtn];
     [addBtn addTarget:self action:@selector(tianjia) forControlEvents:UIControlEventTouchUpInside];
-    NSLog(@"%@",theIndexPath);
-    NSLog(@"delegate - %@",self.delegate.flagIndexPath);
+    
     if (theIndexPath.row == self.delegate.flagIndexPath.row && theIndexPath.section == self.delegate.flagIndexPath.section) {
-        
-        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 60, 320, 60)];
-        view.backgroundColor = [UIColor orangeColor];
-        addBtn.backgroundColor = [UIColor greenColor];
-        [self.contentView addSubview:view];
-        self.isGreen = 120;
-        height = 120;
-    }else{
-        height = 60;
+        if (self.delegate.flagHeight == 60) {//正常
+            if (_shanchuView) {
+                [_shanchuView removeFromSuperview];
+            }
+            height = 60;
+        }else if (self.delegate.flagHeight == 120){//删除界面
+            [addBtn setImage:[UIImage imageNamed:@"jiantou_up18_10.png"] forState:UIControlStateNormal];
+            _shanchuView = [[UIView alloc]initWithFrame:CGRectMake(0, 60, 320, 60)];
+            _shanchuView.backgroundColor = [UIColor redColor];
+            [self.contentView addSubview:addBtn];
+            height = 120;
+        }
     }
+    
+    
+    
+        
+    NSLog(@"%f",height);
     return height;
 }
 

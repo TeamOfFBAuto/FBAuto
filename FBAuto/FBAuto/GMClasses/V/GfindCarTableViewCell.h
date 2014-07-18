@@ -14,13 +14,14 @@
 typedef void (^addViewBlock)();//点击箭头添加选项菜单view
 
 @interface GfindCarTableViewCell : UITableViewCell
-
+{
+    UIView *_shanchuView;//点击箭头出来的删除view
+}
 @property(nonatomic,assign)BOOL ischoose;//是否添加了视图
 @property(nonatomic,copy)addViewBlock addviewBlock;
 @property(nonatomic,strong)GfindCarViewController *delegate;//代理
-@property(nonatomic,strong)NSIndexPath *flagIndexPath;//标记
 
-@property(nonatomic,assign)int isGreen;//是否点击 再点一下收起  60开  120收
+
 
 -(void)setAddviewBlock:(addViewBlock)addviewBlock;
 

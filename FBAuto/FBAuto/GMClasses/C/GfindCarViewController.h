@@ -21,8 +21,12 @@
 
 @property(nonatomic,strong)NSIndexPath *flagIndexPath;//用于标记有菜单的cell
 
-@property(nonatomic,assign)int gtype;//寻车：3         车源：2
+@property(nonatomic,strong)NSIndexPath *lastIndexPath;//上一个indexpath
 
+@property(nonatomic,assign)int flagHeight;//现在的点击的高
+@property(nonatomic,assign)int lastHeight;//上一个indxpath的高
+
+@property(nonatomic,assign)int gtype;
 
 
 @end

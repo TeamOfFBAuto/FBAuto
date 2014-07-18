@@ -28,9 +28,13 @@
     
     NSLog(@"%s",__FUNCTION__);
     
-    self.flagIndexPath = [NSIndexPath indexPathForRow:10000 inSection:10000];
+    
     
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    
+    
+    self.flagHeight = 60;
     
     _tableiView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64)];
     _tableiView.delegate = self;
@@ -66,33 +70,29 @@
         [view removeFromSuperview];
     }
     
-    
-    
-    
-    
-//    NSLog(@"---- %@",self.flagIndexPath);
+    [cell loadView:indexPath];
     
     __weak typeof (self)bself = self;
     __weak typeof (_tableiView)btableview = _tableiView;
-    __weak typeof (cell)bcell = cell;
     
+    //设置上下箭头的点击
     [cell setAddviewBlock:^{
+        bself.flagIndexPath = indexPath;
+        NSArray *indexPathArray = @[bself.flagIndexPath];
         
-        NSLog(@"11%@",bself.flagIndexPath);
-        bself.flagIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-        
-        if (bcell.isGreen == 120) {
-            bself.flagIndexPath = [NSIndexPath indexPathForRow:1 inSection:1];
-            bcell.isGreen =60;
+        if (bself.flagHeight == 120) {
+            bself.flagHeight = 60;
+        }else if (bself.flagHeight == 60){
+            bself.flagHeight = 120;
         }
+        [btableview reloadRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationFade];
         
         
-        [btableview reloadData];
+        
+        
         
     }];
     
-    
-    [cell loadView:indexPath];
     
     
     
@@ -116,6 +116,7 @@
     }
     
 
+    NSLog(@"%f",height);
     
     return height;
 }
