@@ -26,7 +26,7 @@
 @property(nonatomic,assign)int flagHeight;//现在的点击的高
 @property(nonatomic,assign)int lastHeight;//上一个indxpath的高
 
-@property(nonatomic,assign)int gtype;
+@property(nonatomic,assign)int gtype;// 2:我的车源    3我的寻车
 
 
 @end

@@ -82,6 +82,12 @@
             [self.contentView addSubview:addBtn];
             height = 120;
         }
+    }else if (theIndexPath.row == self.delegate.lastIndexPath.row && theIndexPath.section == self.delegate.lastIndexPath.section){
+        [addBtn setImage:[UIImage imageNamed:@"jiantou_down18_10.png"] forState:UIControlStateNormal];
+        height = 60;
+        if (_shanchuView) {
+            [_shanchuView removeFromSuperview];
+        }
     }
     
     
