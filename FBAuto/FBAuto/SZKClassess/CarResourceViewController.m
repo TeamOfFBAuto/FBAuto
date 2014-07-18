@@ -310,6 +310,13 @@
 {
     _searchPage = page;
     
+    //比较两次请求关键词是否一致,如果不一致，则刷新数据
+    
+    if (![_searchKeyword isEqualToString:keyword]) {
+        
+        _dataArray = nil;
+    }
+    
     _searchKeyword = keyword;
     
     NSString *url = [NSString stringWithFormat:FBAUTO_CARSOURCE_SEARCH,keyword,_searchPage,KPageSize];
@@ -609,6 +616,11 @@
     if ([requestType isEqualToString:_lastRequest]) { //两次请求一致
         
         NSLog(@"两次一致");
+        
+        if ([requestType isEqualToString:CAR_SEARCH]) {
+            
+//            isReload = YES;
+        }
         
     }else //两次请求不一致
     {

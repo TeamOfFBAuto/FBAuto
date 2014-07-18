@@ -37,6 +37,7 @@
 
 - (IBAction)clickToDial:(id)sender;//打电话
 - (IBAction)clickToChat:(id)sender;//聊天
+- (IBAction)clickToPersonal:(id)sender;//个人信息页
 
 
 @end

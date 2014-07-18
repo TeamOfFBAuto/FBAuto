@@ -11,7 +11,7 @@
 #import <UIKit/UIKit.h>
 @class GyhzyTableViewCell;
 
-@interface GyhzyViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface GyhzyViewController : FBBaseViewController<UITableViewDataSource,UITableViewDelegate>
 
 {
     UITableView *_tableView;//主tableview
@@ -20,6 +20,7 @@
     
 }
 
+@property(nonatomic,retain)NSString *title;
 
 
 @end

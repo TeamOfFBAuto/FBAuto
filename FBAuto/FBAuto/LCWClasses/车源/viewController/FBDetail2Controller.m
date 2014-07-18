@@ -11,6 +11,7 @@
 #import "DDPageControl.h"
 #import "FBChatViewController.h"
 #import "ClickImageView.h"
+#import "GyhzyViewController.h"
 
 @interface FBDetail2Controller ()
 {
@@ -241,4 +242,10 @@
     
 }
 
+- (IBAction)clickToPersonal:(id)sender {
+    
+    GyhzyViewController *personal = [[GyhzyViewController alloc]init];
+    personal.title = self.nameLabel.text;
+    [self.navigationController pushViewController:personal animated:YES];
+}
 @end

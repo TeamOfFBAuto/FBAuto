@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		05B651E30AD74BE1BEB43F89 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE98169392244209FCDCF04 /* libPods.a */; };
+		1315537B1979243B0044C010 /* FindCarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 131553791979243B0044C010 /* FindCarCell.m */; };
+		1315537C1979243B0044C010 /* FindCarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1315537A1979243B0044C010 /* FindCarCell.xib */; };
 		1336BC06196A88410011B4D9 /* duihuahuang1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1336BC04196A88410011B4D9 /* duihuahuang1@2x.png */; };
 		1336BC09196A8CE70011B4D9 /* FBAreaFriensController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC08196A8CE70011B4D9 /* FBAreaFriensController.m */; };
 		1336BC0D196B89A00011B4D9 /* XMPPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC0C196B89A00011B4D9 /* XMPPServer.m */; };
@@ -360,6 +362,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		131553781979243B0044C010 /* FindCarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindCarCell.h; sourceTree = "<group>"; };
+		131553791979243B0044C010 /* FindCarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindCarCell.m; sourceTree = "<group>"; };
+		1315537A1979243B0044C010 /* FindCarCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FindCarCell.xib; sourceTree = "<group>"; };
 		1336BC04196A88410011B4D9 /* duihuahuang1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "duihuahuang1@2x.png"; sourceTree = "<group>"; };
 		1336BC07196A8CE70011B4D9 /* FBAreaFriensController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBAreaFriensController.h; sourceTree = "<group>"; };
 		1336BC08196A8CE70011B4D9 /* FBAreaFriensController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBAreaFriensController.m; sourceTree = "<group>"; };
@@ -852,6 +857,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		13155373197923D90044C010 /* 寻车 */ = {
+			isa = PBXGroup;
+			children = (
+				13155374197924180044C010 /* cell */,
+				13155375197924180044C010 /* model */,
+				13155376197924180044C010 /* viewController */,
+				13155377197924180044C010 /* views */,
+			);
+			path = "寻车";
+			sourceTree = "<group>";
+		};
+		13155374197924180044C010 /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				131553781979243B0044C010 /* FindCarCell.h */,
+				131553791979243B0044C010 /* FindCarCell.m */,
+				1315537A1979243B0044C010 /* FindCarCell.xib */,
+			);
+			path = cell;
+			sourceTree = "<group>";
+		};
+		13155375197924180044C010 /* model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		13155376197924180044C010 /* viewController */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = viewController;
+			sourceTree = "<group>";
+		};
+		13155377197924180044C010 /* views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
 		1336BC0A196B89940011B4D9 /* XMPPTools */ = {
 			isa = PBXGroup;
 			children = (
@@ -1153,6 +1200,7 @@
 			children = (
 				13D5E07C1962BD5800804835 /* FBBaseViewController.h */,
 				13D5E07D1962BD5800804835 /* FBBaseViewController.m */,
+				13155373197923D90044C010 /* 寻车 */,
 				13D5E0451962A14E00804835 /* 车源 */,
 				13D5E05C1962A14E00804835 /* 发布 */,
 				13737C821965380900941746 /* 商圈好友 */,
@@ -1976,6 +2024,7 @@
 				138B4AB31966A4BD00B974A5 /* face29.png in Resources */,
 				138B4ACD1966A4BD00B974A5 /* face52.png in Resources */,
 				138B4ABE1966A4BD00B974A5 /* face39.gif in Resources */,
+				1315537C1979243B0044C010 /* FindCarCell.xib in Resources */,
 				138B4AA51966A4BD00B974A5 /* face16.png in Resources */,
 				138B4AC51966A4BD00B974A5 /* face45.png in Resources */,
 				138B4AF41966A4BD00B974A5 /* face88.png in Resources */,
@@ -2338,6 +2387,7 @@
 				137FEB061974D48100CDBD89 /* CarStyle.m in Sources */,
 				13D5E0DE1963DBA400804835 /* MyViewController.m in Sources */,
 				138B4A261966868300B974A5 /* KKMessageCell.m in Sources */,
+				1315537B1979243B0044C010 /* FindCarCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -25,6 +25,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.titleLabel.text = self.title;
     
     NSLog(@"%s",__FUNCTION__);
     
