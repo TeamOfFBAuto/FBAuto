@@ -62,40 +62,46 @@
     height = 60;
     
     //操作按钮
-    UIButton *addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [addBtn setImage:[UIImage imageNamed:@"jiantou_down18_10.png"] forState:UIControlStateNormal];
-    [addBtn setImageEdgeInsets:UIEdgeInsetsMake(7.5, 5, 7.5, 5)];
-    addBtn.frame = CGRectMake(287, 20, 20, 20);
-    [self.contentView addSubview:addBtn];
-    [addBtn addTarget:self action:@selector(tianjia) forControlEvents:UIControlEventTouchUpInside];
+    self.addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.addBtn setImage:[UIImage imageNamed:@"jiantou_down18_10.png"] forState:UIControlStateNormal];
+    [self.addBtn setImageEdgeInsets:UIEdgeInsetsMake(7.5, 5, 7.5, 5)];
+    self.addBtn.frame = CGRectMake(287, 20, 20, 20);
+    [self.contentView addSubview:self.addBtn];
+    [self.addBtn addTarget:self action:@selector(tianjia) forControlEvents:UIControlEventTouchUpInside];
     
-    if (theIndexPath.row == self.delegate.flagIndexPath.row && theIndexPath.section == self.delegate.flagIndexPath.section) {
+
+    //根据vc的indexPathArray 和 cell高度标示展示cell
+    
+    if (self.delegate.indexPathArray.count == 2) {//有last 有flag
         
-        
-        if (self.delegate.flagHeight == 60) {//正常
-            if (_shanchuView) {
+        NSIndexPath *lastIndexPath = self.delegate.indexPathArray[0];
+        NSIndexPath *flagIndexPath = self.delegate.indexPathArray[1];
+        if (theIndexPath.row == lastIndexPath.row && theIndexPath.section == lastIndexPath.section) {//last的高度给60
+            
+            height = 60;
+            if (_shanchuView) {//如果有删除的view的话 删掉
                 [_shanchuView removeFromSuperview];
             }
-            height = 60;
-        }else if (self.delegate.flagHeight == 120){//删除界面
+        }else if (theIndexPath.row == flagIndexPath.row && theIndexPath.section == flagIndexPath.section){//flag的高度给vc的标示高度
+            height = self.delegate.flagHeight;
             
-            [addBtn setImage:[UIImage imageNamed:@"jiantou_up18_10.png"] forState:UIControlStateNormal];
-            _shanchuView = [[UIView alloc]initWithFrame:CGRectMake(0, 60, 320, 60)];
-            _shanchuView.backgroundColor = [UIColor redColor];
-            [self.contentView addSubview:addBtn];
-            height = 120;
+            //添加删除view
+            [self addSanchuView];
+        }
+    }else if (self.delegate.indexPathArray.count == 1){//flag 和 last 是同一个
+        
+        NSIndexPath *flagIndexPath = self.delegate.indexPathArray[0];
+        if (theIndexPath.row == flagIndexPath.row && theIndexPath.section == flagIndexPath.section) {
+            height = self.delegate.flagHeight;
+            if (self.delegate.flagHeight == 60) {
+                if (_shanchuView) {
+                    [_shanchuView removeFromSuperview];
+                }
+            }
+            [self addSanchuView];
         }
         
-    }else if (theIndexPath.row == self.delegate.lastIndexPath.row && theIndexPath.section == self.delegate.lastIndexPath.section){
-        
-        
-        [addBtn setImage:[UIImage imageNamed:@"jiantou_down18_10.png"] forState:UIControlStateNormal];
-        height = 60;
-        if (_shanchuView) {
-            [_shanchuView removeFromSuperview];
-        }
     }
-    
     
     
         
@@ -104,7 +110,7 @@
     return height;
 }
 
-
+//添加按钮点击方法
 -(void)tianjia{
     
     if (self.addviewBlock) {
@@ -114,11 +120,63 @@
     
 }
 
+//添加删除界面view
+-(void)addSanchuView{
+    
+    _shanchuView = [[UIView alloc]initWithFrame:CGRectMake(0, 60, 320, 60)];
+    
+    //图片数组
+    UIImage *imag1 = [UIImage imageNamed:@"lajitong44_44.png"];//删除
+    UIImage *imag2 = [UIImage imageNamed:@"xiugai32_44.png"];//修改
+    UIImage *imag3 = [UIImage imageNamed:@"shuaxin40_44.png"];//刷新
+    UIImage *imag4 = [UIImage imageNamed:@"xubxhe_fabu_44_44.png"];//分享
+    NSArray *imageArray = @[imag1,imag2,imag3,imag4];
+    
+    //titile数组
+    NSString *t1 = @"删除";
+    NSString *t2 = @"修改";
+    NSString *t3 = @"刷新";
+    NSString *t4 = @"分享";
+    NSArray *titleArray = @[t1,t2,t3,t4];
+    
+    
+    for (int i = 0; i<4; i++) {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.frame = CGRectMake(0+i*80, 0, 80, 60);
+        [btn setImage:imageArray[i] forState:UIControlStateNormal];
+        [btn setTitle:titleArray[i] forState:UIControlStateNormal];
+        
+        btn.tag = i+10;
+        [btn addTarget:self action:@selector(viewBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        
+        btn.backgroundColor = [UIColor blackColor];
+        [_shanchuView addSubview:btn];
+    }
+    _shanchuView.backgroundColor = [UIColor redColor];
+    [self.contentView addSubview:_shanchuView];
+}
+
+
+//操作view上面的btn点击方法
+-(void)viewBtnClicked:(UIButton *)sender{
+    if (self.caozuoBtnBlock) {
+        self.caozuoBtnBlock(sender.tag);
+    }
+}
+
+
+
+
 
 
 -(void)setAddviewBlock:(addViewBlock)addviewBlock{
     _addviewBlock = addviewBlock;
 }
+
+-(void)setCaozuoBtnBlock:(caozuoBtnBlock)caozuoBtnBlock{
+    _caozuoBtnBlock = caozuoBtnBlock;
+}
+
 
 
 - (void)awakeFromNib
