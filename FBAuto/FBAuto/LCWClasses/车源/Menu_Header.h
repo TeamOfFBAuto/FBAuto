@@ -31,6 +31,7 @@
 #define MENU_STANDARD_2 @[@"中规",@"美规",@"欧规",@"中东规"] //规格
 #define MENU_SOURCE_2 @[@"商家",@"经纪人"] //来源
 #define MENU_TIMELIMIT_2 @[@"现车",@"期货"] //期限
+#define MENU_MONEY_2 @[@"不限",@"定金已付",@"定金未支付"] //期限
 
 
 #endif

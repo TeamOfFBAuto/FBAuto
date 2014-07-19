@@ -21,7 +21,9 @@ typedef enum{
     Data_Price,//价格
     Data_Timelimit, //期限
     Data_Color_Out,//外观颜色
-    Data_Color_In//内饰颜色
+    Data_Color_In,//内饰颜色
+    Data_Money,//定金
+    Data_Area//地区
     
 }DATASTYLE;
 
@@ -39,6 +41,8 @@ typedef void(^ SelectParamsBlock) (DATASTYLE style,NSString *paramName,NSString 
 @property(nonatomic,retain)NSString *lastLevelId;//上一级id
 @property(nonatomic,retain)NSString *brandId;
 @property(nonatomic,retain)NSString *typeId;//
+@property(nonatomic,assign)UIViewController *rootVC;//根视图
+@property(nonatomic,assign)BOOL haveLimit;//是否有 不限选择(yes 时 有 不限选择)
 
 - (void)selectParamBlock:(SelectParamsBlock)aBlock;
 

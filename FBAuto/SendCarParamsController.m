@@ -54,25 +54,25 @@
         case Data_Standard:
         {
             title = @"规格";
-            self.dataArray = MENU_STANDARD_2;
+            self.dataArray = self.haveLimit ? MENU_SOURCE : MENU_SOURCE_2;
         }
             break;
         case Data_Timelimit:
         {
             title = @"期限";
-            self.dataArray = MENU_TIMELIMIT_2;
+            self.dataArray = self.haveLimit ? MENU_TIMELIMIT : MENU_TIMELIMIT_2;
         }
             break;
         case Data_Color_Out:
         {
             title = @"外观颜色";
-            self.dataArray = MENU_HIGHT_OUTSIDE_CORLOR_2;
+            self.dataArray = self.haveLimit ? MENU_HIGHT_OUTSIDE_CORLOR : MENU_HIGHT_OUTSIDE_CORLOR_2;
         }
             break;
         case Data_Color_In:
         {
             title = @"内饰颜色";
-            self.dataArray = MENU_HIGHT_INSIDE_CORLOR_2;
+            self.dataArray = self.haveLimit ? MENU_HIGHT_INSIDE_CORLOR : MENU_HIGHT_INSIDE_CORLOR_2;
         }
             break;
         case Data_Car_Type:
@@ -81,7 +81,6 @@
             
             self.dataArray = typeArr;
             
-//            [self.table reloadData];
         }
             break;
         case Data_Car_Style:
@@ -89,9 +88,16 @@
             NSArray *styteArr = [[[LCWTools alloc]init]queryDataClassType:CARSOURCE_STYLE_QUERY pageSize:0 andOffset:0 unique:self.typeId];
             
             self.dataArray = styteArr;
-            
-//            [self.table reloadData];
-            
+        }
+            break;
+        case Data_Area:
+        {
+
+        }
+            break;
+        case Data_Money:
+        {
+            self.dataArray = self.haveLimit ? MENU_MONEY : MENU_MONEY_2;
         }
             break;
             
@@ -287,6 +293,8 @@
         
         base.brandId = aBrand.brandId;
         
+        base.rootVC = self.rootVC;
+        
         [base selectParamBlock:^(DATASTYLE style, NSString *paramName, NSString *paramId) {
             
             selectBlock(style,paramName,paramId);
@@ -320,6 +328,7 @@
             base.selectLabel = self.selectLabel;
             base.brandId = self.brandId;
             base.typeId = aType.typeId;
+            base.rootVC = self.rootVC;
             
             [base selectParamBlock:^(DATASTYLE style, NSString *paramName, NSString *paramId) {
                 
@@ -349,7 +358,12 @@
             selectBlock(self.dataStyle,aStyle.styleName,car);
         }
         
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        if (self.rootVC) {
+            [self.navigationController popToViewController:self.rootVC animated:YES];
+        }else
+        {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
         
         return;
         
@@ -357,7 +371,10 @@
     
     NSString *select = [_dataArray objectAtIndex:indexPath.row];
     
-    selectBlock(self.dataStyle,select,[NSString stringWithFormat:@"%ld",(long)indexPath.row + 1]);
+    
+    int row = self.haveLimit ? indexPath.row : indexPath.row + 1;
+    
+    selectBlock(self.dataStyle,select,[NSString stringWithFormat:@"%d",row]);
     
     [self clickToBack:nil];
 }

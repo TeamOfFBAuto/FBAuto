@@ -10,8 +10,9 @@
 #import "SendCarParamsController.h"
 #import "Section_Button.h"
 
-@interface FindCarPublishController ()
+@interface FindCarPublishController ()<UITextFieldDelegate>
 {
+    MBProgressHUD *loadingHub;
     UIScrollView *bigBgScroll;//背景scroll
     UIButton *publish;
     
@@ -22,7 +23,11 @@
     int _color_out;// 外观颜色id
     int _color_in;// 内饰颜色id
     int _carfrom;// 汽车规格id（美规，中规）
+    int _deposit;//定金
+    int _province;
+    int _city;
     NSString *_cardiscrib;// 车源描述
+    UITextField *descriptionTF;
 }
 
 @end
@@ -53,6 +58,14 @@
     [self.view addSubview:bigBgScroll];
     
     [self createSection];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(clickToHideKeyboard)];
+    tap.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:tap];
+    
+    loadingHub = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+	[self.navigationController.view addSubview:loadingHub];
+	loadingHub.labelText = @"发布中...";
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,7 +78,7 @@
 
 - (void)createSection
 {
-    UILabel *firstLabel = [self createLabelFrame:CGRectMake(10, 25, 300, 45) text:@"必填" alignMent:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"818181"]];
+    UILabel *firstLabel = [self createLabelFrame:CGRectMake(10, 0, 300, 45) text:@"必填" alignMent:NSTextAlignmentLeft textColor:[UIColor colorWithHexString:@"818181"]];
     [bigBgScroll addSubview:firstLabel];
     
     UIView *firstBgView = [[UIView alloc]initWithFrame:CGRectMake(10, firstLabel.bottom, 320 - 20, 45 * 2)];
@@ -83,41 +96,33 @@
     secondBgView.layer.borderColor = [UIColor colorWithHexString:@"b4b4b4"].CGColor;
     [bigBgScroll addSubview:secondBgView];
     
-    NSArray *titles = @[@"车型",@"规格",@"期现",@"外观颜色",@"内饰颜色"];
-    for (int i = 0; i < 5; i ++) {
-        Section_Button *btn = [[Section_Button alloc]initWithFrame:CGRectMake(0, 45 * i, secondBgView.width, 45) title:[titles objectAtIndex:i] target:self action:@selector(clickToParams:) sectionStyle:Section_Normal image:nil];
+    NSArray *titles1 = @[@"地区",@"车型"];
+    for (int i = 0; i < titles1.count; i ++) {
+        Section_Button *btn = [[Section_Button alloc]initWithFrame:CGRectMake(0, 45 * i, secondBgView.width, 45) title:[titles1 objectAtIndex:i] target:self action:@selector(clickToParams:) sectionStyle:Section_Normal image:nil];
         btn.tag = 100 + i;
+        [firstBgView addSubview:btn];
+    }
+    
+    NSArray *titles2 = @[@"规格",@"期现",@"外观色",@"内饰色",@"定金"];
+    for (int i = 0; i < titles2.count; i ++) {
+        Section_Button *btn = [[Section_Button alloc]initWithFrame:CGRectMake(0, 45 * i, secondBgView.width, 45) title:[titles2 objectAtIndex:i] target:self action:@selector(clickToParams:) sectionStyle:Section_Normal image:nil];
+        btn.tag = 100 + i + 2;
+        btn.contentLabel.text = @"不限";
         [secondBgView addSubview:btn];
     }
     
-//    //价格特殊处理，需要输入
-//    
-//    UIView *line1 = [[UIView alloc]initWithFrame:CGRectMake(0, 45*5, 300, 0.5)];
-//    line1.backgroundColor = [UIColor colorWithHexString:@"b4b4b4"];
-//    [secondBgView addSubview:line1];
-//    
-//    [secondBgView addSubview:[self createLabelFrame:CGRectMake(10, 45*5, 100, 45.f) text:@"价格" alignMent:NSTextAlignmentLeft textColor:[UIColor blackColor]]];
-//    
-//    priceTF = [[UITextField alloc]initWithFrame:CGRectMake(80 - 10, 45 * 5, 175, 45)];
-//    priceTF.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-//    priceTF.delegate = self;
-//    priceTF.backgroundColor = [UIColor clearColor];
-//    [secondBgView addSubview:priceTF];
-//    
-//    [secondBgView addSubview:[self createLabelFrame:CGRectMake(300 - 35 - 10, 45 * 5, 35, 45.f) text:@"万元" alignMent:NSTextAlignmentRight textColor:[UIColor colorWithHexString:@"c7c7cc"]]];
-//    
-//    //车源描述，需要输入
-//    
-//    UIView *line2 = [[UIView alloc]initWithFrame:CGRectMake(0, 45*6, 300, 1)];
-//    line2.backgroundColor = [UIColor colorWithHexString:@"b4b4b4"];
-//    [secondBgView addSubview:line2];
-//    
-//    [secondBgView addSubview:[self createLabelFrame:CGRectMake(10, 45*6, 100, 45.f) text:@"车源描述" alignMent:NSTextAlignmentLeft textColor:[UIColor blackColor]]];
-//    
-//    descriptionTF = [[UITextField alloc]initWithFrame:CGRectMake(80 - 10, 45 * 6, 175, 45)];
-//    descriptionTF.delegate = self;
-//    descriptionTF.backgroundColor = [UIColor clearColor];
-//    [secondBgView addSubview:descriptionTF];
+    //车源描述，需要输入
+    
+    UIView *line2 = [[UIView alloc]initWithFrame:CGRectMake(0, 45*5, 300, 0.5)];
+    line2.backgroundColor = [UIColor colorWithHexString:@"b4b4b4"];
+    [secondBgView addSubview:line2];
+    
+    [secondBgView addSubview:[self createLabelFrame:CGRectMake(10, 45*5, 100, 45.f) text:@"车源描述" alignMent:NSTextAlignmentLeft textColor:[UIColor blackColor]]];
+    
+    descriptionTF = [[UITextField alloc]initWithFrame:CGRectMake(80 - 10, 45 * 5, 175, 45)];
+    descriptionTF.delegate = self;
+    descriptionTF.backgroundColor = [UIColor clearColor];
+    [secondBgView addSubview:descriptionTF];
     
     
     //发布按钮
@@ -129,7 +134,7 @@
     [publish addTarget:self action:@selector(clickToPublish:) forControlEvents:UIControlEventTouchUpInside];
     [bigBgScroll addSubview:publish];
     
-    bigBgScroll.contentSize = CGSizeMake(320, firstBgView.height + secondBgView.height + 16 + publish.height + 10);
+    bigBgScroll.contentSize = CGSizeMake(320, firstBgView.height + secondBgView.height + publish.height + 400);
 }
 
 - (UILabel *)createLabelFrame:(CGRect)aFrame text:(NSString *)text alignMent:(NSTextAlignment)align textColor:(UIColor *)color
@@ -144,6 +149,35 @@
 }
 
 
+#pragma - mark 价格输入框
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        bigBgScroll.contentOffset = CGPointMake(0, 251);
+    }];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        bigBgScroll.contentOffset = CGPointMake(0, 0);
+    }];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [descriptionTF resignFirstResponder];
+    return YES;
+}
+
+- (void)clickToHideKeyboard
+{
+    [descriptionTF resignFirstResponder];
+}
+
 
 #pragma - mark 进入发布车源参数页面
 
@@ -155,38 +189,44 @@
     switch (btn.tag) {
         case 100:
         {
+            aStyle = Data_Area;
+            title = @"地区";
+        }
+            break;
+        case 101:
+        {
             aStyle = Data_Car_Brand;
             title = @"车型";
         }
             break;
-        case 101:
+        case 102:
         {
             aStyle = Data_Standard;
             title = @"规格";
         }
             break;
-        case 102:
+        case 103:
         {
             aStyle = Data_Timelimit;
             title = @"期限";
         }
             break;
-        case 103:
+        case 104:
         {
             aStyle = Data_Color_Out;
             title = @"外观颜色";
         }
             break;
-        case 104:
+        case 105:
         {
             aStyle = Data_Color_In;
             title = @"内饰颜色";
         }
             break;
-        case 105:
+        case 106:
         {
-            aStyle = Data_Price;
-            title = @"价格";
+            aStyle = Data_Money;
+            title = @"定金";
         }
             break;
             
@@ -199,6 +239,8 @@
     base.navigationTitle = title;
     base.dataStyle = aStyle;
     base.selectLabel = btn.contentLabel;
+    base.rootVC = self;
+    base.haveLimit = YES;
     
     [base selectParamBlock:^(DATASTYLE style, NSString *paramName, NSString *paramId) {
         NSLog(@"paramName %@ %@",paramName,paramId);
@@ -303,5 +345,37 @@
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:text delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alert show];
 }
+
+#pragma - mark 网络请求--发布寻车信息
+
+#pragma - mark 发布车源
+
+- (void)publishCarSource
+{
+    
+    NSString *descrip = descriptionTF.text;
+    descrip = descrip ? descrip : @"无";
+    NSString *url = [NSString stringWithFormat:
+                     @"%@&authkey=%@&province=%d&city=%d&car=%@&spot_future=%d&color_out=%d&color_in=%d&deposit=%d&carfrom=%d&cardiscrib=%@",FBAUTO_FINDCAR_PUBLISH,[GMAPI getAuthkey],_province,_city,_car,_spot_future,_color_out,_color_in,_deposit,_carfrom,descrip];
+    
+    NSLog(@"发布列表 %@",url);
+    
+    LCWTools *tool = [[LCWTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"寻车发布 result %@, erro%@",result,[result objectForKey:@"errinfo"]);
+        
+        [loadingHub hide:NO];
+        
+        [LCWTools showMBProgressWithText:@"车源信息发布成功" addToView:self.view];
+//        [self refreshUI];
+        
+    }failBlock:^(NSDictionary *failDic, NSError *erro) {
+        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
+    }];
+    
+}
+
+
 
 @end

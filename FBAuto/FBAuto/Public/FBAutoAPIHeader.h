@@ -141,4 +141,6 @@ alpha:(a)]
 
 #define FBAUTO_FINDCAR_SEARCH @"http://fbautoapp.fblife.com/index.php?c=interface&a=searchxunche&keyword=%@&page=%d&ps=%d" //寻车搜索
 
+#define FBAUTO_FINDCAR_PUBLISH @"http://fbautoapp.fblife.com/index.php?c=interface&a=addxunche"//添加寻车信息
+
 #endif
