@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CarResourceViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface CarResourceViewController : UIViewController<UITableViewDataSource>
 
 @end

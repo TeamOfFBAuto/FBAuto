@@ -16,7 +16,8 @@
 typedef enum {
     Menu_Standard = 0,//规格
     Menu_Source,//来源
-    Menu_Timelimit//期限
+    Menu_Timelimit,//期限
+    Menu_Money
 }MenuStyle;
 
 typedef void(^SelectNormalBlock) (MenuStyle style, NSString *selectId);

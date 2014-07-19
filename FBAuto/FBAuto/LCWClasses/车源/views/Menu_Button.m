@@ -53,7 +53,13 @@
         
         
     }
-    self.backgroundColor = [UIColor clearColor];
+    
+    if (self.normalColor) {
+        self.backgroundColor = [UIColor colorWithHexString:self.normalColor];
+    }else
+    {
+        self.backgroundColor = [UIColor clearColor];
+    }
 }
 
 -(void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event

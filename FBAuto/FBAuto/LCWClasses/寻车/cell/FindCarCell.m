@@ -7,6 +7,7 @@
 //
 
 #import "FindCarCell.h"
+#import "CarSourceClass.h"
 
 @implementation FindCarCell
 
@@ -20,6 +21,15 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)setCellDataWithModel:(CarSourceClass *)aCar
+{
+    
+    self.contentLabel.text = @"发河北 寻美规 奥迪Q7 14款 豪华";
+    self.moneyLabel.text = @"已交定金";
+    self.nameLabel.text = @"张三";
+    self.timeLabel.text = [LCWTools timechange:aCar.dateline];
 }
 
 @end

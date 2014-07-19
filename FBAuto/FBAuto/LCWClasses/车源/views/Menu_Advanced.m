@@ -32,7 +32,7 @@
     return self;
 }
 
-- (id)initWithFrontView:(UIView *)frontView
+- (id)initWithFrontView:(UIView *)frontView contentStyle:(ContentStyle)aContentStyle
 {
     self = [super init];
     if (self) {
@@ -49,23 +49,42 @@
         
         sumHeight = self.height - 49 - KTOP - 44 - 20 - 40;
         
-        table = [[UITableView alloc]initWithFrame:CGRectMake(KLEFT, arrowImage.bottom, self.width - 2 * KLEFT, sumHeight) style:UITableViewStylePlain];
+        contentStyle = aContentStyle;
         
-        table.separatorInset = UIEdgeInsetsMake(10, 10, 0, 10);
-        table.delegate = self;
-        table.dataSource = self;
-        [self addSubview:table];
-        
-        dataArray = MENU_HIGHT_TITLE;
-        [table reloadData];
-        
-        CGRect aFrame = table.frame;
-        aFrame.size.height = 45 * dataArray.count;
-        table.frame = aFrame;
+        if (aContentStyle == Content_Area) {
+            
+            [self loadProvince];
+            
+        }else{
+            
+            if (aContentStyle == Content_Out_In)
+            {
+                dataArray = MENU_HIGHT_TITLE_MORE;
+                
+            }else
+            {
+                
+                dataArray = MENU_HIGHT_TITLE;
+            }
+            
+            table = [[UITableView alloc]initWithFrame:CGRectMake(KLEFT, arrowImage.bottom, self.width - 2 * KLEFT, sumHeight) style:UITableViewStylePlain];
+            table.separatorInset = UIEdgeInsetsMake(10, 10, 0, 10);
+            table.delegate = self;
+            table.dataSource = self;
+            [self addSubview:table];
+            
+            [table reloadData];
+            
+            CGRect aFrame = table.frame;
+            aFrame.size.height = 45 * dataArray.count;
+            table.frame = aFrame;
+            
+        }
         
     }
     
     return self;
+
 }
 
 - (void)selectBlock:(SelectBlock)aBlock
@@ -170,49 +189,35 @@
 - (void)reloadSecondTable
 {
     
+//    arrowImage.bottom
+    
+    CGFloat aWidth = 243.f;
+    CGFloat aLeft = 320.f;
+    
+    if (contentStyle == Content_Area) {
+        aWidth = 300;
+        aLeft = 10.0;
+    }
+    
     if (secondTable == nil) {
         
-        secondTable = [[UITableView alloc]initWithFrame:CGRectMake(320, table.top, 243, sumHeight) style:UITableViewStylePlain];
+        secondTable = [[UITableView alloc]initWithFrame:CGRectMake(aLeft, arrowImage.bottom, aWidth, sumHeight) style:UITableViewStylePlain];
         secondTable.delegate = self;
         secondTable.dataSource = self;
         [self addSubview:secondTable];
         
-        [UIView animateWithDuration:0.2 animations:^{
-            CGRect aFrame = secondTable.frame;
-            aFrame.origin.x -= 243;
-            secondTable.frame = aFrame;
-        }];
-        
+        if (contentStyle != Content_Area) {
+            [UIView animateWithDuration:0.2 animations:^{
+                CGRect aFrame = secondTable.frame;
+                aFrame.origin.x -= 243;
+                secondTable.frame = aFrame;
+            }];
+        }
     }
     
     [secondTable reloadData];
 }
 
-
-
-//三级table
-
-//- (void)reloadThirdTableData:(NSArray *)dataArr
-//{
-//    
-//    if (thirdTable == nil) {
-//        
-//        thirdTable = [[UITableView alloc]initWithFrame:CGRectMake(320, table.top, 158, sumHeight) style:UITableViewStylePlain];
-//        thirdTable.delegate = self;
-//        thirdTable.dataSource = self;
-//        [self addSubview:thirdTable];
-//        
-//        [UIView animateWithDuration:0.2 animations:^{
-//            CGRect aFrame = thirdTable.frame;
-//            aFrame.origin.x -= 158;
-//            thirdTable.frame = aFrame;
-//        }];
-//        
-//    }
-//    
-//    thirdArray = dataArr;
-//    [thirdTable reloadData];
-//}
 
 //三级table
 
@@ -221,7 +226,7 @@
     
     if (thirdTable == nil) {
         
-        thirdTable = [[UITableView alloc]initWithFrame:CGRectMake(320, table.top, 158, sumHeight) style:UITableViewStylePlain];
+        thirdTable = [[UITableView alloc]initWithFrame:CGRectMake(320, arrowImage.bottom, 158, sumHeight) style:UITableViewStylePlain];
         thirdTable.delegate = self;
         thirdTable.dataSource = self;
         [self addSubview:thirdTable];

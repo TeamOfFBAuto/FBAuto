@@ -18,6 +18,12 @@ typedef enum {
     Select_In_Color//内饰颜色
 }BlockStyle;
 
+typedef enum {
+    Content_All = 0,//地区、内、外
+    Content_Out_In,//外、内
+    Content_Area//只有地区
+}ContentStyle;
+
 typedef void(^SelectBlock) (BlockStyle style,NSString *colorName,NSString *colorId);
 
 typedef void(^SelectCityBlock) (NSString *cityName,NSString *provinceId,NSString *cityId);
@@ -49,11 +55,14 @@ typedef void(^SelectCityBlock) (NSString *cityName,NSString *provinceId,NSString
     SelectCityBlock cityBlock;
     
     BlockStyle blockStyle;//一级的上一次选择
+    ContentStyle contentStyle;//需要显示数据类型
 }
 
 @property(nonatomic,assign)NSInteger itemIndex;//第几个item,用于控制箭头位置
 
-- (id)initWithFrontView:(UIView *)frontView;
+//- (id)initWithFrontView:(UIView *)frontView;
+- (id)initWithFrontView:(UIView *)frontView contentStyle:(ContentStyle)aContentStyle;
+
 - (void)showInView:(UIView *)aView;
 - (void)hidden;
 

@@ -76,7 +76,7 @@
             name = [NSString stringWithFormat:@"%@%@",fistName,name];
         }
         
-        if (name && phone && [LCWTools isValidateMobile:phone]) {
+        if (name && phone) {
             
             [nameArr addObject:name];
             [phoneArr addObject:phone];

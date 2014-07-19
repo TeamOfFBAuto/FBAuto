@@ -12,10 +12,12 @@
 #import "Menu_Normal.h"
 #import "Menu_button.h"
 #import "Menu_Car.h"
-#import "ZkingSearchView.h"
 #import "FBPhotoBrowserController.h"
 #import "FBDetailController.h"
 #import "FBDetail2Controller.h"
+#import "FBSearchResultController.h"
+
+#import "LSearchView.h"
 
 #import "GloginViewController.h"
 
@@ -45,7 +47,12 @@
     Menu_Normal *menu_Timelimit;//期限
     Menu_Car *menu_Car;//车型选择
     
-    ZkingSearchView *zkingSearchV;
+//    ZkingSearchView *zkingSearchV;
+    
+    UIView *navigationView;
+    LSearchView *searchView;
+    UIButton *cancelButton;
+    
     UIView *menuBgView;
     long openIndex;//当前打开的是第几个
     
@@ -63,7 +70,7 @@
     //搜索参数
     int _searchPage;//搜索页数
     
-    BOOL _isSearch;//是否在搜索(只有当点击搜索之后变为YES,此时刷新、加载更多都基于 搜索；只有点击了选项按钮才设为 NO)
+//    BOOL _isSearch;//是否在搜索(只有当点击搜索之后变为YES,此时刷新、加载更多都基于 搜索；只有点击了选项按钮才设为 NO)
     
     NSString *_lastRequest;//判断两次 请求接口是否一致,如果一致需要更新dataArray
     
@@ -91,6 +98,8 @@
 -(void)viewWillAppear:(BOOL)animated{
 
     [super viewWillAppear:YES];
+    [self.navigationController.navigationBar addSubview:navigationView];
+    
     if (![GMAPI getUsername].length) {
         
         [self presentViewController:[[UINavigationController alloc]initWithRootViewController:[[GloginViewController alloc]init]] animated:NO completion:^{
@@ -100,6 +109,12 @@
         NSLog(@"xxname===%@",[GMAPI getUsername]);
     }
     
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [navigationView removeFromSuperview];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -128,25 +143,13 @@
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan_bg_640_88"] forBarMetrics: UIBarMetricsDefault];
     
-    //搜索
-    
-    zkingSearchV = [[ZkingSearchView alloc]initWithFrame:CGRectMake(0, (44 - 30)/2.0, 300, 30) imgBG:[UIImage imageNamed:@"sousuo_bg548_58"] shortimgbg:[UIImage imageNamed:@"sousuo_bg548_58"] imgLogo:[UIImage imageNamed:@"sousuo_icon26_26"] placeholder:@"请输入车型、电话、姓名或公司名" searchWidth:275.f ZkingSearchViewBlocs:^(NSString *strSearchText, int tag) {
-        
-        [self searchFriendWithname:strSearchText thetag:tag];
-        
-    }];
-    zkingSearchV.backgroundColor = [UIColor clearColor];
-    
-    self.navigationItem.titleView = zkingSearchV;
+    [self createNavigationView];
     
     //menu选项
-    
     [self createMenu];
     
-    
     //数据展示table
-    
-    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, menuBgView.bottom, 320, self.view.height -zkingSearchV.height - menuBgView.height - 49 - 15 - (iPhone5 ? 20 : 0))];
+    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, menuBgView.bottom, 320, self.view.height - 44 - menuBgView.height - 49 - 15 - (iPhone5 ? 20 : 0))];
     
     _table.refreshDelegate = self;
     _table.dataSource = self;
@@ -155,9 +158,6 @@
     [self.view addSubview:_table];
     
     //搜索遮罩
-    
-    [self createMask];
-    
     [_table showRefreshHeader:YES];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getCarBrandData:) name:NEED_REQUEST_CAR_BRAND object:nil];
@@ -169,6 +169,87 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma - mark 添加寻车信息
+
+- (void)createNavigationView
+{
+    navigationView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
+    navigationView.backgroundColor = [UIColor clearColor];
+    [self.navigationController.navigationBar addSubview:navigationView];
+    
+    //搜索
+    searchView = [[LSearchView alloc]initWithFrame:CGRectMake((320 - 550 / 2.0) / 2.0, (44 - 30)/2.0, 550 / 2.0, 30) placeholder:@"请输入车型、电话、姓名或公司名" logoImage:[UIImage imageNamed:@"sousuo_icon26_26"] maskViewShowInView:self.view searchBlock:^(SearchStyle actionStyle, NSString *searchText) {
+        
+        [self searchStyle:actionStyle searchText:searchText];
+        
+    }];
+    
+    [navigationView addSubview:searchView];
+    
+    //取消按钮
+    cancelButton =[[UIButton alloc]initWithFrame:CGRectMake(320 - 44 - 10,0,44,44)];
+    cancelButton.backgroundColor = [UIColor clearColor];
+    [cancelButton addTarget:self action:@selector(clickToCancel:) forControlEvents:UIControlEventTouchUpInside];
+    [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
+    [cancelButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    [navigationView addSubview:cancelButton];
+    cancelButton.hidden = YES;
+    
+}
+
+- (void)clickToCancel:(UIButton *)sender
+{
+    [searchView cancelSearch];
+}
+
+#pragma - mark 处理搜索框事件
+
+- (void)searchStyle:(SearchStyle)aStyle searchText:(NSString *)text
+{
+    if (aStyle == Search_BeginEdit)
+    {
+        //显示取消按钮、隐藏编辑按钮
+        [self updateSearchViewNormal:NO];
+        
+    }else if (aStyle == Search_Search)
+    {
+        if (text && ![text isEqualToString:@""]) {
+            FBSearchResultController *result = [[FBSearchResultController alloc]initWithStyle:Search_carSource];
+            result.searchKeyword = text;
+            result.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:result animated:YES];
+            
+            [self updateSearchViewNormal:YES];
+        }
+        
+    }else if (aStyle == Search_Cancel)
+    {
+        [self updateSearchViewNormal:YES];
+    }
+}
+
+- (void)updateSearchViewNormal:(BOOL)isNormal
+{
+    cancelButton.hidden = isNormal;
+    
+    CGRect aFrame = searchView.frame;
+    if (isNormal) {
+        
+        aFrame.origin.x = (320 - 550 / 2.0) / 2.0;
+        aFrame.size.width = 550 / 2.0;
+        
+    }else
+    {
+        aFrame.origin.x = 10.f;
+        aFrame.size.width = 320 - 3 * 10 - 44;
+    }
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        searchView.frame = aFrame;
+    }];
+}
+
+
 #pragma - mark 根据通知获取车型数据
 
 - (void)getCarBrandData:(NSNotification *)notification
@@ -176,25 +257,6 @@
     _needRefreshCarBrand = YES;
     
     [self getCarData];
-}
-
-#pragma - mark 搜索遮罩
-
-- (void)createMask
-{
-    maskView = [[UIView alloc]initWithFrame:self.view.frame];
-    maskView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
-    [self.view addSubview:maskView];
-    maskView.hidden = YES;
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideKeyboard)];
-    [maskView addGestureRecognizer:tap];
-}
-
-- (void)hideKeyboard
-{
-    [zkingSearchV doCancelButton];
-    maskView.hidden = YES;
 }
 
 #pragma - mark 创建导航menu
@@ -228,7 +290,7 @@
         [menuBgView addSubview:line];
     }
     
-    menu_Advanced = [[Menu_Advanced alloc]initWithFrontView:menuBgView];
+    menu_Advanced = [[Menu_Advanced alloc]initWithFrontView:menuBgView contentStyle:Content_All];
     
     [menu_Advanced selectBlock:^(BlockStyle style, NSString *colorName, NSString *colorId) {
         
@@ -613,23 +675,23 @@
  */
 - (void)reloadData:(NSArray *)dataArr isReload:(BOOL)isReload requestType:(NSString *)requestType
 {
-    if ([requestType isEqualToString:_lastRequest]) { //两次请求一致
-        
-        NSLog(@"两次一致");
-        
-        if ([requestType isEqualToString:CAR_SEARCH]) {
-            
-//            isReload = YES;
-        }
-        
-    }else //两次请求不一致
-    {
-        isReload = YES;//强制刷新
-        
-        NSLog(@"两次不一致");
-    }
-    
-    _lastRequest = requestType;
+//    if ([requestType isEqualToString:_lastRequest]) { //两次请求一致
+//        
+//        NSLog(@"两次一致");
+//        
+//        if ([requestType isEqualToString:CAR_SEARCH]) {
+//            
+////            isReload = YES;
+//        }
+//        
+//    }else //两次请求不一致
+//    {
+//        isReload = YES;//强制刷新
+//        
+//        NSLog(@"两次不一致");
+//    }
+//    
+//    _lastRequest = requestType;
     
     if (isReload) {
         
@@ -644,6 +706,7 @@
     
     [_table performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
 }
+
 - (void)clickToDetail:(NSString *)carId
 {
     FBDetail2Controller *detail = [[FBDetail2Controller alloc]init];
@@ -664,54 +727,15 @@
     [self.navigationController pushViewController:browser animated:YES];
 }
 
--(void)searchFriendWithname:(NSString *)strname thetag:(int )_tag{
-    //tag=1,代表取消按钮；tag=2代表开始编辑状态；tag=3代表点击了搜索按钮
-    
-    // self.navigationController.navigationBarHidden=YES;
-    switch (_tag) {
-        case 1:
-        {
-            maskView.hidden = YES;
-            
-            _searchPage = 1;
-        }
-            break;
-        case 2:
-        {
-            maskView.hidden = NO;
-            _searchPage = 1;
-            
-        }
-            break;
-            
-        case 3:
-        {
-            
-            _isSearch = YES;
-            
-            [zkingSearchV doCancelButton];
-            
-            [self searchCarSourceWithKeyword:strname page:1];
-        }
-            break;
-            
-            
-        default:
-            break;
-    }
-    
-}
-
-
 #pragma - mark 点击选项
 
 - (void)clickToDo:(Menu_Button *)selectButton
 {
-    _isSearch = NO;
+//    _isSearch = NO;
     
     //搜索框恢复
     
-    [zkingSearchV doCancelButton];
+    [searchView cancelSearch];
     
     NSInteger aTag = selectButton.tag - 1000;
     
@@ -863,12 +887,12 @@
 {
     NSLog(@"loadNewData");
     
-    if (_isSearch) {
-        
-        [self searchCarSourceWithKeyword:_searchKeyword page:1];
-        
-    }else
-    {
+//    if (_isSearch) {
+//        
+//        [self searchCarSourceWithKeyword:_searchKeyword page:1];
+//        
+//    }else
+//    {
         _car = @"000000000";
         _spot_future = 0;
         _color_out = 0;
@@ -879,23 +903,23 @@
         _city = 0;
         _page = 1;
         [self getCarSourceList];
-    }
+//    }
 }
 
 - (void)loadMoreData
 {
    NSLog(@"loadMoreData");
     
-    if (_isSearch) {
-        
-        _searchPage ++;
-        [self searchCarSourceWithKeyword:_searchKeyword page:_searchPage];
-        
-    }else
-    {
+//    if (_isSearch) {
+//        
+//        _searchPage ++;
+//        [self searchCarSourceWithKeyword:_searchKeyword page:_searchPage];
+//        
+//    }else
+//    {
         _page ++;
         [self getCarSourceList];
-    }
+//    }
 }
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath

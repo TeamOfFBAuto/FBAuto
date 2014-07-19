@@ -22,6 +22,7 @@
 @property(nonatomic,assign)SEL menu_Action;
 
 @property(nonatomic,assign)BOOL selected;
+@property(nonatomic,assign)NSString *normalColor;
 
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title target:(id)target action:(SEL)action;
 

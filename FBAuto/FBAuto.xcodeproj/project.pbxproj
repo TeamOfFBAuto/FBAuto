@@ -10,6 +10,7 @@
 		05B651E30AD74BE1BEB43F89 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE98169392244209FCDCF04 /* libPods.a */; };
 		1315537B1979243B0044C010 /* FindCarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 131553791979243B0044C010 /* FindCarCell.m */; };
 		1315537C1979243B0044C010 /* FindCarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1315537A1979243B0044C010 /* FindCarCell.xib */; };
+		1315537F19792FC60044C010 /* LSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1315537E19792FC60044C010 /* LSearchView.m */; };
 		1336BC06196A88410011B4D9 /* duihuahuang1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1336BC04196A88410011B4D9 /* duihuahuang1@2x.png */; };
 		1336BC09196A8CE70011B4D9 /* FBAreaFriensController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC08196A8CE70011B4D9 /* FBAreaFriensController.m */; };
 		1336BC0D196B89A00011B4D9 /* XMPPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC0C196B89A00011B4D9 /* XMPPServer.m */; };
@@ -20,6 +21,8 @@
 		1336BC25196B91F70011B4D9 /* SJAvatarBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC22196B91F70011B4D9 /* SJAvatarBrowser.m */; };
 		1336BC28196B921C0011B4D9 /* XMPPStatics.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC27196B921C0011B4D9 /* XMPPStatics.m */; };
 		1336BC2B196B93CC0011B4D9 /* FBChatImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC2A196B93CC0011B4D9 /* FBChatImage.m */; };
+		1351C5C9197A4F8E000F7391 /* FBSearchResultController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1351C5C8197A4F8E000F7391 /* FBSearchResultController.m */; };
+		1351C5CC197A704F000F7391 /* FindCarPublishController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1351C5CB197A704F000F7391 /* FindCarPublishController.m */; };
 		13737C8119652F1700941746 /* detail_test.png in Resources */ = {isa = PBXBuildFile; fileRef = 13737C8019652F1700941746 /* detail_test.png */; };
 		13737C8E1965420000941746 /* PersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13737C8D1965420000941746 /* PersonalViewController.m */; };
 		137FEB031974C9E700CDBD89 /* carData1.rtfd in Resources */ = {isa = PBXBuildFile; fileRef = 137FEB021974C9E700CDBD89 /* carData1.rtfd */; };
@@ -246,7 +249,6 @@
 		13D5E05F1962A14E00804835 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13D5E04A1962A14E00804835 /* city.plist */; };
 		13D5E0601962A14E00804835 /* City.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D5E04E1962A14E00804835 /* City.m */; };
 		13D5E0611962A14E00804835 /* MenuModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D5E0501962A14E00804835 /* MenuModel.m */; };
-		13D5E0621962A14E00804835 /* FBSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D5E0531962A14E00804835 /* FBSearchView.m */; };
 		13D5E0631962A14E00804835 /* Menu_Advanced.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D5E0551962A14E00804835 /* Menu_Advanced.m */; };
 		13D5E0641962A14E00804835 /* Menu_Button.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D5E0571962A14E00804835 /* Menu_Button.m */; };
 		13D5E0651962A14E00804835 /* Menu_Normal.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D5E0591962A14E00804835 /* Menu_Normal.m */; };
@@ -365,6 +367,8 @@
 		131553781979243B0044C010 /* FindCarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindCarCell.h; sourceTree = "<group>"; };
 		131553791979243B0044C010 /* FindCarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindCarCell.m; sourceTree = "<group>"; };
 		1315537A1979243B0044C010 /* FindCarCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FindCarCell.xib; sourceTree = "<group>"; };
+		1315537D19792FC60044C010 /* LSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSearchView.h; sourceTree = "<group>"; };
+		1315537E19792FC60044C010 /* LSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSearchView.m; sourceTree = "<group>"; };
 		1336BC04196A88410011B4D9 /* duihuahuang1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "duihuahuang1@2x.png"; sourceTree = "<group>"; };
 		1336BC07196A8CE70011B4D9 /* FBAreaFriensController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBAreaFriensController.h; sourceTree = "<group>"; };
 		1336BC08196A8CE70011B4D9 /* FBAreaFriensController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBAreaFriensController.m; sourceTree = "<group>"; };
@@ -384,6 +388,10 @@
 		1336BC27196B921C0011B4D9 /* XMPPStatics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPStatics.m; sourceTree = "<group>"; };
 		1336BC29196B93CC0011B4D9 /* FBChatImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBChatImage.h; sourceTree = "<group>"; };
 		1336BC2A196B93CC0011B4D9 /* FBChatImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBChatImage.m; sourceTree = "<group>"; };
+		1351C5C7197A4F8E000F7391 /* FBSearchResultController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBSearchResultController.h; sourceTree = "<group>"; };
+		1351C5C8197A4F8E000F7391 /* FBSearchResultController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBSearchResultController.m; sourceTree = "<group>"; };
+		1351C5CA197A704F000F7391 /* FindCarPublishController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindCarPublishController.h; sourceTree = "<group>"; };
+		1351C5CB197A704F000F7391 /* FindCarPublishController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindCarPublishController.m; sourceTree = "<group>"; };
 		13737C8019652F1700941746 /* detail_test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detail_test.png; sourceTree = "<group>"; };
 		13737C8C1965420000941746 /* PersonalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalViewController.h; sourceTree = "<group>"; };
 		13737C8D1965420000941746 /* PersonalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalViewController.m; sourceTree = "<group>"; };
@@ -652,8 +660,6 @@
 		13D5E04E1962A14E00804835 /* City.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = City.m; sourceTree = "<group>"; };
 		13D5E04F1962A14E00804835 /* MenuModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuModel.h; sourceTree = "<group>"; };
 		13D5E0501962A14E00804835 /* MenuModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuModel.m; sourceTree = "<group>"; };
-		13D5E0521962A14E00804835 /* FBSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBSearchView.h; sourceTree = "<group>"; };
-		13D5E0531962A14E00804835 /* FBSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBSearchView.m; sourceTree = "<group>"; };
 		13D5E0541962A14E00804835 /* Menu_Advanced.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Menu_Advanced.h; sourceTree = "<group>"; };
 		13D5E0551962A14E00804835 /* Menu_Advanced.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Menu_Advanced.m; sourceTree = "<group>"; };
 		13D5E0561962A14E00804835 /* Menu_Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Menu_Button.h; sourceTree = "<group>"; };
@@ -888,6 +894,8 @@
 		13155376197924180044C010 /* viewController */ = {
 			isa = PBXGroup;
 			children = (
+				1351C5CA197A704F000F7391 /* FindCarPublishController.h */,
+				1351C5CB197A704F000F7391 /* FindCarPublishController.m */,
 			);
 			path = viewController;
 			sourceTree = "<group>";
@@ -895,6 +903,8 @@
 		13155377197924180044C010 /* views */ = {
 			isa = PBXGroup;
 			children = (
+				1315537D19792FC60044C010 /* LSearchView.h */,
+				1315537E19792FC60044C010 /* LSearchView.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -1200,6 +1210,8 @@
 			children = (
 				13D5E07C1962BD5800804835 /* FBBaseViewController.h */,
 				13D5E07D1962BD5800804835 /* FBBaseViewController.m */,
+				1351C5C7197A4F8E000F7391 /* FBSearchResultController.h */,
+				1351C5C8197A4F8E000F7391 /* FBSearchResultController.m */,
 				13155373197923D90044C010 /* 寻车 */,
 				13D5E0451962A14E00804835 /* 车源 */,
 				13D5E05C1962A14E00804835 /* 发布 */,
@@ -1473,8 +1485,6 @@
 		13D5E0511962A14E00804835 /* views */ = {
 			isa = PBXGroup;
 			children = (
-				13D5E0521962A14E00804835 /* FBSearchView.h */,
-				13D5E0531962A14E00804835 /* FBSearchView.m */,
 				13D5E0541962A14E00804835 /* Menu_Advanced.h */,
 				13D5E0551962A14E00804835 /* Menu_Advanced.m */,
 				13D5E0561962A14E00804835 /* Menu_Button.h */,
@@ -2275,16 +2285,17 @@
 			files = (
 				13807501196E74A500AD3D03 /* EGORefreshTableFooterView.m in Sources */,
 				138B4A1119664ED500B974A5 /* FBAddFriendsController.m in Sources */,
+				1351C5CC197A704F000F7391 /* FindCarPublishController.m in Sources */,
 				137FEB091974D48100CDBD89 /* CarBrand.m in Sources */,
 				E33ECB08196D230A00DDD72D /* GptzTableViewCell.m in Sources */,
 				E362357D19657588003B23CC /* GloginViewController.m in Sources */,
 				138B4A1A19667E4C00B974A5 /* FBChatViewController.m in Sources */,
+				1351C5C9197A4F8E000F7391 /* FBSearchResultController.m in Sources */,
 				138B4A0A19664EC100B974A5 /* Section_Button.m in Sources */,
 				138B4A1319664ED500B974A5 /* FBSearchFriendsController.m in Sources */,
 				190BFD51195AA0FB0098E0F4 /* AppDelegate.m in Sources */,
 				E362357C19657588003B23CC /* GfindPasswViewController.m in Sources */,
 				13D5DF7E19615A3500804835 /* NSString+PinYin.m in Sources */,
-				13D5E0621962A14E00804835 /* FBSearchView.m in Sources */,
 				138074FB196E317700AD3D03 /* SzkAPI.m in Sources */,
 				13D5E0771962B2B000804835 /* UIColor+ConvertColor.m in Sources */,
 				13D5E0601962A14E00804835 /* City.m in Sources */,
@@ -2294,6 +2305,7 @@
 				1391EF01197670E300FDC52A /* CarSourceCell.m in Sources */,
 				13D5E117196513AF00804835 /* FBDetail2Controller.m in Sources */,
 				E3FFFCE7196BE19D00596186 /* GfindCarViewController.m in Sources */,
+				1315537F19792FC60044C010 /* LSearchView.m in Sources */,
 				13D5E07F1962BD5800804835 /* FBBaseViewController.m in Sources */,
 				E3FFFCEA196BE28F00596186 /* GfindCarTableViewCell.m in Sources */,
 				E31F53951974044A00540124 /* MLImageCrop.m in Sources */,

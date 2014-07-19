@@ -55,9 +55,13 @@
         }else if (style == Menu_Source)
         {
             dataArray = MENU_SOURCE;
-        }else
+            
+        }else if(style == Menu_Timelimit)
         {
            dataArray = MENU_TIMELIMIT;
+        }else
+        {
+            dataArray = MENU_MONEY;
         }
         
         selectStyle = style;

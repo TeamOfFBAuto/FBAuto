@@ -87,14 +87,14 @@
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
-    
-    self.statusBarBack = [[UIWindow alloc]initWithFrame:[UIApplication sharedApplication].statusBarFrame];
-    
-    _statusBarBack.backgroundColor = [UIColor blackColor];
-    
-    [_statusBarBack setWindowLevel:UIWindowLevelStatusBar-1];
-    
-    [_statusBarBack makeKeyAndVisible];
+//    
+//    self.statusBarBack = [[UIWindow alloc]initWithFrame:[UIApplication sharedApplication].statusBarFrame];
+//    
+//    _statusBarBack.backgroundColor = [UIColor blackColor];
+//    
+//    [_statusBarBack setWindowLevel:UIWindowLevelStatusBar-1];
+//    
+//    [_statusBarBack makeKeyAndVisible];
     
     
     //开启网络状况的监听
@@ -172,21 +172,6 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-//    [[XMPPServer shareInstance]connect];//连接
-    
-//    for (int i = 0; i < 10; i ++) {
-//        [[XMPPServer shareInstance]login:^(BOOL result) {
-//            if (result) {
-//                NSLog(@"连接并且登录成功");
-//                
-//                return ;
-//            }else
-//            {
-//                NSLog(@"连接登录不成功");
-//            }
-//        }];
-//    }
-    
     [[XMPPServer shareInstance]loginTimes:10 loginBack:^(BOOL result) {
         if (result) {
             NSLog(@"连接并且登录成功");

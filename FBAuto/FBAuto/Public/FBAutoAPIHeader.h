@@ -135,4 +135,10 @@ alpha:(a)]
 
 #define FBAUTO_CARSOURCE_EDIT @"http://fbautoapp.fblife.com/index.php?c=interface&a=editcheyuan"//修改车源信息
 
+//寻车API================
+
+#define FBAUTO_FINDCAR_LIST @"http://fbautoapp.fblife.com/index.php?c=interface&a=getxunche"//寻车列表数据
+
+#define FBAUTO_FINDCAR_SEARCH @"http://fbautoapp.fblife.com/index.php?c=interface&a=searchxunche&keyword=%@&page=%d&ps=%d" //寻车搜索
+
 #endif
