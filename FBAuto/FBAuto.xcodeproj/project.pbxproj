@@ -347,6 +347,7 @@
 		E37D2C9D1974CFA500EBA627 /* xuanze_down_44_44@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37D2C9A1974CFA500EBA627 /* xuanze_down_44_44@2x.png */; };
 		E37D2C9E1974CFA500EBA627 /* xuanze_up_44_44@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37D2C9B1974CFA500EBA627 /* xuanze_up_44_44@2x.png */; };
 		E38087F3196F898200435E53 /* GyhzyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E38087F2196F898200435E53 /* GyhzyViewController.m */; };
+		E38F5197197A6AFD00B3B9ED /* TLAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = E38F5196197A6AFD00B3B9ED /* TLAlertView.m */; };
 		E3FFFCE7196BE19D00596186 /* GfindCarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FFFCE6196BE19D00596186 /* GfindCarViewController.m */; };
 		E3FFFCEA196BE28F00596186 /* GfindCarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FFFCE9196BE28F00596186 /* GfindCarTableViewCell.m */; };
 /* End PBXBuildFile section */
@@ -822,6 +823,8 @@
 		E37D2C9B1974CFA500EBA627 /* xuanze_up_44_44@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xuanze_up_44_44@2x.png"; sourceTree = "<group>"; };
 		E38087F1196F898200435E53 /* GyhzyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GyhzyViewController.h; sourceTree = "<group>"; };
 		E38087F2196F898200435E53 /* GyhzyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GyhzyViewController.m; sourceTree = "<group>"; };
+		E38F5195197A6AFD00B3B9ED /* TLAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLAlertView.h; sourceTree = "<group>"; };
+		E38F5196197A6AFD00B3B9ED /* TLAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLAlertView.m; sourceTree = "<group>"; };
 		E3FFFCE5196BE19D00596186 /* GfindCarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GfindCarViewController.h; sourceTree = "<group>"; };
 		E3FFFCE6196BE19D00596186 /* GfindCarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GfindCarViewController.m; sourceTree = "<group>"; };
 		E3FFFCE8196BE28F00596186 /* GfindCarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GfindCarTableViewCell.h; sourceTree = "<group>"; };
@@ -1274,12 +1277,12 @@
 		13D5DF9C1961758E00804835 /* FBAuto_chat */ = {
 			isa = PBXGroup;
 			children = (
+				13D5DFA11961758E00804835 /* shouye48_44@2x.png */,
 				1336BC04196A88410011B4D9 /* duihuahuang1@2x.png */,
 				E35871F4196AA63E0002813C /* duihuahuang@2x.png */,
 				E35871F5196AA63E0002813C /* duihuahuang1@2x.png */,
 				13D5DF9D1961758E00804835 /* dianhua40_48@2x.png */,
 				13D5DFA01961758E00804835 /* fasong_botton116_48@2x.png */,
-				13D5DFA11961758E00804835 /* shouye48_44@2x.png */,
 				13D5DFA21961758E00804835 /* sousuokuang_.png */,
 				13D5DFA31961758E00804835 /* zhaoxiangji66_48@2x.png */,
 			);
@@ -1834,6 +1837,8 @@
 		E33ECB09196D25AE00DDD72D /* GUtils */ = {
 			isa = PBXGroup;
 			children = (
+				E38F5195197A6AFD00B3B9ED /* TLAlertView.h */,
+				E38F5196197A6AFD00B3B9ED /* TLAlertView.m */,
 				E31F53931974044A00540124 /* MLImageCrop.h */,
 				E31F53941974044A00540124 /* MLImageCrop.m */,
 				E351A0C4196FB91800C78CFE /* UILabel+GautoMatchedText.h */,
@@ -2277,6 +2282,7 @@
 				138B4A1119664ED500B974A5 /* FBAddFriendsController.m in Sources */,
 				137FEB091974D48100CDBD89 /* CarBrand.m in Sources */,
 				E33ECB08196D230A00DDD72D /* GptzTableViewCell.m in Sources */,
+				E38F5197197A6AFD00B3B9ED /* TLAlertView.m in Sources */,
 				E362357D19657588003B23CC /* GloginViewController.m in Sources */,
 				138B4A1A19667E4C00B974A5 /* FBChatViewController.m in Sources */,
 				138B4A0A19664EC100B974A5 /* Section_Button.m in Sources */,

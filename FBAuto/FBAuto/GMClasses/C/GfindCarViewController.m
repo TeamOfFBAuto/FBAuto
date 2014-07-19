@@ -9,6 +9,8 @@
 #import "GfindCarViewController.h"
 #import "GfindCarTableViewCell.h"
 
+#import "TLAlertView.h"
+
 
 #import "GmLoadData.h"
 
@@ -38,7 +40,7 @@
     
     self.flagHeight = 60;
     
-    _tableiView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64)];
+    _tableiView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64-44)];
     _tableiView.delegate = self;
     _tableiView.dataSource = self;
     
@@ -109,6 +111,7 @@
         
         //flag不为空的时候赋值给last
         if (bself.flagIndexPath) {
+            
             bself.lastIndexPath = bself.flagIndexPath;
         }
         //当前点击的indexPath赋值给flag
@@ -116,42 +119,74 @@
         
         //把flag加到数组里
         NSArray *indexPathArray = @[bself.flagIndexPath];
-        
-        
-        
+
         //如果last有值 并且和flag不同 就加到数组里
         if (bself.lastIndexPath && (bself.lastIndexPath.row!=bself.flagIndexPath.row || bself.lastIndexPath.section != bself.flagIndexPath.section)) {
             indexPathArray = @[bself.lastIndexPath,bself.flagIndexPath];
         }
         
-        //单元格高度标示 
-        if (bself.flagHeight == 120) {
-            if (bself.lastIndexPath.row == bself.lastIndexPath.row && bself.lastIndexPath.section == bself.flagIndexPath.section) {//flag和last相同
-                bself.flagHeight = 60;
-            }else{
-                bself.flagHeight =120;
-            }
-        }else if (bself.flagHeight == 60){
+        self.indexPathArray = indexPathArray;
+        
+        NSLog(@"%ld  %ld",(long)bself.lastIndexPath.row,(long)bself.flagIndexPath.row);
+        
+
+        
+        //单元格高度标示
+        if (indexPathArray.count == 2) {//有last 有flag
             bself.flagHeight = 120;
+        }else if (indexPathArray.count == 1){//last和flag为同一个
+            if (bself.flagHeight == 120) {
+                bself.flagHeight = 60;
+                
+            }else if (bself.flagHeight == 60){
+                bself.flagHeight = 120;
+                
+            }
         }
         
         
-        for (NSIndexPath *indexPath in indexPathArray) {
-            NSLog(@"------%@",indexPath);
-        }
         
-        
-        [btableview reloadRowsAtIndexPaths:indexPathArray withRowAnimation:UITableViewRowAnimationFade];
-        
-        
-        
-        
+        [btableview reloadRowsAtIndexPaths:self.indexPathArray withRowAnimation:UITableViewRowAnimationFade];
         
     }];
     
     
     
     
+    
+    [cell setCaozuoBtnBlock:^(NSInteger btnTag) {
+        switch (btnTag) {
+            case 10://删除
+            {
+                TLAlertView *alertView = [TLAlertView showInView:self.view withTitle:@"提示" message:@"你确定删除此条消息吗" confirmButtonTitle:@"确定" cancelButtonTitle:@"取消"];
+                alertView.viewColor = [UIColor whiteColor];
+                alertView.buttonColor = [UIColor orangeColor];
+                alertView.titleColor = [UIColor blackColor];
+                [alertView handleCancel:^{
+                    NSLog(@"cancel");
+                }         handleConfirm:^{
+                    NSLog(@"confirm");
+                }];
+                
+                alertView.TLAnimationType = (arc4random_uniform(10) % 2 == 0) ? TLAnimationType3D : tLAnimationTypeHinge;
+                [alertView show];
+            }
+                
+                break;
+            case 11://修改
+                
+                break;
+            case 12://刷新
+                
+                break;
+            case 13://分享
+                
+                break;
+            default:
+                break;
+        }
+    }];
+
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     cell.separatorInset = UIEdgeInsetsZero;
@@ -178,6 +213,13 @@
 }
 
 
+
+
+
+#pragma mark - UIAlerViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSLog(@"%ld",buttonIndex);
+}
 
 
 
