@@ -143,8 +143,12 @@
     for (int i = 0; i<4; i++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.frame = CGRectMake(0+i*80, 0, 80, 60);
-        [btn setImage:imageArray[i] forState:UIControlStateNormal];
         [btn setTitle:titleArray[i] forState:UIControlStateNormal];
+        btn.titleLabel.font = [UIFont systemFontOfSize:10];
+        [btn setImage:imageArray[i] forState:UIControlStateNormal];
+        [btn setTitleEdgeInsets:UIEdgeInsetsMake(40, 6, 11, 30)];
+        [btn setImageEdgeInsets:UIEdgeInsetsMake(10, 28, 28, 28)];
+        
         
         btn.tag = i+10;
         [btn addTarget:self action:@selector(viewBtnClicked:) forControlEvents:UIControlEventTouchUpInside];

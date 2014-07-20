@@ -8,11 +8,9 @@
 
 #import "GfindCarViewController.h"
 #import "GfindCarTableViewCell.h"
-
-#import "TLAlertView.h"
-
-
 #import "GmLoadData.h"
+
+#import "DXAlertView.h"
 
 @interface GfindCarViewController ()
 
@@ -158,18 +156,14 @@
         switch (btnTag) {
             case 10://删除
             {
-                TLAlertView *alertView = [TLAlertView showInView:self.view withTitle:@"提示" message:@"你确定删除此条消息吗" confirmButtonTitle:@"确定" cancelButtonTitle:@"取消"];
-                alertView.viewColor = [UIColor whiteColor];
-                alertView.buttonColor = [UIColor orangeColor];
-                alertView.titleColor = [UIColor blackColor];
-                [alertView handleCancel:^{
-                    NSLog(@"cancel");
-                }         handleConfirm:^{
-                    NSLog(@"confirm");
-                }];
-                
-                alertView.TLAnimationType = (arc4random_uniform(10) % 2 == 0) ? TLAnimationType3D : tLAnimationTypeHinge;
-                [alertView show];
+                DXAlertView *al = [[DXAlertView alloc]initWithTitle:@"您确定删除此条消息吗？" contentText:nil leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
+                [al show];
+                al.leftBlock = ^(){
+                    NSLog(@"取消");
+                };
+                al.rightBlock = ^(){
+                    NSLog(@"确定");
+                };
             }
                 
                 break;
