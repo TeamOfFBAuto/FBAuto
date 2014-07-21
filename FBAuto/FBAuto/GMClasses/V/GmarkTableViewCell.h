@@ -31,4 +31,7 @@ typedef void (^DelImvClickedBlock)(NSInteger gtag);//选择某个收藏删除
 //加载视图 填充数据 并返回单元格高度
 -(CGFloat)loadViewWithIndexPath:(NSIndexPath*)theIndexPatch;
 
+//填充数据
+-(void)configWithNetData:(NSArray *)array;
+
 @end

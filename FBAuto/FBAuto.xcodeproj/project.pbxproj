@@ -334,6 +334,7 @@
 		E34B74A4196E923000451C65 /* GjjxxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E34B74A3196E923000451C65 /* GjjxxViewController.m */; };
 		E34B74A7196E974100451C65 /* GHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E34B74A6196E974100451C65 /* GHolderTextView.m */; };
 		E34B74AA196E983700451C65 /* GlxwmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E34B74A9196E983700451C65 /* GlxwmViewController.m */; };
+		E34F3897197D12FE00CB9815 /* LoadingIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = E34F3896197D12FE00CB9815 /* LoadingIndicatorView.m */; };
 		E351A0C3196F943800C78CFE /* GyhzyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E351A0C2196F943800C78CFE /* GyhzyTableViewCell.m */; };
 		E351A0C6196FB91800C78CFE /* UILabel+GautoMatchedText.m in Sources */ = {isa = PBXBuildFile; fileRef = E351A0C5196FB91800C78CFE /* UILabel+GautoMatchedText.m */; };
 		E35871ED196A946F0002813C /* GPersonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E35871EC196A946F0002813C /* GPersonTableViewCell.m */; };
@@ -806,6 +807,8 @@
 		E34B74A6196E974100451C65 /* GHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHolderTextView.m; sourceTree = "<group>"; };
 		E34B74A8196E983700451C65 /* GlxwmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlxwmViewController.h; sourceTree = "<group>"; };
 		E34B74A9196E983700451C65 /* GlxwmViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlxwmViewController.m; sourceTree = "<group>"; };
+		E34F3895197D12FE00CB9815 /* LoadingIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingIndicatorView.h; sourceTree = "<group>"; };
+		E34F3896197D12FE00CB9815 /* LoadingIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingIndicatorView.m; sourceTree = "<group>"; };
 		E351A0C1196F943800C78CFE /* GyhzyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GyhzyTableViewCell.h; sourceTree = "<group>"; };
 		E351A0C2196F943800C78CFE /* GyhzyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GyhzyTableViewCell.m; sourceTree = "<group>"; };
 		E351A0C4196FB91800C78CFE /* UILabel+GautoMatchedText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+GautoMatchedText.h"; sourceTree = "<group>"; };
@@ -1855,6 +1858,8 @@
 		E33ECB09196D25AE00DDD72D /* GUtils */ = {
 			isa = PBXGroup;
 			children = (
+				E34F3895197D12FE00CB9815 /* LoadingIndicatorView.h */,
+				E34F3896197D12FE00CB9815 /* LoadingIndicatorView.m */,
 				E3611458197BA8E000F9234E /* DXAlertView.h */,
 				E3611457197BA8E000F9234E /* DXAlertView.m */,
 				E31F53931974044A00540124 /* MLImageCrop.h */,
@@ -2408,6 +2413,7 @@
 				190BFD85195AAD800098E0F4 /* FindCarViewController.m in Sources */,
 				1336BC09196A8CE70011B4D9 /* FBAreaFriensController.m in Sources */,
 				13D5E0731962A7CA00804835 /* FBActionSheet.m in Sources */,
+				E34F3897197D12FE00CB9815 /* LoadingIndicatorView.m in Sources */,
 				13D5DF721961306000804835 /* UIView+Frame.m in Sources */,
 				138B4B0E1966A51700B974A5 /* NSAttributedString+Attributes.m in Sources */,
 				190BFD82195AAD6A0098E0F4 /* SendCarViewController.m in Sources */,

@@ -131,7 +131,7 @@ alpha:(a)]
 
 #define FBAUTO_CARSOURCE_SEARCH @"http://fbautoapp.fblife.com/index.php?c=interface&a=searchcheyuan&keyword=%@&page=%d&ps=%d"//搜索车源
 
-#define FBAUTO_CARSOURCE_MYSELF @"http://fbautoapp.fblife.com/index.php?c=interface&a=getmycheyuan&authkey=%@"//获取我的车源
+#define FBAUTO_CARSOURCE_MYSELF @"http://fbautoapp.fblife.com/index.php?c=interface&a=getmycheyuan&authkey=%@&page=%d&ps=%d"//获取我的车源
 
 #define FBAUTO_CARSOURCE_DELETE @"http://fbautoapp.fblife.com/index.php?c=interface&a=delcheyuan&authkey=%@&cid=%d" //删除车源
 

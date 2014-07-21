@@ -111,4 +111,10 @@
 }
 
 
+
+//填充数据
+-(void)configWithNetData:(NSArray *)array{
+    
+}
+
 @end
