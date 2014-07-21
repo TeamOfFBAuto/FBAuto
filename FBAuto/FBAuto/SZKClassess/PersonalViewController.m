@@ -40,6 +40,14 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    if (self.userFaceImv) {
+        if ([GlocalUserImage getUserFaceImage]) {
+            [self.userFaceImv setImage:[GlocalUserImage getUserFaceImage]];
+        }
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -53,6 +61,9 @@
     //头像
     self.userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake(10, 15, 45, 45)];
     self.userFaceImv.backgroundColor = [UIColor grayColor];
+    if ([GlocalUserImage getUserFaceImage]) {
+        [self.userFaceImv setImage:[GlocalUserImage getUserFaceImage]];
+    }
     
     [self.view addSubview:self.userFaceImv];
     
