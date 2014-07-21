@@ -10,6 +10,17 @@
 
 //发布寻车信息
 
+typedef enum{
+    
+    Find_Action_Add = 0,//发布寻车
+    Find_Action_Edit //修改寻车
+    
+}Find_ActionStyle;
+
 @interface FindCarPublishController : FBBaseViewController
+
+@property(nonatomic,assign)Find_ActionStyle actionStyle;
+
+@property(nonatomic,retain)NSString *infoId;
 
 @end

@@ -10,6 +10,9 @@
 #import "GfindCarTableViewCell.h"
 #import "FBFindCarDetailController.h"
 #import "FBDetail2Controller.h"
+
+#import "SendCarViewController.h"
+#import "FindCarPublishController.h"
 #import "CarSourceClass.h"
 #import "GmLoadData.h"
 
@@ -270,8 +273,6 @@
         
         NSLog(@"%ld  %ld",(long)bself.lastIndexPath.row,(long)bself.flagIndexPath.row);
         
-
-        
         //单元格高度标示
         if (indexPathArray.count == 2) {//有last 有flag
             bself.flagHeight = 120;
@@ -306,6 +307,26 @@
                 break;
             case 11://修改
                 
+                if (indexPath.row < _dataArray.count) {
+                    CarSourceClass *aCar = [_dataArray objectAtIndex:indexPath.row];
+                    
+                    if (self.gtype == 2) {//我的车源
+                        
+                        SendCarViewController *detail = [[SendCarViewController alloc]init];
+                        detail.actionStyle = Action_Edit;
+                        detail.infoId = aCar.id;
+                        [self.navigationController pushViewController:detail animated:YES];
+                        
+                    }else if (self.gtype == 3){//我的寻车
+                        
+                        FindCarPublishController *detail = [[FindCarPublishController alloc]init];
+                        detail.style = Navigation_Special;
+                        detail.infoId = aCar.id;
+                        detail.actionStyle = Find_Action_Edit;
+                        [self.navigationController pushViewController:detail animated:YES];
+                    }
+                }
+                
                 
                 
                 break;
@@ -326,11 +347,7 @@
     
     if (indexPath.row < _dataArray.count) {
         CarSourceClass *aCar = [_dataArray objectAtIndex:indexPath.row];
-        
-//        @property(nonatomic,retain)UILabel *ciLable;
-//        @property(nonatomic,retain)UILabel *cLabel;
-//        @property(nonatomic,retain)UILabel *tLabel;
-        
+        cell.ciLable.text = @"1000";
         cell.cLabel.text = aCar.car_name;
         cell.tLabel.text = [LCWTools timechange3:aCar.dateline];
     }

@@ -18,7 +18,7 @@
 #define MENU_HIGHT_OUTSIDE_CORLOR @[@"不限",@"黑色",@"白色",@"红色",@"黄色",@"蓝色",@"绿色",@"紫色",@"银灰色",@"深灰色",@"香槟色",@"其他"] //外观颜色
 
 #define MENU_STANDARD @[@"不限",@"中规",@"美规",@"欧规",@"中东规"] //规格
-#define MENU_SOURCE @[@"不限",@"商家",@"经纪人"] //来源
+#define MENU_SOURCE @[@"不限",@"商家",@"个人"] //来源
 #define MENU_TIMELIMIT @[@"不限",@"现车",@"期货"] //期限
 #define MENU_MONEY @[@"不限",@"定金已付",@"定金未支付"] //期限
 
@@ -29,7 +29,7 @@
 #define MENU_HIGHT_OUTSIDE_CORLOR_2 @[@"黑色",@"白色",@"红色",@"黄色",@"蓝色",@"绿色",@"紫色",@"银灰色",@"深灰色",@"香槟色",@"其他"] //外观颜色
 
 #define MENU_STANDARD_2 @[@"中规",@"美规",@"欧规",@"中东规"] //规格
-#define MENU_SOURCE_2 @[@"商家",@"经纪人"] //来源
+#define MENU_SOURCE_2 @[@"商家",@"个人"] //来源
 #define MENU_TIMELIMIT_2 @[@"现车",@"期货"] //期限
 #define MENU_MONEY_2 @[@"不限",@"定金已付",@"定金未支付"] //期限
 

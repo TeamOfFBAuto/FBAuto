@@ -25,6 +25,8 @@
 
 #import "ASIFormDataRequest.h"
 
+#import "Menu_Header.h"
+
 #define KFistSectionHeight 110 //上部分高度
 
 @interface SendCarViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,QBImagePickerControllerDelegate,UIScrollViewDelegate,UITextFieldDelegate>
@@ -86,7 +88,17 @@
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
     
-   }
+}
+
+-(id)initWithStyle:(ActionStyle)aStyle
+{
+    self = [super init];
+    if (self) {
+        // Custom initialization
+        
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
@@ -95,15 +107,17 @@
 
     // Do any additional setup after loading the view.
     
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan_bg_640_88"] forBarMetrics: UIBarMetricsDefault];
-    
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 21)];
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.text = @"发布车源";
-    
-    
-    self.navigationItem.titleView = titleLabel;
+    if (self.actionStyle == Action_Add) {
+        
+        self.titleLabel.text = @"发布车源";
+        self.button_back.hidden = YES;
+        
+    }else if (self.actionStyle == Action_Edit)
+    {
+        self.titleLabel.text = @"修改车源";
+        
+        [self getSingleCarInfoWithId:self.infoId];//获取单个车源信息
+    }
     
     bigBgScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, self.view.height - 49 - 44 - 20)];
     bigBgScroll.backgroundColor = [UIColor clearColor];
@@ -153,6 +167,46 @@
     
     NSString *descrip = descriptionTF.text;
     descrip = descrip ? descrip : @"无";
+    
+    NSString *url = @"";
+    if (self.actionStyle == Action_Add) {
+        
+        url = [NSString stringWithFormat:@"%@&authkey=%@&car=%@&spot_future=%d&color_out=%d&color_in=%d&carfrom=%d&cardiscrib=%@&price=%@&photo=%@",FBAUTO_CARSOURCE_ADD_SOURCE,[GMAPI getAuthkey],_car,_spot_future,_color_out,_color_in,_carfrom,descrip,priceTF.text,_photo];
+        
+        NSLog(@"发布车源 %@",url);
+        
+    }else if (self.actionStyle == Action_Edit)
+    {
+        url = [NSString stringWithFormat:@"%@&authkey=%@&cid=%@&car=%@&spot_future=%d&color_out=%d&color_in=%d&carfrom=%d&cardiscrib=%@&price=%@&photo=%@",FBAUTO_CARSOURCE_EDIT,[GMAPI getAuthkey],self.infoId,_car,_spot_future,_color_out,_color_in,_carfrom,descrip,priceTF.text,_photo];
+        
+        NSLog(@"修改车源 %@",url);
+    }
+    
+    
+    LCWTools *tool = [[LCWTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"车源 result %@, erro%@",result,[result objectForKey:@"errinfo"]);
+        
+        [loadingHub hide:NO];
+        
+        [self showMBProgressWithText:[result objectForKey:@"errinfo"]];
+        
+        [self refreshUI];
+
+    }failBlock:^(NSDictionary *failDic, NSError *erro) {
+        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
+    }];
+    
+}
+
+#pragma - mark 编辑车源
+
+- (void)editeCarSource
+{
+    
+    NSString *descrip = descriptionTF.text;
+    descrip = descrip ? descrip : @"无";
     NSString *url = [NSString stringWithFormat:@"%@&authkey=%@&car=%@&spot_future=%d&color_out=%d&color_in=%d&carfrom=%d&cardiscrib=%@&price=%@&photo=%@",FBAUTO_CARSOURCE_ADD_SOURCE,[GMAPI getAuthkey],_car,_spot_future,_color_out,_color_in,_carfrom,descrip,priceTF.text,_photo];
     
     NSLog(@"车源列表 %@",url);
@@ -167,12 +221,82 @@
         [self showMBProgressWithText:@"车源信息发布成功"];
         
         [self refreshUI];
-
+        
     }failBlock:^(NSDictionary *failDic, NSError *erro) {
         [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
     }];
     
 }
+
+#pragma - mark 网络请求
+
+- (void)getSingleCarInfoWithId:(NSString *)carId
+{
+    NSString *url = [NSString stringWithFormat:FBAUTO_CARSOURCE_SINGLE_SOURE,carId];
+    
+    NSLog(@"单个车源信息 %@",url);
+    
+    LCWTools *tool = [[LCWTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"单个车源发布 result %@, erro%@",result,[result objectForKey:@"errinfo"]);
+        
+        NSArray *dataInfo = [result objectForKey:@"datainfo"];
+        
+        if (dataInfo.count == 0) {
+            return ;
+        }
+        
+        NSDictionary *dic = [dataInfo objectAtIndex:0];
+        
+        //车辆图片
+        
+        [self labelWithTag:100].text = [dic objectForKey:@"car_name"];
+        _car = [dic objectForKey:@"car"];
+        [self labelWithTag:101].text = [dic objectForKey:@"carfrom"];
+        _carfrom = (int)[MENU_STANDARD indexOfObject:[dic objectForKey:@"carfrom"]];
+        
+        [self labelWithTag:102].text = [dic objectForKey:@"spot_future"];
+        
+        _spot_future = (int)[MENU_TIMELIMIT indexOfObject:[dic objectForKey:@"spot_future"]];
+        
+        [self labelWithTag:103].text = [dic objectForKey:@"color_out"];
+        
+        _color_out = (int)[MENU_HIGHT_OUTSIDE_CORLOR indexOfObject:[dic objectForKey:@"color_out"]];
+        
+        [self labelWithTag:104].text = [dic objectForKey:@"color_in"];
+        
+        _color_in = (int)[MENU_HIGHT_INSIDE_CORLOR indexOfObject:[dic objectForKey:@"color_in"]];
+        
+        priceTF.text = [dic objectForKey:@"price"];
+        descriptionTF.text = [dic objectForKey:@"cardiscrib"];
+        
+        NSArray *image = [dic objectForKey:@"image"];
+        NSMutableArray *imageUrls = [NSMutableArray arrayWithCapacity:image.count];
+        
+        for (NSDictionary *aImageDic in image) {
+            
+            NSString *url = [aImageDic objectForKey:@"link"];
+            NSString *imageId = [aImageDic objectForKey:@"imgid"];
+            [imageUrls addObject:url];
+            
+            [photosArray addObject:imageId];//编辑的时候里面开始存放的是 图片id
+            
+            [self updateScrollViewAndPhotoButton:nil imageUrl:url];
+        }
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"failDic %@",failDic);
+        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
+    }];
+}
+
+- (UILabel *)labelWithTag:(int)aTag
+{
+    Section_Button *btn = (Section_Button *)[secondBgView viewWithTag:aTag];
+    return btn.contentLabel;
+}
+
 
 #pragma - mark 发布成功之后 UI复原
 
@@ -207,6 +331,11 @@
         Section_Button *btn = (Section_Button *)[secondBgView viewWithTag:100 + i];
         btn.contentLabel.text = @"";
     }
+    
+    if (self.actionStyle == Action_Edit) {
+        [self performSelector:@selector(clickToBack:) withObject:nil afterDelay:0.5];
+    }
+    
 }
 
 #pragma - mark 图片上传
@@ -214,6 +343,37 @@
 - (void)postImages:(NSArray *)allImages
 {
     [loadingHub show:YES];
+    
+    
+    //挑选 imageId 和 image
+    
+    NSMutableArray *ids = [NSMutableArray array];
+    NSMutableArray *images = [NSMutableArray array];
+    for (id aObject in allImages) {
+        if ([aObject isKindOfClass:[UIImage class]]) {
+            
+            NSLog(@"aObject %@",aObject);
+            [images addObject:aObject];
+            
+        }else
+        {
+            [ids addObject:aObject];
+        }
+    }
+    
+    if (ids.count == allImages.count) { //说明全是 imageId,那么不需要再上传图片了,直接执行下一步
+        
+        _photo = [ids componentsJoinedByString:@","];
+        NSLog(@"aObject %@",_photo);
+        [self publishCarSource];
+        
+        return;
+        
+    }else
+    {
+        allImages = images; //全是图片
+    }
+    
     
     NSString* url = [NSString stringWithFormat:FBAUTO_CARSOURCE_ADD_PIC];
     
@@ -278,6 +438,12 @@
             for (NSDictionary *imageDic in dataInfo) {
                 NSString *imageId = [imageDic objectForKey:@"imageid"];
                 [imageIdArr addObject:imageId];
+            }
+            
+            if (ids.count > 0) {
+                for (NSString *aId in ids) {
+                    [imageIdArr addObject:aId];
+                }
             }
             
             _photo = [imageIdArr componentsJoinedByString:@","];
@@ -483,9 +649,9 @@
 
 //添加图片,移动scrollView 和 添加图片按钮 (并且控制是否显示 点)
 
-- (void)updateScrollViewAndPhotoButton:(UIImage *)aImage
+- (void)updateScrollViewAndPhotoButton:(UIImage *)aImage imageUrl:(NSString *)imageUrl
 {
-    if (aImage == nil) {
+    if (aImage == nil && imageUrl == Nil) {
         return;
     }
     
@@ -503,9 +669,15 @@
     PhotoImageView *newImageV= [[PhotoImageView alloc]initWithFrame:CGRectMake(scrollSizeWidth + 15,0, 90, 90) image:aImage deleteBlock:^(UIImageView *deleteImageView, UIImage *deleteImage) {
         
         
+        int deleteIndex = (int)[weakPhotoViewArray indexOfObject:deleteImageView];
+        [weakPhotoArray removeObjectAtIndex:deleteIndex];
+        
         [weakPhotoViewArray removeObject:deleteImageView];
-        [weakPhotoArray removeObject:aImage];
+//        [weakPhotoArray removeObject:aImage];
         [deleteImageView removeFromSuperview];
+        
+        
+
         
         weakScroll.contentSize = CGSizeMake(weakPhotoViewArray.count * (90 + 15), weakScroll.contentSize.height);
         
@@ -530,8 +702,21 @@
         
     }];
     
+    //有可能是图片的网络地址
+    
+    if (imageUrl) {
+        
+        [newImageV sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"detail_test"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            
+//            [photosArray addObject:image];
+            
+        }];
+    }else
+    {
+        [photosArray addObject:aImage];
+    }
+    
     [photosScroll addSubview:newImageV];
-    [photosArray addObject:aImage];
     [photoViewArray addObject:newImageV];
     
     [self controlPageControlDisplay:YES showPage:photosArray.count sumPage:photosArray.count];
@@ -775,6 +960,10 @@
     base.dataStyle = aStyle;
     base.selectLabel = btn.contentLabel;
     
+    if (self.actionStyle == Action_Edit) {
+        base.rootVC = self;
+    }
+    
     [base selectParamBlock:^(DATASTYLE style, NSString *paramName, NSString *paramId) {
         NSLog(@"paramName %@ %@",paramName,paramId);
         
@@ -916,7 +1105,7 @@
         //将二进制数据生成UIImage
         UIImage *image = [UIImage imageWithData:data];
         
-        [self updateScrollViewAndPhotoButton:image];
+        [self updateScrollViewAndPhotoButton:image imageUrl:nil];
         
         [picker dismissViewControllerAnimated:NO completion:^{
             
@@ -952,7 +1141,7 @@
         [allImageArray addObject:newImage];
         
         
-        [self updateScrollViewAndPhotoButton:newImage];
+        [self updateScrollViewAndPhotoButton:newImage imageUrl:nil];
         
         
 //        NSURL * url = [[mediaInfoArray objectAtIndex:i] objectForKey:@"UIImagePickerControllerReferenceURL"];

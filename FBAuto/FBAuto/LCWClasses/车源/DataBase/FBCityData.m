@@ -92,4 +92,31 @@
     return @"未知地区";
 }
 
++ (int)cityIdForName:(NSString *)cityName//根据城市名获取id
+{
+    //打开数据库
+    sqlite3 *db = [DataBase openDB];
+    //创建操作指针
+    sqlite3_stmt *stmt = nil;
+    //执行SQL语句
+    int result = sqlite3_prepare_v2(db, "select * from area where name = ?", -1, &stmt, nil);
+    
+    NSLog(@"All subcities result = %d %@",result,cityName);
+    
+    if (result == SQLITE_OK) {
+        
+        sqlite3_bind_text(stmt, 1, [cityName UTF8String], -1, nil);
+        
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            
+            
+            int cityId = sqlite3_column_int(stmt, 1);
+            
+            return cityId;
+        }
+    }
+    sqlite3_finalize(stmt);
+    return 0;
+}
+
 @end

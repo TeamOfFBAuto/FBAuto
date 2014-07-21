@@ -8,6 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SendCarViewController : UIViewController
+typedef enum{
+    
+    Action_Add = 0,//发布车源
+    Action_Edit //修改车源
+    
+}ActionStyle;
+
+@interface SendCarViewController : FBBaseViewController
+
+@property(nonatomic,assign)ActionStyle actionStyle;
+@property(nonatomic,retain)NSString *infoId;//信息id
+
+-(id)initWithStyle:(ActionStyle)aStyle;
 
 @end

@@ -9,6 +9,8 @@
 #import "FindCarPublishController.h"
 #import "SendCarParamsController.h"
 #import "Section_Button.h"
+#import "Menu_Header.h"
+#import "FBCityData.h"
 
 @interface FindCarPublishController ()<UITextFieldDelegate>
 {
@@ -48,8 +50,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.titleLabel.text = @"发布寻车";
-    
     bigBgScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, self.view.height - 44 - 20)];
     bigBgScroll.backgroundColor = [UIColor whiteColor];
     bigBgScroll.showsHorizontalScrollIndicator = NO;
@@ -71,6 +71,14 @@
     _color_in = 0;// 内饰颜色id
     _carfrom = 0;// 汽车规格id（美规，中规）
     _deposit = 0;//定金
+    
+    if (self.actionStyle == Find_Action_Add) {
+        self.titleLabel.text = @"发布寻车";
+    }else if (self.actionStyle == Find_Action_Edit){
+        self.titleLabel.text = @"修改寻车";
+        
+        [self getSingleCarInfoWithId:self.infoId];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -339,10 +347,20 @@
     
     NSString *descrip = descriptionTF.text;
     descrip = descrip ? descrip : @"无";
-    NSString *url = [NSString stringWithFormat:
-                     @"%@&authkey=%@&province=%d&city=%d&car=%@&spot_future=%d&color_out=%d&color_in=%d&deposit=%d&carfrom=%d&cardiscrib=%@",FBAUTO_FINDCAR_PUBLISH,[GMAPI getAuthkey],_province,_city,_car,_spot_future,_color_out,_color_in,_deposit,_carfrom,descrip];
+    NSString *url = @"";
     
     NSLog(@"发布列表 %@",url);
+    
+    if (self.actionStyle == Find_Action_Add) {
+        
+        url = [NSString stringWithFormat:
+               @"%@&authkey=%@&province=%d&city=%d&car=%@&spot_future=%d&color_out=%d&color_in=%d&deposit=%d&carfrom=%d&cardiscrib=%@",FBAUTO_FINDCAR_PUBLISH,[GMAPI getAuthkey],_province,_city,_car,_spot_future,_color_out,_color_in,_deposit,_carfrom,descrip];
+        
+    }else if (self.actionStyle == Find_Action_Edit) {
+        
+        url = [NSString stringWithFormat:
+               @"%@&authkey=%@&xid=%@&province=%d&city=%d&car=%@&spot_future=%d&color_out=%d&color_in=%d&deposit=%d&carfrom=%d&cardiscrib=%@",FBAUTO_FINDCAR_EDIT,[GMAPI getAuthkey],self.infoId,_province,_city,_car,_spot_future,_color_out,_color_in,_deposit,_carfrom,descrip];
+    }
     
     LCWTools *tool = [[LCWTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -351,13 +369,75 @@
         
         [loadingHub hide:NO];
         
-        [LCWTools showMBProgressWithText:@"寻车信息发布成功" addToView:self.view];
+        [LCWTools showMBProgressWithText:[result objectForKey:@"errinfo"] addToView:self.view];
         [self refreshUI];
+        
+        [self performSelector:@selector(clickToBack:) withObject:nil afterDelay:0.5];
         
     }failBlock:^(NSDictionary *failDic, NSError *erro) {
         [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
     }];
     
+}
+
+
+#pragma - mark 网络请求 获取单个寻车信息
+
+- (void)getSingleCarInfoWithId:(NSString *)carId
+{
+    NSString *url = [NSString stringWithFormat:FBAUTO_FINDCAR_SINGLE,carId];
+    
+    NSLog(@"单个寻车信息 %@",url);
+    
+    LCWTools *tool = [[LCWTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"单个寻车 result %@, erro%@",result,[result objectForKey:@"errinfo"]);
+        
+        NSArray *dataInfo = [result objectForKey:@"datainfo"];
+        
+        if (dataInfo.count == 0) {
+            return ;
+        }
+        
+        NSDictionary *dic = [dataInfo objectAtIndex:0];
+        
+        //        //参数
+        [self labelWithTag:101].text = [dic objectForKey:@"car_name"];
+        
+        _car = [dic objectForKey:@"car"];
+        
+        [self labelWithTag:100].text  =[self showForText:[NSString stringWithFormat:@"%@%@",[dic objectForKey:@"province"],[dic objectForKey:@"city"]]] ;
+        
+        _province = [FBCityData cityIdForName:[dic objectForKey:@"province"]];
+        _city = [FBCityData cityIdForName:[dic objectForKey:@"city"]];
+        
+        
+        [self labelWithTag:100 + 2].text  = [self showForText:[dic objectForKey:@"carfrom"]];
+        _carfrom = (int)[MENU_STANDARD indexOfObject:[dic objectForKey:@"carfrom"]];
+        
+        [self labelWithTag:101 + 2].text  = [self showForText:[dic objectForKey:@"spot_future"]];
+        _spot_future = (int)[MENU_TIMELIMIT indexOfObject:[dic objectForKey:@"spot_future"]];
+        
+        [self labelWithTag:102 + 2].text  = [self showForText:[dic objectForKey:@"color_out"]];
+        _color_out = (int)[MENU_HIGHT_OUTSIDE_CORLOR indexOfObject:[dic objectForKey:@"color_out"]];
+        
+        [self labelWithTag:103 + 2].text  = [self showForText:[dic objectForKey:@"color_in"]];
+        _color_in = (int)[MENU_HIGHT_INSIDE_CORLOR indexOfObject:[dic objectForKey:@"color_in"]];
+        
+        [self labelWithTag:104 + 2].text  = [self depositWithText:[dic objectForKey:@"deposit"]];
+        _deposit = [[dic objectForKey:@"deposit"]intValue];
+        
+        descriptionTF.text = [[dic objectForKey:@"cardiscrib"] isEqualToString:@""] ? @"无" : [dic objectForKey:@"cardiscrib"];
+        
+        descriptionTF.text = [dic objectForKey:@"cardiscrib"];
+        
+        
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"failDic %@",failDic);
+        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
+    }];
 }
 
 - (void)refreshUI
@@ -368,5 +448,34 @@
     }
 }
 
+
+- (NSString *)showForText:(NSString *)text
+{
+    if ([text isEqualToString:@""]) {
+        
+        text = @"不限";
+    }
+    return text;
+}
+
+- (UILabel *)labelWithTag:(int)aTag
+{
+    Section_Button *btn = (Section_Button *)[self.view viewWithTag:aTag];
+    return btn.contentLabel;
+}
+
+- (NSString *)depositWithText:(NSString *)text
+{
+    if ([text isEqualToString:@"1"]) {
+        text = @"定金已付";
+    }else if ([text isEqualToString:@"2"])
+    {
+        text = @"定金未支付";
+    }else if ([text isEqualToString:@"0"] || [text isEqualToString:@""])
+    {
+        text = @"定金不限";
+    }
+    return text;
+}
 
 @end

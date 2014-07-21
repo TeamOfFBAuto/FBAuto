@@ -36,7 +36,7 @@
     
     [self createViews];
     
-    [self getSingleCarInfoWithId:self.carId];
+    [self getSingleCarInfoWithId:self.infoId];
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,7 +45,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma - mark 网络请求
+#pragma - mark 网络请求 获取单个寻车信息
 
 - (void)getSingleCarInfoWithId:(NSString *)carId
 {

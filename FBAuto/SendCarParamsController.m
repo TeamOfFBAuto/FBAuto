@@ -58,7 +58,7 @@
         case Data_Standard:
         {
             title = @"规格";
-            self.dataArray = self.haveLimit ? MENU_SOURCE : MENU_SOURCE_2;
+            self.dataArray = self.haveLimit ? MENU_STANDARD : MENU_STANDARD_2;
         }
             break;
         case Data_Timelimit:
