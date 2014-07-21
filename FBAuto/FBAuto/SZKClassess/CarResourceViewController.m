@@ -707,12 +707,13 @@
     [_table performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
 }
 
-- (void)clickToDetail:(NSString *)carId
+- (void)clickToDetail:(NSString *)infoId car:(NSString *)car
 {
     FBDetail2Controller *detail = [[FBDetail2Controller alloc]init];
     detail.style = Navigation_Special;
     detail.navigationTitle = @"详情";
-    detail.carId = carId;
+    detail.infoId = infoId;
+    detail.carId = car;
     detail.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:detail animated:YES];
     
@@ -926,7 +927,7 @@
 {
     CarSourceClass *aCar = (CarSourceClass *)[_dataArray objectAtIndex:indexPath.row];
     
-    [self clickToDetail:aCar.id];
+    [self clickToDetail:aCar.id car:aCar.car];
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {

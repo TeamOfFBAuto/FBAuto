@@ -11,11 +11,15 @@
 #import "CarBrand.h"
 #import "CarType.h"
 #import "CarStyle.h"
+#import "FBCityData.h"
+#import "FBCity.h"
 
 @interface SendCarParamsController ()
 {
     NSMutableDictionary *brandDic;//存储分组brand
     NSArray *firstLetterArray;//分组首字母数据brand
+    
+    NSDictionary *provinceDic;//存放省份
 
 }
 
@@ -92,12 +96,17 @@
             break;
         case Data_Area:
         {
-
+            [self loadProvince];
         }
             break;
         case Data_Money:
         {
             self.dataArray = self.haveLimit ? MENU_MONEY : MENU_MONEY_2;
+        }
+            break;
+        case Data_Area_City:
+        {
+            self.dataArray = [FBCityData getSubCityWithProvinceId:[self.provinceId intValue]];
         }
             break;
             
@@ -119,6 +128,36 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma  - mark 获取城市地区数据
+
+- (void)loadProvince
+{
+    NSArray *cityArr = [FBCityData getAllProvince];
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    
+    for (FBCity *aCity in cityArr) {
+        
+        NSMutableArray *cityGroup = [NSMutableArray arrayWithArray:[dic objectForKey:[aCity.cityName getFirstLetter]]];
+        [cityGroup addObject:aCity];
+        
+        [dic setObject:cityGroup forKey:[aCity.cityName getFirstLetter]];
+    }
+    
+    NSArray *arr = [dic allKeys];
+    
+    arr = [arr sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2){
+        NSComparisonResult result = [obj1 compare:obj2];
+        return result==NSOrderedDescending;
+    }];
+    
+    firstLetterArray = arr;
+    provinceDic = dic;
+
+}
+
+
 
 #pragma - mark 获取车品牌
 
@@ -154,6 +193,9 @@
 {
     if (self.dataStyle == Data_Car_Brand) {
         return firstLetterArray.count;
+    }else if (self.dataStyle == Data_Area)
+    {
+        return firstLetterArray.count + 1;
     }
     return 1;
 }
@@ -163,6 +205,11 @@
     if (self.dataStyle == Data_Car_Brand) {
         
         return firstLetterArray;
+    }else if (self.dataStyle == Data_Area){
+        
+        NSMutableArray *arr = [NSMutableArray arrayWithArray:firstLetterArray];
+        [arr insertObject:@"全" atIndex:0];
+        return arr;
     }
     
     return nil ;
@@ -172,6 +219,14 @@
 {
     if (self.dataStyle == Data_Car_Brand) {
         return 20;
+    }else if (_dataStyle == Data_Area)
+    {
+        if (section == 0) {
+            return 0;
+        }else
+        {
+            return 20;
+        }
     }
     return 0;
 }
@@ -183,8 +238,21 @@
         NSString *letter = [firstLetterArray objectAtIndex:section];
         
         UIView *aView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 20)];
-        
         UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 20)];
+        [aView addSubview:titleLabel];
+        titleLabel.backgroundColor = [UIColor colorWithHexString:@"dcdcdc"];
+        titleLabel.text = [NSString stringWithFormat:@"  %@",letter];
+        
+        return aView;
+    }else if (_dataStyle == Data_Area)
+    {
+        if (section == 0) {
+            return nil;
+        }
+        
+        NSString *letter = [firstLetterArray objectAtIndex:section - 1];
+        UIView *aView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 20)];
+        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 300, 20)];
         [aView addSubview:titleLabel];
         titleLabel.backgroundColor = [UIColor colorWithHexString:@"dcdcdc"];
         titleLabel.text = [NSString stringWithFormat:@"  %@",letter];
@@ -206,6 +274,17 @@
         
         return subArr.count;
         
+    }else if (_dataStyle == Data_Area){
+        
+        if (section == 0) {
+            return 1;
+        }
+        
+        NSString *letter = [firstLetterArray objectAtIndex:section - 1];
+        
+        NSArray *subCityArr = [provinceDic objectForKey:letter];
+        
+        return subCityArr.count;
     }
     return _dataArray.count;
 }
@@ -243,7 +322,28 @@
         
         return cell;
         
-    }else if (self.dataStyle == Data_Car_Type)
+    }else if (_dataStyle == Data_Area)
+    {
+        if (indexPath.section == 0) {
+            
+            cell.textLabel.text = @"全国";
+            cell.textLabel.textColor = [UIColor colorWithHexString:@"ff9c00"];
+            
+        }else
+        {
+            
+            NSString *letter = [firstLetterArray objectAtIndex:indexPath.section - 1];
+            
+            NSArray *subCityArr = [provinceDic objectForKey:letter];
+            
+            FBCity *aCity = [subCityArr objectAtIndex:indexPath.row];
+            
+            cell.textLabel.text = aCity.cityName;
+            
+            cell.textLabel.textColor = [UIColor colorWithHexString:@"666666"];
+        }
+    }
+    else if (self.dataStyle == Data_Car_Type)
     {
         if (indexPath.row == 0) {
            cell.textLabel.text = @"不限";
@@ -265,6 +365,11 @@
             cell.textLabel.text = aStyle.styleName;
             
         }
+    }else if (_dataStyle == Data_Area_City)
+    {
+        FBCity *aCity = [self.dataArray objectAtIndex:indexPath.row];
+        cell.textLabel.text = aCity.cityName;
+        
     }else
     {
         cell.textLabel.text = [self.dataArray objectAtIndex:indexPath.row];
@@ -303,14 +408,11 @@
         
         [self.navigationController pushViewController:base animated:YES];
         
-        
-        
         return;
         
     }else if (self.dataStyle == Data_Car_Type) {
         
         if (indexPath.row == 0) {
-            
             
             NSString *car = [NSString stringWithFormat:@"%@%@%@",self.brandId,@"000",@"000"];
             selectBlock(self.dataStyle,@"不限",car);
@@ -367,12 +469,58 @@
         
         return;
         
+    }else if (_dataStyle == Data_Area)
+    {
+        if (indexPath.section == 0) {
+            return;
+        }
+        
+        NSString *letter = [firstLetterArray objectAtIndex:indexPath.section - 1];
+        
+        NSArray *subCityArr = [provinceDic objectForKey:letter];
+        
+        FBCity *aCity = [subCityArr objectAtIndex:indexPath.row];
+
+        
+        SendCarParamsController *base = [[SendCarParamsController alloc]init];
+        base.hidesBottomBarWhenPushed = YES;
+        base.navigationTitle = aCity.cityName;
+        base.dataStyle = Data_Area_City;
+        base.selectLabel = self.selectLabel;
+        base.provinceId = [NSString stringWithFormat:@"%d",aCity.provinceId];
+        base.rootVC = self.rootVC;
+        
+        [base selectParamBlock:^(DATASTYLE style, NSString *paramName, NSString *paramId) {
+            
+            selectBlock(style,paramName,paramId);
+            
+        }];
+        
+        [self.navigationController pushViewController:base animated:YES];
+        
+        return;
+        
+    }else if (self.dataStyle == Data_Area_City) {
+        
+        FBCity *aCity = [self.dataArray objectAtIndex:indexPath.row];
+        NSString *city = [NSString stringWithFormat:@"%@,%d",self.provinceId,aCity.cityId];
+        selectBlock(_dataStyle,aCity.cityName,city);
+            
+        if (self.rootVC) {
+            [self.navigationController popToViewController:self.rootVC animated:YES];
+        }else
+        {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+        
+        return;
+        
     }
     
     NSString *select = [_dataArray objectAtIndex:indexPath.row];
     
     
-    int row = self.haveLimit ? indexPath.row : indexPath.row + 1;
+    int row = self.haveLimit ? (int)indexPath.row : (int)indexPath.row + 1;
     
     selectBlock(self.dataStyle,select,[NSString stringWithFormat:@"%d",row]);
     

@@ -71,13 +71,13 @@
     }else
     {
         UIButton *saveButton =[[UIButton alloc]initWithFrame:CGRectMake(0,8,30,21.5)];
-        [saveButton addTarget:self action:@selector(clickToBack:) forControlEvents:UIControlEventTouchUpInside];
+        [saveButton addTarget:self action:@selector(clickToCollect:) forControlEvents:UIControlEventTouchUpInside];
         [saveButton setImage:[UIImage imageNamed:@"shoucang_46_44"] forState:UIControlStateNormal];
         UIBarButtonItem *save_item=[[UIBarButtonItem alloc]initWithCustomView:saveButton];
         
         
         UIButton *share_Button =[[UIButton alloc]initWithFrame:CGRectMake(0,8,30,21.5)];
-        [share_Button addTarget:self action:@selector(clickToBack:) forControlEvents:UIControlEventTouchUpInside];
+        [share_Button addTarget:self action:@selector(clickToShare:) forControlEvents:UIControlEventTouchUpInside];
         [share_Button setImage:[UIImage imageNamed:@"fenxiang42_42"] forState:UIControlStateNormal];
         UIBarButtonItem *share_item=[[UIBarButtonItem alloc]initWithCustomView:share_Button];
         self.navigationItem.rightBarButtonItems = @[share_item,save_item];
@@ -94,4 +94,17 @@
     
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+//收藏
+- (void)clickToCollect:(UIButton *)sender
+{
+    
+}
+
+//分享
+- (void)clickToShare:(UIButton *)sender
+{
+    
+}
+
 @end

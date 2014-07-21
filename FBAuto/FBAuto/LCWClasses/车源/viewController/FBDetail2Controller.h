@@ -33,7 +33,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *phoneNumLabel;
 @property (strong, nonatomic) IBOutlet UILabel *addressLabel;
 
-@property (nonatomic,retain)NSString *carId;//车源信息id
+@property (nonatomic,retain)NSString *infoId;//车源信息id
+@property (nonatomic,retain)NSString *carId;//车源信息id(如:006005002)
 
 - (IBAction)clickToDial:(id)sender;//打电话
 - (IBAction)clickToChat:(id)sender;//聊天

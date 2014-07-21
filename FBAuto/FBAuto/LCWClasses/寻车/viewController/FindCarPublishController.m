@@ -54,7 +54,6 @@
     bigBgScroll.backgroundColor = [UIColor whiteColor];
     bigBgScroll.showsHorizontalScrollIndicator = NO;
     bigBgScroll.showsVerticalScrollIndicator = NO;
-//    bigBgScroll.delegate = self;
     [self.view addSubview:bigBgScroll];
     
     [self createSection];
@@ -66,6 +65,12 @@
     loadingHub = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
 	[self.navigationController.view addSubview:loadingHub];
 	loadingHub.labelText = @"发布中...";
+    
+    _spot_future = 0;// 现货或者期货id
+    _color_out = 0;// 外观颜色id
+    _color_in = 0;// 内饰颜色id
+    _carfrom = 0;// 汽车规格id（美规，中规）
+    _deposit = 0;//定金
 }
 
 - (void)didReceiveMemoryWarning
@@ -275,7 +280,20 @@
                 _color_in = [paramId intValue];
             }
                 break;
+            case Data_Area:
+            case Data_Area_City:
+            {
+                NSArray *params = [paramId componentsSeparatedByString:@","];
                 
+                _province = [[params objectAtIndex:0]intValue];
+                _city = [[params objectAtIndex:1]intValue];
+            }
+                break;
+            case Data_Money:
+            {
+                _deposit = [paramId intValue];
+            }
+                break;
             default:
                 break;
         }
@@ -290,55 +308,21 @@
 
 - (void)clickToPublish:(UIButton *)btn
 {
-//    if (photosArray.count <= 0)
-//    {
-//        [self alertText:@"图片不能为空"];
-//        
-//        return;
-//    }
-//    
-//    Section_Button *btn1 = (Section_Button *)[secondBgView viewWithTag:100];
-//    
-//    if (btn1.contentLabel.text == nil || [btn1.contentLabel.text isEqualToString:@""])
-//    {
-//        [self alertText:@"请选择车型"];
-//        
-//        return;
-//    }
-//    
-//    for (int i = 0; i < 5; i ++) {
-//        
-//        Section_Button *btn1 = (Section_Button *)[secondBgView viewWithTag:100 + i];
-//        
-//        if (btn1.contentLabel.text == nil || [btn1.contentLabel.text isEqualToString:@""])
-//        {
-//            if (i == 0) {
-//                
-//                [self alertText:@"请选择车型"];
-//                
-//            }else if (i == 1)
-//            {
-//                [self alertText:@"请选择规格"];
-//                
-//            }else if (i == 2)
-//            {
-//                [self alertText:@"请选择期限"];
-//                
-//            }else if (i == 3)
-//            {
-//                [self alertText:@"请选择外观颜色"];
-//                
-//            }else if (i == 4)
-//            {
-//                [self alertText:@"请选择内饰颜色"];
-//            }
-//            
-//            return;
-//        }
-//    }
+    Section_Button *btn1 = (Section_Button *)[bigBgScroll viewWithTag:100];
+    if (btn1.contentLabel.text == nil || [btn1.contentLabel.text isEqualToString:@""]) {
+        [self alertText:@"请选择地区"];
+        return;
+    }
     
+    Section_Button *btn2 = (Section_Button *)[bigBgScroll viewWithTag:101];
+    if (btn2.contentLabel.text == nil || [btn2.contentLabel.text isEqualToString:@""]) {
+        [self alertText:@"请选择车型"];
+        return;
+    }
+    
+    [self publishCarSource];
+        
 }
-
 
 - (void)alertText:(NSString *)text
 {
@@ -367,8 +351,8 @@
         
         [loadingHub hide:NO];
         
-        [LCWTools showMBProgressWithText:@"车源信息发布成功" addToView:self.view];
-//        [self refreshUI];
+        [LCWTools showMBProgressWithText:@"寻车信息发布成功" addToView:self.view];
+        [self refreshUI];
         
     }failBlock:^(NSDictionary *failDic, NSError *erro) {
         [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
@@ -376,6 +360,13 @@
     
 }
 
+- (void)refreshUI
+{
+    for (int i = 0; i < 5; i ++) {
+        Section_Button *btn = (Section_Button *)[bigBgScroll viewWithTag:100 + i + 2];
+        btn.contentLabel.text = @"不限";
+    }
+}
 
 
 @end

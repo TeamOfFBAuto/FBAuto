@@ -26,6 +26,8 @@
 @property(nonatomic,retain)NSString *price;
 @property(nonatomic,retain)NSString *uptime;//上传时间
 
+@property(nonatomic,retain)NSString *deposit;//定金
+
 -(id)initWithDictionary:(NSDictionary *)dic;
 
 @end

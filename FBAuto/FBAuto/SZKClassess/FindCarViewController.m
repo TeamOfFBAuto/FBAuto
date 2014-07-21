@@ -10,6 +10,7 @@
 #import "FBFriendsController.h"
 #import "FBSearchResultController.h"
 #import "FindCarPublishController.h"
+#import "FBFindCarDetailController.h"
 
 #import "ZkingSearchView.h"
 
@@ -446,12 +447,12 @@
 
 - (void)clickToDetail:(NSString *)carId
 {
-//    FBDetail2Controller *detail = [[FBDetail2Controller alloc]init];
-//    detail.style = Navigation_Special;
-//    detail.navigationTitle = @"详情";
-//    detail.carId = carId;
-//    detail.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:detail animated:YES];
+    FBFindCarDetailController *detail = [[FBFindCarDetailController alloc]init];
+    detail.style = Navigation_Special;
+    detail.navigationTitle = @"详情";
+    detail.carId = carId;
+    detail.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:detail animated:YES];
     
 }
 
@@ -612,51 +613,36 @@
 - (void)loadNewData
 {
     NSLog(@"loadNewData");
-    
-//    if (_isSearch) {
-//        
-//        [self searchCarSourceWithKeyword:_searchKeyword page:1];
-//        
-//    }else
-//    {
-        _car = @"000000000";
-        _spot_future = 0;
-        _color_out = 0;
-        _color_in = 0;
-        _carfrom = 0;
-        _usertype = 0;
-        _province = 0;
-        _city = 0;
-        _page = 1;
-        [self getFindCarSourceList];
-//    }
+    _car = @"000000000";
+    _spot_future = 0;
+    _color_out = 0;
+    _color_in = 0;
+    _carfrom = 0;
+    _usertype = 0;
+    _province = 0;
+    _city = 0;
+    _page = 1;
+    _deposit = 0;
+    [self getFindCarSourceList];
+
 }
 
 - (void)loadMoreData
 {
     NSLog(@"loadMoreData");
-    
-//    if (_isSearch) {
-//        
-//        _searchPage ++;
-//        [self searchCarSourceWithKeyword:_searchKeyword page:_searchPage];
-//        
-//    }else
-//    {
-        _page ++;
-        [self getFindCarSourceList];
-//    }
+    _page ++;
+    [self getFindCarSourceList];
 }
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    CarSourceClass *aCar = (CarSourceClass *)[_dataArray objectAtIndex:indexPath.row];
-//    
-//    [self clickToDetail:aCar.id];
+    CarSourceClass *aCar = (CarSourceClass *)[_dataArray objectAtIndex:indexPath.row];
+    
+    [self clickToDetail:aCar.id];
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {
-    return 75;
+    return 55;
 }
 
 #pragma mark - UITableViewDelegate
@@ -671,8 +657,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    return _dataArray.count;
-    return 20;
+    return _dataArray.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -690,8 +675,8 @@
     cell.backgroundColor = [UIColor colorWithHexString:@"eeeeee"];
     
     if (indexPath.row < _dataArray.count) {
-//        CarSourceClass *aCar = [_dataArray objectAtIndex:indexPath.row];
-//        [cell setCellDataWithModel:aCar];
+        CarSourceClass *aCar = [_dataArray objectAtIndex:indexPath.row];
+        [cell setCellDataWithModel:aCar];
     }
     
     return cell;

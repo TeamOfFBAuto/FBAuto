@@ -21,6 +21,8 @@
 		1336BC25196B91F70011B4D9 /* SJAvatarBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC22196B91F70011B4D9 /* SJAvatarBrowser.m */; };
 		1336BC28196B921C0011B4D9 /* XMPPStatics.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC27196B921C0011B4D9 /* XMPPStatics.m */; };
 		1336BC2B196B93CC0011B4D9 /* FBChatImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC2A196B93CC0011B4D9 /* FBChatImage.m */; };
+		133DF6A2197CE7F9006BF9ED /* FBFindCarDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 133DF6A0197CE7F9006BF9ED /* FBFindCarDetailController.m */; };
+		133DF6A3197CE7F9006BF9ED /* FBFindCarDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 133DF6A1197CE7F9006BF9ED /* FBFindCarDetailController.xib */; };
 		1351C5C9197A4F8E000F7391 /* FBSearchResultController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1351C5C8197A4F8E000F7391 /* FBSearchResultController.m */; };
 		1351C5CC197A704F000F7391 /* FindCarPublishController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1351C5CB197A704F000F7391 /* FindCarPublishController.m */; };
 		13737C8119652F1700941746 /* detail_test.png in Resources */ = {isa = PBXBuildFile; fileRef = 13737C8019652F1700941746 /* detail_test.png */; };
@@ -389,6 +391,9 @@
 		1336BC27196B921C0011B4D9 /* XMPPStatics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPStatics.m; sourceTree = "<group>"; };
 		1336BC29196B93CC0011B4D9 /* FBChatImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBChatImage.h; sourceTree = "<group>"; };
 		1336BC2A196B93CC0011B4D9 /* FBChatImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBChatImage.m; sourceTree = "<group>"; };
+		133DF69F197CE7F9006BF9ED /* FBFindCarDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBFindCarDetailController.h; sourceTree = "<group>"; };
+		133DF6A0197CE7F9006BF9ED /* FBFindCarDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBFindCarDetailController.m; sourceTree = "<group>"; };
+		133DF6A1197CE7F9006BF9ED /* FBFindCarDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FBFindCarDetailController.xib; sourceTree = "<group>"; };
 		1351C5C7197A4F8E000F7391 /* FBSearchResultController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBSearchResultController.h; sourceTree = "<group>"; };
 		1351C5C8197A4F8E000F7391 /* FBSearchResultController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBSearchResultController.m; sourceTree = "<group>"; };
 		1351C5CA197A704F000F7391 /* FindCarPublishController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindCarPublishController.h; sourceTree = "<group>"; };
@@ -897,6 +902,9 @@
 		13155376197924180044C010 /* viewController */ = {
 			isa = PBXGroup;
 			children = (
+				133DF69F197CE7F9006BF9ED /* FBFindCarDetailController.h */,
+				133DF6A0197CE7F9006BF9ED /* FBFindCarDetailController.m */,
+				133DF6A1197CE7F9006BF9ED /* FBFindCarDetailController.xib */,
 				1351C5CA197A704F000F7391 /* FindCarPublishController.h */,
 				1351C5CB197A704F000F7391 /* FindCarPublishController.m */,
 			);
@@ -2178,6 +2186,7 @@
 				138B4AC11966A4BD00B974A5 /* face41.png in Resources */,
 				13D5E00E1961758E00804835 /* xiaoxi182_58@2x.png in Resources */,
 				137FEB031974C9E700CDBD89 /* carData1.rtfd in Resources */,
+				133DF6A3197CE7F9006BF9ED /* FBFindCarDetailController.xib in Resources */,
 				138B4AB21966A4BD00B974A5 /* face28.png in Resources */,
 				138B4AF01966A4BD00B974A5 /* face84.gif in Resources */,
 				13D5DFE11961758E00804835 /* liaotian46_46@2x.png in Resources */,
@@ -2353,6 +2362,7 @@
 				1336BC23196B91F70011B4D9 /* CWInputView.m in Sources */,
 				1391EF1A1977A4CC00FDC52A /* RefreshTableView.m in Sources */,
 				E34B74A1196E341A00451C65 /* GperInfoTableViewCell.m in Sources */,
+				133DF6A2197CE7F9006BF9ED /* FBFindCarDetailController.m in Sources */,
 				13D5E1061964F2E700804835 /* AutoDetail.m in Sources */,
 				13D5E0DA1963DB9800804835 /* AsyncImageView.m in Sources */,
 				138B49F0196552F500B974A5 /* FBFriendCell.m in Sources */,

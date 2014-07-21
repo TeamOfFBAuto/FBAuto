@@ -46,7 +46,7 @@
     thirdFrame.origin.y = self.view.bottom - 75 - 44 - (iPhone5 ? 20 : 0);
     self.thirdBgView.frame = thirdFrame;
     
-    [self getSingleCarInfoWithId:self.carId];
+    [self getSingleCarInfoWithId:self.infoId];
 }
 
 - (void)didReceiveMemoryWarning
@@ -248,4 +248,36 @@
     personal.title = self.nameLabel.text;
     [self.navigationController pushViewController:personal animated:YES];
 }
+
+//收藏
+- (void)clickToCollect:(UIButton *)sender
+{
+    NSLog(@"收藏");
+    
+    // ‘1’ 车源收藏 ‘2’ 寻车收藏
+    NSString *url = [NSString stringWithFormat:FBAUTO_COLLECTION,[GMAPI getAuthkey],self.carId,1,self.infoId];
+    
+    NSLog(@"添加收藏 %@",url);
+    
+    LCWTools *tool = [[LCWTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"添加收藏 result %@, erro%@",result,[result objectForKey:@"errinfo"]);
+        
+        [LCWTools showMBProgressWithText:[result objectForKey:@"errinfo"] addToView:self.view];
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"failDic %@",failDic);
+        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
+    }];
+
+    
+}
+
+//分享
+- (void)clickToShare:(UIButton *)sender
+{
+    NSLog(@"分享");
+}
+
 @end

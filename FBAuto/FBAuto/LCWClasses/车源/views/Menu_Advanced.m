@@ -370,9 +370,6 @@
         if (section == 0) {
             return 1;
         }
-//        NSString *letter = [firstLetterArray objectAtIndex:section - 1];
-//        NSArray *arr = [cityDic objectForKey:letter];
-//        return arr.count;
         
         NSString *letter = [firstLetterArray objectAtIndex:section - 1];
         

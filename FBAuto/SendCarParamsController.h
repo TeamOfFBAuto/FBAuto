@@ -23,7 +23,8 @@ typedef enum{
     Data_Color_Out,//外观颜色
     Data_Color_In,//内饰颜色
     Data_Money,//定金
-    Data_Area//地区
+    Data_Area,//地区 省份
+    Data_Area_City //地区 城市
     
 }DATASTYLE;
 
@@ -43,6 +44,9 @@ typedef void(^ SelectParamsBlock) (DATASTYLE style,NSString *paramName,NSString 
 @property(nonatomic,retain)NSString *typeId;//
 @property(nonatomic,assign)UIViewController *rootVC;//根视图
 @property(nonatomic,assign)BOOL haveLimit;//是否有 不限选择(yes 时 有 不限选择)
+
+@property(nonatomic,retain)NSString *provinceId;//省份
+@property(nonatomic,retain)NSString *cityId;//城市
 
 - (void)selectParamBlock:(SelectParamsBlock)aBlock;
 

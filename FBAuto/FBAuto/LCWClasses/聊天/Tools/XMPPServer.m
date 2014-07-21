@@ -152,8 +152,11 @@
     [self connect];
 }
 
+static int x = 10;
+
 - (void)loginTimes:(int)times loginBack:(loginAction)login_Back//多次联系登录
 {
+   
     loginBack = login_Back;
     
     if ([self.xmppStream isAuthenticated])
@@ -161,23 +164,35 @@
         login_Back(YES);
         return;
     }
-    for (int i = 0; i < times; i ++) {
-        
+    
         [[XMPPServer shareInstance]login:^(BOOL result) {
             if (result) {
                 NSLog(@"连接并且登录成功");
                 
                 login_Back(YES);
                 
+                x = 10;
+                
                 return ;
             }else
             {
+                
                 NSLog(@"连接登录不成功");
-                login_Back(NO);
-                sleep(1);
+                
+                x --;
+                
+                if (x >= 0) {
+                    
+                    [self loginTimes:0 loginBack:login_Back];
+                }else
+                {
+                    login_Back(NO);
+                    x = 10;
+                }
+                
             }
         }];
-    }
+
 }
 
 #pragma - mark 查询已存在房间
@@ -269,12 +284,12 @@
 //        {
 //            
 //        }else{//如果程序在后台运行，收到消息以通知类型来显示
-            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-            localNotification.alertAction = @"Ok";
-            localNotification.alertBody = [NSString stringWithFormat:@"From: %@\n\n%@",from,msg];//通知主体
-            localNotification.soundName = @"crunch.wav";//通知声音
-            localNotification.applicationIconBadgeNumber = 2;//标记数
-            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];//发送通知
+//            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+//            localNotification.alertAction = @"Ok";
+//            localNotification.alertBody = [NSString stringWithFormat:@"From: %@\n\n%@",from,msg];//通知主体
+//            localNotification.soundName = @"crunch.wav";//通知声音
+//            localNotification.applicationIconBadgeNumber = 2;//标记数
+//            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];//发送通知
 //        }
     }
 }

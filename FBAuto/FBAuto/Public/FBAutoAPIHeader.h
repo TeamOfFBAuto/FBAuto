@@ -143,4 +143,10 @@ alpha:(a)]
 
 #define FBAUTO_FINDCAR_PUBLISH @"http://fbautoapp.fblife.com/index.php?c=interface&a=addxunche"//添加寻车信息
 
+#define FBAUTO_FINDCAR_SINGLE @"http://fbautoapp.fblife.com/index.php?c=interface&a=getsinglexunche&xid=%@"//单个寻车信息
+
+//收藏API============
+
+#define FBAUTO_COLLECTION @"http://fbautoapp.fblife.com/index.php?c=interface&a=addshoucang&authkey=%@&car=%@&stype=%d&sid=%@" //添加收藏
+
 #endif

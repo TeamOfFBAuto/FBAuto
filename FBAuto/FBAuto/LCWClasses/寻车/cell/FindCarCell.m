@@ -25,11 +25,26 @@
 
 - (void)setCellDataWithModel:(CarSourceClass *)aCar
 {
-    
-    self.contentLabel.text = @"发河北 寻美规 奥迪Q7 14款 豪华";
-    self.moneyLabel.text = @"已交定金";
-    self.nameLabel.text = @"张三";
+    //@"发河北 寻美规 奥迪Q7 14款 豪华"
+    NSString *contentText = [NSString stringWithFormat:@"发%@%@ 寻%@",aCar.province,aCar.city,aCar.car_name];
+    self.contentLabel.text = contentText;
+    self.moneyLabel.text = [self depositWithText:aCar.deposit];
+    self.nameLabel.text = aCar.username;
     self.timeLabel.text = [LCWTools timechange:aCar.dateline];
+}
+
+- (NSString *)depositWithText:(NSString *)text
+{
+    if ([text isEqualToString:@"1"]) {
+        text = @"定金已付";
+    }else if ([text isEqualToString:@"2"])
+    {
+        text = @"定金未支付";
+    }else if ([text isEqualToString:@"0"] || [text isEqualToString:@""])
+    {
+        text = @"定金不限";
+    }
+    return text;
 }
 
 @end

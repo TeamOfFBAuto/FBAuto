@@ -9,8 +9,10 @@
 #import "FBSearchResultController.h"
 
 #import "FBDetail2Controller.h"
+#import "FBFindCarDetailController.h"
 #import "CarSourceClass.h"
 #import "CarSourceCell.h"
+#import "FindCarCell.h"
 #define KPageSize  10 //每页条数
 
 @interface FBSearchResultController ()<RefreshDelegate>
@@ -80,9 +82,17 @@
 {
     _searchPage = page;
     
-    NSString *url = [NSString stringWithFormat:FBAUTO_CARSOURCE_SEARCH,keyword,_searchPage,KPageSize];
+    NSString *url = @"";
+    if (aSearchStyle == search_findCar) {
+        
+        url = [NSString stringWithFormat:FBAUTO_FINDCAR_SEARCH,keyword,_searchPage,KPageSize];
+        
+    }else
+    {
+        url = [NSString stringWithFormat:FBAUTO_CARSOURCE_SEARCH,keyword,_searchPage,KPageSize];
+    }
     
-    NSLog(@"搜索车源列表 %@",url);
+    NSLog(@"搜索车源或寻车列表 %@",url);
     
     __weak typeof(FBSearchResultController *)weakSelf = self;
     
@@ -156,9 +166,23 @@
     [_table performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
 }
 
-- (void)clickToDetail:(NSString *)carId
+//车源详情
+- (void)clickToDetail:(NSString *)infoId car:(NSString *)car
 {
     FBDetail2Controller *detail = [[FBDetail2Controller alloc]init];
+    detail.style = Navigation_Special;
+    detail.navigationTitle = @"详情";
+    detail.infoId = infoId;
+    detail.carId = car;
+    detail.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:detail animated:YES];
+    
+}
+//寻车详情
+
+- (void)clickToFindDetail:(NSString *)carId
+{
+    FBFindCarDetailController *detail = [[FBFindCarDetailController alloc]init];
     detail.style = Navigation_Special;
     detail.navigationTitle = @"详情";
     detail.carId = carId;
@@ -190,12 +214,19 @@
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CarSourceClass *aCar = (CarSourceClass *)[_dataArray objectAtIndex:indexPath.row];
-    
-    [self clickToDetail:aCar.id];
+    if (aSearchStyle == Search_carSource) {
+        [self clickToDetail:aCar.id car:aCar.car];
+    }else
+    {
+        [self clickToFindDetail:aCar.id];
+    }
 }
 
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {
+    if (aSearchStyle == search_findCar) {
+        return 55;
+    }
     return 75;
 }
 
@@ -213,6 +244,28 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (aSearchStyle == search_findCar) {
+        static NSString * identifier = @"FindCarCell";
+        
+        FindCarCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        
+        if (cell == nil)
+        {
+            cell = [[[NSBundle mainBundle]loadNibNamed:@"FindCarCell" owner:self options:nil]objectAtIndex:0];
+        }
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.backgroundColor = [UIColor colorWithHexString:@"eeeeee"];
+        
+        if (indexPath.row < _dataArray.count) {
+            CarSourceClass *aCar = [_dataArray objectAtIndex:indexPath.row];
+            [cell setCellDataWithModel:aCar];
+        }
+        
+        return cell;
+
+    }
+    
     static NSString * identifier = @"CarSourceCell";
     
     CarSourceCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
