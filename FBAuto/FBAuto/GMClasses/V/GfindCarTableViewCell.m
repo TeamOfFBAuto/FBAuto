@@ -68,7 +68,8 @@
     self.addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.addBtn setImage:[UIImage imageNamed:@"jiantou_down18_10.png"] forState:UIControlStateNormal];
     [self.addBtn setImageEdgeInsets:UIEdgeInsetsMake(7.5, 5, 7.5, 5)];
-    self.addBtn.frame = CGRectMake(287, 20, 20, 20);
+    self.addBtn.frame = CGRectMake(277, 10, 40, 40);
+    self.addBtn.backgroundColor = [UIColor redColor];
     [self.contentView addSubview:self.addBtn];
     [self.addBtn addTarget:self action:@selector(tianjia) forControlEvents:UIControlEventTouchUpInside];
     
@@ -100,8 +101,10 @@
                 if (_shanchuView) {
                     [_shanchuView removeFromSuperview];
                 }
+            }else{
+                [self addSanchuView];
             }
-            [self addSanchuView];
+            
         }
         
     }
