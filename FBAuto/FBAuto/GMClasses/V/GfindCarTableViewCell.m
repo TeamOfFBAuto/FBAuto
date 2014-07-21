@@ -30,14 +30,14 @@
     CGFloat height = 0;
     
     //多少次浏览
-    UILabel *ciLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 18, 75, 13)];
-    ciLable.backgroundColor = [UIColor orangeColor];
-    ciLable.textAlignment = NSTextAlignmentCenter;
-    ciLable.font = [UIFont systemFontOfSize:12];
-    [self.contentView addSubview:ciLable];
+    self.ciLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 18, 75, 13)];
+    _ciLable.backgroundColor = [UIColor orangeColor];
+    _ciLable.textAlignment = NSTextAlignmentCenter;
+    _ciLable.font = [UIFont systemFontOfSize:12];
+    [self.contentView addSubview:_ciLable];
     
     //浏览
-    UILabel *llLabel = [[UILabel alloc]initWithFrame:CGRectMake(28, CGRectGetMaxY(ciLable.frame)+4, 24, 13)];
+    UILabel *llLabel = [[UILabel alloc]initWithFrame:CGRectMake(28, CGRectGetMaxY(_ciLable.frame)+4, 24, 13)];
     llLabel.font = [UIFont systemFontOfSize:12];
     llLabel.text = @"浏览";
     [self.contentView addSubview:llLabel];
@@ -49,14 +49,17 @@
     
     
     //内容label
-    UILabel *cLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(bview.frame)+20, 15, 158, 15)];
-    cLabel.backgroundColor = [UIColor purpleColor];
-    [self.contentView addSubview:cLabel];
+    self.cLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(bview.frame)+20, 15, 158, 15)];
+    _cLabel.backgroundColor = [UIColor clearColor];
+    _cLabel.font = [UIFont systemFontOfSize:14];
+    [self.contentView addSubview:_cLabel];
     
     //时间label
-    UILabel *tLabel = [[UILabel alloc]initWithFrame:CGRectMake(cLabel.frame.origin.x, CGRectGetMaxY(cLabel.frame)+8, 80, 13)];
-    tLabel.backgroundColor = [UIColor orangeColor];
-    [self.contentView addSubview:tLabel];
+    self.tLabel = [[UILabel alloc]initWithFrame:CGRectMake(_cLabel.frame.origin.x, CGRectGetMaxY(_cLabel.frame)+8, 100, 13)];
+    _tLabel.backgroundColor = [UIColor clearColor];
+    _tLabel.font = [UIFont systemFontOfSize:13];
+    _tLabel.textColor = [UIColor grayColor];
+    [self.contentView addSubview:_tLabel];
     
     
     height = 60;

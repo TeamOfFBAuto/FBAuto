@@ -24,6 +24,10 @@ typedef void (^caozuoBtnBlock)(NSInteger btnTag);
 @property(nonatomic,strong)UIButton *addBtn;//右边的箭头
 @property(nonatomic,copy)caozuoBtnBlock caozuoBtnBlock;
 
+@property(nonatomic,retain)UILabel *ciLable;
+@property(nonatomic,retain)UILabel *cLabel;
+@property(nonatomic,retain)UILabel *tLabel;
+
 
 
 -(void)setAddviewBlock:(addViewBlock)addviewBlock;

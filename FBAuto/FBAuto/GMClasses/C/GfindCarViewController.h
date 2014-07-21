@@ -13,7 +13,7 @@
 
 @interface GfindCarViewController : FBBaseViewController<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
-    UITableView *_tableiView;//主tablevew
+    RefreshTableView *_tableView;//主tablevew
     GfindCarTableViewCell *_tmpCell;//用户获取单元格高度的cell对象
     
 }

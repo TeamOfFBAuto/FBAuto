@@ -42,6 +42,7 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 + (void)alertText:(NSString *)text;
 +(NSString *)timechange:(NSString *)placetime;
 +(NSString *)timechange2:(NSString *)placetime;
++(NSString *)timechange3:(NSString *)placetime;
 + (void)showMBProgressWithText:(NSString *)text addToView:(UIView *)aView;
 
 /**

@@ -37,6 +37,8 @@
 
 #define USERPASSWORD @"userpassword"
 
+#define KPageSize  10 //每页条数
+
 //颜色
 
 #define RGBCOLOR(r,g,b) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:1]
@@ -140,6 +142,8 @@ alpha:(a)]
 #define FBAUTO_FINDCAR_LIST @"http://fbautoapp.fblife.com/index.php?c=interface&a=getxunche"//寻车列表数据
 
 #define FBAUTO_FINDCAR_SEARCH @"http://fbautoapp.fblife.com/index.php?c=interface&a=searchxunche&keyword=%@&page=%d&ps=%d" //寻车搜索
+
+#define FBAUTO_FINCAR_MYSELF @"http://fbautoapp.fblife.com/index.php?c=interface&a=getmyxunche&authkey=%@"//我的寻车
 
 #define FBAUTO_FINDCAR_PUBLISH @"http://fbautoapp.fblife.com/index.php?c=interface&a=addxunche"//添加寻车信息
 

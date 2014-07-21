@@ -24,7 +24,6 @@
 
 #import "LSearchView.h"
 
-#define KPageSize  10 //每页条数
 
 #define CAR_LIST @"CAR_LIST" //车源列表
 #define CAR_SEARCH @"CAR_SEARCH" //搜索车源
@@ -445,12 +444,13 @@
     [_table performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
 }
 
-- (void)clickToDetail:(NSString *)carId
+- (void)clickToDetail:(NSString *)info car:(NSString *)car
 {
     FBFindCarDetailController *detail = [[FBFindCarDetailController alloc]init];
     detail.style = Navigation_Special;
     detail.navigationTitle = @"详情";
-    detail.carId = carId;
+    detail.infoId = info;
+    detail.carId = car;
     detail.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:detail animated:YES];
     
@@ -638,7 +638,7 @@
 {
     CarSourceClass *aCar = (CarSourceClass *)[_dataArray objectAtIndex:indexPath.row];
     
-    [self clickToDetail:aCar.id];
+    [self clickToDetail:aCar.id car:aCar.car];
 }
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {

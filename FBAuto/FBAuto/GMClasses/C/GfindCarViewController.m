@@ -8,11 +8,18 @@
 
 #import "GfindCarViewController.h"
 #import "GfindCarTableViewCell.h"
+#import "FBFindCarDetailController.h"
+#import "FBDetail2Controller.h"
+#import "CarSourceClass.h"
 #import "GmLoadData.h"
 
 #import "DXAlertView.h"
 
-@interface GfindCarViewController ()
+@interface GfindCarViewController ()<RefreshDelegate>
+{
+    int _page;//第几页
+    NSArray *_dataArray;
+}
 
 @end
 
@@ -31,46 +38,114 @@
     
     NSLog(@"%s",__FUNCTION__);
     
-    
     self.view.backgroundColor = [UIColor whiteColor];
-    
-    
     
     self.flagHeight = 60;
     
-    _tableiView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64-44)];
-    _tableiView.delegate = self;
-    _tableiView.dataSource = self;
+    _tableView = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64-44)];
+    _tableView.refreshDelegate = self;
+    _tableView.dataSource = self;
     
-    _tableiView.separatorColor = [UIColor whiteColor];
+    _tableView.separatorColor = [UIColor whiteColor];
     
-    [self.view addSubview:_tableiView];
+    [self.view addSubview:_tableView];
     
     
     if (self.gtype == 2) {//我的车源
-        [self prepareCheyuan];
+        
+        self.titleLabel.text = @"我的车源";
+        
     }else if (self.gtype == 3){//我的寻车
-        [self prepareXunche];
+        
+        self.titleLabel.text = @"我的寻车";
     }
     
-    
-    
+    [self prepareDataForType:self.gtype];
 }
-
-
 
 #pragma mark - 请求网络数据
 //我的车源
--(void)prepareCheyuan{
+-(void)prepareDataForType:(int)aType{
     //获取我的车源列表
     //http://fbautoapp.fblife.com/index.php?c=interface&a=getmycheyuan&authkey=VWMHKVFzUWYBdAAuAWdRJgdz
-    GmLoadData *gmloadData = [[GmLoadData alloc]init];
     
-    [gmloadData SeturlStr:[NSString stringWithFormat:@"http://fbautoapp.fblife.com/index.php?c=interface&a=getmycheyuan&authkey=%@",[GMAPI getAuthkey]] block:^(NSDictionary *dataInfo, NSString *errorinfo, NSInteger errcode) {
+    __weak typeof(GfindCarViewController *)weakSelf = self;
+    NSString *api = @"";
+    
+    if (aType == 2) {
+        api = [NSString stringWithFormat:FBAUTO_CARSOURCE_MYSELF,[GMAPI getAuthkey]];
+    }else if (aType == 3)
+    {
+        api = [NSString stringWithFormat:FBAUTO_FINCAR_MYSELF,[GMAPI getAuthkey]];
+    }
+    
+    NSString *url = [NSString stringWithFormat:@"%@&page=%d&ps=%d",api,_page,KPageSize];
+    LCWTools *tool = [[LCWTools alloc]initWithUrl:url isPost:nil postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"寻车列表erro%@",[result objectForKey:@"errinfo"]);
+        
+        NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
+        int total = [[dataInfo objectForKey:@"total"]intValue];
+        
+        if (_page < total) {
+            
+            _tableView.isHaveMoreData = YES;
+        }else
+        {
+            _tableView.isHaveMoreData = NO;
+        }
+        
+        NSArray *data = [dataInfo objectForKey:@"data"];
+        
+        NSMutableArray *arr = [NSMutableArray arrayWithCapacity:data.count];
+        
+        for (NSDictionary *aDic in data) {
+            
+            CarSourceClass *aCar = [[CarSourceClass alloc]initWithDictionary:aDic];
+            
+            [arr addObject:aCar];
+        }
+        
+        [weakSelf reloadData:arr isReload:_tableView.isReloadData];
+        
+    }failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failDic %@",failDic);
+        
+        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
+        
+        if (_tableView.isReloadData) {
+            
+            _page --;
+            
+            [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+        }
         
     }];
     
+}
+
+/**
+ *  刷新数据列表
+ *
+ *  @param dataArr  新请求的数据
+ *  @param isReload 判断在刷新或者加载更多
+ */
+- (void)reloadData:(NSArray *)dataArr isReload:(BOOL)isReload
+{
+    if (isReload) {
+        
+        _dataArray = dataArr;
+        
+    }else
+    {
+        NSMutableArray *newArr = [NSMutableArray arrayWithArray:_dataArray];
+        [newArr addObjectsFromArray:dataArr];
+        _dataArray = newArr;
+    }
     
+    [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
 }
 
 //我的寻车
@@ -78,11 +153,79 @@
     
 }
 
+- (void)clickToDetail:(NSString *)info car:(NSString *)car
+{
+    
+    
+    if (self.gtype == 2) {//我的车源
+        
+        FBDetail2Controller *detail = [[FBDetail2Controller alloc]init];
+        detail.style = Navigation_Special;
+        detail.navigationTitle = @"详情";
+        detail.infoId = info;
+        detail.carId = car;
+        detail.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:detail animated:YES];
+        
+    }else if (self.gtype == 3){//我的寻车
+        
+        FBFindCarDetailController *detail = [[FBFindCarDetailController alloc]init];
+        detail.style = Navigation_Special;
+        detail.navigationTitle = @"详情";
+        detail.infoId = info;
+        detail.carId = car;
+        detail.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:detail animated:YES];
+    }
+    
+}
+
+#pragma - mark RefreshDelegate <NSObject>
+
+- (void)loadNewData
+{
+    _page = 1;
+    
+    [self prepareDataForType:self.gtype];
+}
+
+- (void)loadMoreData
+{
+    NSLog(@"loadMoreData");
+    
+    _page ++;
+    
+    [self prepareDataForType:self.gtype];
+}
+
+- (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CarSourceClass *aCar = (CarSourceClass *)[_dataArray objectAtIndex:indexPath.row];
+    
+    [self clickToDetail:aCar.id car:aCar.car];
+}
+- (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat height = 0;
+    if (_tmpCell) {
+        height = [_tmpCell loadView:indexPath];
+    }else{
+        _tmpCell = [[GfindCarTableViewCell alloc]init];
+        _tmpCell.delegate = self;
+        height = [_tmpCell loadView:indexPath];
+    }
+    
+    
+    NSLog(@"%f",height);
+    
+    return height;
+}
 
 
 #pragma mark - UITableiViewDelegate && UITableViewDataSource
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    return _dataArray.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -102,7 +245,7 @@
     [cell loadView:indexPath];
     
     __weak typeof (self)bself = self;
-    __weak typeof (_tableiView)btableview = _tableiView;
+    __weak typeof (_tableView)btableview = _tableView;
     
     //设置上下箭头的点击
     [cell setAddviewBlock:^{
@@ -142,15 +285,9 @@
             }
         }
         
-        
-        
         [btableview reloadRowsAtIndexPaths:self.indexPathArray withRowAnimation:UITableViewRowAnimationFade];
         
     }];
-    
-    
-    
-    
     
     [cell setCaozuoBtnBlock:^(NSInteger btnTag) {
         switch (btnTag) {
@@ -187,30 +324,19 @@
     
     cell.separatorInset = UIEdgeInsetsZero;
     
+    if (indexPath.row < _dataArray.count) {
+        CarSourceClass *aCar = [_dataArray objectAtIndex:indexPath.row];
+        
+//        @property(nonatomic,retain)UILabel *ciLable;
+//        @property(nonatomic,retain)UILabel *cLabel;
+//        @property(nonatomic,retain)UILabel *tLabel;
+        
+        cell.cLabel.text = aCar.car_name;
+        cell.tLabel.text = [LCWTools timechange3:aCar.dateline];
+    }
     
     return cell;
 }
-
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    CGFloat height = 0;
-    if (_tmpCell) {
-        height = [_tmpCell loadView:indexPath];
-    }else{
-        _tmpCell = [[GfindCarTableViewCell alloc]init];
-        _tmpCell.delegate = self;
-        height = [_tmpCell loadView:indexPath];
-    }
-    
-
-    NSLog(@"%f",height);
-    
-    return height;
-}
-
-
-
-
 
 #pragma mark - UIAlerViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
