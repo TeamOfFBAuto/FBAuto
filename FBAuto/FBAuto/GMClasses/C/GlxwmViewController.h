@@ -10,6 +10,6 @@
 //联系我们界面
 #import <UIKit/UIKit.h>
 
-@interface GlxwmViewController : UIViewController
+@interface GlxwmViewController : FBBaseViewController
 
 @end

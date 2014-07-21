@@ -9,7 +9,7 @@
 //个人中心 消息设置
 #import <UIKit/UIKit.h>
 
-@interface GMessageSViewController : UIViewController
+@interface GMessageSViewController : FBBaseViewController
 
 
 

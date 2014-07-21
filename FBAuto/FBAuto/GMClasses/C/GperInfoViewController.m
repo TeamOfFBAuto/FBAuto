@@ -35,6 +35,9 @@
     NSLog(@"%s",__FUNCTION__);
     self.view.backgroundColor = [UIColor whiteColor];
     
+    
+    
+        
     NSLog(@"%s",__FUNCTION__);
     
     //主tableview

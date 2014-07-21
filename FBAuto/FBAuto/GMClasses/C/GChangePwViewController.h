@@ -9,7 +9,7 @@
 //修改密码界面
 #import <UIKit/UIKit.h>
 
-@interface GChangePwViewController : UIViewController
+@interface GChangePwViewController : FBBaseViewController
 
 @property(nonatomic,strong)NSMutableArray *tfArray;//textfield数组
 

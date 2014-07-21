@@ -9,7 +9,7 @@
 //找回密码界面VC
 #import <UIKit/UIKit.h>
 
-@interface GfindPasswViewController : UIViewController
+@interface GfindPasswViewController : FBBaseViewController
 {
     NSTimer *_timer;
     UIButton * _yanzhengBtn;

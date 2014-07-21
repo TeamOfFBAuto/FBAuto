@@ -23,7 +23,7 @@
 
 @class GperInfoTableViewCell;
 
-@interface GperInfoViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,MLImageCropDelegate,ASIHTTPRequestDelegate>
+@interface GperInfoViewController : FBBaseViewController<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,MLImageCropDelegate,ASIHTTPRequestDelegate>
 
 {
     UITableView *_tableview;//主tableview

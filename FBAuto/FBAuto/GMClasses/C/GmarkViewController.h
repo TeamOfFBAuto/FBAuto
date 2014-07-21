@@ -11,7 +11,7 @@
 #import <UIKit/UIKit.h>
 @class GmarkTableViewCell;
 
-@interface GmarkViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface GmarkViewController : FBBaseViewController<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_tableview;
     UIView *_dview;//下面删除view

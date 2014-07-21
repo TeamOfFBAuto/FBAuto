@@ -9,7 +9,7 @@
 //个人中心 通知vc
 #import <UIKit/UIKit.h>
 
-@interface GpersonTZViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface GpersonTZViewController : FBBaseViewController<UITableViewDataSource,UITableViewDelegate>
 
 {
     UITableView *_tableView;

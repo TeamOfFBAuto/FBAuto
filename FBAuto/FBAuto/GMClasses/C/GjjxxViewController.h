@@ -15,7 +15,7 @@
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
 
-@interface GjjxxViewController : UIViewController<ASIHTTPRequestDelegate>
+@interface GjjxxViewController : FBBaseViewController<ASIHTTPRequestDelegate>
 
 {
     UITextView *_textView;//输入tv

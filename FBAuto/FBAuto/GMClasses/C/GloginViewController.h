@@ -11,7 +11,7 @@
 @class GloginView;
 #define Frame_row3Down CGRectMake(24, 312, 275, 210)
 #define Frame_row3Up CGRectMake(24, 312-180, 275, 210)
-@interface GloginViewController : UIViewController
+@interface GloginViewController : FBBaseViewController
 
 @property(nonatomic,strong)GloginView *gloginView;
 
