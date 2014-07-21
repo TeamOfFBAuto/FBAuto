@@ -35,7 +35,7 @@
     NSLog(@"%s",__FUNCTION__);
     self.view.backgroundColor = [UIColor whiteColor];
     
-    
+    self.titleLabel.text = @"个人资料";
     
         
     NSLog(@"%s",__FUNCTION__);

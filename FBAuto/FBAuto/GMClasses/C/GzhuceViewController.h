@@ -11,7 +11,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GzhuceViewController : FBBaseViewController<UITableViewDataSource,UITableViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
+@interface GzhuceViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 {
     
     UIBarButtonItem * spaceButton;

@@ -37,10 +37,16 @@
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor=[UIColor redColor];
-    
     NSLog(@"%s",__FUNCTION__);
     
-    UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithTitle:@"删除" style:UIBarButtonItemStylePlain target:self action:@selector(ggDel)];
+    self.titleLabel.text = @"我的收藏";
+    
+    UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"lajitong44_44.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(ggDel)];
+    
+    
+    
+    
+//    UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithTitle:@"删除" style:UIBarButtonItemStylePlain target:self action:@selector(ggDel)];
     self.navigationItem.rightBarButtonItem = right;
     
     self.delClicked = NO;

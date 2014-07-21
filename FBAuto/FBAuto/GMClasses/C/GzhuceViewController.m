@@ -61,7 +61,7 @@
     _btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
     [_btn1 setTitle:@"个人注册" forState:UIControlStateNormal];
     [_btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    _btn1.frame = CGRectMake(0, 64, 160, 50);
+    _btn1.frame = CGRectMake(0, 0, 160, 50);
     _btn1.backgroundColor = [UIColor whiteColor];
     [_btn1 setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
     [_btn1 addTarget:self action:@selector(gerenzhuce:) forControlEvents:UIControlEventTouchUpInside];
@@ -72,21 +72,21 @@
     _btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
     [_btn2 setTitle:@"商家注册" forState:UIControlStateNormal];
     [_btn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    _btn2.frame = CGRectMake(160, 64, 160, 50);
+    _btn2.frame = CGRectMake(160, 0, 160, 50);
     _btn2.backgroundColor = RGBCOLOR(238, 238, 238);
     [_btn2 addTarget:self action:@selector(shagnjiazhuce:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_btn2];
     
     
     //个人注册
-    _gerenTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 124, 320, 568-124) style:UITableViewStylePlain];
+    _gerenTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 60, 320, 568-124) style:UITableViewStylePlain];
     _gerenTableView.delegate = self;
     _gerenTableView.dataSource = self;
     _gerenTableView.tag = 5;
     [self.view addSubview:_gerenTableView];
     
     //商家注册
-    _shangjiaTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 124, 320, 568-124) style:UITableViewStylePlain];
+    _shangjiaTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 60, 320, 568-124) style:UITableViewStylePlain];
     _shangjiaTableView.delegate = self;
     _shangjiaTableView.dataSource = self;
     _shangjiaTableView.tag = 6;
