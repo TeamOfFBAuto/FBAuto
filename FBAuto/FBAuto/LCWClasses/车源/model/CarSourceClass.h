@@ -28,6 +28,8 @@
 
 @property(nonatomic,retain)NSString *deposit;//定金
 
+
+@property(nonatomic,strong)NSString *stype_name;//收藏的内容种类
 -(id)initWithDictionary:(NSDictionary *)dic;
 
 @end

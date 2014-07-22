@@ -155,4 +155,6 @@ alpha:(a)]
 
 #define FBAUTO_COLLECTION @"http://fbautoapp.fblife.com/index.php?c=interface&a=addshoucang&authkey=%@&car=%@&stype=%d&sid=%@" //添加收藏
 
+#define FBAUTO_MYMARKCAR @"http://fbautoapp.fblife.com/index.php?c=interface&a=getshoucang&authkey=%@&page=%d&ps=%d"
+
 #endif

@@ -76,7 +76,7 @@
     NSString *api = @"";
     
     if (aType == 2) {
-        api = [NSString stringWithFormat:FBAUTO_CARSOURCE_MYSELF,[GMAPI getAuthkey]];
+        api = [NSString stringWithFormat:FBAUTO_CARSOURCE_MYSELF,[GMAPI getAuthkey],_page,KPageSize];
     }else if (aType == 3)
     {
         api = [NSString stringWithFormat:FBAUTO_FINCAR_MYSELF,[GMAPI getAuthkey]];

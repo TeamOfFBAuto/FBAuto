@@ -10,6 +10,8 @@
 
 #import "GmarkViewController.h"
 
+#import "CarSourceClass.h"//数据Model类
+
 @implementation GmarkTableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -54,13 +56,15 @@
     
     //车源分类titleLabel
     UILabel *tLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 24, 25, 13)];
-    tLabel.backgroundColor = [UIColor redColor];
+    
     tLabel.font = [UIFont systemFontOfSize:12];
+    tLabel.textColor = RGBCOLOR(129, 129, 129);
+    self.tLabel = tLabel;
     
     //车源信息
     UILabel *cLabel = [[UILabel alloc]initWithFrame:CGRectMake(65, 23, 240, 14)];
     cLabel.font = [UIFont systemFontOfSize:13];
-    cLabel.backgroundColor = [UIColor redColor];
+    self.cLabel = cLabel;
     
     
     
@@ -93,8 +97,18 @@
         self.clickImv.tag = theIndexPatch.row;
         [self.clickImv setImage:[UIImage imageNamed:@"xuanze_up_44_44.png"]];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doTap:)];
-        [self.clickImv addGestureRecognizer:tap];
-        [self.contentView addSubview:self.clickImv];
+//        [self.clickImv addGestureRecognizer:tap];
+        
+        
+        UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 50, 60)];
+        backView.userInteractionEnabled = YES;
+        backView.tag = theIndexPatch.row;
+        [backView addSubview:self.clickImv];
+        [backView addGestureRecognizer:tap];
+        
+        
+        
+        [self.contentView addSubview:backView];
     }
     
     
@@ -113,7 +127,10 @@
 
 
 //填充数据
--(void)configWithNetData:(NSArray *)array{
+-(void)configWithNetData:(NSArray *)array indexPath:(NSIndexPath*)theIndexPath{
+    CarSourceClass *aCar = array[theIndexPath.row];
+    self.tLabel.text = aCar.stype_name;
+    self.cLabel.text = aCar.car_name;
     
 }
 
