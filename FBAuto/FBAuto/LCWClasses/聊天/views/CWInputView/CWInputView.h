@@ -14,7 +14,10 @@
 #import <UIKit/UIKit.h>
 #import "NSString+Emoji.h"
 
-typedef void(^ ToolBlock) (int aTag);//aTag, 0 打电话,1 拍照,2 相册
+@class CWInputView;
+
+typedef void(^ ToolBlock) (int aTag);//aTag, 0 打电话,1 拍照,2 相册,3 frame变化
+typedef void(^ FrameBlock) (CWInputView *inputView,CGRect frame,BOOL isEnd);//frame变化
 
 @class CWInputView;
 @protocol CWInputDelegate <NSObject>
@@ -30,10 +33,10 @@ typedef void(^ ToolBlock) (int aTag);//aTag, 0 打电话,1 拍照,2 相册
     CGFloat current_KeyBoard_Y;//当前键盘坐标Y
     
     ToolBlock toolBlock;
+    FrameBlock frameBlock;
 }
 
 @property(assign,nonatomic)id<CWInputDelegate> delegate;
-//@property(strong,nonatomic)UITextField *textField;
 @property(strong,nonatomic)UITextView *textView;
 @property(strong,nonatomic)UIButton *sendBtn;
 @property(strong,nonatomic)UIButton *toolBtn1;
@@ -51,5 +54,7 @@ typedef void(^ ToolBlock) (int aTag);//aTag, 0 打电话,1 拍照,2 相册
 - (BOOL)resignFirstResponder;
 
 - (void)setToolBlock:(ToolBlock)aBlock;
+
+- (void)setFrameBlock:(FrameBlock)aFrameBlock;
 
 @end

@@ -32,8 +32,6 @@
 
 #import "CarClass.h"
 
-#define KPageSize  10 //每页条数
-
 #define CAR_LIST @"CAR_LIST" //车源列表
 #define CAR_SEARCH @"CAR_SEARCH" //搜索车源
 
@@ -98,7 +96,6 @@
 -(void)viewWillAppear:(BOOL)animated{
 
     [super viewWillAppear:YES];
-    [self.navigationController.navigationBar addSubview:navigationView];
     
     if (![GMAPI getUsername].length) {
         
@@ -120,6 +117,8 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    [self.navigationController.navigationBar addSubview:navigationView];
     
     //定时更新
     
@@ -628,28 +627,41 @@
 //        NSLog(@"车源列表 result %@",result);
         
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
-        int total = [[dataInfo objectForKey:@"total"]intValue];
         
-        if (_page < total) {
+        if ([dataInfo isKindOfClass:[NSDictionary class]]) {
             
-            _table.isHaveMoreData = YES;
+            //说明无结果
+            
+            int total = [[dataInfo objectForKey:@"total"]intValue];
+            
+            if (_page < total) {
+                
+                _table.isHaveMoreData = YES;
+            }else
+            {
+                _table.isHaveMoreData = NO;
+            }
+            
+            NSArray *data = [dataInfo objectForKey:@"data"];
+            
+            NSMutableArray *arr = [NSMutableArray arrayWithCapacity:data.count];
+            
+            for (NSDictionary *aDic in data) {
+                
+                CarSourceClass *aCar = [[CarSourceClass alloc]initWithDictionary:aDic];
+                
+                [arr addObject:aCar];
+            }
+            
+            [weakSelf reloadData:arr isReload:_table.isReloadData requestType:CAR_LIST];
+            
         }else
         {
             _table.isHaveMoreData = NO;
+            [weakSelf reloadData:nil isReload:_table.isReloadData requestType:CAR_LIST];
         }
         
-        NSArray *data = [dataInfo objectForKey:@"data"];
         
-        NSMutableArray *arr = [NSMutableArray arrayWithCapacity:data.count];
-        
-        for (NSDictionary *aDic in data) {
-            
-            CarSourceClass *aCar = [[CarSourceClass alloc]initWithDictionary:aDic];
-            
-            [arr addObject:aCar];
-        }
-        
-        [weakSelf reloadData:arr isReload:_table.isReloadData requestType:CAR_LIST];
         
     }failBlock:^(NSDictionary *failDic, NSError *erro) {
         

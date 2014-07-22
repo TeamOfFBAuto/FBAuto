@@ -45,6 +45,14 @@
     //适配ios7navigationbar高度
     if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0)) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
+        
+        //滑动返回
+        if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+            
+            self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+            
+        }
+        
     }
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan_bg_640_88"] forBarMetrics: UIBarMetricsDefault];

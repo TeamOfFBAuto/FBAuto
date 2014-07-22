@@ -31,8 +31,10 @@
 - (void)dealloc
 {
     NSLog(@"%s",__FUNCTION__);
+    _tableView.refreshDelegate = nil;
+    _tableView.dataSource = nil;
+    _tableView.delegate = nil;
 }
-
 
 - (void)viewDidLoad
 {
@@ -63,27 +65,25 @@
         self.titleLabel.text = @"我的寻车";
     }
     
-    [self prepareDataForType:self.gtype];
+    [_tableView showRefreshHeader:YES];
 }
 
 #pragma mark - 请求网络数据
 //我的车源
 -(void)prepareDataForType:(int)aType{
     //获取我的车源列表
-    //http://fbautoapp.fblife.com/index.php?c=interface&a=getmycheyuan&authkey=VWMHKVFzUWYBdAAuAWdRJgdz
     
     __weak typeof(GfindCarViewController *)weakSelf = self;
     NSString *api = @"";
     
     if (aType == 2) {
-        api = [NSString stringWithFormat:FBAUTO_CARSOURCE_MYSELF,[GMAPI getAuthkey]];
+        api = [NSString stringWithFormat:FBAUTO_CARSOURCE_MYSELF,[GMAPI getAuthkey],_page,KPageSize];
     }else if (aType == 3)
     {
-        api = [NSString stringWithFormat:FBAUTO_FINCAR_MYSELF,[GMAPI getAuthkey]];
+        api = [NSString stringWithFormat:FBAUTO_FINCAR_MYSELF,[GMAPI getAuthkey],_page,KPageSize];
     }
     
-    NSString *url = [NSString stringWithFormat:@"%@&page=%d&ps=%d",api,_page,KPageSize];
-    LCWTools *tool = [[LCWTools alloc]initWithUrl:url isPost:nil postData:nil];
+    LCWTools *tool = [[LCWTools alloc]initWithUrl:api isPost:nil postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"寻车列表erro%@",[result objectForKey:@"errinfo"]);
@@ -151,10 +151,6 @@
     [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
 }
 
-//我的寻车
--(void)prepareXunche{
-    
-}
 
 - (void)clickToDetail:(NSString *)info car:(NSString *)car
 {
@@ -180,8 +176,63 @@
         detail.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:detail animated:YES];
     }
-    
 }
+
+/**
+ *  删除 我的车源、我的寻车
+ *
+ *  @param aType  2:车源 3:寻车
+ *  @param infoId 信息id
+ */
+
+- (void)deleteDataForCell:(NSIndexPath *)indexPath
+{
+    //获取我的车源列表
+    
+    __weak typeof(GfindCarViewController *)weakSelf = self;
+    
+    CarSourceClass *aCar = [_dataArray objectAtIndex:indexPath.row];
+    
+    NSString *api = @"";
+    
+    if (self.gtype == 2) {
+        
+        api = [NSString stringWithFormat:FBAUTO_CARSOURCE_DELETE,[GMAPI getAuthkey],aCar.id];
+        
+    }else if (self.gtype == 3)
+    {
+        api = [NSString stringWithFormat:FBAUTO_FINDCAR_DELETE,[GMAPI getAuthkey],aCar.id];
+    }
+    
+    LCWTools *tool = [[LCWTools alloc]initWithUrl:api isPost:nil postData:nil];
+    
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"删除信息 erro%@",[result objectForKey:@"errinfo"]);
+        
+        //成功之后删除数据源,删除cell
+        
+        NSMutableArray *tempArr = [NSMutableArray arrayWithArray:_dataArray];
+        [tempArr removeObjectAtIndex:indexPath.row];
+        _dataArray = tempArr;
+        
+        weakSelf.lastIndexPath = nil;
+        weakSelf.flagIndexPath = nil;
+        
+        [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+        [_tableView reloadData];
+        
+        
+    }failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failDic %@",failDic);
+        
+        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
+        
+    }];
+
+}
+
 
 #pragma - mark RefreshDelegate <NSObject>
 
@@ -247,41 +298,41 @@
     
     [cell loadView:indexPath];
     
-    __weak typeof (self)bself = self;
+    __weak typeof (self)weakSelf = self;
     __weak typeof (_tableView)btableview = _tableView;
     
     //设置上下箭头的点击
     [cell setAddviewBlock:^{
         
         //flag不为空的时候赋值给last
-        if (bself.flagIndexPath) {
+        if (weakSelf.flagIndexPath) {
             
-            bself.lastIndexPath = bself.flagIndexPath;
+            weakSelf.lastIndexPath = weakSelf.flagIndexPath;
         }
         //当前点击的indexPath赋值给flag
-        bself.flagIndexPath = indexPath;
+        weakSelf.flagIndexPath = indexPath;
         
         //把flag加到数组里
-        NSArray *indexPathArray = @[bself.flagIndexPath];
+        NSArray *indexPathArray = @[weakSelf.flagIndexPath];
 
         //如果last有值 并且和flag不同 就加到数组里
-        if (bself.lastIndexPath && (bself.lastIndexPath.row!=bself.flagIndexPath.row || bself.lastIndexPath.section != bself.flagIndexPath.section)) {
-            indexPathArray = @[bself.lastIndexPath,bself.flagIndexPath];
+        if (weakSelf.lastIndexPath && (weakSelf.lastIndexPath.row!=weakSelf.flagIndexPath.row || weakSelf.lastIndexPath.section != weakSelf.flagIndexPath.section)) {
+            indexPathArray = @[weakSelf.lastIndexPath,weakSelf.flagIndexPath];
         }
         
         self.indexPathArray = indexPathArray;
         
-        NSLog(@"%ld  %ld",(long)bself.lastIndexPath.row,(long)bself.flagIndexPath.row);
+        NSLog(@"%ld  %ld",(long)weakSelf.lastIndexPath.row,(long)weakSelf.flagIndexPath.row);
         
         //单元格高度标示
         if (indexPathArray.count == 2) {//有last 有flag
-            bself.flagHeight = 120;
+            weakSelf.flagHeight = 120;
         }else if (indexPathArray.count == 1){//last和flag为同一个
-            if (bself.flagHeight == 120) {
-                bself.flagHeight = 60;
+            if (weakSelf.flagHeight == 120) {
+                weakSelf.flagHeight = 60;
                 
-            }else if (bself.flagHeight == 60){
-                bself.flagHeight = 120;
+            }else if (weakSelf.flagHeight == 60){
+                weakSelf.flagHeight = 120;
                 
             }
         }
@@ -294,6 +345,8 @@
         switch (btnTag) {
             case 10://删除
             {
+                
+                NSLog(@"delete Alert");
                 DXAlertView *al = [[DXAlertView alloc]initWithTitle:@"您确定删除此条消息吗？" contentText:nil leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
                 [al show];
                 al.leftBlock = ^(){
@@ -301,6 +354,10 @@
                 };
                 al.rightBlock = ^(){
                     NSLog(@"确定");
+                    
+                    
+                    [weakSelf deleteDataForCell:indexPath];
+                    
                 };
             }
                 
@@ -315,7 +372,7 @@
                         SendCarViewController *detail = [[SendCarViewController alloc]init];
                         detail.actionStyle = Action_Edit;
                         detail.infoId = aCar.id;
-                        [self.navigationController pushViewController:detail animated:YES];
+                        [weakSelf.navigationController pushViewController:detail animated:YES];
                         
                     }else if (self.gtype == 3){//我的寻车
                         
@@ -323,7 +380,7 @@
                         detail.style = Navigation_Special;
                         detail.infoId = aCar.id;
                         detail.actionStyle = Find_Action_Edit;
-                        [self.navigationController pushViewController:detail animated:YES];
+                        [weakSelf.navigationController pushViewController:detail animated:YES];
                     }
                 }
                 
