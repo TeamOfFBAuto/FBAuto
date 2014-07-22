@@ -120,7 +120,7 @@
 //    }
     
     self.bgImageView.image = bgImage;
-    [self.bgImageView setFrame:CGRectMake(left, KDIS + self.senderAndTimeLabel.height, aSize.width + 3 * KDIS, aSize.height + 2 * KDIS)];
+    [self.bgImageView setFrame:CGRectMake(left, KDIS + self.senderAndTimeLabel.height, aSize.width + 2 * KDIS, aSize.height + KDIS)];
     self.OHLabel.center = CGPointMake(bgImageView.width / 2.0 + dix, bgImageView.height / 2.0);
     
 }

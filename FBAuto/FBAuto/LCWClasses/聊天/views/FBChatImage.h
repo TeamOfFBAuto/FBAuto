@@ -7,14 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
+@class FBChatImage;
 
 typedef void(^ ClickBlock) (UIImageView *imageView);
+typedef void(^ LoadFailBlock)(FBChatImage *chatImageView);//load失败
 
 @interface FBChatImage : UIImageView
 {
     ClickBlock aBlock;
+    LoadFailBlock aFailBlock;
+    
+    UIButton *maskView;
+    UIActivityIndicatorView *indicator;
 }
 
 - (void)showBigImage:(ClickBlock )clickBlock;
+
+- (void)startLoading;
+
+- (void)stopLoadingWithFailBlock:(LoadFailBlock)failBlock;
 
 @end

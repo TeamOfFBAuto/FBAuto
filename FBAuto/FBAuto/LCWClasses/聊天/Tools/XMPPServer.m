@@ -226,7 +226,6 @@ static int x = 10;
     isOpen = YES;
     NSError *error = nil;
     //验证密码
-//    [[self xmppStream] authenticateWithPassword:PWD error:&error];
     
     //验证最好使用以下方法,上述方法可能被弃用
     
@@ -237,6 +236,8 @@ static int x = 10;
 
 //验证通过
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender{
+    
+    NSLog(@"xmppStreamDidAuthenticate");
     
     [self goOnline];
     

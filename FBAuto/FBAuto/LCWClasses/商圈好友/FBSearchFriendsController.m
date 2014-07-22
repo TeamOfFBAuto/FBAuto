@@ -10,10 +10,13 @@
 #import "FBFriend2Cell.h"
 #import "ZkingSearchView.h"
 #import "FBFriendModel.h"
+#import "LSearchView.h"
 
 @interface FBSearchFriendsController ()
 {
     ZkingSearchView *zkingSearchV;
+    LSearchView *searchView;
+    UIButton *cancelButton;
 }
 
 @end
@@ -32,7 +35,17 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [zkingSearchV removeFromSuperview];
+    
+    [searchView removeFromSuperview];
+    [cancelButton removeFromSuperview];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self.navigationController.navigationBar addSubview:searchView];
+    [self.navigationController.navigationBar addSubview:cancelButton];
 }
 
 - (void)viewDidLoad
@@ -40,28 +53,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    //搜索
-    
-    zkingSearchV = [[ZkingSearchView alloc]initWithFrame:CGRectMake(20 + 5, (44 - 30)/2.0, 300, 30) imgBG:[UIImage imageNamed:@"sousuo_bg548_58"] shortimgbg:[UIImage imageNamed:@"sousuo_bg548_58"] imgLogo:[UIImage imageNamed:@"sousuo_icon26_26"] placeholder:@"请输入手机号或姓名" searchWidth:275.f ZkingSearchViewBlocs:^(NSString *strSearchText, int tag) {
-        
-        [self searchFriendWithname:strSearchText thetag:tag];
-        
-    }];
-    zkingSearchV.backgroundColor = [UIColor clearColor];
-    
-    CGRect labFrame = zkingSearchV.cancelLabel.frame;
-    labFrame.origin.x += 5;
-    zkingSearchV.cancelLabel.frame = labFrame;
-    
-    [self.navigationController.navigationBar addSubview:zkingSearchV];
-    
-    
+    [self createSearchViews];
     
     self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, self.view.height - 44 - (iPhone5 ? 20 : 0)) style:UITableViewStylePlain];
     _table.delegate = self;
     _table.dataSource = self;
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
-    //    _table.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     [self.view addSubview:_table];
 }
 
@@ -69,6 +66,76 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma - mark 搜索相关view
+
+- (void)createSearchViews
+{
+    //搜索
+    searchView = [[LSearchView alloc]initWithFrame:CGRectMake(40, (44 - 30)/2.0, 550 / 2.0 - 4, 30) placeholder:@"请输入手机号或姓名" logoImage:[UIImage imageNamed:@"sousuo_icon26_26"] maskViewShowInView:self.view searchBlock:^(SearchStyle actionStyle, NSString *searchText) {
+        
+        [self searchStyle:actionStyle searchText:searchText];
+        
+    }];
+    
+    [self.navigationController.navigationBar addSubview:searchView];
+    
+    //取消按钮
+    cancelButton =[[UIButton alloc]initWithFrame:CGRectMake(550/2.0,0,44,44)];
+    cancelButton.backgroundColor = [UIColor clearColor];
+    [cancelButton addTarget:self action:@selector(clickToCancel:) forControlEvents:UIControlEventTouchUpInside];
+    [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
+    [cancelButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    [self.navigationController.navigationBar addSubview:cancelButton];
+}
+
+#pragma - mark 处理搜索框事件
+
+- (void)searchStyle:(SearchStyle)aStyle searchText:(NSString *)text
+{
+    if (aStyle == Search_BeginEdit)
+    {
+        //显示取消按钮、隐藏编辑按钮
+        [self updateSearchViewNormal:NO];
+        
+    }else if (aStyle == Search_Search)
+    {
+        if (text && ![text isEqualToString:@""]) {
+            
+            [self updateSearchViewNormal:YES];
+        }
+        
+    }else if (aStyle == Search_Cancel)
+    {
+        [self updateSearchViewNormal:YES];
+    }
+}
+
+- (void)updateSearchViewNormal:(BOOL)isNormal
+{
+//    cancelButton.hidden = isNormal;
+    
+    CGRect aFrame = searchView.frame;
+    if (isNormal) {
+        
+        aFrame.origin.x = 40;
+        aFrame.size.width = 550 / 2.0 - 4;
+        
+    }else
+    {
+        aFrame.origin.x = 10.f;
+        aFrame.size.width = 320 - 10 - 44;
+    }
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        searchView.frame = aFrame;
+    }];
+}
+
+- (void)clickToCancel:(UIButton *)sender
+{
+    [searchView cancelSearch];
 }
 
 #pragma - mark 搜索好友

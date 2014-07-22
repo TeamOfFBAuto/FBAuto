@@ -358,6 +358,7 @@
         }else
         {
             [ids addObject:aObject];
+            NSLog(@"ids %@",aObject);
         }
     }
     

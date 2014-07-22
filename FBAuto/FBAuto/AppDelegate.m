@@ -97,6 +97,7 @@
 //    [_statusBarBack makeKeyAndVisible];
     
     
+    
     //开启网络状况的监听
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];

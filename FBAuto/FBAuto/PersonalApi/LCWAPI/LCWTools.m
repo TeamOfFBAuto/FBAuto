@@ -56,12 +56,14 @@
     NSURL *urlS = [NSURL URLWithString:newStr];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urlS cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:2];
     
+    
     if (isPostRequest) {
         
         [request setHTTPMethod:@"POST"];
         
         [request setHTTPBody:requestData];
     }
+
     
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         
@@ -75,10 +77,8 @@
                 int erroCode = [[dic objectForKey:@"errcode"]intValue];
                 NSString *erroInfo = [dic objectForKey:@"errinfo"];
                 
-                if (erroCode != 0) {
-//                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:erroInfo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//                    [alert show];
-                    
+                if (erroCode != 0 && erroCode != 1) { //0代表无错误,1代表无结果
+
                     NSDictionary *failDic = @{ERROR_INFO:erroInfo};
                     failBlock(failDic,connectionError);
                     

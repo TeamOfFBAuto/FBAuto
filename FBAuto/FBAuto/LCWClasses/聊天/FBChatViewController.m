@@ -25,6 +25,8 @@
 #import "SJAvatarBrowser.h"
 #import "FBChatImage.h"
 
+#import "ASIFormDataRequest.h"
+
 #define MESSAGE_PAGE_SIZE 10
 
 
@@ -42,6 +44,8 @@
     XMPPServer *xmppServer;//xmpp 中心
     
     int currentPage;
+    
+    BOOL notStart;//刚出现键盘
 }
 
 @property (nonatomic,assign)BOOL                        reloading;         //是否正在loading
@@ -68,7 +72,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
     
     self.titleLabel.text = self.chatWithUser;
     
@@ -113,29 +116,11 @@
         }];
     }
     
-    
-//    if (![xmppServer.xmppStream isAuthenticated])
-//    {
-//        NSLog(@"未认证");
-//        
-//        if (![xmppServer.xmppStream isConnected]) {
-//            
-//            NSLog(@"未连接");
-//            [xmppServer connect];
-//        }else
-//        {
-//            NSError *error;
-//            [xmppServer.xmppStream authenticate:xmppServer.xmppPlainAutentication error:&error];
-//            NSLog(@"kk erro %@",error);
-//        }
-//    }
-    
-    
     messages = [NSMutableArray array];
     labelArr = [NSMutableArray array];
     rowHeights = [NSMutableArray array];
     
-//    [self testData];//测试数据
+    [self testData];//测试数据
     
     [self createInputView];
     
@@ -248,8 +233,7 @@
             return;
         }
         
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:messages.count - 1 inSection:0];;
-        [self.table scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        [self scrollToBottom];
     }
 }
 
@@ -261,6 +245,14 @@
     }
     
     return YES;
+}
+
+#pragma - mark 内容滑动到最后一条
+
+- (void)scrollToBottom
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:messages.count - 1 inSection:0];;
+    [self.table scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
 #pragma - mark  click事件
@@ -285,28 +277,28 @@
 {
     NSDictionary *dic = @{MESSAGE_SENDER: @"张三",MESSAGE_MSG:@"发送的[哈哈]消息有多长呢",MESSAGE_TIME:@"2014-07-04"};
     NSDictionary *dic1 = @{MESSAGE_SENDER: @"you",MESSAGE_MSG:@"发送的[抓狂]消息[抓狂]有多长呢",MESSAGE_TIME:@"2014-07-04"};
-    NSDictionary *dic2 = @{MESSAGE_SENDER: @"张三",MESSAGE_MSG:@"诺诺你好我最爱的漂亮金毛姑娘刚离别小半天，我想你了，好想好像你希望你在另一个美丽的世界中依然还是那样的聪明，顽皮……2013年7月6日星期六，中午接到姐的电话，听说你吃到了不干净的东西现在呕吐，吐出的是黑色的血，现在在宠物医[熊猫]看着你努力的抬头望着这个多彩的世界当，看着你努力的环视着llllll",MESSAGE_TIME:@"2014-07-04"};
+    NSDictionary *dic2 = @{MESSAGE_SENDER: @"张三",MESSAGE_MSG:@"现在在宠物医[熊猫]看着你努力的抬头望着这个多彩的世界当，看着你努力的环视着llllll",MESSAGE_TIME:@"2014-07-04"};
     NSDictionary *dic3 = @{MESSAGE_SENDER: @"you",MESSAGE_MSG:@"诺诺你好我最爱的漂亮金毛姑娘刚离别小半天，我想你了，好想好像你希望你在另一个美丽的世界中依然还[熊猫]褐色的皮毛是那样的光滑柔顺当，看着你努力的抬头望着这个多彩的世界当，看着你努力的环视着[熊猫]发送[bed凌乱][bed凌乱][bed凌乱][的消息有多长呢",MESSAGE_TIME:@"2014-07-04"};
-    NSDictionary *dic4 = @{MESSAGE_SENDER: @"张三",MESSAGE_MSG:@"发送的的消的消息有的消息有的消息有的发送的消的消息有的消息有的消息有的消息[懒得理你]有息有多长呢发送的消的消息有的消息有[抓狂]的消息有的消[大笑][大笑][多长呢发送的消的消息有的消息有的消息有的消[懒得理你]息有息有多长呢发送的消的消息有的消息有的消息有的消息有息有多长呢发送的消的消多长呢",MESSAGE_TIME:@"2014-07-04"};
+    NSDictionary *dic4 = @{MESSAGE_SENDER: @"张三",MESSAGE_MSG:@"消息[懒得理你]有息有多长呢发送的消的消息有的消息有[抓狂]的消息有的消[大笑][大笑]消[懒得理你]息有息有多长呢发送的呢发送的消的消多长呢",MESSAGE_TIME:@"2014-07-04"};
     
-     NSString *test = @"<img height=\"195\" width=\"325\" src=\"http://www0.autoimg.cn/newspic/2013/12/22/620x0_0_2013122223315823282.jpg\"/>>";
+     NSString *test = @"<img height=\"195\" width=\"325\" src=\"http://imgsrc.baidu.com/forum/pic/item/41dadb43ad4bd113c9ec23c95aafa40f4afb05f3.jpg\"/>>";
     NSDictionary *dic5 = @{MESSAGE_SENDER: @"张三",MESSAGE_MSG:test,MESSAGE_TIME:@"2014-07-04"};
     
     NSDictionary *dic6 = @{MESSAGE_SENDER: @"you",MESSAGE_MSG:@"发送的消息有多长呢",MESSAGE_TIME:@"2014-07-04"};
-    NSDictionary *dic7 = @{MESSAGE_SENDER: @"you",MESSAGE_MSG:@"发送的消的消息有的消息有的消息有的发送的消的消息有的消息有的消息有的消息有息有[懒得理你]多长呢[熊猫]想念我不停的祈祷，我不停的对自己说，没事没事一切都会好起来的现在在宠物医院急救着我的头脑嗡嗡的响，怎么会这样，怎么有多长呢",MESSAGE_TIME:@"2014-07-04"};
+    NSDictionary *dic7 = @{MESSAGE_SENDER: @"you",MESSAGE_MSG:@"有息有[懒得理你]多长呢[熊猫]想念我不停的祈祷，我不停的对自己说，没事没事一切都会好起来的现在在宠物医院急救着我的头脑嗡嗡的响，怎么会这样，怎么有多长呢",MESSAGE_TIME:@"2014-07-04"};
     
     
-   NSString *test1 = @"<img height=\"195\" width=\"325\" src=\"http://c.hiphotos.baidu.com/image/pic/item/32fa828ba61ea8d3ef5adf65950a304e251f5852.jpg\"/>>";
+   NSString *test1 = @"<img height=\"195\" width=\"325\" src=\"http://imgsrc.baidu.com/forum/pic/item/839e68d9f2d3572ce5ff08278a13632763d0c3f8.jpg\"/>>";
     
     NSDictionary *dic8 = @{MESSAGE_SENDER: @"张三",MESSAGE_MSG:test1,MESSAGE_TIME:@"2014-07-04"};
     
     NSDictionary *dic9 = @{MESSAGE_SENDER: @"张三",MESSAGE_MSG:@"发送[抓狂]的消的消息有息有多长呢",MESSAGE_TIME:@"2014-07-04"};
     
-    
-    [messages addObjectsFromArray:@[dic,dic1,dic2,dic3,dic4,dic5,dic6,dic7,dic8,dic9]];
-    
+    [messages addObjectsFromArray:@[dic,dic8,dic1,dic2,dic5,dic3,dic4,dic5,dic6,dic7,dic9]];
     
     [self.table reloadData];
+    
+    [self scrollToBottom];
 }
 
 
@@ -395,16 +387,20 @@
             
         }
         
-        
-        aImageView.userInteractionEnabled = YES;
-        
         [aImageView showBigImage:^(UIImageView *imageView) {
             
             [SJAvatarBrowser showImage:imageView];
             
         }];
         
-        [aImageView setImageWithURL:[NSURL URLWithString:url] placeholderImage:nil];
+         __weak typeof (FBChatImage *)weakChatV = aImageView;
+        
+        [aImageView startLoading];
+        
+        [aImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"detail_test"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            [weakChatV stopLoadingWithFailBlock:nil];
+            
+        }];
         
         //最多高度 200,最大宽度 200
         [XMPPStatics updateFrameForImageView:aImageView originalWidth:width originalHeight:height];
@@ -419,11 +415,8 @@
             
         }
         
-        
         return [heightNum floatValue];
-        
     }
-    
     
     OHAttributedLabel *label = [[OHAttributedLabel alloc] initWithFrame:CGRectZero];
     NSString *text = [dic objectForKey:MESSAGE_MSG];
@@ -437,7 +430,6 @@
     }else
     {
         [labelArr addObject:label];
-        
     }
     
     [self drawImage:label];
@@ -450,7 +442,6 @@
         [rowHeights addObject:heightNum];
         
     }
-
     
     return [heightNum floatValue];
 }
@@ -544,7 +535,7 @@
     inputBar = [[CWInputView alloc]initWithFrame:CGRectMake(0, self.view.height - 50 - (iPhone5 ? 20 : 0) - 44, 320, 50)];
     inputBar.delegate = self;
     inputBar.clearInputWhenSend = YES;
-    inputBar.resignFirstResponderWhenSend = YES;
+    inputBar.resignFirstResponderWhenSend = NO;
     
     
     __block typeof(FBChatViewController *)weakSelf = self;
@@ -555,7 +546,7 @@
             {
                 NSLog(@"打电话");
                 
-                NSString *num = [[NSString alloc] initWithFormat:@"tel://%@",@"18612389982"];
+                NSString *num = [[NSString alloc] initWithFormat:@"tel://%@",weakSelf.chatWithUser];
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:num]];
                 
             }
@@ -580,12 +571,58 @@
         
     }];
     
+    [inputBar setFrameBlock:^(CWInputView *inputView, CGRect frame, BOOL isEnd) {
+        
+        [weakSelf resetTableFrameIsNormal:isEnd];
+    }];
+    
     [self.view addSubview:inputBar];
     
     NSLog(@"-->%f",self.view.height);
 }
 
+- (void)resetTableFrameIsNormal:(BOOL)isNormal
+{
+    
+    CGRect aFrame = _table.frame;
+    CGFloat aFrameY = 0.0;
+    
+    if (isNormal) {
+        
+        aFrameY = 0.0;
+        notStart = NO;
+        
+    }else
+    {
+        
+        aFrameY = inputBar.top - (self.view.height - 50 - (iPhone5 ? 20 : 0) - 44) - inputBar.height - 10;
+    }
+    
+    aFrame.origin.y = aFrameY;
+    
+    __weak typeof(UITableView *)weakTable = _table;
+    
+    if (notStart == NO) {
+        
+        [self scrollToBottom];
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            
+            weakTable.frame = aFrame;
+            
+        }];
+    }else
+    {
+        weakTable.frame = aFrame;
+    }
+    
+    notStart = YES;
+}
+
+
 #pragma - mark 本地发送信息处理
+
+//发送图片的时候,aImage不能为空
 
 - (void)localSendMessage:(NSString *)message MessageType:(MESSAGE_TYPE)type image:(UIImage *)aImage
 {
@@ -615,9 +652,7 @@
         
         return;
     }
-    
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:messages.count - 1 inSection:0];;
-    [self.table scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    [self scrollToBottom];
 }
 
 #pragma - mark XMPP发送消息
@@ -666,57 +701,156 @@
 
 #pragma - mark 验证是否登录成功,否则自动登录再fasong
 
+//发送图片时aImage不为空
+
 - (void)xmppAuthenticatedWithMessage:(NSString *)text MessageType:(MESSAGE_TYPE)type image:(UIImage *)aImage
 {
+    [self localSendMessage:text MessageType:type image:aImage];
+    
     if (![xmppServer.xmppStream isAuthenticated])
     {
-        NSLog(@"未认证");
-        
-        if (![xmppServer.xmppStream isConnected]) {
+        [xmppServer loginTimes:10 loginBack:^(BOOL result) {
             
-            NSLog(@"未连接");
-            
-            [xmppServer login:^(BOOL result) {
+            if (result) {
                 
-                if (result) {
+                NSLog(@"连接 %d",result);
+                
+                if (aImage) { //说明发送的是图片
                     
-                    NSLog(@"连接 %d",result);
+                    //需要先上传图片,再发送消息
                     
-                    [self localSendMessage:text MessageType:type image:aImage];
+                    [self postImages:aImage];
                     
+                }else
+                {
                     [self xmppSendMessage:text];
                     
                 }
-                
-            }];
+            }
+            
+        }];
+    }else
+    {
+        if (aImage) { //说明发送的是图片
+            
+            //需要先上传图片,再发送消息
+            
+            [self postImages:aImage];
             
         }else
         {
-            NSError *error;
-            BOOL isAuthicat = [xmppServer.xmppStream authenticate:xmppServer.xmppPlainAutentication error:&error];
-            NSLog(@"kk erro %@",error);
-            if (isAuthicat) {
-                
-                NSLog(@"认证成功了,发送");
-                
-                [self localSendMessage:text MessageType:type image:aImage];
-                
-                [self xmppSendMessage:text];
-            }else
-            {
-                NSLog(@"认证失败");
-            }
+            [self xmppSendMessage:text];
             
         }
-    }else
-    {
-        NSLog(@"已认证,直接发送");
-        [self localSendMessage:text MessageType:type image:aImage];
-        
-        [self xmppSendMessage:text];
     }
+    
 }
 
+
+
+#pragma - mark 图片上传
+
+- (void)postImages:(UIImage *)eImage
+{
+    
+    FBChatImage *chatImage = nil;
+    
+    id aView = [labelArr lastObject];
+    
+    if ([aView isKindOfClass:[FBChatImage class]]) {
+        
+        chatImage = aView;
+    }
+    
+    [chatImage startLoading];//开始菊花
+    
+    NSString* url = [NSString stringWithFormat:FBAUTO_CARSOURCE_ADD_PIC];
+    
+    ASIFormDataRequest *uploadImageRequest= [ ASIFormDataRequest requestWithURL : [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] ]];
+    [uploadImageRequest setStringEncoding:NSUTF8StringEncoding];
+    [uploadImageRequest setRequestMethod:@"POST"];
+    [uploadImageRequest setResponseEncoding:NSUTF8StringEncoding];
+    [uploadImageRequest setPostValue:[GMAPI getAuthkey] forKey:@"authkey"];
+    [uploadImageRequest setPostFormat:ASIMultipartFormDataPostFormat];
+    
+    UIImage * newImage = [SzkAPI scaleToSizeWithImage:eImage size:CGSizeMake(eImage.size.width>1024?1024:eImage.size.width,eImage.size.width>1024?eImage.size.height*1024/eImage.size.width:eImage.size.height)];
+    NSData *imageData=UIImageJPEGRepresentation(newImage,0.5);
+    NSString *photoName=[NSString stringWithFormat:@"FBAuto_xmpp.png"];
+    NSLog(@"photoName:%@",photoName);
+    NSLog(@"图片大小:%ld",[imageData length]);
+    
+    [uploadImageRequest addData:imageData withFileName:photoName andContentType:@"image/png" forKey:@"photo[]"];
+    
+    [uploadImageRequest setDelegate : self ];
+    
+    [uploadImageRequest startAsynchronous];
+    
+    __weak typeof(ASIFormDataRequest *)weakRequst = uploadImageRequest;
+    
+    __weak typeof (FBChatImage *)weakChatV = chatImage;
+    
+    __weak typeof(FBChatViewController *)weakSelf = self;
+    //完成
+    [uploadImageRequest setCompletionBlock:^{
+        
+        NSDictionary *result = [NSJSONSerialization JSONObjectWithData:weakRequst.responseData options:0 error:nil];
+        
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            
+            int erroCode = [[result objectForKey:@"errcode"]intValue];
+            NSString *erroInfo = [result objectForKey:@"errinfo"];
+            
+            if (erroCode != 0) {
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:erroInfo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [alert show];
+                
+                return ;
+            }
+            
+            NSArray *dataInfo = [result objectForKey:@"datainfo"];
+            NSMutableArray *imageIdArr = [NSMutableArray arrayWithCapacity:dataInfo.count];
+            
+            NSString *imageLink = @"";
+            
+            for (NSDictionary *imageDic in dataInfo) {
+                NSString *imageId = [imageDic objectForKey:@"imageid"];
+                imageLink = [imageDic objectForKey:@"image"];
+                [imageIdArr addObject:imageId];
+            }
+            
+            [weakChatV stopLoadingWithFailBlock:nil];//停止菊花
+            
+            
+            CGFloat imageWidth = newImage.size.width;
+            CGFloat imageHeight = newImage.size.height;
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                
+                
+                NSString *sendImage = [NSString stringWithFormat:@"<img height=\"%f\" width=\"%f\" src=\"%@\"/>>",imageWidth,imageHeight,imageLink];
+                NSLog(@"sendImage %@",sendImage);
+                
+                [weakSelf xmppSendMessage:sendImage];
+                
+            });
+        }
+        
+        
+    }];
+    
+    //失败
+    [uploadImageRequest setFailedBlock:^{
+        
+        NSLog(@"uploadFail %@",weakRequst.responseString);
+        
+        [weakChatV stopLoadingWithFailBlock:^(FBChatImage *chatImageView) {
+            
+            [weakSelf postImages:eImage];
+            
+        }];//停止菊花
+    }];
+    
+}
 
 
 #pragma - mark messageDelegate 消息代理 <NSObject>
@@ -735,8 +869,7 @@
         [messages addObject:messageDic];
         [self.table reloadData];
         
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:messages.count - 1 inSection:0];;
-        [self.table scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        [self scrollToBottom];
     }
 }
 
@@ -934,11 +1067,13 @@
         //将二进制数据生成UIImage
         UIImage *image = [UIImage imageWithData:data];
         
-//        [self localSendMessage:Nil MessageType:Message_Image image:image];
+        //先上传图片
         
-        NSString *test = @"<img height=\"195\" width=\"325\" src=\"http://www0.autoimg.cn/newspic/2013/12/22/620x0_0_2013122223315823282.jpg\"/>>";
+        [self localSendMessage:Nil MessageType:Message_Image image:image];
         
-        [self xmppAuthenticatedWithMessage:test MessageType:Message_Image image:image];
+        //再实际发送
+
+        [self postImages:image];
         
         [picker dismissViewControllerAnimated:NO completion:^{
             
@@ -1089,6 +1224,5 @@
         
     }
 }
-
 
 @end

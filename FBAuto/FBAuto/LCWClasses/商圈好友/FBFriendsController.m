@@ -117,13 +117,18 @@
     for (FBFriendModel *aModel in friendsArr)
     {
         NSString *firstLetter = [aModel.buddyname getFirstLetter];
-        
-        [firstLetterArr addObject:firstLetter];
-        
+
         NSMutableArray *groupArr = [NSMutableArray arrayWithArray:[friendsDic objectForKey:firstLetter]];
         [groupArr addObject:aModel];
         [friendsDic setObject:groupArr forKey:firstLetter];
     }
+    
+    NSArray* arr = [friendsDic allKeys];
+    arr = [arr sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2){
+            NSComparisonResult result = [obj1 compare:obj2];
+            return result==NSOrderedDescending;
+        }];
+    firstLetterArr = arr;
     
     [self.table reloadData];
 }

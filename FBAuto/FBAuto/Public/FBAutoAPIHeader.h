@@ -133,7 +133,7 @@ alpha:(a)]
 
 #define FBAUTO_CARSOURCE_MYSELF @"http://fbautoapp.fblife.com/index.php?c=interface&a=getmycheyuan&authkey=%@&page=%d&ps=%d"//获取我的车源
 
-#define FBAUTO_CARSOURCE_DELETE @"http://fbautoapp.fblife.com/index.php?c=interface&a=delcheyuan&authkey=%@&cid=%d" //删除车源
+#define FBAUTO_CARSOURCE_DELETE @"http://fbautoapp.fblife.com/index.php?c=interface&a=delcheyuan&authkey=%@&cid=%@" //删除车源
 
 #define FBAUTO_CARSOURCE_EDIT @"http://fbautoapp.fblife.com/index.php?c=interface&a=editcheyuan"//修改车源信息
 
@@ -143,13 +143,15 @@ alpha:(a)]
 
 #define FBAUTO_FINDCAR_SEARCH @"http://fbautoapp.fblife.com/index.php?c=interface&a=searchxunche&keyword=%@&page=%d&ps=%d" //寻车搜索
 
-#define FBAUTO_FINCAR_MYSELF @"http://fbautoapp.fblife.com/index.php?c=interface&a=getmyxunche&authkey=%@"//我的寻车
+#define FBAUTO_FINCAR_MYSELF @"http://fbautoapp.fblife.com/index.php?c=interface&a=getmyxunche&authkey=%@&page=%d&ps=%d"//我的寻车
 
 #define FBAUTO_FINDCAR_PUBLISH @"http://fbautoapp.fblife.com/index.php?c=interface&a=addxunche"//添加寻车信息
 
 #define FBAUTO_FINDCAR_SINGLE @"http://fbautoapp.fblife.com/index.php?c=interface&a=getsinglexunche&xid=%@"//单个寻车信息
 
 #define FBAUTO_FINDCAR_EDIT @"http://fbautoapp.fblife.com/index.php?c=interface&a=editxunche"//编辑
+
+#define FBAUTO_FINDCAR_DELETE @"http://fbautoapp.fblife.com/index.php?c=interface&a=delxunche&authkey=%@&xid=%@"//删除寻车信息
 
 //收藏API============
 

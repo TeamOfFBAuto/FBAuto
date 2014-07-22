@@ -142,9 +142,15 @@
     return _toolBtn2;
 }
 
+#pragma - mark block 回调
+
 - (void)setToolBlock:(ToolBlock)aBlock
 {
     toolBlock = aBlock;
+}
+- (void)setFrameBlock:(FrameBlock)aFrameBlock
+{
+    frameBlock = aFrameBlock;
 }
 
 #pragma mark - 事件处理
@@ -234,6 +240,10 @@
         current_FrameY = aFrame.origin.y;//记录当前y
         current_KeyBoard_Y = keyboardRect.origin.y;
     }];
+    
+    if (frameBlock) {
+        frameBlock(self,self.frame,NO);
+    }
 }
 
 - (void)keyboardWillHide:(NSNotification*)notification{
@@ -255,6 +265,10 @@
                          self.frame = aFrame;
                          current_FrameY = aFrame.origin.y;//记录当前y
                      } completion:nil];
+    
+    if (frameBlock) {
+        frameBlock(self,self.frame,YES);
+    }
 }
 
 #pragma  mark ConvertPoint
@@ -289,7 +303,7 @@
     
     [self sendBtnPress:nil];
     
-    [self resignFirstResponder];
+//    [self resignFirstResponder];
     return NO;
 }
 /**
@@ -308,6 +322,14 @@
     input_Frame.origin.y = current_KeyBoard_Y - input_Frame.size.height - UPDARE_HEIGHT - (iPhone5 ? 20 : 0);
     
     self.frame = input_Frame;
+    
+    NSLog(@"resetFrame %f",input_Frame.origin.y);
+    
+    toolBlock(3);
+    
+    if (frameBlock) {
+        frameBlock(self,input_Frame,NO);
+    }
 }
 
 #pragma - mark 表情处理

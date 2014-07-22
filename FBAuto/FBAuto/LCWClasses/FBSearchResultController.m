@@ -180,12 +180,13 @@
 }
 //寻车详情
 
-- (void)clickToFindDetail:(NSString *)carId
+- (void)clickToFindDetail:(NSString *)infoId car:(NSString *)car
 {
     FBFindCarDetailController *detail = [[FBFindCarDetailController alloc]init];
     detail.style = Navigation_Special;
     detail.navigationTitle = @"详情";
-    detail.carId = carId;
+    detail.carId = car;
+    detail.infoId = infoId;
     detail.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:detail animated:YES];
     
@@ -218,7 +219,7 @@
         [self clickToDetail:aCar.id car:aCar.car];
     }else
     {
-        [self clickToFindDetail:aCar.id];
+        [self clickToFindDetail:aCar.id car:aCar.car];
     }
 }
 
