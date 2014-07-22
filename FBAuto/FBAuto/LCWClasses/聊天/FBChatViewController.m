@@ -299,6 +299,7 @@
     [self.table reloadData];
     
     [self scrollToBottom];
+    //
 }
 
 
