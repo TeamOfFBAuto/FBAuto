@@ -102,7 +102,8 @@
         //忘记密码
         UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn1 setTitle:@"忘记密码" forState:UIControlStateNormal];
-        btn1.frame = CGRectMake(0, CGRectGetMaxY(loginBtn.frame)+12, 50, 14);
+        btn1.frame = CGRectMake(0, CGRectGetMaxY(loginBtn.frame), 50, 25);
+        
         btn1.titleLabel.font = [UIFont systemFontOfSize:12];
         btn1.titleLabel.textColor = RGBCOLOR(123, 123, 123);
         [btn1 addTarget:self action:@selector(findmima) forControlEvents:UIControlEventTouchUpInside];
@@ -111,7 +112,7 @@
         //免费注册
         UIButton *btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn2 setTitle:@"免费注册" forState:UIControlStateNormal];
-        btn2.frame = CGRectMake(225, btn1.frame.origin.y, 50, 14);
+        btn2.frame = CGRectMake(225, btn1.frame.origin.y, 50, 25);
         btn2.titleLabel.font = [UIFont systemFontOfSize:12];
         btn2.titleLabel.textColor = RGBCOLOR(123, 123, 123);
         [self.Row3backView addSubview:btn2];
