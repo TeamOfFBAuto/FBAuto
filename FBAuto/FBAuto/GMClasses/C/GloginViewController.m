@@ -36,22 +36,20 @@
     return self;
 }
 
-
-
--(void)viewWillAppear:(BOOL)animated{
+-(void)viewDidAppear:(BOOL)animated{
+    
+    [super viewDidAppear:animated];
     //隐藏navigationBar
     self.navigationController.navigationBarHidden = YES;
     
 }
-
-
-
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.button_back.hidden = YES;
     
     NSLog(@"%s",__FUNCTION__);
     
@@ -83,9 +81,6 @@
         [bself dengluWithUserName:usern pass:passw];
     }];
     
-    
-    
-    
 }
 
 
@@ -95,6 +90,7 @@
 
 #pragma mark - 登录
 -(void)dengluWithUserName:(NSString *)name pass:(NSString *)passw{
+    
     NSString *str = [NSString stringWithFormat:FBAUTO_LOG_IN,name,passw,@"textToken"];
     
     NSLog(@"登录请求接口======%@",str);
@@ -123,7 +119,7 @@
             //聊天使用
             
             [defaults setObject:name forKey:XMPP_USERID];
-            [defaults setObject:passw forKey:XMPP_PASS];
+            [defaults setObject:[LCWTools md5:passw] forKey:XMPP_PASS];
             [defaults setObject:@"60.18.147.4" forKey:XMPP_SERVER];
             
             

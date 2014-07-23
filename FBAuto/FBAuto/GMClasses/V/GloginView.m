@@ -34,7 +34,7 @@
         
         //背景图
         UIImageView *backGroundImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"denglu_bg640_1096.png"]];
-        backGroundImageView.frame = CGRectMake(0, 20, 320, 568-20);
+        backGroundImageView.frame = CGRectMake(0, 0, 320, 568);
         [self addSubview:backGroundImageView];
         
         

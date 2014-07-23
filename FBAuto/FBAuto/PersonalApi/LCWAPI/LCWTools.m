@@ -7,6 +7,8 @@
 //
 
 #import "LCWTools.h"
+#import <CommonCrypto/CommonDigest.h>
+
 #import "AppDelegate.h"
 
 #import "CarBrand.h"
@@ -29,6 +31,23 @@
     return dataBlock;
 }
 
+#pragma - mark MD5 加密
+
++ (NSString *) md5:(NSString *) text
+{
+    const char * bytes = [text UTF8String];
+    unsigned char md5Binary[16];
+    CC_MD5(bytes, (CC_LONG)strlen(bytes), md5Binary);
+    
+    NSString * md5String = [NSString
+                            stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
+                            md5Binary[0], md5Binary[1], md5Binary[2], md5Binary[3],
+                            md5Binary[4], md5Binary[5], md5Binary[6], md5Binary[7],
+                            md5Binary[8], md5Binary[9], md5Binary[10], md5Binary[11],
+                            md5Binary[12], md5Binary[13], md5Binary[14], md5Binary[15]
+                            ];
+    return md5String;
+}
 
 #pragma - mark 网络数据请求
 
@@ -77,7 +96,7 @@
                 int erroCode = [[dic objectForKey:@"errcode"]intValue];
                 NSString *erroInfo = [dic objectForKey:@"errinfo"];
                 
-                if (erroCode != 0 && erroCode != 1) { //0代表无错误,1代表无结果
+                if (erroCode != 0) { //0代表无错误,  && erroCode != 1 1代表无结果
 
                     NSDictionary *failDic = @{ERROR_INFO:erroInfo};
                     failBlock(failDic,connectionError);

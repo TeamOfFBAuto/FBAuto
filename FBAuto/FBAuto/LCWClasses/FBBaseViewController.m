@@ -46,12 +46,12 @@
     if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0)) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
         
-        //滑动返回
-        if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-            
-            self.navigationController.interactivePopGestureRecognizer.delegate = nil;
-            
-        }
+//        //滑动返回
+//        if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+//            
+//            self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+//            
+//        }
         
     }
     
