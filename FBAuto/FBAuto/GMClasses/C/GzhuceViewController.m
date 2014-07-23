@@ -277,8 +277,8 @@
     [Gcell setShouTablevBlock:^{
         _isChooseArea = NO;
         [UIView animateWithDuration:0.3 animations:^{
-            bgerenTableView.frame = CGRectMake(0, 124, 320, 444);
-            bshangjiaTableView.frame = CGRectMake(0, 124, 320, 444);
+            bgerenTableView.frame = CGRectMake(0, 60, 320, 444);
+            bshangjiaTableView.frame = CGRectMake(0, 60, 320, 444);
             [bself areaHidden];
         } completion:^(BOOL finished) {
             
@@ -317,7 +317,7 @@
     NSLog(@"_backPickView");
     __weak typeof (self)bself = self;
     [UIView animateWithDuration:0.3 animations:^{
-        bself.backPickView.frame = CGRectMake(0, 352, 320, 216);
+        bself.backPickView.frame = CGRectMake(0, 300, 320, 216);
     }];
     
     

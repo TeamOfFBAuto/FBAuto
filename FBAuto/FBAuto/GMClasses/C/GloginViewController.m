@@ -76,9 +76,24 @@
     //登录
     [gloginView setDengluBlock:^(NSString *usern, NSString *passw) {
         
-        NSLog(@"%@     %@",usern,passw);
+        NSLog(@"--%@     --%@",usern,passw);
         
-        [bself dengluWithUserName:usern pass:passw];
+        if (usern.length ==0 && passw.length == 0) {
+            UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请输入用户名和密码" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [al show];
+        }else if (usern.length == 0 || passw.length == 0){
+            if (usern.length == 0) {
+                UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请输入用户名" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [al show];
+            }else if (passw.length == 0){
+                UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请输入密码" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [al show];
+            }
+        }else{
+            [bself dengluWithUserName:usern pass:passw];
+        }
+        
+        
     }];
     
 }
@@ -90,6 +105,11 @@
 
 #pragma mark - 登录
 -(void)dengluWithUserName:(NSString *)name pass:(NSString *)passw{
+    //菊花
+    UIActivityIndicatorView *j = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    j.center = CGPointMake(160, 235);
+    [self.view addSubview:j];
+    [j startAnimating];
     
     NSString *str = [NSString stringWithFormat:FBAUTO_LOG_IN,name,passw,@"textToken"];
     
@@ -98,6 +118,8 @@
     NSURL *url = [NSURL URLWithString:str];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        
+        [j stopAnimating];
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
         NSLog(@"%@ %@",dic,[dic objectForKey:@"errinfo"]);
@@ -134,6 +156,9 @@
             [self dismissViewControllerAnimated:YES completion:^{
                 
             }];
+        }else{
+            UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请核对用户名或密码是否正确" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [al show];
         }
         
         

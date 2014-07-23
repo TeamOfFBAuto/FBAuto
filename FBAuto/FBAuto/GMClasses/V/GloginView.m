@@ -58,12 +58,16 @@
         //输入textField
         //用户名
         self.userTf = [[UITextField alloc]initWithFrame:CGRectMake(15, 0,275, 45)];
+        self.userTf.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        self.userTf.textColor = RGBCOLOR(164, 164, 164);
         self.userTf.delegate = self;
         self.userTf.tag = 50;
         
         //密码
         self.passWordTf = [[UITextField alloc]initWithFrame:CGRectMake(15, 60, 275, 45)];
-        self.passWordTf.keyboardType = UIKeyboardTypeASCIICapable;
+        self.passWordTf.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        self.passWordTf.secureTextEntry = YES;
+        self.passWordTf.textColor = RGBCOLOR(164, 164, 164);
         self.passWordTf.delegate = self;
         self.passWordTf.tag = 51;
         
@@ -102,7 +106,7 @@
         //忘记密码
         UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn1 setTitle:@"忘记密码" forState:UIControlStateNormal];
-        btn1.frame = CGRectMake(0, CGRectGetMaxY(loginBtn.frame)+12, 50, 14);
+        btn1.frame = CGRectMake(0, CGRectGetMaxY(loginBtn.frame)+5, 50, 25);
         btn1.titleLabel.font = [UIFont systemFontOfSize:12];
         btn1.titleLabel.textColor = RGBCOLOR(123, 123, 123);
         [btn1 addTarget:self action:@selector(findmima) forControlEvents:UIControlEventTouchUpInside];
@@ -111,7 +115,7 @@
         //免费注册
         UIButton *btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn2 setTitle:@"免费注册" forState:UIControlStateNormal];
-        btn2.frame = CGRectMake(225, btn1.frame.origin.y, 50, 14);
+        btn2.frame = CGRectMake(225, btn1.frame.origin.y, 50, 25);
         btn2.titleLabel.font = [UIFont systemFontOfSize:12];
         btn2.titleLabel.textColor = RGBCOLOR(123, 123, 123);
         [self.Row3backView addSubview:btn2];

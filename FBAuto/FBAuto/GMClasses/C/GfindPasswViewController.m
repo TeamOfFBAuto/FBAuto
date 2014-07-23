@@ -62,10 +62,13 @@
         [self.view addSubview:contentf];
         if (i == 0) {
             self.phonetf = contentf;
+            self.phonetf.keyboardType = UIKeyboardTypePhonePad;
         }else if (i == 1){
             self.yanzhengtf = contentf;
+            self.yanzhengtf.keyboardType = UIKeyboardTypePhonePad;
         }else if (i == 2){
             self.passWordtf = contentf;
+            self.passWordtf.autocapitalizationType = UITextAutocapitalizationTypeNone;
         }
         
         
@@ -96,22 +99,26 @@
 
 //获取验证码
 -(void)yanzhengma{
-    _yanzhengBtn.userInteractionEnabled = NO;
-    SzkLoadData *szk = [[SzkLoadData alloc]init];
-    
-    NSString *str = [NSString stringWithFormat:FBAUTO_GET_VERIFICATION_CODE,self.phonetf.text,2];
-    [szk SeturlStr:str block:^(NSArray *arrayinfo, NSString *errorindo, NSInteger errcode) {
+    if (self.phonetf.text.length != 11) {
+        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请输入正确的手机号" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [al show];
+    }else{
+        _yanzhengBtn.userInteractionEnabled = NO;
+        SzkLoadData *szk = [[SzkLoadData alloc]init];
         
-    }];
-    
-    
-    _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changexianshi) userInfo:nil repeats:YES];
-    [_timer fire];
-    
-    _timeNum = 60;
-    
-    [_yanzhengBtn setTitle:[NSString stringWithFormat:@"%d秒后重新发送",_timeNum] forState:UIControlStateNormal];
-    
+        NSString *str = [NSString stringWithFormat:FBAUTO_GET_VERIFICATION_CODE,self.phonetf.text,2];
+        [szk SeturlStr:str block:^(NSArray *arrayinfo, NSString *errorindo, NSInteger errcode) {
+            
+        }];
+        
+        
+        _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changexianshi) userInfo:nil repeats:YES];
+        [_timer fire];
+        
+        _timeNum = 60;
+        
+        [_yanzhengBtn setTitle:[NSString stringWithFormat:@"%d秒后重新发送",_timeNum] forState:UIControlStateNormal];
+    }
     
 }
 
