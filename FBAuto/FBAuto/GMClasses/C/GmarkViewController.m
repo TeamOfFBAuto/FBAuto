@@ -276,6 +276,15 @@
 
 #pragma mark - 确认删除
 -(void)doTap1{
+    
+    NSLog(@"------ %lu",(unsigned long)self.indexes.count);
+    
+    for (NSIndexPath *indexPath in self.indexes) {
+        NSLog(@"%@",indexPath);
+    }
+    
+    
+    
     NSLog(@"%s",__FUNCTION__);
     [self ggDel];
 }

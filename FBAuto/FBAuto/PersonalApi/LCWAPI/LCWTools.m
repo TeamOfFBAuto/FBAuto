@@ -77,7 +77,7 @@
                 int erroCode = [[dic objectForKey:@"errcode"]intValue];
                 NSString *erroInfo = [dic objectForKey:@"errinfo"];
                 
-                if (erroCode != 0 && erroCode != 1) { //0代表无错误,1代表无结果
+                if (erroCode != 0) { //0代表无错误
 
                     NSDictionary *failDic = @{ERROR_INFO:erroInfo};
                     failBlock(failDic,connectionError);
