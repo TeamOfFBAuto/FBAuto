@@ -34,7 +34,7 @@
         
         //背景图
         UIImageView *backGroundImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"denglu_bg640_1096.png"]];
-        backGroundImageView.frame = CGRectMake(0, 20, 320, 568-20);
+        backGroundImageView.frame = CGRectMake(0, 0, 320, 568);
         [self addSubview:backGroundImageView];
         
         
@@ -58,12 +58,16 @@
         //输入textField
         //用户名
         self.userTf = [[UITextField alloc]initWithFrame:CGRectMake(15, 0,275, 45)];
+        self.userTf.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        self.userTf.textColor = RGBCOLOR(164, 164, 164);
         self.userTf.delegate = self;
         self.userTf.tag = 50;
         
         //密码
         self.passWordTf = [[UITextField alloc]initWithFrame:CGRectMake(15, 60, 275, 45)];
-        self.passWordTf.keyboardType = UIKeyboardTypeASCIICapable;
+        self.passWordTf.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        self.passWordTf.secureTextEntry = YES;
+        self.passWordTf.textColor = RGBCOLOR(164, 164, 164);
         self.passWordTf.delegate = self;
         self.passWordTf.tag = 51;
         
