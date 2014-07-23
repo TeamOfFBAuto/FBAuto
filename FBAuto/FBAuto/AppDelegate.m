@@ -68,14 +68,7 @@
     
     
     UITabBarController * tabbar = [[UITabBarController alloc] init];
-    
-//    tabbar.tabBar.backgroundColor=RGBCOLOR(31, 32, 33);
-  //  tabbar.tabBar.backgroundColor=[UIColor blackColor];
-    
     tabbar.tabBar.backgroundImage=[UIImage imageNamed:@"testV.png"];
-    
-  //  tabbar.tabBar.selectionIndicatorImage = [UIImage imageNamed:@"background_image.png"];
-    
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:232.0/255.0f green:128/255.0f blue:24/255.0f alpha:1]];
     
     tabbar.viewControllers = [NSArray arrayWithObjects:navc1,navc2,navc3,navc4,nil];
@@ -96,7 +89,7 @@
 //    
 //    [_statusBarBack makeKeyAndVisible];
     
-    
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
     //开启网络状况的监听
     

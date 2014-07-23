@@ -39,6 +39,7 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 
 #pragma - mark 小工具
 
++ (NSString *) md5:(NSString *) text;
 + (void)alertText:(NSString *)text;
 +(NSString *)timechange:(NSString *)placetime;
 +(NSString *)timechange2:(NSString *)placetime;
