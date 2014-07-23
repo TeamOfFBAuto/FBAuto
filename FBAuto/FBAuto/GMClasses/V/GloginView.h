@@ -31,10 +31,6 @@ typedef void (^dengluBlock)(NSString *usern,NSString *passw);//登录
 
 @property(strong,nonatomic)UITextField  *passWordTf;//密码
 
-@property(strong,nonatomic)UIButton * forgetPassWordButton;//忘记密码的按钮,一期先不做
-
-@property(strong,nonatomic)UIButton * regeistbutton;//新用户注册的按钮
-
 @property(nonatomic,strong)UIView *zhuanquanview;//转圈的菊花加在这个上面
 
 

@@ -106,8 +106,7 @@
         //忘记密码
         UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn1 setTitle:@"忘记密码" forState:UIControlStateNormal];
-        btn1.frame = CGRectMake(0, CGRectGetMaxY(loginBtn.frame), 50, 25);
-        
+        btn1.frame = CGRectMake(0, CGRectGetMaxY(loginBtn.frame)+5, 50, 25);
         btn1.titleLabel.font = [UIFont systemFontOfSize:12];
         btn1.titleLabel.textColor = RGBCOLOR(123, 123, 123);
         [btn1 addTarget:self action:@selector(findmima) forControlEvents:UIControlEventTouchUpInside];

@@ -317,7 +317,7 @@
     NSLog(@"_backPickView");
     __weak typeof (self)bself = self;
     [UIView animateWithDuration:0.3 animations:^{
-        bself.backPickView.frame = CGRectMake(0, 352, 320, 216);
+        bself.backPickView.frame = CGRectMake(0, 300, 320, 216);
     }];
     
     
