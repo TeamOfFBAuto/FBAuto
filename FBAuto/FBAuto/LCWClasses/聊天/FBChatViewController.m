@@ -779,8 +779,11 @@
     [uploadImageRequest setPostValue:[GMAPI getAuthkey] forKey:@"authkey"];
     [uploadImageRequest setPostFormat:ASIMultipartFormDataPostFormat];
     
-    UIImage * newImage = [SzkAPI scaleToSizeWithImage:eImage size:CGSizeMake(eImage.size.width>1024?1024:eImage.size.width,eImage.size.width>1024?eImage.size.height*1024/eImage.size.width:eImage.size.height)];
-    NSData *imageData=UIImageJPEGRepresentation(newImage,0.5);
+//    UIImage * newImage = [SzkAPI scaleToSizeWithImage:eImage size:CGSizeMake(eImage.size.width>1024?1024:eImage.size.width,eImage.size.width>1024?eImage.size.height*1024/eImage.size.width:eImage.size.height)];
+    NSData *imageData=UIImageJPEGRepresentation(eImage,0.8);
+    
+    UIImage * newImage = [UIImage imageWithData:imageData];
+    
     NSString *photoName=[NSString stringWithFormat:@"FBAuto_xmpp.png"];
     NSLog(@"photoName:%@",photoName);
     NSLog(@"图片大小:%d",[imageData length]);

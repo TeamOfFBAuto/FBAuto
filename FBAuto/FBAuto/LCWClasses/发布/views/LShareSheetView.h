@@ -11,12 +11,13 @@
  *  分享 sheetView
  */
 
-typedef void(^ ActionBlock) (NSInteger buttonIndex);
+typedef void(^ ActionBlock) (NSInteger buttonIndex,NSString *shareStyle);
 
 @interface LShareSheetView : UIView
 {
     ActionBlock actionBlock;
     UIView *bgView;
+    NSArray *items;
 }
 
 - (void)actionBlock:(ActionBlock)aBlock;

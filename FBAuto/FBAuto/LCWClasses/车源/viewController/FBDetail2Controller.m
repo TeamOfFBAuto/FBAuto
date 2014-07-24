@@ -281,9 +281,11 @@
 {
     NSLog(@"分享");
     LShareSheetView *shareView = [[LShareSheetView alloc]initWithFrame:self.view.frame];
-    [shareView actionBlock:^(NSInteger buttonIndex) {
+    [shareView actionBlock:^(NSInteger buttonIndex, NSString *shareStyle) {
         
+        NSLog(@"share %d %@",buttonIndex,shareStyle);
     }];
 }
+
 
 @end

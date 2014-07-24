@@ -37,14 +37,30 @@
         
         //微信、QQ、朋友圈、微博、站内好友
         
-        NSArray *items = @[@"微信",@"QQ",@"朋友圈",@"微博",@"站内好友"];
-        NSArray *images = @[@"weixin72_72",@"QQ72_72",@"pengyouquan72_7222x",@"weibo90_72@2x",@"haoyou90_70"];
+        items = @[@"微信",@"QQ",@"朋友圈",@"微博",@"站内好友"];
+        NSArray *images = @[@"weixin72_72",@"QQ72_72",@"pengyouquan72_7222x",@"weibo90_72",@"haoyou90_70"];
         
+        CGFloat left = 96 / 2.f;
+        CGFloat aWidth = 36.f;
+        CGFloat top = 55 / 2.f;
+        int line = 0;
         for (int i = 0; i < items.count; i ++) {
+            
+            line = i / 3;
+            
             UIButton *itemBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            [itemBtn setFrame:CGRectMake(96/2.0, 26/2.0, 36, 36)];
+            [itemBtn setFrame:CGRectMake(left + (62 + aWidth) * (i % 3), top + (20 + aWidth + 10) * line, aWidth, aWidth)];
             [itemBtn setBackgroundImage:[UIImage imageNamed:[images objectAtIndex:i]] forState:UIControlStateNormal];
             [bgView addSubview:itemBtn];
+            itemBtn.tag = 100 + i;
+            
+            [itemBtn addTarget:self action:@selector(actionToDo:) forControlEvents:UIControlEventTouchUpInside];
+            
+            UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(itemBtn.left - aWidth / 2.0, itemBtn.bottom + 5, aWidth * 2, 20)];
+            titleLabel.text = [items objectAtIndex:i];
+            titleLabel.font = [UIFont systemFontOfSize:14];
+            titleLabel.textAlignment = NSTextAlignmentCenter;
+            [bgView addSubview:titleLabel];
         }
         
         UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -84,7 +100,7 @@
 - (void)actionToDo:(UIButton *)button
 {
     //0,1,2
-    actionBlock(button.tag);
+    actionBlock(button.tag,[items objectAtIndex:button.tag - 100]);
     [self hidden];
 }
 
