@@ -101,7 +101,7 @@
     if ([nTf.text isEqualToString:nTf1.text]) {
         [self testWithNewPsw:nTf.text];
     }else{
-        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"两次输入结果不一致" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"两次输入内容不一致" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [al show];
     }
     

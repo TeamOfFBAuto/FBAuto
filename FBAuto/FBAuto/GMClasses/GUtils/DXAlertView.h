@@ -18,6 +18,8 @@
     leftButtonTitle:(NSString *)leftTitle
    rightButtonTitle:(NSString *)rigthTitle;
 
+
+
 - (void)show;
 
 @property (nonatomic, copy) dispatch_block_t leftBlock;
