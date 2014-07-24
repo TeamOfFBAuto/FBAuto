@@ -89,7 +89,9 @@
             break;
         case Data_Car_Style:
         {
-            NSArray *styteArr = [[[LCWTools alloc]init]queryDataClassType:CARSOURCE_STYLE_QUERY pageSize:0 andOffset:0 unique:self.typeId];
+            NSString *unique = [NSString stringWithFormat:@"%@%@",self.brandId,self.typeId];
+            
+            NSArray *styteArr = [[[LCWTools alloc]init]queryDataClassType:CARSOURCE_STYLE_QUERY pageSize:0 andOffset:0 unique:unique];
             
             self.dataArray = styteArr;
         }

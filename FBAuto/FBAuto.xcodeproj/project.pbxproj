@@ -33,7 +33,6 @@
 		137FEB0C1974D48100CDBD89 /* CarType.m in Sources */ = {isa = PBXBuildFile; fileRef = 137FEB0B1974D48100CDBD89 /* CarType.m */; };
 		137FEB0F1974FB4800CDBD89 /* Menu_Car.m in Sources */ = {isa = PBXBuildFile; fileRef = 137FEB0E1974FB4800CDBD89 /* Menu_Car.m */; };
 		138074E6196CEB3F00AD3D03 /* FBFriendModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 138074E5196CEB3F00AD3D03 /* FBFriendModel.m */; };
-		138074EC196D3D4600AD3D03 /* garea.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 138074EB196D3D4600AD3D03 /* garea.sqlite */; };
 		138074F0196D3DA100AD3D03 /* DataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 138074EF196D3DA100AD3D03 /* DataBase.m */; };
 		138074F3196D3E1000AD3D03 /* FBCityData.m in Sources */ = {isa = PBXBuildFile; fileRef = 138074F2196D3E1000AD3D03 /* FBCityData.m */; };
 		138074F6196D3E8200AD3D03 /* FBCity.m in Sources */ = {isa = PBXBuildFile; fileRef = 138074F5196D3E8200AD3D03 /* FBCity.m */; };
@@ -175,6 +174,7 @@
 		1391EF171977A4AF00FDC52A /* LCWTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391EF161977A4AF00FDC52A /* LCWTools.m */; };
 		1391EF1A1977A4CC00FDC52A /* RefreshTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391EF191977A4CC00FDC52A /* RefreshTableView.m */; };
 		1391EF1D1977FC6D00FDC52A /* CarClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391EF1C1977FC6D00FDC52A /* CarClass.m */; };
+		13A1A93F1980A50900E09666 /* garea.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 13A1A93E1980A50900E09666 /* garea.sqlite */; };
 		13D5DF721961306000804835 /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D5DF711961306000804835 /* UIView+Frame.m */; };
 		13D5DF7E19615A3500804835 /* NSString+PinYin.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D5DF7D19615A3500804835 /* NSString+PinYin.m */; };
 		13D5DFD91961758E00804835 /* fangdajing_icon36_36@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13D5DF831961758E00804835 /* fangdajing_icon36_36@2x.png */; };
@@ -413,7 +413,6 @@
 		137FEB0E1974FB4800CDBD89 /* Menu_Car.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Menu_Car.m; sourceTree = "<group>"; };
 		138074E4196CEB3F00AD3D03 /* FBFriendModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBFriendModel.h; sourceTree = SOURCE_ROOT; };
 		138074E5196CEB3F00AD3D03 /* FBFriendModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBFriendModel.m; sourceTree = SOURCE_ROOT; };
-		138074EB196D3D4600AD3D03 /* garea.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; name = garea.sqlite; path = ../garea.sqlite; sourceTree = "<group>"; };
 		138074EE196D3DA100AD3D03 /* DataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataBase.h; sourceTree = "<group>"; };
 		138074EF196D3DA100AD3D03 /* DataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataBase.m; sourceTree = "<group>"; };
 		138074F1196D3E1000AD3D03 /* FBCityData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBCityData.h; sourceTree = "<group>"; };
@@ -585,6 +584,7 @@
 		1391EF191977A4CC00FDC52A /* RefreshTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefreshTableView.m; sourceTree = "<group>"; };
 		1391EF1B1977FC6D00FDC52A /* CarClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarClass.h; sourceTree = "<group>"; };
 		1391EF1C1977FC6D00FDC52A /* CarClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarClass.m; sourceTree = "<group>"; };
+		13A1A93E1980A50900E09666 /* garea.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = garea.sqlite; sourceTree = "<group>"; };
 		13D5DF701961306000804835 /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Frame.h"; sourceTree = "<group>"; };
 		13D5DF711961306000804835 /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Frame.m"; sourceTree = "<group>"; };
 		13D5DF7C19615A3500804835 /* NSString+PinYin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PinYin.h"; sourceTree = "<group>"; };
@@ -1000,7 +1000,7 @@
 		138074ED196D3D9400AD3D03 /* DataBase */ = {
 			isa = PBXGroup;
 			children = (
-				138074EB196D3D4600AD3D03 /* garea.sqlite */,
+				13A1A93E1980A50900E09666 /* garea.sqlite */,
 				138074EE196D3DA100AD3D03 /* DataBase.h */,
 				138074EF196D3DA100AD3D03 /* DataBase.m */,
 				138074F1196D3E1000AD3D03 /* FBCityData.h */,
@@ -2111,6 +2111,7 @@
 				138B4AB91966A4BD00B974A5 /* face34.png in Resources */,
 				13D5DFE31961758E00804835 /* cheyuan_down46_46@2x.png in Resources */,
 				138B4AD41966A4BD00B974A5 /* face59.png in Resources */,
+				13A1A93F1980A50900E09666 /* garea.sqlite in Resources */,
 				13D5E0111961758E00804835 /* wancheng_button82_46@2x.png in Resources */,
 				138B4AD21966A4BD00B974A5 /* face57.png in Resources */,
 				138B4AB51966A4BD00B974A5 /* face30.png in Resources */,
@@ -2133,7 +2134,6 @@
 				E37D2C9C1974CFA500EBA627 /* shanchu_button_600_100@2x.png in Resources */,
 				138B4AFA1966A4BD00B974A5 /* face93.png in Resources */,
 				138B4AD51966A4BD00B974A5 /* face6.png in Resources */,
-				138074EC196D3D4600AD3D03 /* garea.sqlite in Resources */,
 				138B4AAF1966A4BD00B974A5 /* face25.png in Resources */,
 				1391EF02197670E300FDC52A /* CarSourceCell.xib in Resources */,
 				13D5E0011961758E00804835 /* xubxhe_fabu_44_44@2x.png in Resources */,

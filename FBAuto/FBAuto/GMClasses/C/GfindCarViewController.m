@@ -83,7 +83,7 @@
         api = [NSString stringWithFormat:FBAUTO_FINCAR_MYSELF,[GMAPI getAuthkey],_page,KPageSize];
     }
     
-    LCWTools *tool = [[LCWTools alloc]initWithUrl:api isPost:nil postData:nil];
+    LCWTools *tool = [[LCWTools alloc]initWithUrl:api isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"寻车列表erro%@",[result objectForKey:@"errinfo"]);
@@ -204,7 +204,7 @@
         api = [NSString stringWithFormat:FBAUTO_FINDCAR_DELETE,[GMAPI getAuthkey],aCar.id];
     }
     
-    LCWTools *tool = [[LCWTools alloc]initWithUrl:api isPost:nil postData:nil];
+    LCWTools *tool = [[LCWTools alloc]initWithUrl:api isPost:NO postData:nil];
     
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
@@ -216,8 +216,9 @@
         [tempArr removeObjectAtIndex:indexPath.row];
         _dataArray = tempArr;
         
-        weakSelf.lastIndexPath = nil;
-        weakSelf.flagIndexPath = nil;
+        weakSelf.flagHeight = 60.f;
+        
+        weakSelf.indexPathArray = nil;
         
         [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
         [_tableView reloadData];
