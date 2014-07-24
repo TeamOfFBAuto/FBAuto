@@ -18,6 +18,8 @@
 {
     DDPageControl *pageControl;
     NSArray *imageUrlsArray;
+    
+    NSString *userId;//用户id
 }
 
 @end
@@ -96,6 +98,8 @@
         NSString *headImage = [LCWTools NSStringNotNull:[dic objectForKey:@"headimage"]];
         
         [self.headImage sd_setImageWithURL:[NSURL URLWithString:headImage] placeholderImage:[UIImage imageNamed:@"detail_test"]];
+        
+        userId = [dic objectForKey:@"uid"];//用户id
         
         //车辆图片
         
