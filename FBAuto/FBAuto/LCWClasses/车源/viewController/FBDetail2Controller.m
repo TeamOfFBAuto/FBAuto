@@ -252,6 +252,7 @@
     
     GyhzyViewController *personal = [[GyhzyViewController alloc]init];
     personal.title = self.nameLabel.text;
+    personal.userId = userId;
     [self.navigationController pushViewController:personal animated:YES];
 }
 
