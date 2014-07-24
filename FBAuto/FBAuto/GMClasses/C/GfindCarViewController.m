@@ -358,6 +358,10 @@
                     [weakSelf deleteDataForCell:indexPath];
                     
                 };
+                
+                
+                
+                
             }
                 
                 break;

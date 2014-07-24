@@ -67,22 +67,11 @@
         self.alertTitleLabel.textColor = [UIColor blackColor];
         [self addSubview:self.alertTitleLabel];
         
-//        CGFloat contentLabelWidth = kAlertWidth - 16;
-//        self.alertContentLabel = [[UILabel alloc] initWithFrame:CGRectMake((kAlertWidth - contentLabelWidth) * 0.5, CGRectGetMaxY(self.alertTitleLabel.frame), contentLabelWidth, 60)];
-//        self.alertContentLabel.numberOfLines = 0;
-//        self.alertContentLabel.textAlignment = self.alertTitleLabel.textAlignment = NSTextAlignmentCenter;
-//        self.alertContentLabel.textColor = [UIColor colorWithRed:127.0/255.0 green:127.0/255.0 blue:127.0/255.0 alpha:1];
-//        self.alertContentLabel.font = [UIFont systemFontOfSize:15.0f];
-//        [self addSubview:self.alertContentLabel];
-        
         CGRect leftBtnFrame;
         CGRect rightBtnFrame;
-#define kSingleButtonWidth 160.0f
-#define kCoupleButtonWidth 107.0f
-#define kButtonHeight 40.0f
-#define kButtonBottomOffset 10.0f
+        
         if (!leftTitle) {
-            rightBtnFrame = CGRectMake(144, 47, 165, 35);
+            rightBtnFrame = CGRectMake(74, 47, 114, 35);
             self.rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
             self.rightBtn.frame = rightBtnFrame;
             
@@ -113,17 +102,14 @@
         self.alertTitleLabel.text = title;
         self.alertContentLabel.text = content;
         
-        UIButton *xButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [xButton setImage:[UIImage imageNamed:@"btn_close_normal.png"] forState:UIControlStateNormal];
-        [xButton setImage:[UIImage imageNamed:@"btn_close_selected.png"] forState:UIControlStateHighlighted];
-        xButton.frame = CGRectMake(kAlertWidth - 32, 0, 32, 32);
-        [self addSubview:xButton];
-        [xButton addTarget:self action:@selector(dismissAlert) forControlEvents:UIControlEventTouchUpInside];
-        
         self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
     }
     return self;
 }
+
+
+
+
 
 - (void)leftBtnClicked:(id)sender
 {
@@ -176,16 +162,23 @@
     UIViewController *topVC = [self appRootViewController];
     CGRect afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - kAlertWidth) * 0.5, CGRectGetHeight(topVC.view.bounds), kAlertWidth, kAlertHeight);
     
-    [UIView animateWithDuration:0.35f delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        self.frame = afterFrame;
-        if (_leftLeave) {
-            self.transform = CGAffineTransformMakeRotation(-M_1_PI / 1.5);
-        }else {
-            self.transform = CGAffineTransformMakeRotation(M_1_PI / 1.5);
-        }
-    } completion:^(BOOL finished) {
-        [super removeFromSuperview];
-    }];
+//    //带动画
+//    [UIView animateWithDuration:0.35f delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//        self.frame = afterFrame;
+//        if (_leftLeave) {
+//            self.transform = CGAffineTransformMakeRotation(-M_1_PI / 1.5);
+//        }else {
+//            self.transform = CGAffineTransformMakeRotation(M_1_PI / 1.5);
+//        }
+//    } completion:^(BOOL finished) {
+//        [super removeFromSuperview];
+//    }];
+    
+    //无动画
+    self.frame = afterFrame;
+    
+    
+    
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview
@@ -204,31 +197,39 @@
     [topVC.view addSubview:self.backImageView];
     self.transform = CGAffineTransformMakeRotation(-M_1_PI / 2);
     CGRect afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - kAlertWidth) * 0.5, (CGRectGetHeight(topVC.view.bounds) - kAlertHeight) * 0.5, kAlertWidth, kAlertHeight);
-    [UIView animateWithDuration:0.35f delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-        self.transform = CGAffineTransformMakeRotation(0);
-        self.frame = afterFrame;
-    } completion:^(BOOL finished) {
-    }];
+    
+    //无动画
+    self.transform = CGAffineTransformMakeRotation(0);
+    self.frame = afterFrame;
+    
+    //带动画
+//    [UIView animateWithDuration:0.35f delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+//        self.transform = CGAffineTransformMakeRotation(0);
+//        self.frame = afterFrame;
+//    } completion:^(BOOL finished) {
+//    }];
+    
+    
     [super willMoveToSuperview:newSuperview];
 }
 
 @end
 
-@implementation UIImage (colorful)
+//@implementation UIImage (colorful)
+//
+//+ (UIImage *)imageWithColor:(UIColor *)color
+//{
+//    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+//    UIGraphicsBeginImageContext(rect.size);
+//    CGContextRef context = UIGraphicsGetCurrentContext();
+//    
+//    CGContextSetFillColorWithColor(context, [color CGColor]);
+//    CGContextFillRect(context, rect);
+//    
+//    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//    
+//    return image;
+//}
 
-+ (UIImage *)imageWithColor:(UIColor *)color
-{
-    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
-    UIGraphicsBeginImageContext(rect.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSetFillColorWithColor(context, [color CGColor]);
-    CGContextFillRect(context, rect);
-    
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return image;
-}
-
-@end
+//@end
