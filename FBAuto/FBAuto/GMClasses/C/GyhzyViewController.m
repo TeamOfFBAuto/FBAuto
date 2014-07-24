@@ -49,6 +49,7 @@
 #pragma mark - 请求网络数据
 -(void)prepareNetData{
     NSString *api = [NSString stringWithFormat:FBAUTO_GET_USER_INFORMATION,self.userId];
+    NSLog(@"api === %@",api);
 }
 
 
