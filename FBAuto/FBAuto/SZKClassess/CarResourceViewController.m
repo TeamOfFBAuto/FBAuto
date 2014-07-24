@@ -25,6 +25,8 @@
 #import "CarStyle.h"
 #import "CarType.h"
 
+#import "FBCityData.h"
+
 #import "AppDelegate.h"
 
 #import "CarSourceCell.h"
@@ -433,7 +435,7 @@
 
 }
 
-#pragma - mark 获取车型数据
+#pragma - mark 判读是否获取车型数据
 
 /**
  *  是否需要获取车型数据，一天请求一次
@@ -467,6 +469,9 @@
 {
     return ((AppDelegate *)[[UIApplication sharedApplication]delegate]).managedObjectContext;
 }
+
+
+#pragma - mark 网络获取车型数据
 
 - (void)getCarData
 {
@@ -532,36 +537,43 @@
         
         CarClass *aCarBrand = [[CarClass alloc]initWithBrandId:[self carCodeForIndex:i] brandName:brandName brandFirstName:firstLetter];
         [brand_Arr addObject:aCarBrand];
+        
+        [FBCityData insertCarBrandId:[self carCodeForIndex:i] brandName:brandName firstLetter:firstLetter];
 
         
         for (int j = 1; j < carTypeArray.count; j ++) {
             
             NSArray *carStyleArray = [carTypeArray objectAtIndex:j];
             
-            NSString *style = [carStyleArray objectAtIndex:0];//车型名称
+            NSString *type = [carStyleArray objectAtIndex:0];//车型名称
             
-            NSArray *styleArr = [style componentsSeparatedByString:@"  "];
-            NSString *styleArrFirstLetter = [styleArr objectAtIndex:0];
-            NSString *styleName = [styleArr objectAtIndex:1];
+            NSArray *typeArr = [type componentsSeparatedByString:@"  "];
+            NSString *typeFirstLetter = [typeArr objectAtIndex:0];
+            NSString *typeName = [typeArr objectAtIndex:1];
             
-            CarClass *aClassType = [[CarClass alloc]initWithParentId:[self carCodeForIndex:i] typeId:[self carCodeForIndex:j] typeName:styleName firstLetter:styleArrFirstLetter];
+            CarClass *aClassType = [[CarClass alloc]initWithParentId:[self carCodeForIndex:i] typeId:[self carCodeForIndex:j] typeName:typeName firstLetter:typeFirstLetter];
             [type_arr addObject:aClassType];
             
+            [FBCityData insertCarTypeId:[self carCodeForIndex:j] parentId:[self carCodeForIndex:i] typeName:typeName firstLetter:typeFirstLetter];
             
             for (int k = 1; k < carStyleArray.count; k ++) {
                 
                 NSString *carStyle = [carStyleArray objectAtIndex:k];
                 
+                NSString *style_parentId = [NSString stringWithFormat:@"%@%@",[self carCodeForIndex:i],[self carCodeForIndex:j]];
+                
                 CarClass *aCarStyle = [[CarClass alloc]initWithParentId:[self carCodeForIndex:j] styleId:[self carCodeForIndex:k] styleName:carStyle];
                 [style_arr addObject:aCarStyle];
-
+                
+                [FBCityData insertCarStyleId:[self carCodeForIndex:k] parentId:style_parentId StyleName:carStyle];
             }
+
         }
     }
-    
-    [[[LCWTools alloc]init]insertDataClassType:CARSOURCE_BRAND_INSERT dataArray:brand_Arr unique:nil];
-    [[[LCWTools alloc]init]insertDataClassType:CARSOURCE_TYPE_INSETT dataArray:type_arr unique:nil];
-    [[[LCWTools alloc]init]insertDataClassType:CARSOURCE_STYLE_INSETT dataArray:style_arr unique:nil];
+//    
+//    [[[LCWTools alloc]init]insertDataClassType:CARSOURCE_BRAND_INSERT dataArray:brand_Arr unique:nil];
+//    [[[LCWTools alloc]init]insertDataClassType:CARSOURCE_TYPE_INSETT dataArray:type_arr unique:nil];
+//    [[[LCWTools alloc]init]insertDataClassType:CARSOURCE_STYLE_INSETT dataArray:style_arr unique:nil];
     
     NSLog(@"车型数据保存完成");
     

@@ -12,6 +12,8 @@
 #import "CarType.h"
 #import "CarStyle.h"
 
+#import "CarClass.h"
+
 #define KLEFT 10.0
 #define KTOP 5.0
 #define KBOTTOM 10
@@ -362,7 +364,9 @@
         }else
         {
             CarType *aType = [secondArray objectAtIndex:indexPath.row - 1];
-            NSArray *styteArr = [[[LCWTools alloc]init]queryDataClassType:CARSOURCE_STYLE_QUERY pageSize:0 andOffset:0 unique:aType.typeId];
+            
+            NSString *unique = [NSString stringWithFormat:@"%@%@",aType.parentId,aType.typeId];
+            NSArray *styteArr = [[[LCWTools alloc]init]queryDataClassType:CARSOURCE_STYLE_QUERY pageSize:0 andOffset:0 unique:unique];
             
             typeId = aType.typeId;
             

@@ -15,6 +15,8 @@
 #import "CarType.h"
 #import "CarStyle.h"
 
+#import "FBCityData.h"
+
 #import "CarClass.h"
 
 @implementation LCWTools
@@ -570,15 +572,21 @@
 {
     if([classType isEqualToString:CARSOURCE_BRAND_QUERY])
     {
-        return [self queryCarBrand];
+//        return [self queryCarBrand];
+        
+        return [FBCityData queryAllCarBrand];
         
     }else if ([classType isEqualToString:CARSOURCE_TYPE_QUERY])
     {
-        return [self queryCarTypeUnique:unique];
+//        return [self queryCarTypeUnique:unique];
+        
+        return [FBCityData queryCarTypeWithParentId:unique];
         
     }else if ([classType isEqualToString:CARSOURCE_STYLE_QUERY])
     {
-        return [self queryCarStyleUnique:unique];
+//        return [self queryCarStyleUnique:unique];
+        
+        return [FBCityData queryCarStyleWithParentId:unique];
         
     }
     return nil;

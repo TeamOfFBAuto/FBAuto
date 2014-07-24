@@ -19,9 +19,6 @@
     if (self) {
         self.brandId = brandId;
         self.brandName = brandName;
-        
-        NSLog(@"brandId %@",brandId);
-        
         self.brandFirstLetter = brandFirstLetter;
     }
     return self;

@@ -89,6 +89,10 @@
     NSString *server = [defaults objectForKey:XMPP_SERVER];
 //    NSString *jid = [defaults objectForKey:XMPP_JID];
     
+    NSLog(@"md5 password %@",passWord);
+    
+//    passWord = @"123456";
+    
     //判断是否断开，没有返回yes
     if ([_xmppStream isDisconnected] == NO) {
         return YES;
