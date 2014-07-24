@@ -126,7 +126,7 @@
     
     if ([self needGetCarTypeData]) {
         
-        [self getCarData];
+//        [self getCarData];
     }
 }
 
@@ -150,7 +150,7 @@
     [self createMenu];
     
     //数据展示table
-    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, menuBgView.bottom, 320, self.view.height - 44 - menuBgView.height - 49 - 15 - (iPhone5 ? 20 : 0))];
+    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, menuBgView.bottom, 320, self.view.height - 44 - menuBgView.height - 49 - (iPhone5 ? 20 : 0))];
     
     _table.refreshDelegate = self;
     _table.dataSource = self;
@@ -160,8 +160,6 @@
     
     //搜索遮罩
     [_table showRefreshHeader:YES];
-    
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getCarBrandData:) name:NEED_REQUEST_CAR_BRAND object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -250,15 +248,6 @@
     }];
 }
 
-
-#pragma - mark 根据通知获取车型数据
-
-- (void)getCarBrandData:(NSNotification *)notification
-{
-    _needRefreshCarBrand = YES;
-    
-    [self getCarData];
-}
 
 #pragma - mark 创建导航menu
 

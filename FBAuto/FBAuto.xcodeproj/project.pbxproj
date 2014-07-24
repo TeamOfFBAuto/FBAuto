@@ -11,7 +11,6 @@
 		1315537B1979243B0044C010 /* FindCarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 131553791979243B0044C010 /* FindCarCell.m */; };
 		1315537C1979243B0044C010 /* FindCarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1315537A1979243B0044C010 /* FindCarCell.xib */; };
 		1315537F19792FC60044C010 /* LSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1315537E19792FC60044C010 /* LSearchView.m */; };
-		1328CA80197F9835008E6711 /* garea.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 1328CA7F197F9835008E6711 /* garea.sqlite */; };
 		1336BC06196A88410011B4D9 /* duihuahuang1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1336BC04196A88410011B4D9 /* duihuahuang1@2x.png */; };
 		1336BC09196A8CE70011B4D9 /* FBAreaFriensController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC08196A8CE70011B4D9 /* FBAreaFriensController.m */; };
 		1336BC0D196B89A00011B4D9 /* XMPPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC0C196B89A00011B4D9 /* XMPPServer.m */; };
@@ -175,6 +174,7 @@
 		1391EF171977A4AF00FDC52A /* LCWTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391EF161977A4AF00FDC52A /* LCWTools.m */; };
 		1391EF1A1977A4CC00FDC52A /* RefreshTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391EF191977A4CC00FDC52A /* RefreshTableView.m */; };
 		1391EF1D1977FC6D00FDC52A /* CarClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391EF1C1977FC6D00FDC52A /* CarClass.m */; };
+		13A1A93F1980A50900E09666 /* garea.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 13A1A93E1980A50900E09666 /* garea.sqlite */; };
 		13D5DF721961306000804835 /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D5DF711961306000804835 /* UIView+Frame.m */; };
 		13D5DF7E19615A3500804835 /* NSString+PinYin.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D5DF7D19615A3500804835 /* NSString+PinYin.m */; };
 		13D5DFD91961758E00804835 /* fangdajing_icon36_36@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13D5DF831961758E00804835 /* fangdajing_icon36_36@2x.png */; };
@@ -373,7 +373,6 @@
 		1315537A1979243B0044C010 /* FindCarCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FindCarCell.xib; sourceTree = "<group>"; };
 		1315537D19792FC60044C010 /* LSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSearchView.h; sourceTree = "<group>"; };
 		1315537E19792FC60044C010 /* LSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSearchView.m; sourceTree = "<group>"; };
-		1328CA7F197F9835008E6711 /* garea.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = garea.sqlite; sourceTree = "<group>"; };
 		1336BC04196A88410011B4D9 /* duihuahuang1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "duihuahuang1@2x.png"; sourceTree = "<group>"; };
 		1336BC07196A8CE70011B4D9 /* FBAreaFriensController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBAreaFriensController.h; sourceTree = "<group>"; };
 		1336BC08196A8CE70011B4D9 /* FBAreaFriensController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBAreaFriensController.m; sourceTree = "<group>"; };
@@ -585,6 +584,7 @@
 		1391EF191977A4CC00FDC52A /* RefreshTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefreshTableView.m; sourceTree = "<group>"; };
 		1391EF1B1977FC6D00FDC52A /* CarClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarClass.h; sourceTree = "<group>"; };
 		1391EF1C1977FC6D00FDC52A /* CarClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarClass.m; sourceTree = "<group>"; };
+		13A1A93E1980A50900E09666 /* garea.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = garea.sqlite; sourceTree = "<group>"; };
 		13D5DF701961306000804835 /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Frame.h"; sourceTree = "<group>"; };
 		13D5DF711961306000804835 /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Frame.m"; sourceTree = "<group>"; };
 		13D5DF7C19615A3500804835 /* NSString+PinYin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PinYin.h"; sourceTree = "<group>"; };
@@ -1000,8 +1000,8 @@
 		138074ED196D3D9400AD3D03 /* DataBase */ = {
 			isa = PBXGroup;
 			children = (
+				13A1A93E1980A50900E09666 /* garea.sqlite */,
 				138074EE196D3DA100AD3D03 /* DataBase.h */,
-				1328CA7F197F9835008E6711 /* garea.sqlite */,
 				138074EF196D3DA100AD3D03 /* DataBase.m */,
 				138074F1196D3E1000AD3D03 /* FBCityData.h */,
 				138074F2196D3E1000AD3D03 /* FBCityData.m */,
@@ -2111,7 +2111,7 @@
 				138B4AB91966A4BD00B974A5 /* face34.png in Resources */,
 				13D5DFE31961758E00804835 /* cheyuan_down46_46@2x.png in Resources */,
 				138B4AD41966A4BD00B974A5 /* face59.png in Resources */,
-				1328CA80197F9835008E6711 /* garea.sqlite in Resources */,
+				13A1A93F1980A50900E09666 /* garea.sqlite in Resources */,
 				13D5E0111961758E00804835 /* wancheng_button82_46@2x.png in Resources */,
 				138B4AD21966A4BD00B974A5 /* face57.png in Resources */,
 				138B4AB51966A4BD00B974A5 /* face30.png in Resources */,
