@@ -120,7 +120,7 @@
     labelArr = [NSMutableArray array];
     rowHeights = [NSMutableArray array];
     
-    [self testData];//测试数据
+//    [self testData];//测试数据
     
     [self createInputView];
     
@@ -675,8 +675,10 @@
     
     NSLog(@"_chatWithUser %@ server %@",self.chatWithUser,[[NSUserDefaults standardUserDefaults] stringForKey:XMPP_SERVER]);
     
+    NSLog(@"toUser %@",toUser);
     
     [mes addAttributeWithName:@"to" stringValue:toUser];
+    
     //由谁发送
     [mes addAttributeWithName:@"from" stringValue:[[NSUserDefaults standardUserDefaults] stringForKey:XMPP_USERID]];
     //组合
@@ -778,7 +780,7 @@
     NSData *imageData=UIImageJPEGRepresentation(newImage,0.5);
     NSString *photoName=[NSString stringWithFormat:@"FBAuto_xmpp.png"];
     NSLog(@"photoName:%@",photoName);
-    NSLog(@"图片大小:%ld",[imageData length]);
+    NSLog(@"图片大小:%d",[imageData length]);
     
     [uploadImageRequest addData:imageData withFileName:photoName andContentType:@"image/png" forKey:@"photo[]"];
     
@@ -828,7 +830,7 @@
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 
                 
-                NSString *sendImage = [NSString stringWithFormat:@"<img height=\"%f\" width=\"%f\" src=\"%@\"/>>",imageWidth,imageHeight,imageLink];
+                NSString *sendImage = [NSString stringWithFormat:@"<img height=\"%f\" width=\"%f\" src=\"%@\"/>>",imageHeight,imageWidth,imageLink];
                 NSLog(@"sendImage %@",sendImage);
                 
                 [weakSelf xmppSendMessage:sendImage];

@@ -91,7 +91,6 @@
     
     NSLog(@"md5 password %@",passWord);
     
-//    passWord = @"123456";
     
     //判断是否断开，没有返回yes
     if ([_xmppStream isDisconnected] == NO) {
@@ -104,6 +103,8 @@
     
     //jid格式为 userName@host  否则不可用
     NSString *jidName = [NSString stringWithFormat:@"%@@%@",userName,server];
+    
+    NSLog(@"jidName %@",jidName);
     
     [_xmppStream setMyJID:[XMPPJID jidWithString:jidName]];
     [_xmppStream setHostName:server];

@@ -45,9 +45,9 @@ PODS:
   - MBProgressHUD (0.8)
   - Reachability (3.1.1)
   - RegexKitLite (4.0)
-  - SDWebImage (3.7.0):
+  - SDWebImage (3.7.1):
     - SDWebImage/Core
-  - SDWebImage/Core (3.7.0)
+  - SDWebImage/Core (3.7.1)
   - UMeng (2.2.1)
   - XMPPFramework (3.6.4):
     - XMPPFramework/Authentication
@@ -201,7 +201,7 @@ SPEC CHECKSUMS:
   MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
   Reachability: 8e9635e3cb4f98e7f825e51147f677ecc694d0e7
   RegexKitLite: 761b4944f23cb8fe20697b2e47be0689fd832c09
-  SDWebImage: 791cb0f588046cb0bb7802ae8ae8f5462947b773
+  SDWebImage: 116e88633b5b416ea0ca4b334a4ac59cf72dd38d
   UMeng: e5b6c6a06215aeba33cb59159341ab3d6d292935
   XMPPFramework: 15ca7fcceb7d22c2580ecf6f6e69744dbe2ba25b
 

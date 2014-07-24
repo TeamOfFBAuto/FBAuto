@@ -287,6 +287,16 @@
     [hud hide:YES afterDelay:1.5];
 }
 
+#pragma - mark 非空字符串
+
++ (NSString *)NSStringNotNull:(NSString *)text
+{
+    if (![text isKindOfClass:[NSString class]]) {
+        return @"";
+    }
+    return text;
+}
+
 #pragma - mark CoreData数据管理
 
 @synthesize managedObjectContext = _managedObjectContext;

@@ -46,6 +46,8 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 +(NSString *)timechange3:(NSString *)placetime;
 + (void)showMBProgressWithText:(NSString *)text addToView:(UIView *)aView;
 
++ (NSString *)NSStringNotNull:(NSString *)text;
+
 /**
  *  验证 邮箱、电话等
  */

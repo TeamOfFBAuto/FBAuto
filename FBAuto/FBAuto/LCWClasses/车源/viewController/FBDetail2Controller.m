@@ -12,6 +12,7 @@
 #import "FBChatViewController.h"
 #import "ClickImageView.h"
 #import "GyhzyViewController.h"
+#import "LShareSheetView.h"
 
 @interface FBDetail2Controller ()
 {
@@ -90,10 +91,11 @@
 
         self.nameLabel.text = [dic objectForKey:@"username"];
         self.saleTypeBtn.titleLabel.text = [dic objectForKey:@"usertype"];//商家类型
-        self.phoneNumLabel.text = [dic objectForKey:@"phone"];
+        self.phoneNumLabel.text = [LCWTools NSStringNotNull:[dic objectForKey:@"phone"]];
         self.addressLabel.text = [NSString stringWithFormat:@"%@%@",[dic objectForKey:@"province"],[dic objectForKey:@"city"]];
+        NSString *headImage = [LCWTools NSStringNotNull:[dic objectForKey:@"headimage"]];
         
-        [self.headImage sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"headimage"]] placeholderImage:[UIImage imageNamed:@"detail_test"]];
+        [self.headImage sd_setImageWithURL:[NSURL URLWithString:headImage] placeholderImage:[UIImage imageNamed:@"detail_test"]];
         
         //车辆图片
         
@@ -278,6 +280,10 @@
 - (void)clickToShare:(UIButton *)sender
 {
     NSLog(@"分享");
+    LShareSheetView *shareView = [[LShareSheetView alloc]initWithFrame:self.view.frame];
+    [shareView actionBlock:^(NSInteger buttonIndex) {
+        
+    }];
 }
 
 @end

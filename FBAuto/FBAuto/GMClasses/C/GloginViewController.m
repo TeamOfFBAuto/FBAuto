@@ -141,7 +141,10 @@
             //聊天使用
             
             [defaults setObject:name forKey:XMPP_USERID];
-            [defaults setObject:[LCWTools md5:passw] forKey:XMPP_PASS];
+//            [defaults setObject:[LCWTools md5:passw] forKey:XMPP_PASS];
+            
+            [defaults setObject:passw forKey:XMPP_PASS];
+            
             [defaults setObject:@"60.18.147.4" forKey:XMPP_SERVER];
             
             
