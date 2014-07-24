@@ -22,5 +22,7 @@
 
 @property(nonatomic,retain)NSString *title;
 
+@property(nonatomic,strong)NSString *userId;//用于获取数据的用户id
+
 
 @end

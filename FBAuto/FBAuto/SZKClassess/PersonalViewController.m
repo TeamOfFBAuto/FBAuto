@@ -20,6 +20,7 @@
 #import "GlxwmViewController.h"//联系我们
 #import "GmLoadData.h"//网路请求类
 #import "GlocalUserImage.h"//本地化图片
+#import "GxiaoxiViewController.h"//消息
 
 //测试
 #import "GyhzyViewController.h"//用户主页
@@ -298,7 +299,7 @@
         friends.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:friends animated:YES];
     }else if (sender.tag == 51){//消息
-        
+        [self.navigationController pushViewController:[[GxiaoxiViewController alloc]init] animated:YES];
     }else if(sender.tag == 52){//通知
         [self.navigationController pushViewController:[[GpersonTZViewController alloc]init] animated:YES];
     }
