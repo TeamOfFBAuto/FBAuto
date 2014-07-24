@@ -157,6 +157,9 @@ alpha:(a)]
 
 #define FBAUTO_COLLECTION @"http://fbautoapp.fblife.com/index.php?c=interface&a=addshoucang&authkey=%@&car=%@&stype=%d&sid=%@" //添加收藏
 
-#define FBAUTO_MYMARKCAR @"http://fbautoapp.fblife.com/index.php?c=interface&a=getshoucang&authkey=%@&page=%d&ps=%d"
+#define FBAUTO_MYMARKCAR @"http://fbautoapp.fblife.com/index.php?c=interface&a=getshoucang&authkey=%@&page=%d&ps=%d"//我的收藏 获取收藏列表
+
+#define FBAUTO_DELMYMARKCAR @"http://fbautoapp.fblife.com/index.php?c=interface&a=delshoucang&authkey=%@&sids=%@"//删除我的收藏  sids为需要删除的id 多个用逗号隔开
+
 
 #endif

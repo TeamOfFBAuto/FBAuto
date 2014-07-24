@@ -354,8 +354,6 @@
                 };
                 al.rightBlock = ^(){
                     NSLog(@"确定");
-                    
-                    
                     [weakSelf deleteDataForCell:indexPath];
                     
                 };

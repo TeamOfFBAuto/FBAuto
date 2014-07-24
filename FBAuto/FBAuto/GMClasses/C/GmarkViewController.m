@@ -22,7 +22,7 @@
 @interface GmarkViewController ()<RefreshDelegate>
 {
     int _page;//第几页
-    NSArray *_dataArray;
+    NSMutableArray *_dataArray;
     
 }
 @end
@@ -279,13 +279,50 @@
     
     NSLog(@"------ %lu",(unsigned long)self.indexes.count);
     
-    for (NSIndexPath *indexPath in self.indexes) {
-        NSLog(@"%@",indexPath);
+    if (self.indexes.count != 0) {//有需要删除的选项
+        
+        NSMutableArray *array = [NSMutableArray arrayWithCapacity:1];//需要删除的数据
+        
+        for (NSIndexPath *indexPath in self.indexes) {
+            CarSourceClass *acar = _dataArray[indexPath.row];
+            [array addObject:acar];
+        }
+        
+        //本地操作======
+        //删除数据
+        [_dataArray removeObjectsInArray:array];
+        //刷新talbeivew
+        [_tableview reloadData];
+        
+        
+        //网络操作=====
+        NSMutableArray *carIdArray = [NSMutableArray arrayWithCapacity:1];
+        for (CarSourceClass *acar in array) {
+            [carIdArray addObject:acar.id];
+            
+        }
+        
+        [_dataArray componentsJoinedByString:@","];
+        
+        NSString *api = [NSString stringWithFormat:FBAUTO_DELMYMARKCAR,[GMAPI getAuthkey],[carIdArray componentsJoinedByString:@","]];
+        NSURL *url = [NSURL URLWithString:api];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            
+            NSLog(@"%@",dic);
+            if ([[dic objectForKey:@"errcode"]intValue] == 0) {
+                NSLog(@"删除成功");
+            }else{
+                UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请检查网络" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [al show];
+            }
+            
+        }];
+        NSLog(@"%@",api);
     }
+
     
-    
-    
-    NSLog(@"%s",__FUNCTION__);
     [self ggDel];
 }
 
@@ -374,7 +411,7 @@
 {
     if (isReload) {
         
-        _dataArray = dataArr;
+        _dataArray = [NSMutableArray arrayWithArray:dataArr];
         
     }else
     {
