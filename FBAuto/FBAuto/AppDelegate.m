@@ -17,13 +17,41 @@
 
 #import "PersonalViewController.h"//个人中心
 
-
-
 #import "ASIHTTPRequest.h"
-
 
 #import "XMPPServer.h"
 
+#import <ShareSDK/ShareSDK.h>
+#import "WeiboSDK.h"
+#import "WXApi.h"
+#import <TencentOpenAPI/QQApi.h>
+#import <TencentOpenAPI/QQApiInterface.h>
+#import <TencentOpenAPI/TencentOAuth.h>
+
+//shareSDK fbauto@qq.com
+
+// 邮箱 fbauto2014@qq.com
+// QQ: 2609534839
+// 密码: 123abc
+
+#define Appkey @"2767e6ead1a0"
+#define App @"3dfded7d59ea1015aea147bad5d006a4"
+
+//#define SinaAppKey @"3264973609"
+//#define SinaAppSecret @"5f23a738ceeaff81863614301a5bb635"
+
+//#define QQAPPID @"101030950"
+//#define WXAPPID @"wx1083e61dfbcb9cf7"
+
+// shareSDK 测试数据
+#define SinaAppKey @"568898243"
+#define SinaAppSecret @"38a4f8204cc784f81f9f0daaf31e02e3"
+
+#define QQAPPID @"100371282"
+#define WXAPPID @"wx4868b35061f87885"
+
+#define RedirectUrl @"http://www.sharesdk.cn"
+//#define RedirectUrl @"http://www.sina.com"
 
 
 @implementation AppDelegate
@@ -100,6 +128,10 @@
     
     [self.hostReach startNotifier];
     
+    //分享
+    
+    [ShareSDK registerApp:Appkey];
+    [self initSharePlat];
 
     self.window.rootViewController=tabbar;
     self.window.backgroundColor = [UIColor whiteColor];
@@ -107,6 +139,31 @@
     
     return YES;
 }
+
+#pragma - mark 分享
+
+- (void)initSharePlat
+{
+    //添加新浪微博应用 注册网址 http://open.weibo.com
+    [ShareSDK connectSinaWeiboWithAppKey:SinaAppKey
+                               appSecret:SinaAppSecret
+                             redirectUri:RedirectUrl];
+    //当使用新浪微博客户端分享的时候需要按照下面的方法来初始化新浪的平台
+    [ShareSDK  connectSinaWeiboWithAppKey:SinaAppKey
+                                appSecret:SinaAppSecret
+                              redirectUri:RedirectUrl
+                              weiboSDKCls:[WeiboSDK class]];
+    
+    //添加QQ应用  注册网址  http://mobile.qq.com/api/
+    [ShareSDK connectQQWithQZoneAppKey:QQAPPID
+                     qqApiInterfaceCls:[QQApiInterface class]
+                       tencentOAuthCls:[TencentOAuth class]];
+    
+    //添加微信应用 注册网址 http://open.weixin.qq.com
+    [ShareSDK connectWeChatWithAppId:WXAPPID
+                           wechatCls:[WXApi class]];
+}
+
 
 #pragma - mark 监控网络状态
 
@@ -145,6 +202,36 @@
         self.isReachable = YES;
         
     }
+}
+
+#pragma mark - WXApiDelegate
+
+-(void) onReq:(BaseReq*)req
+{
+    NSLog(@"req %@",req);
+}
+
+-(void) onResp:(BaseResp*)resp
+{
+    NSLog(@"req %@",resp);
+}
+
+- (BOOL)application:(UIApplication *)application
+      handleOpenURL:(NSURL *)url
+{
+    return [ShareSDK handleOpenURL:url
+                        wxDelegate:self];
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    return [ShareSDK handleOpenURL:url
+                 sourceApplication:sourceApplication
+                        annotation:annotation
+                        wxDelegate:self];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

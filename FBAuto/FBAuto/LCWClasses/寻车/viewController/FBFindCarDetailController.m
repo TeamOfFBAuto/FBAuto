@@ -9,6 +9,8 @@
 #import "FBFindCarDetailController.h"
 #import "FBChatViewController.h"
 #import "GyhzyViewController.h"
+#import "LShareSheetView.h"
+#import <ShareSDK/ShareSDK.h>
 
 @interface FBFindCarDetailController ()
 
@@ -204,11 +206,119 @@
     
 }
 
+
+
 //分享
 - (void)clickToShare:(UIButton *)sender
 {
     NSLog(@"分享");
+    LShareSheetView *shareView = [[LShareSheetView alloc]initWithFrame:self.view.frame];
+    [shareView actionBlock:^(NSInteger buttonIndex, NSString *shareStyle) {
+        
+        NSArray *text =  @[@"微信",@"QQ",@"朋友圈",@"微博",@"站内好友"];
+        NSString *imageUrl = @"http://fbautoapp.fblife.com/resource/photo/63/bd/thumb_34_small.jpg";
+        
+        buttonIndex -= 100;
+        NSLog(@"share %d %@",buttonIndex,shareStyle);
+        switch (buttonIndex) {
+            case 0:
+            {
+                NSLog(@"微信");
+                
+                [self shareText:[text objectAtIndex:buttonIndex] imageName:imageUrl ShareType:ShareTypeWeixiSession];
+            }
+                break;
+            case 1:
+            {
+                NSLog(@"QQ");
+                [self shareText:[text objectAtIndex:buttonIndex] imageName:imageUrl ShareType:ShareTypeQQ];
+            }
+                break;
+            case 2:
+            {
+                NSLog(@"朋友圈");
+                [self shareText:[text objectAtIndex:buttonIndex] imageName:imageUrl ShareType:ShareTypeWeixiTimeline];
+            }
+                break;
+            case 3:
+            {
+                NSLog(@"微博");
+                [self shareText:[text objectAtIndex:buttonIndex] imageName:imageUrl ShareType:ShareTypeSinaWeibo];
+            }
+                break;
+            case 4:
+            {
+                NSLog(@"站内好友");
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }];
 }
+
+
+
+- (void)shareText:(NSString *)text imageName:(NSString *)imageUrl ShareType:(ShareType)aShareType{
+    
+    //创建分享内容
+    
+    id<ISSContent> publishContent = [ShareSDK content:text
+                                       defaultContent:@"FBAuto分享"
+                                                image:[ShareSDK imageWithUrl:imageUrl]
+                                                title:nil
+                                                  url:nil
+                                          description:nil
+                                            mediaType:SSPublishContentMediaTypeText];
+    
+    //创建弹出菜单容器
+    id<ISSContainer> container = [ShareSDK container];
+    
+    id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
+                                                         allowCallback:YES
+                                                         authViewStyle:SSAuthViewStyleFullScreenPopup
+                                                          viewDelegate:nil
+                                               authManagerViewDelegate:nil];
+    
+    //    //在授权页面中添加关注官方微博
+    //    [authOptions setFollowAccounts:[NSDictionary dictionaryWithObjectsAndKeys:
+    //                                    [ShareSDK userFieldWithType:SSUserFieldTypeName value:@"ShareSDK"],
+    //                                    SHARE_TYPE_NUMBER(ShareTypeSinaWeibo),
+    //                                    [ShareSDK userFieldWithType:SSUserFieldTypeName value:@"ShareSDK"],
+    //                                    SHARE_TYPE_NUMBER(ShareTypeTencentWeibo),
+    //
+    //                                    nil]];
+    
+    //显示分享菜单
+    [ShareSDK showShareViewWithType:aShareType
+                          container:container
+                            content:publishContent
+                      statusBarTips:YES
+                        authOptions:authOptions
+                       shareOptions:[ShareSDK defaultShareOptionsWithTitle:nil
+                                                           oneKeyShareList:nil
+                                                            qqButtonHidden:NO
+                                                     wxSessionButtonHidden:NO
+                                                    wxTimelineButtonHidden:NO
+                                                      showKeyboardOnAppear:NO
+                                                         shareViewDelegate:nil
+                                                       friendsViewDelegate:nil
+                                                     picViewerViewDelegate:nil]
+                             result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+                                 
+                                 if (state == SSPublishContentStateSuccess)
+                                 {
+                                     NSLog(NSLocalizedString(@"TEXT_SHARE_SUC", @"发表成功"));
+                                 }
+                                 else if (state == SSPublishContentStateFail)
+                                 {
+                                     NSLog(NSLocalizedString(@"TEXT_SHARE_FAI", @"发布失败!error code == %d, error code == %@"), [error errorCode], [error errorDescription]);
+                                 }
+                             }];
+}
+
+
 
 
 @end
