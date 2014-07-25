@@ -324,6 +324,7 @@
 		E31F538D19737DDC00540124 /* GmLoadData.m in Sources */ = {isa = PBXBuildFile; fileRef = E31F538C19737DDC00540124 /* GmLoadData.m */; };
 		E31F53951974044A00540124 /* MLImageCrop.m in Sources */ = {isa = PBXBuildFile; fileRef = E31F53941974044A00540124 /* MLImageCrop.m */; };
 		E31F5398197405DC00540124 /* GlocalUserImage.m in Sources */ = {isa = PBXBuildFile; fileRef = E31F5397197405DC00540124 /* GlocalUserImage.m */; };
+		E3219BD91982431700EA026D /* GuserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3219BD81982431700EA026D /* GuserModel.m */; };
 		E3385D2A196BBAED008061FA /* GChangePwViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3385D29196BBAED008061FA /* GChangePwViewController.m */; };
 		E33ECB05196D211200DDD72D /* GpersonTZViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E33ECB04196D211200DDD72D /* GpersonTZViewController.m */; };
 		E33ECB08196D230A00DDD72D /* GptzTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E33ECB07196D230A00DDD72D /* GptzTableViewCell.m */; };
@@ -791,6 +792,8 @@
 		E31F53941974044A00540124 /* MLImageCrop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLImageCrop.m; sourceTree = "<group>"; };
 		E31F5396197405DC00540124 /* GlocalUserImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlocalUserImage.h; sourceTree = "<group>"; };
 		E31F5397197405DC00540124 /* GlocalUserImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlocalUserImage.m; sourceTree = "<group>"; };
+		E3219BD71982431700EA026D /* GuserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuserModel.h; sourceTree = "<group>"; };
+		E3219BD81982431700EA026D /* GuserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuserModel.m; sourceTree = "<group>"; };
 		E3385D28196BBAED008061FA /* GChangePwViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GChangePwViewController.h; sourceTree = "<group>"; };
 		E3385D29196BBAED008061FA /* GChangePwViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GChangePwViewController.m; sourceTree = "<group>"; };
 		E33ECB03196D211200DDD72D /* GpersonTZViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GpersonTZViewController.h; sourceTree = "<group>"; };
@@ -1949,6 +1952,8 @@
 				E362357419657588003B23CC /* area.plist */,
 				E362357519657588003B23CC /* GuserZhuce.h */,
 				E362357619657588003B23CC /* GuserZhuce.m */,
+				E3219BD71982431700EA026D /* GuserModel.h */,
+				E3219BD81982431700EA026D /* GuserModel.m */,
 			);
 			path = M;
 			sourceTree = "<group>";
@@ -2323,6 +2328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13807501196E74A500AD3D03 /* EGORefreshTableFooterView.m in Sources */,
+				E3219BD91982431700EA026D /* GuserModel.m in Sources */,
 				138B4A1119664ED500B974A5 /* FBAddFriendsController.m in Sources */,
 				1351C5CC197A704F000F7391 /* FindCarPublishController.m in Sources */,
 				137FEB091974D48100CDBD89 /* CarBrand.m in Sources */,

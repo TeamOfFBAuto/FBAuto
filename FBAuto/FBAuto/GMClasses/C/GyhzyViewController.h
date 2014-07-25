@@ -10,6 +10,7 @@
 //用户主页界面
 #import <UIKit/UIKit.h>
 @class GyhzyTableViewCell;
+@class GuserModel;
 
 @interface GyhzyViewController : FBBaseViewController<UITableViewDataSource,UITableViewDelegate>
 
@@ -23,6 +24,9 @@
 @property(nonatomic,retain)NSString *title;
 
 @property(nonatomic,strong)NSString *userId;//用于获取数据的用户id
+
+@property(nonatomic,strong)GuserModel *guserModel;
+
 
 
 @end

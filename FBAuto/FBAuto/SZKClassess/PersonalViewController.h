@@ -14,12 +14,25 @@
 
 {
     UITableView *_tableView;//主tableview
+    
+    UIButton *_shangquanBtn;//商圈btn
+    UIButton *_xiaoxiBtn;//消息btn
+    UIButton *_tongzhiBtn;//通知btn
+    
 }
 
 @property(nonatomic,strong)UIImageView *userFaceImv;
 @property(nonatomic,strong)UILabel *nameLabel;
 @property(nonatomic,strong)UILabel *nameLabel1;
 
+
+//小红点 小红点上数字显示 0为没有小红点
+@property(nonatomic,assign)int xiaoxiRedPointNum;//消息按钮右上的小红点需要显示的个数
+@property(nonatomic,assign)int tongzhirRedPointNum;//通知按钮右上的小红点需要显示的个数
+
+
+@property(nonatomic,strong)UIView *xiaoxiRedPointView;//消息 小红点view
+@property(nonatomic,strong)UIView *tongzhiRedPointView;//通知 小红点view
 
 
 @end

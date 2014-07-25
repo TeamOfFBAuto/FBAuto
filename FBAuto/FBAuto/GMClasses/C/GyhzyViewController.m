@@ -9,6 +9,8 @@
 #import "GyhzyViewController.h"
 #import "GyhzyTableViewCell.h"
 
+#import "GuserModel.h"
+
 @interface GyhzyViewController ()
 
 @end
@@ -34,7 +36,7 @@
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
-    
+    [self prepareNetData];
     
 }
 
@@ -49,7 +51,23 @@
 #pragma mark - 请求网络数据
 -(void)prepareNetData{
     NSString *api = [NSString stringWithFormat:FBAUTO_GET_USER_INFORMATION,self.userId];
+    
     NSLog(@"api === %@",api);
+    
+    NSURL *url = [NSURL URLWithString:api];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        NSDictionary *dataInfo = [dic objectForKey:@"datainfo"];
+        
+        NSLog(@"%@",dic);
+        
+        GuserModel *guserModel = [[GuserModel alloc]initWithDic:dataInfo];
+        self.guserModel = guserModel;
+        [_tableView reloadData];
+        
+    }];
+    
 }
 
 
@@ -66,7 +84,8 @@
         [view removeFromSuperview];
     }
     
-    [cell loadViewWithIndexPath:indexPath];
+    [cell loadViewWithIndexPath:indexPath model:self.guserModel];
+    [cell configWithUserModel:self.guserModel];
     
     cell.separatorInset = UIEdgeInsetsZero;
     
@@ -84,10 +103,10 @@
     CGFloat height = 0;
     
     if (_tmpCell) {
-        height = [_tmpCell loadViewWithIndexPath:indexPath];
+        height = [_tmpCell loadViewWithIndexPath:indexPath model:self.guserModel];
     }else{
         _tmpCell = [[GyhzyTableViewCell alloc]init];
-        height = [_tmpCell loadViewWithIndexPath:indexPath];
+        height = [_tmpCell loadViewWithIndexPath:indexPath model:self.guserModel];
     }
     
     return height;

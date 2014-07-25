@@ -101,6 +101,16 @@
         btn.tag = 50+i;
         [btn addTarget:self action:@selector(clickToDetail:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:btn];
+        
+        if (i == 0) {
+            _shangquanBtn = btn;
+        }else if (i == 1){
+            _xiaoxiBtn = btn;
+        }else if (i == 2){
+            _tongzhiBtn = btn;
+        }
+        
+        
     }
     
     
@@ -111,6 +121,35 @@
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
+    
+    
+    
+    //小红点
+    self.xiaoxiRedPointView = [[UIView alloc]initWithFrame:CGRectZero];
+    self.xiaoxiRedPointView.frame = CGRectMake(0, 0, 18, 18);
+    self.xiaoxiRedPointView.layer.cornerRadius = 9;
+    self.xiaoxiRedPointView.backgroundColor = [UIColor redColor];
+    self.xiaoxiRedPointView.center = CGPointMake(CGRectGetMaxX(_xiaoxiBtn.frame), CGRectGetMinY(_xiaoxiBtn.frame));
+    
+    
+    self.tongzhiRedPointView = [[UIView alloc]initWithFrame:CGRectZero];
+    self.tongzhiRedPointView.frame = CGRectMake(0, 0, 18, 18);
+    self.tongzhiRedPointView.layer.cornerRadius = 9;
+    self.tongzhiRedPointView.backgroundColor = [UIColor redColor];
+    self.tongzhiRedPointView.center = CGPointMake(CGRectGetMaxX(_tongzhiBtn.frame), CGRectGetMinY(_tongzhiBtn.frame));
+    
+    
+    
+    [self.view addSubview:self.xiaoxiRedPointView];
+    [self.view addSubview:self.tongzhiRedPointView];
+    
+    if (self.xiaoxiRedPointNum == 0) {
+        self.xiaoxiRedPointView.hidden = YES;
+    }
+    
+    if (self.tongzhirRedPointNum == 0) {
+        self.tongzhiRedPointView.hidden = YES;
+    }
     
     
     //请求网络数据

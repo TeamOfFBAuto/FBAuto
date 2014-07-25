@@ -7,6 +7,7 @@
 //
 
 #import "GyhzyTableViewCell.h"
+#import "GuserModel.h"
 
 @implementation GyhzyTableViewCell
 
@@ -35,30 +36,40 @@
 
 
 
--(CGFloat)loadViewWithIndexPath:(NSIndexPath *)theIndexPath{
+-(CGFloat)loadViewWithIndexPath:(NSIndexPath *)theIndexPath model:(GuserModel*)userModel{
     CGFloat height = 0;
     
     if (theIndexPath.row == 0){//公司名 省份
         //图片
         UIImageView *imaV = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 45, 45)];
-        imaV.backgroundColor = [UIColor redColor];
+        imaV.backgroundColor = [UIColor grayColor];
+        self.touxiangImageView = imaV;
         [self.contentView addSubview:imaV];
         
         //公司全称
         UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imaV.frame)+10, 14, 240, 15)];
-        nameLabel.font = [UIFont systemFontOfSize:15];
-        nameLabel.backgroundColor = [UIColor purpleColor];
+        nameLabel.font = [UIFont systemFontOfSize:14];
+        self.nameLabel = nameLabel;
         [self.contentView addSubview:nameLabel];
         
         //省份
-        UILabel *cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(nameLabel.frame.origin.x, CGRectGetMaxY(nameLabel.frame)+8, 240, 15)];
-        cityLabel.backgroundColor = [UIColor orangeColor];
+        UILabel *titleL = [[UILabel alloc]initWithFrame:CGRectMake(nameLabel.frame.origin.x, CGRectGetMaxY(nameLabel.frame)+8, 30, 15)];
+        titleL.font = [UIFont systemFontOfSize:13];
+        titleL.text = @"省份:";
+        [self.contentView addSubview:titleL];
+        
+        UILabel *cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(titleL.frame)+7, CGRectGetMaxY(nameLabel.frame)+8, 200, 15)];
+        cityLabel.font = [UIFont systemFontOfSize:13];
+        cityLabel.textColor = RGBCOLOR(129, 129, 129);
+        self.areaLable = cityLabel;
         [self.contentView addSubview:cityLabel];
         
         //高度
         height = 65;
         
     }else if (theIndexPath.row == 1){//电话 地址
+        
+        //标题lable
         UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 12, 30, 13)];
         titleLabel.font = [UIFont systemFontOfSize:13];
         titleLabel.text = @"电话:";
@@ -69,6 +80,21 @@
         titleLabel1.text = @"地址:";
         [self.contentView addSubview:titleLabel1];
         
+        //内容label
+        self.phoneLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(titleLabel.frame)+5, titleLabel.frame.origin.y, 110, titleLabel.frame.size.height)];
+        self.phoneLabel.textColor = RGBCOLOR(129, 129, 129);
+        self.phoneLabel.font = [UIFont systemFontOfSize:13];
+        
+        self.dizhiLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(titleLabel1.frame)+5, titleLabel1.frame.origin.y, 260, titleLabel1.frame.size.height)];
+        self.dizhiLabel.font = [UIFont systemFontOfSize:13];
+        self.dizhiLabel.textColor = RGBCOLOR(129, 129, 129);
+        
+        
+        [self.contentView addSubview:self.phoneLabel];
+        [self.contentView addSubview:self.dizhiLabel];
+        
+        
+        
         height = CGRectGetMaxY(titleLabel1.frame)+10;
         
         
@@ -76,17 +102,22 @@
         UILabel *titelLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 12, 30, 13)];
         titelLabel.font = [UIFont systemFontOfSize:13];
         titelLabel.text = @"简介:";
-        titelLabel.backgroundColor = [UIColor orangeColor];
         [self.contentView addSubview:titelLabel];
         
         //简介内容label
-        UILabel *contentLabel = [[UILabel alloc]initWithFrame:CGRectZero];
-        contentLabel.textColor = RGBCOLOR(149, 149, 149);
-        contentLabel.font = [UIFont systemFontOfSize:12];
-        contentLabel.text = @"fjsdal;;;;;;;;;lksdfjienklnitopb;lkbkg;ogotpklg;klg;tk;t;kg;g";
-        [contentLabel setMatchedFrame4LabelWithOrigin:CGPointMake(CGRectGetMaxX(titelLabel.frame)+10, 12) width:266];
-        height = contentLabel.frame.size.height +20;
-        [self.contentView addSubview:contentLabel];
+        self.jianjieLabel = [[UILabel alloc]initWithFrame:CGRectZero];
+        self.jianjieLabel.textColor = RGBCOLOR(149, 149, 149);
+        self.jianjieLabel.font = [UIFont systemFontOfSize:12];
+        
+        [self.contentView addSubview:self.jianjieLabel];
+        [self configWithUserModel:userModel];
+        
+        if (self.jianjieLabel.text.length != 0) {
+            height = self.jianjieLabel.frame.size.height +20;
+        }else{
+            height = CGRectGetMaxY(titelLabel.frame)+10;
+        }
+        
         
         
     }else if(theIndexPath.row == 3){//在售车源 标题
@@ -120,6 +151,22 @@
     
     return height;
 }
+
+
+
+
+-(void)configWithUserModel:(GuserModel*)userModel{
+    self.nameLabel.text = userModel.name;
+    self.areaLable.text = [NSString stringWithFormat:@"%@%@",userModel.province,userModel.city];
+    self.phoneLabel.text = userModel.phone;
+    self.dizhiLabel.text = userModel.address;
+    self.jianjieLabel.text = userModel.intro;
+    [self.jianjieLabel setMatchedFrame4LabelWithOrigin:CGPointMake(45, 12) width:266];
+    [self.touxiangImageView sd_setImageWithURL:[NSURL URLWithString:userModel.headimage]];
+    
+}
+
+
 
 
 
