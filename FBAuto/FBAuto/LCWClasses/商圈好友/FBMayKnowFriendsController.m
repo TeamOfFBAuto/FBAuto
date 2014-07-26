@@ -101,6 +101,8 @@
     NSString *phoneString = [phoneArr componentsJoinedByString:@","];
     NSString *nameString = [nameArr componentsJoinedByString:@","];
     
+    phoneString = @"18612389982,13301072337";
+    
     NSString *urlString = [NSString stringWithFormat:@"http://fbautoapp.fblife.com/index.php?c=interface&a=getphonemember&authkey=%@",[GMAPI getAuthkey]];
     NSString *post = [NSString stringWithFormat:@"phone=%@&rname=%@",phoneString,nameString];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
@@ -126,8 +128,25 @@
             NSArray *dataInfo = [result objectForKey:@"datainfo"];
             NSMutableArray *dataArr = [NSMutableArray arrayWithCapacity:dataInfo.count];
             for (NSDictionary *aDic in dataInfo) {
-                FBFriendModel *aFriend = [[FBFriendModel alloc]initWithDictionary:aDic];
-                [dataArr addObject:aFriend];
+                
+                NSDictionary *userdata = [aDic objectForKey:@"userdata"];
+                
+                
+                //userData 为空非auto用户
+                
+                if (userdata && [userdata isKindOfClass:[NSDictionary class]]) {
+                    FBFriendModel *aFriend = [[FBFriendModel alloc]initWithDictionary:userdata];
+                    
+                    //如果是自己,就不加入
+                    if (![aFriend.uid isEqualToString:[GMAPI getUid]]) {
+                        [dataArr addObject:aFriend];
+                    }
+                    
+                }else
+                {
+                    NSLog(@"userdata 为空 %@",userdata);
+                }
+                
             }
             
             [weakSelf reloadData:dataArr];
@@ -275,7 +294,15 @@
 {
     FBFriendModel *aModel = [_dataArray objectAtIndex:indexPath.row];
     
-    NSString *message = [NSString stringWithFormat:@"是否添加%@为好友",aModel.buddyname];
+    if ([aModel.isbuddy intValue] == 1) {
+        
+        [LCWTools showMBProgressWithText:@"已是好友关系" addToView:self.view];
+        
+        return;
+    }
+    
+    NSString *name = aModel.name ? aModel.name : aModel.buddyname;
+    NSString *message = [NSString stringWithFormat:@"是否添加%@为好友",name];
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:message delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"添加好友", nil];
     alert.tag = [aModel.uid intValue] + 100;
     
@@ -287,7 +314,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
-        [self addFriend:[NSString stringWithFormat:@"%ld",alertView.tag - 100]];
+        [self addFriend:[NSString stringWithFormat:@"%d",alertView.tag - 100]];
     }
 }
 

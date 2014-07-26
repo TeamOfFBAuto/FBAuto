@@ -104,6 +104,8 @@
         if (text && ![text isEqualToString:@""]) {
             
             [self updateSearchViewNormal:YES];
+            
+            [self searchFriendWithKeyword:text];
         }
         
     }else if (aStyle == Search_Cancel)

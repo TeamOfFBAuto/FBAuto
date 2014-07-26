@@ -77,10 +77,10 @@
     NSString *api = @"";
     
     if (aType == 2) {
-        api = [NSString stringWithFormat:FBAUTO_CARSOURCE_MYSELF,[GMAPI getAuthkey],_page,KPageSize];
+        api = [NSString stringWithFormat:FBAUTO_CARSOURCE_MYSELF,[GMAPI getUid],_page,KPageSize];
     }else if (aType == 3)
     {
-        api = [NSString stringWithFormat:FBAUTO_FINCAR_MYSELF,[GMAPI getAuthkey],_page,KPageSize];
+        api = [NSString stringWithFormat:FBAUTO_FINCAR_MYSELF,[GMAPI getUid],_page,KPageSize];
     }
     
     LCWTools *tool = [[LCWTools alloc]initWithUrl:api isPost:NO postData:nil];

@@ -770,16 +770,15 @@
     
     [chatImage startLoading];//开始菊花
     
-    NSString* url = [NSString stringWithFormat:FBAUTO_CARSOURCE_ADD_PIC];
+    NSString* url = [NSString stringWithFormat:FBAUTO_CHAT_TALK_PIC];
     
     ASIFormDataRequest *uploadImageRequest= [ ASIFormDataRequest requestWithURL : [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] ]];
     [uploadImageRequest setStringEncoding:NSUTF8StringEncoding];
     [uploadImageRequest setRequestMethod:@"POST"];
     [uploadImageRequest setResponseEncoding:NSUTF8StringEncoding];
-    [uploadImageRequest setPostValue:[GMAPI getAuthkey] forKey:@"authkey"];
+    [uploadImageRequest setPostValue:[GMAPI getAuthkey] forKey:@"authkey"];//参数一 authkey
     [uploadImageRequest setPostFormat:ASIMultipartFormDataPostFormat];
     
-//    UIImage * newImage = [SzkAPI scaleToSizeWithImage:eImage size:CGSizeMake(eImage.size.width>1024?1024:eImage.size.width,eImage.size.width>1024?eImage.size.height*1024/eImage.size.width:eImage.size.height)];
     NSData *imageData=UIImageJPEGRepresentation(eImage,0.8);
     
     UIImage * newImage = [UIImage imageWithData:imageData];
@@ -788,7 +787,7 @@
     NSLog(@"photoName:%@",photoName);
     NSLog(@"图片大小:%d",[imageData length]);
     
-    [uploadImageRequest addData:imageData withFileName:photoName andContentType:@"image/png" forKey:@"photo[]"];
+    [uploadImageRequest addData:imageData withFileName:photoName andContentType:@"image/png" forKey:@"talkpic"];
     
     [uploadImageRequest setDelegate : self ];
     
@@ -828,6 +827,7 @@
             }
             
             [weakChatV stopLoadingWithFailBlock:nil];//停止菊花
+            [weakChatV sd_setImageWithURL:[NSURL URLWithString:imageLink] placeholderImage:[UIImage imageNamed:@"detail_test"]];
             
             
             CGFloat imageWidth = newImage.size.width;

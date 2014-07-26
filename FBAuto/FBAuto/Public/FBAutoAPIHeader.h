@@ -131,7 +131,7 @@ alpha:(a)]
 
 #define FBAUTO_CARSOURCE_SEARCH @"http://fbautoapp.fblife.com/index.php?c=interface&a=searchcheyuan&keyword=%@&page=%d&ps=%d"//搜索车源
 
-#define FBAUTO_CARSOURCE_MYSELF @"http://fbautoapp.fblife.com/index.php?c=interface&a=getmycheyuan&authkey=%@&page=%d&ps=%d"//获取我的车源
+#define FBAUTO_CARSOURCE_MYSELF @"http://fbautoapp.fblife.com/index.php?c=interface&a=getmycheyuan&uid=%@&page=%d&ps=%d"//获取我的车源
 
 #define FBAUTO_CARSOURCE_DELETE @"http://fbautoapp.fblife.com/index.php?c=interface&a=delcheyuan&authkey=%@&cid=%@" //删除车源
 
@@ -143,7 +143,7 @@ alpha:(a)]
 
 #define FBAUTO_FINDCAR_SEARCH @"http://fbautoapp.fblife.com/index.php?c=interface&a=searchxunche&keyword=%@&page=%d&ps=%d" //寻车搜索
 
-#define FBAUTO_FINCAR_MYSELF @"http://fbautoapp.fblife.com/index.php?c=interface&a=getmyxunche&authkey=%@&page=%d&ps=%d"//我的寻车
+#define FBAUTO_FINCAR_MYSELF @"http://fbautoapp.fblife.com/index.php?c=interface&a=getmyxunche&uid=%@&page=%d&ps=%d"//我的寻车
 
 #define FBAUTO_FINDCAR_PUBLISH @"http://fbautoapp.fblife.com/index.php?c=interface&a=addxunche"//添加寻车信息
 
@@ -161,5 +161,10 @@ alpha:(a)]
 
 #define FBAUTO_DELMYMARKCAR @"http://fbautoapp.fblife.com/index.php?c=interface&a=delshoucang&authkey=%@&sids=%@"//删除我的收藏  sids为需要删除的id 多个用逗号隔开
 
+
+// 聊天相关接口========
+
+#define FBAUTO_CHAT_TALK_PIC @"http://fbautoapp.fblife.com/index.php?c=interface&a=talkpic"//聊天发送图片
+#define FBAUTO_CHAT_TALK_VOICE @"http://fbautoapp.fblife.com/index.php?c=interface&a=talkvoice"//聊天发送语音
 
 #endif

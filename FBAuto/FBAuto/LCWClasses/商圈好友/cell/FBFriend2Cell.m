@@ -26,7 +26,16 @@
 
 - (void)getCellData:(FBFriendModel *)aModel
 {
-    self.nameAndTypeL.text = aModel.buddyname;
+    NSString *useType = nil;
+    if ([aModel.usertype isEqualToString:@"1"]) {
+        useType = @"个人";
+    }else if ([aModel.usertype isEqualToString:@"2"]){
+        useType = @"商家";
+    }
+    
+    NSString *name = aModel.name ? aModel.name : aModel.buddyname;
+    
+    self.nameAndTypeL.text = [NSString stringWithFormat:@"%@(%@)",name,useType];
     self.phoneNumAndAddressL.text = [NSString stringWithFormat:@"%@(%@)",aModel.phone,[FBCityData cityNameForId:[aModel.province intValue]]];
     [self.iconImageV sd_setImageWithURL:[NSURL URLWithString:aModel.face] placeholderImage:[UIImage imageNamed:@"detail_test"]];
 }

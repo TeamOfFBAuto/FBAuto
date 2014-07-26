@@ -34,6 +34,9 @@
 @property(nonatomic,retain)NSString *uid;
 @property(nonatomic,retain)NSString *uptime;
 @property(nonatomic,retain)NSString *usertype;
+@property(nonatomic,retain)NSString *name;
+@property(nonatomic,retain)NSString *isbuddy;
+
 
 -(id)initWithDictionary:(NSDictionary *)dic;
 
