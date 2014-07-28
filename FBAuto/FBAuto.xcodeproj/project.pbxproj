@@ -2078,7 +2078,7 @@
 				E3DF449C1985833400C60FA4 /* 我的收藏 */,
 				E3DF449B1985831F00C60FA4 /* 消息设置 */,
 				E3DF449A1985830B00C60FA4 /* 通知 */,
-				E3DF4499198582EE00C60FA4 /* 寻车 */,
+				E3DF4499198582EE00C60FA4 /* 车源和寻车 */,
 				E3DF4498198582CF00C60FA4 /* 修改密码 */,
 				E3DF4497198582B900C60FA4 /* 注册界面 */,
 				E3DF44961985829F00C60FA4 /* 登录界面 */,
@@ -2173,12 +2173,13 @@
 			path = "修改密码";
 			sourceTree = "<group>";
 		};
-		E3DF4499198582EE00C60FA4 /* 寻车 */ = {
+		E3DF4499198582EE00C60FA4 /* 车源和寻车 */ = {
 			isa = PBXGroup;
 			children = (
 				E3FFFCE5196BE19D00596186 /* GfindCarViewController.h */,
 				E3FFFCE6196BE19D00596186 /* GfindCarViewController.m */,
 			);
+			name = "车源和寻车";
 			path = "寻车";
 			sourceTree = "<group>";
 		};

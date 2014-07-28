@@ -10,8 +10,14 @@
 
 #import "GloginViewController.h"
 
-#define Frame_row3Down CGRectMake(24, 312, 275, 210)
-#define Frame_row3Up CGRectMake(24, 312-180, 275, 210)
+////4寸屏幕
+//#define Frame_row3Down CGRectMake(24, 312, 275, 210)
+//#define Frame_row3Up CGRectMake(24, 312-180, 275, 210)
+//
+////3.5屏幕
+//#define Frame_row3Down4s CGRectMake(24, 200, 275, 210)
+//#define Frame_row3Up4s CGRectMake(24, 200-180, 275, 210)
+
 
 @implementation GloginView
 
@@ -21,9 +27,17 @@
     if (self) {
         // Initialization code
         
-        
 //        //弹出键盘通知
 //        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
+        
+        
+        if (iPhone5) {
+            _Frame_row3Down = CGRectMake(24, 312, 275, 210);
+            _Frame_row3Up = CGRectMake(24, 312-180, 275, 210);
+        }else{
+            _Frame_row3Down = CGRectMake(24, 312-44, 275, 210);
+            _Frame_row3Up = CGRectMake(24, 312-44-190, 275, 210);
+        }
         
         
         
@@ -39,7 +53,7 @@
         
         
         //账号 密码 登录 底层view
-        self.Row3backView = [[UIView alloc]initWithFrame:Frame_row3Down];
+        self.Row3backView = [[UIView alloc]initWithFrame:_Frame_row3Down];
         [self addSubview:self.Row3backView];
         //self.Row3backView.backgroundColor = [UIColor purpleColor];
         
@@ -151,7 +165,7 @@
     
     
     [UIView animateWithDuration:0.3 animations:^{
-        self.Row3backView.frame = Frame_row3Down;
+        self.Row3backView.frame = _Frame_row3Down;
     } completion:^(BOOL finished) {
         
     }];
@@ -202,7 +216,7 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
     [UIView animateWithDuration:0.3 animations:^{
-        self.Row3backView.frame = Frame_row3Up;
+        self.Row3backView.frame = _Frame_row3Up;
     } completion:^(BOOL finished) {
         
     }];

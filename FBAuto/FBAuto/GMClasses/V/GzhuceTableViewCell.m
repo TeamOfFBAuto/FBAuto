@@ -48,7 +48,7 @@
         _titielArray = @[@"姓名",@"地区",@"密码",@"重复密码",@"手机",@"验证码"];
         
         //注册界面的view
-        self.zhuceView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-114)];
+        self.zhuceView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320,  568-114)];
         //self.zhuceView.backgroundColor = [UIColor orangeColor];
         [self.contentView addSubview:self.zhuceView];
         

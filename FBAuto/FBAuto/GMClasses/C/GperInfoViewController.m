@@ -58,6 +58,9 @@
     
     //请求网络数据
     [self prepareNetData];
+    
+    
+    
 
     
 }

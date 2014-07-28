@@ -53,7 +53,7 @@
     
     NSLog(@"%s",__FUNCTION__);
     
-    GloginView *gloginView = [[GloginView alloc]initWithFrame:CGRectMake(0, 0, 320, 568)];
+    GloginView *gloginView = [[GloginView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?568:480)];
     self.gloginView = gloginView;
     [self.view addSubview:gloginView];
     
@@ -120,7 +120,9 @@
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         
         [j stopAnimating];
-        
+        if ([data length] == 0) {
+            return;
+        }
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
         NSLog(@"%@ %@",dic,[dic objectForKey:@"errinfo"]);
         

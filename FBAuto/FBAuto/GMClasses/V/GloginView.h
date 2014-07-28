@@ -22,6 +22,11 @@ typedef void (^dengluBlock)(NSString *usern,NSString *passw);//登录
     
     UILabel *_placeHolder1;//账号
     UILabel *_placeHolder2;//密码
+    
+    CGRect _Frame_row3Up;
+    CGRect _Frame_row3Down;
+    
+    
 }
 
 
@@ -42,6 +47,9 @@ typedef void (^dengluBlock)(NSString *usern,NSString *passw);//登录
 @property(nonatomic,strong)NSString *userPassWord;//用户输入的密码
 
 @property(nonatomic,assign)GloginViewController *delegate;
+
+
+
 
 //block属性
 @property(nonatomic,copy)zhuceBlock zhuceBlock;//注册

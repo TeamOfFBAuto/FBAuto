@@ -78,9 +78,11 @@
     
     if (aType == 2) {
         api = [NSString stringWithFormat:FBAUTO_CARSOURCE_MYSELF,[GMAPI getUid],_page,KPageSize];
+        NSLog(@"我的车源接口:%@",api);
     }else if (aType == 3)
     {
         api = [NSString stringWithFormat:FBAUTO_FINCAR_MYSELF,[GMAPI getUid],_page,KPageSize];
+        NSLog(@"我的寻车接口：%@",api);
     }
     
     LCWTools *tool = [[LCWTools alloc]initWithUrl:api isPost:NO postData:nil];

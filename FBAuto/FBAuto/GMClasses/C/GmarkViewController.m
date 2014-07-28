@@ -113,6 +113,9 @@
     
     [self.view addSubview:_dview];
     
+    
+    [_tableview showRefreshHeader:YES];
+    
     [self prepareNetData];
 }
 
