@@ -844,30 +844,30 @@
 		E31F5397197405DC00540124 /* GlocalUserImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlocalUserImage.m; sourceTree = "<group>"; };
 		E3219BD71982431700EA026D /* GuserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuserModel.h; sourceTree = "<group>"; };
 		E3219BD81982431700EA026D /* GuserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuserModel.m; sourceTree = "<group>"; };
-		E3385D28196BBAED008061FA /* GChangePwViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GChangePwViewController.h; sourceTree = "<group>"; };
-		E3385D29196BBAED008061FA /* GChangePwViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GChangePwViewController.m; sourceTree = "<group>"; };
-		E33ECB03196D211200DDD72D /* GpersonTZViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GpersonTZViewController.h; sourceTree = "<group>"; };
-		E33ECB04196D211200DDD72D /* GpersonTZViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GpersonTZViewController.m; sourceTree = "<group>"; };
+		E3385D28196BBAED008061FA /* GChangePwViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GChangePwViewController.h; path = ../GChangePwViewController.h; sourceTree = "<group>"; };
+		E3385D29196BBAED008061FA /* GChangePwViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GChangePwViewController.m; path = ../GChangePwViewController.m; sourceTree = "<group>"; };
+		E33ECB03196D211200DDD72D /* GpersonTZViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GpersonTZViewController.h; path = ../GpersonTZViewController.h; sourceTree = "<group>"; };
+		E33ECB04196D211200DDD72D /* GpersonTZViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GpersonTZViewController.m; path = ../GpersonTZViewController.m; sourceTree = "<group>"; };
 		E33ECB06196D230A00DDD72D /* GptzTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GptzTableViewCell.h; sourceTree = "<group>"; };
 		E33ECB07196D230A00DDD72D /* GptzTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GptzTableViewCell.m; sourceTree = "<group>"; };
 		E33ECB0A196D25CD00DDD72D /* GTimeSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTimeSwitch.h; sourceTree = "<group>"; };
 		E33ECB0B196D25CD00DDD72D /* GTimeSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTimeSwitch.m; sourceTree = "<group>"; };
-		E33ECB0D196D279B00DDD72D /* GMessageSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMessageSViewController.h; sourceTree = "<group>"; };
-		E33ECB0E196D279B00DDD72D /* GMessageSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMessageSViewController.m; sourceTree = "<group>"; };
-		E33ECB51196D4BF700DDD72D /* GmarkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmarkViewController.h; sourceTree = "<group>"; };
-		E33ECB52196D4BF700DDD72D /* GmarkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmarkViewController.m; sourceTree = "<group>"; };
+		E33ECB0D196D279B00DDD72D /* GMessageSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GMessageSViewController.h; path = ../GMessageSViewController.h; sourceTree = "<group>"; };
+		E33ECB0E196D279B00DDD72D /* GMessageSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GMessageSViewController.m; path = ../GMessageSViewController.m; sourceTree = "<group>"; };
+		E33ECB51196D4BF700DDD72D /* GmarkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GmarkViewController.h; path = ../GmarkViewController.h; sourceTree = "<group>"; };
+		E33ECB52196D4BF700DDD72D /* GmarkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GmarkViewController.m; path = ../GmarkViewController.m; sourceTree = "<group>"; };
 		E33ECB54196D4D1600DDD72D /* GmarkTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmarkTableViewCell.h; sourceTree = "<group>"; };
 		E33ECB55196D4D1600DDD72D /* GmarkTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmarkTableViewCell.m; sourceTree = "<group>"; };
-		E34B749C196E2E5A00451C65 /* GperInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GperInfoViewController.h; sourceTree = "<group>"; };
-		E34B749D196E2E5A00451C65 /* GperInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GperInfoViewController.m; sourceTree = "<group>"; };
+		E34B749C196E2E5A00451C65 /* GperInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GperInfoViewController.h; path = ../GperInfoViewController.h; sourceTree = "<group>"; };
+		E34B749D196E2E5A00451C65 /* GperInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GperInfoViewController.m; path = ../GperInfoViewController.m; sourceTree = "<group>"; };
 		E34B749F196E341A00451C65 /* GperInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GperInfoTableViewCell.h; sourceTree = "<group>"; };
 		E34B74A0196E341A00451C65 /* GperInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GperInfoTableViewCell.m; sourceTree = "<group>"; };
-		E34B74A2196E923000451C65 /* GjjxxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GjjxxViewController.h; sourceTree = "<group>"; };
-		E34B74A3196E923000451C65 /* GjjxxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GjjxxViewController.m; sourceTree = "<group>"; };
+		E34B74A2196E923000451C65 /* GjjxxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GjjxxViewController.h; path = ../GjjxxViewController.h; sourceTree = "<group>"; };
+		E34B74A3196E923000451C65 /* GjjxxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GjjxxViewController.m; path = ../GjjxxViewController.m; sourceTree = "<group>"; };
 		E34B74A5196E974100451C65 /* GHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHolderTextView.h; sourceTree = "<group>"; };
 		E34B74A6196E974100451C65 /* GHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHolderTextView.m; sourceTree = "<group>"; };
-		E34B74A8196E983700451C65 /* GlxwmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlxwmViewController.h; sourceTree = "<group>"; };
-		E34B74A9196E983700451C65 /* GlxwmViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlxwmViewController.m; sourceTree = "<group>"; };
+		E34B74A8196E983700451C65 /* GlxwmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlxwmViewController.h; path = ../GlxwmViewController.h; sourceTree = "<group>"; };
+		E34B74A9196E983700451C65 /* GlxwmViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GlxwmViewController.m; path = ../GlxwmViewController.m; sourceTree = "<group>"; };
 		E34F3895197D12FE00CB9815 /* LoadingIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingIndicatorView.h; sourceTree = "<group>"; };
 		E34F3896197D12FE00CB9815 /* LoadingIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingIndicatorView.m; sourceTree = "<group>"; };
 		E351A0C1196F943800C78CFE /* GyhzyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GyhzyTableViewCell.h; sourceTree = "<group>"; };
@@ -880,12 +880,12 @@
 		E35871F5196AA63E0002813C /* duihuahuang1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "duihuahuang1@2x.png"; sourceTree = "<group>"; };
 		E3611457197BA8E000F9234E /* DXAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXAlertView.m; sourceTree = "<group>"; };
 		E3611458197BA8E000F9234E /* DXAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXAlertView.h; sourceTree = "<group>"; };
-		E362356D19657588003B23CC /* GfindPasswViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GfindPasswViewController.h; sourceTree = "<group>"; };
-		E362356E19657588003B23CC /* GfindPasswViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GfindPasswViewController.m; sourceTree = "<group>"; };
-		E362356F19657588003B23CC /* GloginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GloginViewController.h; sourceTree = "<group>"; };
-		E362357019657588003B23CC /* GloginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GloginViewController.m; sourceTree = "<group>"; };
-		E362357119657588003B23CC /* GzhuceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GzhuceViewController.h; sourceTree = "<group>"; };
-		E362357219657588003B23CC /* GzhuceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GzhuceViewController.m; sourceTree = "<group>"; };
+		E362356D19657588003B23CC /* GfindPasswViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GfindPasswViewController.h; path = ../GfindPasswViewController.h; sourceTree = "<group>"; };
+		E362356E19657588003B23CC /* GfindPasswViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GfindPasswViewController.m; path = ../GfindPasswViewController.m; sourceTree = "<group>"; };
+		E362356F19657588003B23CC /* GloginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GloginViewController.h; path = ../GloginViewController.h; sourceTree = "<group>"; };
+		E362357019657588003B23CC /* GloginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GloginViewController.m; path = ../GloginViewController.m; sourceTree = "<group>"; };
+		E362357119657588003B23CC /* GzhuceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GzhuceViewController.h; path = ../GzhuceViewController.h; sourceTree = "<group>"; };
+		E362357219657588003B23CC /* GzhuceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GzhuceViewController.m; path = ../GzhuceViewController.m; sourceTree = "<group>"; };
 		E362357419657588003B23CC /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
 		E362357519657588003B23CC /* GuserZhuce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuserZhuce.h; sourceTree = "<group>"; };
 		E362357619657588003B23CC /* GuserZhuce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuserZhuce.m; sourceTree = "<group>"; };
@@ -893,19 +893,19 @@
 		E362357919657588003B23CC /* GloginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GloginView.m; sourceTree = "<group>"; };
 		E362357A19657588003B23CC /* GzhuceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GzhuceTableViewCell.h; sourceTree = "<group>"; };
 		E362357B19657588003B23CC /* GzhuceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GzhuceTableViewCell.m; sourceTree = "<group>"; };
-		E362358319657FA6003B23CC /* GMAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMAPI.h; sourceTree = "<group>"; };
-		E362358419657FA6003B23CC /* GMAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMAPI.m; sourceTree = "<group>"; };
+		E362358319657FA6003B23CC /* GMAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GMAPI.h; path = ../C/GMAPI.h; sourceTree = "<group>"; };
+		E362358419657FA6003B23CC /* GMAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GMAPI.m; path = ../C/GMAPI.m; sourceTree = "<group>"; };
 		E37D2C991974CFA500EBA627 /* shanchu_button_600_100@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shanchu_button_600_100@2x.png"; sourceTree = "<group>"; };
 		E37D2C9A1974CFA500EBA627 /* xuanze_down_44_44@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xuanze_down_44_44@2x.png"; sourceTree = "<group>"; };
 		E37D2C9B1974CFA500EBA627 /* xuanze_up_44_44@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xuanze_up_44_44@2x.png"; sourceTree = "<group>"; };
-		E38087F1196F898200435E53 /* GyhzyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GyhzyViewController.h; sourceTree = "<group>"; };
-		E38087F2196F898200435E53 /* GyhzyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GyhzyViewController.m; sourceTree = "<group>"; };
-		E380B4931980FC0600A86F12 /* GxiaoxiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GxiaoxiViewController.h; sourceTree = "<group>"; };
-		E380B4941980FC0600A86F12 /* GxiaoxiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GxiaoxiViewController.m; sourceTree = "<group>"; };
+		E38087F1196F898200435E53 /* GyhzyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GyhzyViewController.h; path = ../GyhzyViewController.h; sourceTree = "<group>"; };
+		E38087F2196F898200435E53 /* GyhzyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GyhzyViewController.m; path = ../GyhzyViewController.m; sourceTree = "<group>"; };
+		E380B4931980FC0600A86F12 /* GxiaoxiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GxiaoxiViewController.h; path = ../GxiaoxiViewController.h; sourceTree = "<group>"; };
+		E380B4941980FC0600A86F12 /* GxiaoxiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GxiaoxiViewController.m; path = ../GxiaoxiViewController.m; sourceTree = "<group>"; };
 		E380B4961980FC4400A86F12 /* GxiaoxiTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GxiaoxiTableViewCell.h; sourceTree = "<group>"; };
 		E380B4971980FC4400A86F12 /* GxiaoxiTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GxiaoxiTableViewCell.m; sourceTree = "<group>"; };
-		E3FFFCE5196BE19D00596186 /* GfindCarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GfindCarViewController.h; sourceTree = "<group>"; };
-		E3FFFCE6196BE19D00596186 /* GfindCarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GfindCarViewController.m; sourceTree = "<group>"; };
+		E3FFFCE5196BE19D00596186 /* GfindCarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GfindCarViewController.h; path = ../GfindCarViewController.h; sourceTree = "<group>"; };
+		E3FFFCE6196BE19D00596186 /* GfindCarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GfindCarViewController.m; path = ../GfindCarViewController.m; sourceTree = "<group>"; };
 		E3FFFCE8196BE28F00596186 /* GfindCarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GfindCarTableViewCell.h; sourceTree = "<group>"; };
 		E3FFFCE9196BE28F00596186 /* GfindCarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GfindCarTableViewCell.m; sourceTree = "<group>"; };
 		F2B6939735024693BB7F96CA /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
@@ -2051,6 +2051,8 @@
 				E31F538C19737DDC00540124 /* GmLoadData.m */,
 				E31F5396197405DC00540124 /* GlocalUserImage.h */,
 				E31F5397197405DC00540124 /* GlocalUserImage.m */,
+				E362358319657FA6003B23CC /* GMAPI.h */,
+				E362358419657FA6003B23CC /* GMAPI.m */,
 			);
 			path = GUtils;
 			sourceTree = "<group>";
@@ -2069,34 +2071,19 @@
 		E362356C19657588003B23CC /* C */ = {
 			isa = PBXGroup;
 			children = (
-				E362356D19657588003B23CC /* GfindPasswViewController.h */,
-				E362356E19657588003B23CC /* GfindPasswViewController.m */,
-				E362356F19657588003B23CC /* GloginViewController.h */,
-				E362357019657588003B23CC /* GloginViewController.m */,
-				E362357119657588003B23CC /* GzhuceViewController.h */,
-				E362357219657588003B23CC /* GzhuceViewController.m */,
-				E3385D28196BBAED008061FA /* GChangePwViewController.h */,
-				E3385D29196BBAED008061FA /* GChangePwViewController.m */,
-				E3FFFCE5196BE19D00596186 /* GfindCarViewController.h */,
-				E3FFFCE6196BE19D00596186 /* GfindCarViewController.m */,
-				E33ECB03196D211200DDD72D /* GpersonTZViewController.h */,
-				E33ECB04196D211200DDD72D /* GpersonTZViewController.m */,
-				E33ECB0D196D279B00DDD72D /* GMessageSViewController.h */,
-				E33ECB0E196D279B00DDD72D /* GMessageSViewController.m */,
-				E33ECB51196D4BF700DDD72D /* GmarkViewController.h */,
-				E33ECB52196D4BF700DDD72D /* GmarkViewController.m */,
-				E34B749C196E2E5A00451C65 /* GperInfoViewController.h */,
-				E34B749D196E2E5A00451C65 /* GperInfoViewController.m */,
-				E34B74A2196E923000451C65 /* GjjxxViewController.h */,
-				E34B74A3196E923000451C65 /* GjjxxViewController.m */,
-				E34B74A8196E983700451C65 /* GlxwmViewController.h */,
-				E34B74A9196E983700451C65 /* GlxwmViewController.m */,
-				E38087F1196F898200435E53 /* GyhzyViewController.h */,
-				E38087F2196F898200435E53 /* GyhzyViewController.m */,
-				E362358319657FA6003B23CC /* GMAPI.h */,
-				E362358419657FA6003B23CC /* GMAPI.m */,
-				E380B4931980FC0600A86F12 /* GxiaoxiViewController.h */,
-				E380B4941980FC0600A86F12 /* GxiaoxiViewController.m */,
+				E3DF44A01985838300C60FA4 /* 站内消息 */,
+				E3DF449F1985837100C60FA4 /* 联系我们 */,
+				E3DF449E1985836100C60FA4 /* 简介和详细 */,
+				E3DF449D1985834500C60FA4 /* 我的资料 */,
+				E3DF449C1985833400C60FA4 /* 我的收藏 */,
+				E3DF449B1985831F00C60FA4 /* 消息设置 */,
+				E3DF449A1985830B00C60FA4 /* 通知 */,
+				E3DF4499198582EE00C60FA4 /* 寻车 */,
+				E3DF4498198582CF00C60FA4 /* 修改密码 */,
+				E3DF4497198582B900C60FA4 /* 注册界面 */,
+				E3DF44961985829F00C60FA4 /* 登录界面 */,
+				E3DF44951985828500C60FA4 /* 找回密码 */,
+				E3DF44941985826000C60FA4 /* 用户主页 */,
 			);
 			path = C;
 			sourceTree = "<group>";
@@ -2139,6 +2126,123 @@
 				E380B4971980FC4400A86F12 /* GxiaoxiTableViewCell.m */,
 			);
 			path = V;
+			sourceTree = "<group>";
+		};
+		E3DF44941985826000C60FA4 /* 用户主页 */ = {
+			isa = PBXGroup;
+			children = (
+				E38087F1196F898200435E53 /* GyhzyViewController.h */,
+				E38087F2196F898200435E53 /* GyhzyViewController.m */,
+			);
+			path = "用户主页";
+			sourceTree = "<group>";
+		};
+		E3DF44951985828500C60FA4 /* 找回密码 */ = {
+			isa = PBXGroup;
+			children = (
+				E362356D19657588003B23CC /* GfindPasswViewController.h */,
+				E362356E19657588003B23CC /* GfindPasswViewController.m */,
+			);
+			path = "找回密码";
+			sourceTree = "<group>";
+		};
+		E3DF44961985829F00C60FA4 /* 登录界面 */ = {
+			isa = PBXGroup;
+			children = (
+				E362356F19657588003B23CC /* GloginViewController.h */,
+				E362357019657588003B23CC /* GloginViewController.m */,
+			);
+			path = "登录界面";
+			sourceTree = "<group>";
+		};
+		E3DF4497198582B900C60FA4 /* 注册界面 */ = {
+			isa = PBXGroup;
+			children = (
+				E362357119657588003B23CC /* GzhuceViewController.h */,
+				E362357219657588003B23CC /* GzhuceViewController.m */,
+			);
+			path = "注册界面";
+			sourceTree = "<group>";
+		};
+		E3DF4498198582CF00C60FA4 /* 修改密码 */ = {
+			isa = PBXGroup;
+			children = (
+				E3385D28196BBAED008061FA /* GChangePwViewController.h */,
+				E3385D29196BBAED008061FA /* GChangePwViewController.m */,
+			);
+			path = "修改密码";
+			sourceTree = "<group>";
+		};
+		E3DF4499198582EE00C60FA4 /* 寻车 */ = {
+			isa = PBXGroup;
+			children = (
+				E3FFFCE5196BE19D00596186 /* GfindCarViewController.h */,
+				E3FFFCE6196BE19D00596186 /* GfindCarViewController.m */,
+			);
+			path = "寻车";
+			sourceTree = "<group>";
+		};
+		E3DF449A1985830B00C60FA4 /* 通知 */ = {
+			isa = PBXGroup;
+			children = (
+				E33ECB03196D211200DDD72D /* GpersonTZViewController.h */,
+				E33ECB04196D211200DDD72D /* GpersonTZViewController.m */,
+			);
+			path = "通知";
+			sourceTree = "<group>";
+		};
+		E3DF449B1985831F00C60FA4 /* 消息设置 */ = {
+			isa = PBXGroup;
+			children = (
+				E33ECB0D196D279B00DDD72D /* GMessageSViewController.h */,
+				E33ECB0E196D279B00DDD72D /* GMessageSViewController.m */,
+			);
+			path = "消息设置";
+			sourceTree = "<group>";
+		};
+		E3DF449C1985833400C60FA4 /* 我的收藏 */ = {
+			isa = PBXGroup;
+			children = (
+				E33ECB51196D4BF700DDD72D /* GmarkViewController.h */,
+				E33ECB52196D4BF700DDD72D /* GmarkViewController.m */,
+			);
+			path = "我的收藏";
+			sourceTree = "<group>";
+		};
+		E3DF449D1985834500C60FA4 /* 我的资料 */ = {
+			isa = PBXGroup;
+			children = (
+				E34B749C196E2E5A00451C65 /* GperInfoViewController.h */,
+				E34B749D196E2E5A00451C65 /* GperInfoViewController.m */,
+			);
+			path = "我的资料";
+			sourceTree = "<group>";
+		};
+		E3DF449E1985836100C60FA4 /* 简介和详细 */ = {
+			isa = PBXGroup;
+			children = (
+				E34B74A2196E923000451C65 /* GjjxxViewController.h */,
+				E34B74A3196E923000451C65 /* GjjxxViewController.m */,
+			);
+			path = "简介和详细";
+			sourceTree = "<group>";
+		};
+		E3DF449F1985837100C60FA4 /* 联系我们 */ = {
+			isa = PBXGroup;
+			children = (
+				E34B74A8196E983700451C65 /* GlxwmViewController.h */,
+				E34B74A9196E983700451C65 /* GlxwmViewController.m */,
+			);
+			path = "联系我们";
+			sourceTree = "<group>";
+		};
+		E3DF44A01985838300C60FA4 /* 站内消息 */ = {
+			isa = PBXGroup;
+			children = (
+				E380B4931980FC0600A86F12 /* GxiaoxiViewController.h */,
+				E380B4941980FC0600A86F12 /* GxiaoxiViewController.m */,
+			);
+			path = "站内消息";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

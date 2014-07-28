@@ -36,8 +36,9 @@
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
-    [self prepareNetData];
-    
+    _page = 1;
+    [self prepareUeserInfo];//获取用户信息
+    [self prepareUserCar];//获取用户车源信息
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,11 +50,10 @@
 
 
 #pragma mark - 请求网络数据
--(void)prepareNetData{
+//获取用户信息
+-(void)prepareUeserInfo{
     NSString *api = [NSString stringWithFormat:FBAUTO_GET_USER_INFORMATION,self.userId];
-    
-    NSLog(@"api === %@",api);
-    
+    NSLog(@"获取用户信息 api === %@",api);
     NSURL *url = [NSURL URLWithString:api];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
@@ -68,6 +68,20 @@
         
     }];
     
+}
+
+//获取用户车源信息
+-(void)prepareUserCar{
+    //获取用户车源信息
+    NSString *api = [NSString stringWithFormat:FBAUTO_CARSOURCE_MYSELF,self.userId,_page,10];
+    
+    NSLog(@"用户车源信息接口:%@",api);
+    
+    NSURL *url = [NSURL URLWithString:api];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        
+    }];
 }
 
 

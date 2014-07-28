@@ -307,9 +307,9 @@
             [self.navigationController pushViewController:gmarkvc animated:YES];
             
         }else if (index == 6){//联系我们
-            //[self.navigationController pushViewController:[[GlxwmViewController alloc]init] animated:YES];
+            [self.navigationController pushViewController:[[GlxwmViewController alloc]init] animated:YES];
             //测试
-            [self.navigationController pushViewController:[[GyhzyViewController alloc]init] animated:YES];
+            //[self.navigationController pushViewController:[[GyhzyViewController alloc]init] animated:YES];
             
             
         }else if (index == 7){//消息设置
