@@ -29,6 +29,7 @@
 
 //退出登录
 #import "CarResourceViewController.h"
+#import "FBCityData.h"
 
 
 @interface PersonalViewController ()
@@ -52,6 +53,10 @@
             [self.userFaceImv setImage:[GlocalUserImage getUserFaceImage]];
         }
     }
+    
+    //进入页面更新未读消息
+    
+    [self updateUnreadNumber:nil];
 }
 
 - (void)viewDidLoad
@@ -179,6 +184,9 @@
     
     //请求网络数据
     [self prepareNetData];
+    
+    //未读消息通知
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateUnreadNumber:) name:@"unReadNumber" object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -187,6 +195,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma - mark 更新未读消息
+
+- (void)updateUnreadNumber:(NSNotification *)notification
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *currentUserPhone = [defaults objectForKey:XMPP_USERID];
+    
+    int number = [FBCityData numberOfUnreadMessage:currentUserPhone];
+    
+    NSLog(@"未读条数:%d",number);
+}
 
 
 #pragma mark - 请求网络数据

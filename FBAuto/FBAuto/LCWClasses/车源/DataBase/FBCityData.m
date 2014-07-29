@@ -382,14 +382,14 @@
     
     int sum = 0;
     //先查询未读数, -1
-    int result1= sqlite3_prepare_v2(db, "select unReadSum from xmppMessage where currentUser = ? and unReadSum > ?", -1, &stmt, nil);
+    int result1= sqlite3_prepare_v2(db, "select unReadSum from xmppMessage where currentUser = ? and unReadSum > 0", -1, &stmt, nil);
     if (result1 == SQLITE_OK) {
         
         sqlite3_bind_text(stmt, 1, [currentUser UTF8String], -1, nil);
         
         while (sqlite3_step(stmt) == SQLITE_ROW) {
             
-            int num = sqlite3_column_int(stmt, 1);
+            int num = sqlite3_column_int(stmt, 0);
             
             sum = sum + num;
         }

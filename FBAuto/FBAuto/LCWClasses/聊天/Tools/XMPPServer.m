@@ -308,7 +308,7 @@ static int x = 10;
         fromPhone = [fromArr objectAtIndex:0];
     }
     //离线消息
-    if (delay) {
+    if (delay.count > 0) {
         
         NSString *delayTime = [[[delay objectAtIndex:0]attributeForName:@"stamp"]stringValue];
         delayTime = [delayTime substringToIndex:10];
@@ -317,7 +317,16 @@ static int x = 10;
         [FBCityData updateCurrentUserPhone:currentUserPhone fromUserPhone:fromPhone fromName:nickName newestMessage:msg time:delayTime clearReadSum:NO];
     }else
     {
-        [FBCityData updateCurrentUserPhone:currentUserPhone fromUserPhone:fromPhone fromName:nickName newestMessage:msg time:[LCWTools currentTime] clearReadSum:NO];
+        NSString *chatingUser = [defaults objectForKey:CHATING_USER];
+        
+        BOOL needClear = NO;
+        
+        //如果是当前正在聊得人,则未读计数清为0
+        if ([chatingUser isEqualToString:fromPhone]) {
+            needClear = YES;
+        }
+        
+        [FBCityData updateCurrentUserPhone:currentUserPhone fromUserPhone:fromPhone fromName:nickName newestMessage:msg time:[LCWTools currentTime] clearReadSum:needClear];
     }
     
     //发送未读消息通知

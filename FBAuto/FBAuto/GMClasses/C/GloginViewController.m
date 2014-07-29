@@ -12,7 +12,7 @@
 #import "GfindPasswViewController.h"//找回密码
 
 #import "XMPPStatics.h"
-
+#import "XMPPServer.h"
 
 @interface GloginViewController ()
 
@@ -152,15 +152,20 @@
             [defaults setObject:passw forKey:XMPP_PASS];
             
             [defaults setObject:@"60.18.147.4" forKey:XMPP_SERVER];
-            
-            
             [defaults setObject:userid forKey:USERID];
             [defaults setObject:username forKey:USERNAME];
             [defaults setObject:authkey forKey:USERAUTHKEY];
             [defaults setObject:passw forKey:USERPASSWORD];
-            
-            
             [defaults synchronize];
+            
+            
+            [[XMPPServer shareInstance]loginTimes:10 loginBack:^(BOOL result) {
+                if (result) {
+                    NSLog(@"连接并且登录成功");
+                }else{
+                    NSLog(@"连接登录不成功");
+                }
+            }];
             
             [self dismissViewControllerAnimated:YES completion:^{
                 

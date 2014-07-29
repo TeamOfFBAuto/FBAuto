@@ -164,8 +164,6 @@
     //搜索遮罩
     [_table showRefreshHeader:YES];
     
-    
-    
 }
 
 - (void)didReceiveMemoryWarning

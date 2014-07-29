@@ -73,6 +73,15 @@
     return self;
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    NSUserDefaults *defalts = [NSUserDefaults standardUserDefaults];
+    [defalts setObject:nil forKey:CHATING_USER];
+    [defalts synchronize];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -142,10 +151,12 @@
     
     NSUserDefaults *defalts = [NSUserDefaults standardUserDefaults];
     NSString *userName = [defalts objectForKey:XMPP_USERID];
-    NSString *server = [defalts objectForKey:XMPP_SERVER];
-//    NSString *from = [NSString stringWithFormat:@"%@@%@"]
-    
     [FBCityData updateCurrentUserPhone:userName fromUserPhone:self.chatWithUser fromName:Nil newestMessage:Nil time:Nil clearReadSum:YES];
+    
+    //记录当前聊天人
+    
+    [defalts setObject:self.chatWithUser forKey:CHATING_USER];
+    [defalts synchronize];
 }
 
 - (void)freindArray

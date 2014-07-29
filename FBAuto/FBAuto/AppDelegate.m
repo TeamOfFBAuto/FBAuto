@@ -108,14 +108,7 @@
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
-//    
-//    self.statusBarBack = [[UIWindow alloc]initWithFrame:[UIApplication sharedApplication].statusBarFrame];
-//    
-//    _statusBarBack.backgroundColor = [UIColor blackColor];
-//    
-//    [_statusBarBack setWindowLevel:UIWindowLevelStatusBar-1];
-//    
-//    [_statusBarBack makeKeyAndVisible];
+
     
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
@@ -132,6 +125,9 @@
     
     [ShareSDK registerApp:Appkey];
     [self initSharePlat];
+    
+    //发送未读消息通知
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"unReadNumber" object:nil];
 
     self.window.rootViewController=tabbar;
     self.window.backgroundColor = [UIColor whiteColor];

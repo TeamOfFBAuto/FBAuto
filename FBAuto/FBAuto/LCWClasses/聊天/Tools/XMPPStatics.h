@@ -13,6 +13,8 @@ static NSString *XMPP_JID = @"jid";
 static NSString *XMPP_PASS= @"pass";
 static NSString *XMPP_SERVER = @"server";
 
+#define CHATING_USER @"CHATING_USER" //正在聊天人
+
 #define ONLINE_TIME @"onelineTime" //上线时间
 #define OFFLINE_TIME @"offlineTime" //离线时间
 
