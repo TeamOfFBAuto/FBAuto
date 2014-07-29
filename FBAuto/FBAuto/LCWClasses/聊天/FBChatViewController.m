@@ -27,6 +27,7 @@
 
 #import "ASIFormDataRequest.h"
 #import "GDataXMLNode.h"
+#import "FBCityData.h"
 
 #define MESSAGE_PAGE_SIZE 10
 
@@ -136,10 +137,15 @@
     //获取用户在线状态
     
     [self requestUserState:self.chatWithUser];
+
+    //将当前聊天用户的未读数设为 0
     
-    //好友列表
+    NSUserDefaults *defalts = [NSUserDefaults standardUserDefaults];
+    NSString *userName = [defalts objectForKey:XMPP_USERID];
+    NSString *server = [defalts objectForKey:XMPP_SERVER];
+//    NSString *from = [NSString stringWithFormat:@"%@@%@"]
     
-    [self freindArray];
+    [FBCityData updateCurrentUserPhone:userName fromUserPhone:self.chatWithUser fromName:Nil newestMessage:Nil time:Nil clearReadSum:YES];
 }
 
 - (void)freindArray

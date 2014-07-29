@@ -319,7 +319,14 @@
         sqlite3_bind_text(stmt, 3, [fromName UTF8String], -1, NULL);
         sqlite3_bind_text(stmt, 4, [message UTF8String], -1, NULL);
         sqlite3_bind_text(stmt, 5, [time UTF8String], -1, NULL);
-        sqlite3_bind_int(stmt, 6, 1);
+        
+        if (clearSum) {
+            number = 0;
+        }else
+        {
+            number = 1;
+        }
+        sqlite3_bind_int(stmt, 6, number);
         result = sqlite3_step(stmt);
         
         NSLog(@"save xmppMessage %@ result:%d",fromName,result);
@@ -328,25 +335,38 @@
     {
         
         if (clearSum) {
-            number = 0;
+            
+            int result2 = sqlite3_prepare(db, "update xmppMessage set unReadSum = ? where currentUser = ? and fromPhone = ?", -1, &stmt, nil);
+            if (result2 == SQLITE_OK) {
+                
+                sqlite3_bind_int(stmt, 1, 0);
+                sqlite3_bind_text(stmt, 2, [currentPhone UTF8String], -1, nil);
+                sqlite3_bind_text(stmt, 3, [FromPhone UTF8String], -1, nil);
+                
+                int resultx = sqlite3_step(stmt);
+                NSLog(@"resultx %d",resultx);
+            }
+            
         }else
         {
            number ++;
+            
+            int result2 = sqlite3_prepare(db, "update xmppMessage set unReadSum = ? ,newestMessage = ?,time = ? where currentUser = ? and fromPhone = ?", -1, &stmt, nil);
+            if (result2 == SQLITE_OK) {
+                
+                sqlite3_bind_int(stmt, 1, number);
+                sqlite3_bind_text(stmt, 2, [message UTF8String], -1, nil);
+                sqlite3_bind_text(stmt, 3, [time UTF8String], -1, nil);
+                sqlite3_bind_text(stmt, 4, [currentPhone UTF8String], -1, nil);
+                sqlite3_bind_text(stmt, 5, [FromPhone UTF8String], -1, nil);
+                int resultx = sqlite3_step(stmt);
+                NSLog(@"resultx %d",resultx);
+            }
         }
         
         NSLog(@"number --> %d",number);
         
-        int result2 = sqlite3_prepare(db, "update xmppMessage set unReadSum = ? ,newestMessage = ?,time = ? where currentUser = ? and fromPhone = ?", -1, &stmt, nil);
-        if (result2 == SQLITE_OK) {
-            
-            sqlite3_bind_int(stmt, 1, number);
-            sqlite3_bind_text(stmt, 2, [message UTF8String], -1, nil);
-            sqlite3_bind_text(stmt, 3, [time UTF8String], -1, nil);
-            sqlite3_bind_text(stmt, 4, [currentPhone UTF8String], -1, nil);
-            sqlite3_bind_text(stmt, 5, [FromPhone UTF8String], -1, nil);
-            int resultx = sqlite3_step(stmt);
-            NSLog(@"resultx %d",resultx);
-        }
+        
     }
     
     sqlite3_finalize(stmt);

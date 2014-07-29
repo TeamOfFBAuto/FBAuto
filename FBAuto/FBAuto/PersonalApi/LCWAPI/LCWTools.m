@@ -286,22 +286,18 @@
 //    return result;
 //}
 
-+ (NSString *)time:(NSDate *)time
++ (NSString *)currentTime
 {
-//    timeString = @"2014-07-29T03:52:04.781Z";
-    
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
     
     [outputFormatter setLocale:[NSLocale currentLocale]];
     
-    [outputFormatter setDateFormat:@"yyyy年MM月dd日 HH时mm分ss秒"];
+    [outputFormatter setDateFormat:@"yyyy-MM-dd"];
     
-    NSString *date = [outputFormatter stringFromDate:time];
+    NSString *date = [outputFormatter stringFromDate:[NSDate date]];
     
-    NSLog(@"testDate:%@", date);
-    
-    NSLog(@"时间 === %@",[NSString stringWithFormat:@"%@",date]);
-    return [NSString stringWithFormat:@"%@",date];
+    NSLog(@"时间 === %@",date);
+    return date;
 }
 
 //alert 提示

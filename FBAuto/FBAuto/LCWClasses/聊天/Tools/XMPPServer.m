@@ -291,7 +291,7 @@ static int x = 10;
     NSString *from = [[message attributeForName:@"from"] stringValue];
     
     //接受者
-    NSString *status = [[message attributeForName:@"status"]stringValue];//是否是离线消息
+//    NSString *status = [[message attributeForName:@"status"]stringValue];//是否是离线消息
     NSString *nickName = [[message attributeForName:@"nickName"]stringValue];//接收者nickName
     
     NSString *currentUserPhone = [defaults objectForKey:XMPP_USERID];
@@ -300,26 +300,28 @@ static int x = 10;
     
     NSArray *delay = [message elementsForName:@"delay"];
     
-//    <message xmlns="jabber:client" type="chat" to="18612389982@60.18.147.4" from="13301072337@60.18.147.4/85ea3c16"><body>小胖</body>
-    //<delay xmlns="urn:xmpp:delay" from="60.18.147.4" stamp="2014-07-29T03:37:34.854Z"></delay><x xmlns="jabber:x:delay" from="60.18.147.4" stamp="20140729T03:37:34"></x></message>
+    NSArray *fromArr = [from componentsSeparatedByString:@"@"];
     
+    NSString *fromPhone = @"";
+    
+    if (fromArr.count > 0) {
+        fromPhone = [fromArr objectAtIndex:0];
+    }
+    //离线消息
     if (delay) {
         
         NSString *delayTime = [[[delay objectAtIndex:0]attributeForName:@"stamp"]stringValue];
         delayTime = [delayTime substringToIndex:10];
         NSLog(@"delay %@",delayTime);
         
-        [FBCityData updateCurrentUserPhone:currentUserPhone fromUserPhone:from fromName:nickName newestMessage:msg time:delayTime clearReadSum:NO];
+        [FBCityData updateCurrentUserPhone:currentUserPhone fromUserPhone:fromPhone fromName:nickName newestMessage:msg time:delayTime clearReadSum:NO];
+    }else
+    {
+        [FBCityData updateCurrentUserPhone:currentUserPhone fromUserPhone:fromPhone fromName:nickName newestMessage:msg time:[LCWTools currentTime] clearReadSum:NO];
     }
-
-   
-//    
-//    if ([status isEqualToString:@"unavailable"]) {
-//        //离线消息
-//        
-//        [FBCityData updateCurrentUserPhone:currentUserPhone fromUserPhone:from fromName:nickName newestMessage:msg time:[XMPPStatics getCurrentTime] clearReadSum:NO];
-//    }
     
+    //发送未读消息通知
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"unReadNumber" object:nil];
     
     if(msg)
     {
@@ -334,21 +336,6 @@ static int x = 10;
         if (self.messageDelegate && [_messageDelegate respondsToSelector:@selector(newMessage:)]) {
             [_messageDelegate newMessage:dict];
         }
-        
-        //消息提示
-        
-//        //程序运行在前台，消息正常显示
-//        if (![[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
-//        {
-//            
-//        }else{//如果程序在后台运行，收到消息以通知类型来显示
-//            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-//            localNotification.alertAction = @"Ok";
-//            localNotification.alertBody = [NSString stringWithFormat:@"From: %@\n\n%@",from,msg];//通知主体
-//            localNotification.soundName = @"crunch.wav";//通知声音
-//            localNotification.applicationIconBadgeNumber = 2;//标记数
-//            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];//发送通知
-//        }
     }
 }
 
