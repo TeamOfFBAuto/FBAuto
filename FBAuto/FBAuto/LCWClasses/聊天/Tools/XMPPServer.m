@@ -292,7 +292,8 @@ static int x = 10;
     
     //接受者
 //    NSString *status = [[message attributeForName:@"status"]stringValue];//是否是离线消息
-    NSString *nickName = [[message attributeForName:@"nickName"]stringValue];//接收者nickName
+    NSString *senderName = [[message attributeForName:@"senderName"]stringValue];//发送者 nickName
+    NSString *senderId = [[message attributeForName:@"senderId"]stringValue];//接收者nickName
     
     NSString *currentUserPhone = [defaults objectForKey:XMPP_USERID];
     
@@ -314,7 +315,7 @@ static int x = 10;
         delayTime = [delayTime substringToIndex:10];
         NSLog(@"delay %@",delayTime);
         
-        [FBCityData updateCurrentUserPhone:currentUserPhone fromUserPhone:fromPhone fromName:nickName newestMessage:msg time:delayTime clearReadSum:NO];
+        [FBCityData updateCurrentUserPhone:currentUserPhone fromUserPhone:fromPhone fromName:senderName fromId:senderId newestMessage:msg time:delayTime clearReadSum:NO];
     }else
     {
         NSString *chatingUser = [defaults objectForKey:CHATING_USER];
@@ -326,7 +327,7 @@ static int x = 10;
             needClear = YES;
         }
         
-        [FBCityData updateCurrentUserPhone:currentUserPhone fromUserPhone:fromPhone fromName:nickName newestMessage:msg time:[LCWTools currentTime] clearReadSum:needClear];
+        [FBCityData updateCurrentUserPhone:currentUserPhone fromUserPhone:fromPhone fromName:senderName fromId:senderId newestMessage:msg time:[LCWTools currentTime] clearReadSum:needClear];
     }
     
     //发送未读消息通知

@@ -14,9 +14,11 @@
 @property(nonatomic,retain)NSString *fromName;
 @property(nonatomic,retain)NSString *newestMessage;
 @property(nonatomic,retain)NSString *time;
+@property(nonatomic,retain)NSString *fromId;
 
 - (id)initWithFromPhone:(NSString *)phoneName
                  fromName:(NSString *)fromName
+                 fromId:(NSString *)fromId
             newestMessage:(NSString *)newestMessage
                      time:(NSString *)time;
 

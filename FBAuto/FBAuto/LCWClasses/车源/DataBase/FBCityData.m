@@ -301,7 +301,7 @@
 
 // clearReadSum 为 yes 时将unReadSum 置为0,反之则 +1
 
-+ (void)updateCurrentUserPhone:(NSString *)currentPhone fromUserPhone:(NSString *)FromPhone fromName:(NSString *)fromName newestMessage:(NSString *)message time:(NSString *)time clearReadSum:(BOOL)clearSum
++ (void)updateCurrentUserPhone:(NSString *)currentPhone fromUserPhone:(NSString *)FromPhone fromName:(NSString *)fromName fromId:(NSString *)fromId newestMessage:(NSString *)message time:(NSString *)time clearReadSum:(BOOL)clearSum
 {
     
     int number = [self numberOfExist:currentPhone fromUser:FromPhone];
@@ -313,13 +313,14 @@
         //插入
         
         //unReadSum = 0,说明没有未读消息 > 0有未读消息
-        int result = sqlite3_prepare(db, "insert into xmppMessage(currentUser,fromPhone,fromName,newestMessage,time,unReadSum) values(?,?,?,?,?,?)", -1, &stmt, nil);//?相当于%@格式
+        int result = sqlite3_prepare(db, "insert into xmppMessage(currentUser,fromPhone,fromName,newestMessage,time,unReadSum,fromId) values(?,?,?,?,?,?,?)", -1, &stmt, nil);//?相当于%@格式
         
         sqlite3_bind_text(stmt, 1, [currentPhone UTF8String], -1, NULL);
         sqlite3_bind_text(stmt, 2, [FromPhone UTF8String], -1, NULL);
         sqlite3_bind_text(stmt, 3, [fromName UTF8String], -1, NULL);
         sqlite3_bind_text(stmt, 4, [message UTF8String], -1, NULL);
         sqlite3_bind_text(stmt, 5, [time UTF8String], -1, NULL);
+        sqlite3_bind_text(stmt, 6, [fromId UTF8String], -1, NULL);
         
         if (clearSum) {
             number = 0;
@@ -330,7 +331,7 @@
         sqlite3_bind_int(stmt, 6, number);
         result = sqlite3_step(stmt);
         
-        NSLog(@"save xmppMessage %@ result:%d",fromName,result);
+        NSLog(@"save xmppMessage %@ fromId:%@ result:%d",fromName,fromId,result);
         
     }else
     {
@@ -418,8 +419,9 @@
             const unsigned char *fromName = sqlite3_column_text(stmt, 2);
             const unsigned char *message = sqlite3_column_text(stmt, 3);
             const unsigned char *time = sqlite3_column_text(stmt, 4);
+            const unsigned char *fromId = sqlite3_column_text(stmt, 4);;
             
-            XMPPMessageModel *aModel = [[XMPPMessageModel alloc]initWithFromPhone:[NSString stringWithUTF8String:(const char *)fromPhone] fromName:[NSString stringWithUTF8String:(const char *)fromName] newestMessage:[NSString stringWithUTF8String:(const char *)message] time:[NSString stringWithUTF8String:(const char *)time]];
+            XMPPMessageModel *aModel = [[XMPPMessageModel alloc]initWithFromPhone:[NSString stringWithUTF8String:(const char *)fromPhone] fromName:[NSString stringWithUTF8String:(const char *)fromName] fromId:[NSString stringWithUTF8String:(const char *)fromId]  newestMessage:[NSString stringWithUTF8String:(const char *)message] time:[NSString stringWithUTF8String:(const char *)time]];
             [resultArr addObject:aModel];
         }
     }

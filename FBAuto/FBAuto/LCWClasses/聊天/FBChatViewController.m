@@ -151,7 +151,7 @@
     
     NSUserDefaults *defalts = [NSUserDefaults standardUserDefaults];
     NSString *userName = [defalts objectForKey:XMPP_USERID];
-    [FBCityData updateCurrentUserPhone:userName fromUserPhone:self.chatWithUser fromName:Nil newestMessage:Nil time:Nil clearReadSum:YES];
+    [FBCityData updateCurrentUserPhone:userName fromUserPhone:self.chatWithUser fromName:Nil fromId:nil newestMessage:Nil time:Nil clearReadSum:YES];
     
     //记录当前聊天人
     
@@ -651,7 +651,16 @@
     }else
     {
         
-        aFrameY = inputBar.top - (self.view.height - 50 - (iPhone5 ? 20 : 0) - 44) - inputBar.height - 10;
+        CGSize contentSize = self.table.contentSize;
+        
+        CGFloat visibleHeight = inputBar.top - (iPhone5 ? 20 : 0) - 44;//聊天可视高度
+        
+        NSLog(@",,,,,%f",visibleHeight);
+        
+        if (contentSize.height > self.table.height) {
+            
+            aFrameY = inputBar.top - (self.view.height - 50 - (iPhone5 ? 20 : 0) - 44) - inputBar.height - 10;
+        }
     }
     
     aFrame.origin.y = aFrameY;
@@ -738,7 +747,12 @@
     
     //聊天对象nickName
     
-    [mes addAttributeWithName:@"nickName" stringValue:self.chatWithUserName];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *senderName = [defaults objectForKey:USERNAME];
+    NSString *senderId = [defaults objectForKey:USERID];
+    
+    [mes addAttributeWithName:@"senderName" stringValue:senderName ? senderName : @""];
+    [mes addAttributeWithName:@"senderId" stringValue:senderId ? senderId : @""];
     
     [mes addAttributeWithName:@"to" stringValue:toUser];
     
