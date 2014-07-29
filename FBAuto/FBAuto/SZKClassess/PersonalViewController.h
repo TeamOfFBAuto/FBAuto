@@ -7,7 +7,7 @@
 //
 
 
-//个人中心 
+//个人中心
 #import <UIKit/UIKit.h>
 
 @interface PersonalViewController : FBBaseViewController<UITableViewDelegate,UITableViewDataSource>
@@ -33,6 +33,10 @@
 
 @property(nonatomic,strong)UIView *xiaoxiRedPointView;//消息 小红点view
 @property(nonatomic,strong)UIView *tongzhiRedPointView;//通知 小红点view
+
+@property(nonatomic,strong)UILabel *xiaoxiNumLabel;//显示消息数量的label
+@property(nonatomic,strong)UILabel *tongzhiNumLabel;//显示通知数量的label
+
 
 
 @end

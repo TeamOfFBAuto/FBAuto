@@ -24,7 +24,12 @@
 
 //测试
 //用户主页
+
 #import "GuserZyViewController.h"
+
+//退出登录
+#import "CarResourceViewController.h"
+
 
 @interface PersonalViewController ()
 
@@ -53,7 +58,7 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor=RGBCOLOR(22, 23, 3);
-
+    
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     self.titleLabel.text = @"个人中心";
@@ -61,7 +66,7 @@
     
     //头像
     self.userFaceImv = [[UIImageView alloc]initWithFrame:CGRectMake(10, 15, 45, 45)];
-    self.userFaceImv.backgroundColor = [UIColor grayColor];
+    self.userFaceImv.backgroundColor = RGBCOLOR(180, 180, 180);
     if ([GlocalUserImage getUserFaceImage]) {
         [self.userFaceImv setImage:[GlocalUserImage getUserFaceImage]];
     }
@@ -95,7 +100,7 @@
         [btn setBackgroundImage:imageArray[i] forState:UIControlStateNormal];
         
         //frame
-        btn.frame = CGRectMake(10+i*105, CGRectGetMaxY(self.userFaceImv.frame)+14, 91, 30);
+        btn.frame = CGRectMake(9+i*105, CGRectGetMaxY(self.userFaceImv.frame)+14, 91, 30);
         btn.backgroundColor = [UIColor orangeColor];
         btn.layer.cornerRadius = 4;
         btn.tag = 50+i;
@@ -131,7 +136,6 @@
     self.xiaoxiRedPointView.backgroundColor = [UIColor redColor];
     self.xiaoxiRedPointView.center = CGPointMake(CGRectGetMaxX(_xiaoxiBtn.frame), CGRectGetMinY(_xiaoxiBtn.frame));
     
-    
     self.tongzhiRedPointView = [[UIView alloc]initWithFrame:CGRectZero];
     self.tongzhiRedPointView.frame = CGRectMake(0, 0, 18, 18);
     self.tongzhiRedPointView.layer.cornerRadius = 9;
@@ -139,16 +143,37 @@
     self.tongzhiRedPointView.center = CGPointMake(CGRectGetMaxX(_tongzhiBtn.frame), CGRectGetMinY(_tongzhiBtn.frame));
     
     
+    //数字label
+    self.xiaoxiNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+    self.xiaoxiNumLabel.center = self.xiaoxiRedPointView.center;
+    self.xiaoxiNumLabel.font = [UIFont systemFontOfSize:12];
+    self.xiaoxiNumLabel.textColor = [UIColor whiteColor];
+    self.xiaoxiNumLabel.textAlignment = NSTextAlignmentCenter;
+    self.xiaoxiNumLabel.text = @"12";
+    
+    self.tongzhiNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+    self.tongzhiNumLabel.center = self.tongzhiRedPointView.center;
+    self.tongzhiNumLabel.font = [UIFont systemFontOfSize:12];
+    self.tongzhiNumLabel.textColor = [UIColor whiteColor];
+    self.tongzhiNumLabel.textAlignment = NSTextAlignmentCenter;
+    self.tongzhiNumLabel.text = @"12";
+    
+    
     
     [self.view addSubview:self.xiaoxiRedPointView];
     [self.view addSubview:self.tongzhiRedPointView];
+    [self.view addSubview:self.xiaoxiNumLabel];
+    [self.view addSubview:self.tongzhiNumLabel];
+    
     
     if (self.xiaoxiRedPointNum == 0) {
         self.xiaoxiRedPointView.hidden = YES;
+        self.xiaoxiNumLabel.hidden = YES;
     }
     
     if (self.tongzhirRedPointNum == 0) {
         self.tongzhiRedPointView.hidden = YES;
+        self.tongzhiNumLabel.hidden = YES;
     }
     
     
@@ -202,7 +227,7 @@
     if (section == 0) {
         num = 4;
     }else if (section == 1){
-        num = 3;
+        num = 4;
     }
     
     return num;
@@ -259,8 +284,7 @@
     UIView *xiatiao = [[UIView alloc]initWithFrame:CGRectMake(10.5, 43, 299, 1)];
     xiatiao.backgroundColor = [UIColor whiteColor];
     [cell.contentView addSubview:xiatiao];
-    
-    if ((indexPath.row == 3 && indexPath.section == 0)||(indexPath.row ==2 && indexPath.section == 1)) {
+    if ((indexPath.row == 3 && indexPath.section == 0)||(indexPath.row ==3 && indexPath.section == 1)) {
         xiatiao.hidden = YES;
     }
     
@@ -314,6 +338,8 @@
             
         }else if (index == 7){//消息设置
             [self.navigationController pushViewController:[[GMessageSViewController alloc]init]animated:YES];
+        }else if (index == 8){//退出登录
+            [self tuichuDenglu];
         }
         
         
@@ -344,6 +370,52 @@
     }
     
 }
+
+
+
+#pragma mark - 退出登录
+-(void)tuichuDenglu{
+    
+    NSString *api = [NSString stringWithFormat:FBAUTO_LOG_OUT,[GMAPI getUid]];
+    NSLog(@"%@",api);
+    
+    NSURL *url = [NSURL URLWithString:api];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    
+    NSUserDefaults *standUDef=[NSUserDefaults standardUserDefaults];
+    [standUDef setObject:@""  forKey:USERAUTHKEY];
+    [standUDef setObject:@""  forKey:USERID];
+    [standUDef setObject:@""  forKey:USERNAME];
+    
+    [standUDef synchronize];
+    
+    NSLog(@"authkey===%@",[GMAPI getAuthkey]);
+    
+    
+    
+    
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if (connectionError==0) {
+            NSLog(@"成功");
+            
+        }else{
+            NSLog(@"xxssx===%@",connectionError);
+        }
+    }];
+    
+    
+    self.tabBarController.selectedIndex = 0;
+    
+    
+    
+    
+}
+
+
+
 
 
 @end
