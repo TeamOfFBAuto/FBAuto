@@ -10,11 +10,14 @@
 
 @interface XMPPMessageModel : NSObject
 
-@property(nonatomic,retain)NSString *userPhone;//车型
-@property(nonatomic,retain)NSString *status;
-@property(nonatomic,assign)BOOL isread;
-@property(nonatomic,retain)NSString *message;
+@property(nonatomic,retain)NSString *fromPhone;//车型
+@property(nonatomic,retain)NSString *fromName;
+@property(nonatomic,retain)NSString *newestMessage;
 @property(nonatomic,retain)NSString *time;
-@property(nonatomic,retain)NSString *name;
+
+- (id)initWithFromPhone:(NSString *)phoneName
+                 fromName:(NSString *)fromName
+            newestMessage:(NSString *)newestMessage
+                     time:(NSString *)time;
 
 @end

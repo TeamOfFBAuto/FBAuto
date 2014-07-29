@@ -10,4 +10,19 @@
 
 @implementation XMPPMessageModel
 
+- (id)initWithFromPhone:(NSString *)phoneName
+                 fromName:(NSString *)fromName
+            newestMessage:(NSString *)newestMessage
+                     time:(NSString *)time
+{
+    self = [super init];
+    if (self) {
+        self.fromPhone = phoneName;
+        self.fromName = fromName;
+        self.newestMessage = newestMessage;
+        self.time = time;
+    }
+    return self;
+}
+
 @end

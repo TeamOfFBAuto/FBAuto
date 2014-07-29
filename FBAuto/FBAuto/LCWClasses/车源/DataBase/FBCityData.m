@@ -11,6 +11,7 @@
 #import "FBCity.h"
 
 #import "CarClass.h"
+#import "XMPPMessageModel.h"
 
 @implementation FBCityData
 
@@ -398,6 +399,33 @@
     return sum;
 }
 
-
++ (NSArray *)queryAllHistoryForUser:(NSString *)currentUser
+{
+    sqlite3 *db = [DataBase openDB];
+    sqlite3_stmt *stmt = nil;
+    
+    int result1= sqlite3_prepare_v2(db, "select * from xmppMessage where currentUser = ? order by time asc", -1, &stmt, nil);
+    
+    NSMutableArray *resultArr = [NSMutableArray array];
+    
+    if (result1 == SQLITE_OK) {
+        
+        sqlite3_bind_text(stmt, 1, [currentUser UTF8String], -1, nil);
+        
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            
+            const unsigned char *fromPhone = sqlite3_column_text(stmt, 1);
+            const unsigned char *fromName = sqlite3_column_text(stmt, 2);
+            const unsigned char *message = sqlite3_column_text(stmt, 3);
+            const unsigned char *time = sqlite3_column_text(stmt, 4);
+            
+            XMPPMessageModel *aModel = [[XMPPMessageModel alloc]initWithFromPhone:[NSString stringWithUTF8String:(const char *)fromPhone] fromName:[NSString stringWithUTF8String:(const char *)fromName] newestMessage:[NSString stringWithUTF8String:(const char *)message] time:[NSString stringWithUTF8String:(const char *)time]];
+            [resultArr addObject:aModel];
+        }
+    }
+    sqlite3_finalize(stmt);
+    
+    return resultArr;
+}
 
 @end

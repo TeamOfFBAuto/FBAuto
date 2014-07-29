@@ -16,7 +16,7 @@
 + (NSString *)cityNameForId:(int)cityId;//根据id获取城市名
 + (int)cityIdForName:(NSString *)cityName;//根据城市名获取id
 
-#pragma - mark insert
+#pragma - mark insert 车型数据
 
 //品牌
 + (void)insertCarBrandId:(NSString *)brandId brandName:(NSString *)name firstLetter:(NSString *)firstLetter;
@@ -25,7 +25,7 @@
 //车款
 + (void)insertCarStyleId:(NSString *)StyleId parentId:(NSString *)parentId StyleName:(NSString *)name;
 
-#pragma - mark querty
+#pragma - mark querty 车型数据
 
 + (NSArray *)queryAllCarBrand;
 + (NSArray *)queryCarTypeWithParentId:(NSString *)parendId;
@@ -37,5 +37,6 @@
 
 + (int)numberOfUnreadMessage:(NSString *)currentUser;
 
++ (NSArray *)queryAllHistoryForUser:(NSString *)currentUser;
 
 @end
