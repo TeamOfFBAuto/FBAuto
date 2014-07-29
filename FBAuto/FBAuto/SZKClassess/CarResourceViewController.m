@@ -163,7 +163,6 @@
     
     //搜索遮罩
     [_table showRefreshHeader:YES];
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -171,11 +170,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
-
-
-
 
 #pragma - mark 添加寻车信息
 

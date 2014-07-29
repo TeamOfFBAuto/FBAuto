@@ -37,6 +37,6 @@
 
 + (int)numberOfUnreadMessage:(NSString *)currentUser;
 
-+ (NSArray *)queryAllHistoryForUser:(NSString *)currentUser;
++ (NSArray *)queryAllNewestMessageForUser:(NSString *)currentUser;//查询历史数据,只有最新一条
 
 @end

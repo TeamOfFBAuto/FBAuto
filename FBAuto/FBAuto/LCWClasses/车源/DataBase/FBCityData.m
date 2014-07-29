@@ -399,7 +399,7 @@
     return sum;
 }
 
-+ (NSArray *)queryAllHistoryForUser:(NSString *)currentUser
++ (NSArray *)queryAllNewestMessageForUser:(NSString *)currentUser
 {
     sqlite3 *db = [DataBase openDB];
     sqlite3_stmt *stmt = nil;

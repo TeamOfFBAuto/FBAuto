@@ -13,7 +13,7 @@
 
 @interface GxiaoxiViewController : FBBaseViewController<UITableViewDataSource,UITableViewDelegate>
 {
-    RefreshTableView *_tableView;//主tableview
+    UITableView *_tableView;//主tableview
     GxiaoxiTableViewCell *_tmpCell;
     
 }

@@ -10,10 +10,14 @@
 
 #import "GxiaoxiTableViewCell.h"
 
+#import "FBCityData.h"
+
+#import "XMPPMessageModel.h"
+
 @interface GxiaoxiViewController ()<RefreshDelegate>
 {
     int _page;//第几页
-    NSMutableArray *_dataArray;//数据源
+    NSArray *_dataArray;//数据源
     
 }
 @end
@@ -29,8 +33,11 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    _tableView = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64)];
-    _tableView.refreshDelegate = self;
+    self.titleLabel.text = @"我的消息";
+    
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64) style:UITableViewStylePlain];
+//    _tableView.refreshDelegate = self;
+    _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorColor = [UIColor whiteColor];
     [self.view addSubview:_tableView];
@@ -38,6 +45,8 @@
     
     //网路请求页码标示
     _page =1;
+    
+    [self queryHistoryMessage];
     
 }
 
@@ -47,11 +56,26 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma - mark 消息历史最新一条
+
+- (void)queryHistoryMessage
+{
+    NSUserDefaults *defalts = [NSUserDefaults standardUserDefaults];
+    NSString *userName = [defalts objectForKey:XMPP_USERID];
+    
+    NSArray *arr = [FBCityData queryAllNewestMessageForUser:userName];
+    
+    NSLog(@"queryAllNewestMessageForUser %@ %d",arr,arr.count);
+    
+    _dataArray = arr;
+    
+    [_tableView reloadData];
+}
 
 #pragma mark - UITableViewDelegate && UITableViewDatasource
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    //    return _dataArray.count;
-    return 20;
+    return _dataArray.count;
+//    return 20;
 }
 
 
@@ -61,9 +85,18 @@
     if (!cell) {
         cell = [[GxiaoxiTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
+    
+    XMPPMessageModel *aModel = [_dataArray objectAtIndex:indexPath.row];
+    
+    cell.textLabel.text = aModel.newestMessage;
+    
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 65.f;
+}
 
 #pragma mark - 请求网络数据
 -(void)prepareNetData{
