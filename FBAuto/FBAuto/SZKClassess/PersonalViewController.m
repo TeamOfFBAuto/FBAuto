@@ -170,16 +170,12 @@
     [self.view addSubview:self.xiaoxiNumLabel];
     [self.view addSubview:self.tongzhiNumLabel];
     
+    self.xiaoxiRedPointView.hidden = YES;
+    self.xiaoxiNumLabel.hidden = YES;
     
-    if (self.xiaoxiRedPointNum == 0) {
-        self.xiaoxiRedPointView.hidden = YES;
-        self.xiaoxiNumLabel.hidden = YES;
-    }
+    self.tongzhiRedPointView.hidden = YES;
+    self.tongzhiNumLabel.hidden = YES;
     
-    if (self.tongzhirRedPointNum == 0) {
-        self.tongzhiRedPointView.hidden = YES;
-        self.tongzhiNumLabel.hidden = YES;
-    }
     
     
     //请求网络数据
@@ -203,6 +199,15 @@
     NSString *currentUserPhone = [defaults objectForKey:XMPP_USERID];
     
     int number = [FBCityData numberOfUnreadMessage:currentUserPhone];
+    
+    if (number == 0) {
+        self.xiaoxiRedPointView.hidden = YES;
+        self.xiaoxiNumLabel.hidden = YES;
+    }else{
+        self.xiaoxiNumLabel.text = [NSString stringWithFormat:@"%d",number];
+        self.xiaoxiNumLabel.hidden = NO;
+        self.xiaoxiRedPointView.hidden = NO;
+    }
     
     NSLog(@"未读条数:%d",number);
 }
