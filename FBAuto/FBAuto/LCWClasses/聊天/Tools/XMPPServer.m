@@ -8,7 +8,7 @@
 
 #import "XMPPServer.h"
 
-
+#import "FBCityData.h"
 /**
  *  先建立连接，然后进行秘密验证，验证通过后上线
  */
@@ -63,6 +63,8 @@
 	self.xmppRoster = [[XMPPRoster alloc] initWithRosterStorage:_xmppRosterStorage];
     [_xmppRoster activate:_xmppStream];
     [_xmppRoster addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    
+    _xmppRoster.autoFetchRoster = YES;
     
     
     self.xmppMessageArchivingCoreDataStorage = [XMPPMessageArchivingCoreDataStorage sharedInstance];
@@ -138,6 +140,8 @@
 {
     XMPPPresence *presence = [XMPPPresence presence];
     [[self xmppStream]sendElement:presence];
+    
+    //更新最近登陆时间
 }
 
 //下线
@@ -146,6 +150,8 @@
 {
     XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
     [[self xmppStream]sendElement:presence];
+    
+    //更新下线时间
 }
 
 #pragma - mark 登录
@@ -159,9 +165,20 @@
 
 static int x = 10;
 
+
+- (void)time:(NSString *)time
+{
+    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+    [outputFormatter setDateFormat:@"yyyy年MM月dd日"];
+    NSDate *date = [outputFormatter dateFromString:time];
+    
+    NSLog(@"testDate:%@", date);
+}
+
+
+
 - (void)loginTimes:(int)times loginBack:(loginAction)login_Back//多次联系登录
 {
-   
     loginBack = login_Back;
     
     if ([self.xmppStream isAuthenticated])
@@ -249,6 +266,8 @@ static int x = 10;
     if (loginBack) {
         loginBack(YES);
     }
+    NSLog(@"------------------");
+    [_xmppRoster fetchRoster];
 }
 
 //验证未通过
@@ -266,8 +285,41 @@ static int x = 10;
 {
     NSLog(@"message = %@", message);
     
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
     NSString *msg = [[message elementForName:@"body"] stringValue];
     NSString *from = [[message attributeForName:@"from"] stringValue];
+    
+    //接受者
+    NSString *status = [[message attributeForName:@"status"]stringValue];//是否是离线消息
+    NSString *nickName = [[message attributeForName:@"nickName"]stringValue];//接收者nickName
+    
+    NSString *currentUserPhone = [defaults objectForKey:XMPP_USERID];
+    
+    //判断是否离线
+    
+    NSArray *delay = [message elementsForName:@"delay"];
+    
+//    <message xmlns="jabber:client" type="chat" to="18612389982@60.18.147.4" from="13301072337@60.18.147.4/85ea3c16"><body>小胖</body>
+    //<delay xmlns="urn:xmpp:delay" from="60.18.147.4" stamp="2014-07-29T03:37:34.854Z"></delay><x xmlns="jabber:x:delay" from="60.18.147.4" stamp="20140729T03:37:34"></x></message>
+    
+    if (delay) {
+        
+        NSString *delayTime = [[[delay objectAtIndex:0]attributeForName:@"stamp"]stringValue];
+        delayTime = [delayTime substringToIndex:10];
+        NSLog(@"delay %@",delayTime);
+        
+        [FBCityData updateCurrentUserPhone:currentUserPhone fromUserPhone:from fromName:nickName newestMessage:msg time:delayTime clearReadSum:NO];
+    }
+
+   
+//    
+//    if ([status isEqualToString:@"unavailable"]) {
+//        //离线消息
+//        
+//        [FBCityData updateCurrentUserPhone:currentUserPhone fromUserPhone:from fromName:nickName newestMessage:msg time:[XMPPStatics getCurrentTime] clearReadSum:NO];
+//    }
+    
     
     if(msg)
     {
@@ -326,6 +378,11 @@ static int x = 10;
             if (self.chatDelegate && [_chatDelegate respondsToSelector:@selector(userOnline:)]) {
                 User *aUser = [[User alloc]initWithName:presenceFromUser type:presenceType];
                 [_chatDelegate userOnline:aUser];
+                
+                [[NSUserDefaults standardUserDefaults]setObject:@"online" forKey:aUser.userName];
+                [[NSUserDefaults standardUserDefaults]synchronize];
+                
+                NSLog(@"line state %@ online",aUser.userName);
             }
         }
         
@@ -336,7 +393,15 @@ static int x = 10;
             if (self.chatDelegate && [_chatDelegate respondsToSelector:@selector(userOffline:)]) {
                 User *aUser = [[User alloc]initWithName:presenceFromUser type:presenceType];
                 [_chatDelegate userOffline:aUser];
+                
+                [[NSUserDefaults standardUserDefaults]setObject:@"offline" forKey:aUser.userName];
+                [[NSUserDefaults standardUserDefaults]synchronize];
+                
+                NSLog(@"line state %@ offline",aUser.userName);
+                
+                //http://localhost:9090/plugins/presence/status?jid=18612389982@localhost&type=xml
             }
+
         }
         
         //这里再次加好友:如果请求的用户返回的是同意添加
@@ -532,6 +597,7 @@ static int x = 10;
  * </item>
  *
  */
+
 - (void)xmppRoster:(XMPPRoster *)sender didRecieveRosterItem:(NSXMLElement *)item{
     
     NSString *jid = [item attributeStringValueForName:@"jid"];
@@ -540,12 +606,8 @@ static int x = 10;
     
     NSXMLElement *groupElement = [item elementForName:@"group"];
     NSString *group = [groupElement attributeStringValueForName:@"group"];
-      NSLog(@"didRecieveRosterItem:  jid=%@ ,name=%@ ,subscription=%@,group=%@",jid,name,subscription,group);
-
-//    DDXMLNode *node = [item childAtIndex:0];
     
-//
-//    NSLog(@"didRecieveRosterItem:  jid=%@,name=%@,subscription=%@,group=%@",jid,name,subscription);
+    NSLog(@"didRecieveRosterItem:  jid=%@ ,name=%@ ,subscription=%@,group=%@",jid,name,subscription,group);
     
 }
 
@@ -554,6 +616,8 @@ static int x = 10;
 - (void)xmppReconnect:(XMPPReconnect *)sender didDetectAccidentalDisconnect:(SCNetworkReachabilityFlags)connectionFlags
 {
     NSLog(@"didDetectAccidentalDisconnect %d",connectionFlags);
+    
+    //更新离线时间
 }
 
 - (BOOL)xmppReconnect:(XMPPReconnect *)sender shouldAttemptAutoReconnect:(SCNetworkReachabilityFlags)reachabilityFlags

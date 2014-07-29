@@ -13,6 +13,9 @@ static NSString *XMPP_JID = @"jid";
 static NSString *XMPP_PASS= @"pass";
 static NSString *XMPP_SERVER = @"server";
 
+#define ONLINE_TIME @"onelineTime" //上线时间
+#define OFFLINE_TIME @"offlineTime" //离线时间
+
 @interface XMPPStatics : NSObject
 
 +(NSString *)getCurrentTime;

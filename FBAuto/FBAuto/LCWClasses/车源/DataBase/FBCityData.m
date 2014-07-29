@@ -267,5 +267,117 @@
     return resultArray;
 }
 
+#pragma - mark 保存消息
+
+/**
+ *  判断是否存在 当前用户、from用户的数据，有的话返回条数，没有返回 -1
+ */
++ (int)numberOfExist:(NSString *)currentUser fromUser:(NSString *)fromUser
+{
+    sqlite3 *db = [DataBase openDB];
+    sqlite3_stmt *stmt = nil;
+    
+    //先查询未读数, -1
+    int result1= sqlite3_prepare_v2(db, "select unReadSum from xmppMessage where currentUser = ? and fromPhone = ?", -1, &stmt, nil);
+    if (result1 == SQLITE_OK) {
+        
+        sqlite3_bind_text(stmt, 1, [currentUser UTF8String], -1, nil);
+        sqlite3_bind_text(stmt, 2, [fromUser UTF8String], -1, nil);
+        
+        int ss = sqlite3_step(stmt);
+        
+        while (ss == SQLITE_ROW) {
+            
+            int num = sqlite3_column_int(stmt, 0);
+            
+            return num;
+        }
+    }
+    sqlite3_finalize(stmt);
+    
+    return -1;
+}
+
+// clearReadSum 为 yes 时将unReadSum 置为0,反之则 +1
+
++ (void)updateCurrentUserPhone:(NSString *)currentPhone fromUserPhone:(NSString *)FromPhone fromName:(NSString *)fromName newestMessage:(NSString *)message time:(NSString *)time clearReadSum:(BOOL)clearSum
+{
+    
+    int number = [self numberOfExist:currentPhone fromUser:FromPhone];
+    
+    sqlite3 *db = [DataBase openDB];
+    sqlite3_stmt *stmt = nil;
+    
+    if (number == -1) {
+        //插入
+        
+        //unReadSum = 0,说明没有未读消息 > 0有未读消息
+        int result = sqlite3_prepare(db, "insert into xmppMessage(currentUser,fromPhone,fromName,newestMessage,time,unReadSum) values(?,?,?,?,?,?)", -1, &stmt, nil);//?相当于%@格式
+        
+        sqlite3_bind_text(stmt, 1, [currentPhone UTF8String], -1, NULL);
+        sqlite3_bind_text(stmt, 2, [FromPhone UTF8String], -1, NULL);
+        sqlite3_bind_text(stmt, 3, [fromName UTF8String], -1, NULL);
+        sqlite3_bind_text(stmt, 4, [message UTF8String], -1, NULL);
+        sqlite3_bind_text(stmt, 5, [time UTF8String], -1, NULL);
+        sqlite3_bind_int(stmt, 6, 1);
+        result = sqlite3_step(stmt);
+        
+        NSLog(@"save xmppMessage %@ result:%d",fromName,result);
+        
+    }else
+    {
+        
+        if (clearSum) {
+            number = 0;
+        }else
+        {
+           number ++;
+        }
+        
+        NSLog(@"number --> %d",number);
+        
+        int result2 = sqlite3_prepare(db, "update xmppMessage set unReadSum = ? ,newestMessage = ?,time = ? where currentUser = ? and fromPhone = ?", -1, &stmt, nil);
+        if (result2 == SQLITE_OK) {
+            
+            sqlite3_bind_int(stmt, 1, number);
+            sqlite3_bind_text(stmt, 2, [message UTF8String], -1, nil);
+            sqlite3_bind_text(stmt, 3, [time UTF8String], -1, nil);
+            sqlite3_bind_text(stmt, 4, [currentPhone UTF8String], -1, nil);
+            sqlite3_bind_text(stmt, 5, [FromPhone UTF8String], -1, nil);
+            int resultx = sqlite3_step(stmt);
+            NSLog(@"resultx %d",resultx);
+        }
+    }
+    
+    sqlite3_finalize(stmt);
+}
+
+//当前用户所有未读条数
+
++ (int)numberOfUnreadMessage:(NSString *)currentUser
+{
+    sqlite3 *db = [DataBase openDB];
+    sqlite3_stmt *stmt = nil;
+    
+    int sum = 0;
+    //先查询未读数, -1
+    int result1= sqlite3_prepare_v2(db, "select unReadSum from xmppMessage where currentUser = ? and unReadSum > ?", -1, &stmt, nil);
+    if (result1 == SQLITE_OK) {
+        
+        sqlite3_bind_text(stmt, 1, [currentUser UTF8String], -1, nil);
+        
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            
+            int num = sqlite3_column_int(stmt, 1);
+            
+            sum = sum + num;
+        }
+    }
+    sqlite3_finalize(stmt);
+    
+    return sum;
+}
+
+
 
 @end

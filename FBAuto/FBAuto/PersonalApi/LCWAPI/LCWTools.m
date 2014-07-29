@@ -267,6 +267,43 @@
     return confromTimespStr;
 }
 
+//- (NSString *)convertDateToCurrLocalWithFormat:(NSString *)_format
+//{
+//	NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
+//	[inputFormatter setDateFormat:_format];
+//    [inputFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"Europe/Copenhagen"]];//设置源时间时区
+//	NSDate *formatterDate = [inputFormatter dateFromString:self];//因为是用category实现，self就是源时间string
+//    
+//	
+//	NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+//    [outputFormatter setTimeZone:[NSTimeZone localTimeZone]];
+//    [outputFormatter setDateStyle:NSDateFormatterShortStyle];
+//    [outputFormatter setTimeStyle:NSDateFormatterShortStyle];
+//	[outputFormatter setDateFormat:_format];
+//	NSString *result = [outputFormatter stringFromDate:formatterDate];
+//
+//    
+//    return result;
+//}
+
++ (NSString *)time:(NSDate *)time
+{
+//    timeString = @"2014-07-29T03:52:04.781Z";
+    
+    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+    
+    [outputFormatter setLocale:[NSLocale currentLocale]];
+    
+    [outputFormatter setDateFormat:@"yyyy年MM月dd日 HH时mm分ss秒"];
+    
+    NSString *date = [outputFormatter stringFromDate:time];
+    
+    NSLog(@"testDate:%@", date);
+    
+    NSLog(@"时间 === %@",[NSString stringWithFormat:@"%@",date]);
+    return [NSString stringWithFormat:@"%@",date];
+}
+
 //alert 提示
 
 + (void)alertText:(NSString *)text

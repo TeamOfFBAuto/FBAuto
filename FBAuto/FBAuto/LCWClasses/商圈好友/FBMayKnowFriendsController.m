@@ -101,8 +101,6 @@
     NSString *phoneString = [phoneArr componentsJoinedByString:@","];
     NSString *nameString = [nameArr componentsJoinedByString:@","];
     
-    phoneString = @"18612389982,13301072337";
-    
     NSString *urlString = [NSString stringWithFormat:@"http://fbautoapp.fblife.com/index.php?c=interface&a=getphonemember&authkey=%@",[GMAPI getAuthkey]];
     NSString *post = [NSString stringWithFormat:@"phone=%@&rname=%@",phoneString,nameString];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];

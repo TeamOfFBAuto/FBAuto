@@ -105,6 +105,12 @@
 // Please contact the author.
 // Version: 1.6.5.1.
 
+// GDataXML-HTML
+#define COCOAPODS_POD_AVAILABLE_GDataXML_HTML
+#define COCOAPODS_VERSION_MAJOR_GDataXML_HTML 1
+#define COCOAPODS_VERSION_MINOR_GDataXML_HTML 1
+#define COCOAPODS_VERSION_PATCH_GDataXML_HTML 0
+
 // JSONKit
 #define COCOAPODS_POD_AVAILABLE_JSONKit
 // This library does not follow semantic-versioning,

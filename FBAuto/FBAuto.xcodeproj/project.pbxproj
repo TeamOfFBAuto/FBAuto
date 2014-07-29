@@ -27,6 +27,7 @@
 		1351C5CC197A704F000F7391 /* FindCarPublishController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1351C5CB197A704F000F7391 /* FindCarPublishController.m */; };
 		13737C8119652F1700941746 /* detail_test.png in Resources */ = {isa = PBXBuildFile; fileRef = 13737C8019652F1700941746 /* detail_test.png */; };
 		13737C8E1965420000941746 /* PersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13737C8D1965420000941746 /* PersonalViewController.m */; };
+		137926E01987464D00377ED5 /* garea.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 137926DF1987464D00377ED5 /* garea.sqlite */; };
 		137FEB031974C9E700CDBD89 /* carData1.rtfd in Resources */ = {isa = PBXBuildFile; fileRef = 137FEB021974C9E700CDBD89 /* carData1.rtfd */; };
 		137FEB061974D48100CDBD89 /* CarStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 137FEB051974D48100CDBD89 /* CarStyle.m */; };
 		137FEB091974D48100CDBD89 /* CarBrand.m in Sources */ = {isa = PBXBuildFile; fileRef = 137FEB081974D48100CDBD89 /* CarBrand.m */; };
@@ -174,9 +175,9 @@
 		1391EF171977A4AF00FDC52A /* LCWTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391EF161977A4AF00FDC52A /* LCWTools.m */; };
 		1391EF1A1977A4CC00FDC52A /* RefreshTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391EF191977A4CC00FDC52A /* RefreshTableView.m */; };
 		1391EF1D1977FC6D00FDC52A /* CarClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 1391EF1C1977FC6D00FDC52A /* CarClass.m */; };
-		13A1A93F1980A50900E09666 /* garea.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 13A1A93E1980A50900E09666 /* garea.sqlite */; };
 		13A1A9421980AC7A00E09666 /* LShareSheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A1A9411980AC7A00E09666 /* LShareSheetView.m */; };
 		13A1A9451980ADB100E09666 /* LImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A1A9441980ADB100E09666 /* LImageButton.m */; };
+		13C4D8751986573E00281521 /* XMPPMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 13C4D8741986573E00281521 /* XMPPMessageModel.m */; };
 		13C7172619824B5A008F7B42 /* QQConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C7170C19824B5A008F7B42 /* QQConnection.framework */; };
 		13C7172719824B5A008F7B42 /* SinaWeiboConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C7170D19824B5A008F7B42 /* SinaWeiboConnection.framework */; };
 		13C7172819824B5A008F7B42 /* WeChatConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C7170E19824B5A008F7B42 /* WeChatConnection.framework */; };
@@ -430,6 +431,7 @@
 		13737C8019652F1700941746 /* detail_test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detail_test.png; sourceTree = "<group>"; };
 		13737C8C1965420000941746 /* PersonalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalViewController.h; sourceTree = "<group>"; };
 		13737C8D1965420000941746 /* PersonalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalViewController.m; sourceTree = "<group>"; };
+		137926DF1987464D00377ED5 /* garea.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = garea.sqlite; sourceTree = "<group>"; };
 		137FEB021974C9E700CDBD89 /* carData1.rtfd */ = {isa = PBXFileReference; lastKnownFileType = wrapper.rtfd; path = carData1.rtfd; sourceTree = "<group>"; };
 		137FEB041974D48100CDBD89 /* CarStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarStyle.h; sourceTree = "<group>"; };
 		137FEB051974D48100CDBD89 /* CarStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarStyle.m; sourceTree = "<group>"; };
@@ -612,11 +614,12 @@
 		1391EF191977A4CC00FDC52A /* RefreshTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefreshTableView.m; sourceTree = "<group>"; };
 		1391EF1B1977FC6D00FDC52A /* CarClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarClass.h; sourceTree = "<group>"; };
 		1391EF1C1977FC6D00FDC52A /* CarClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarClass.m; sourceTree = "<group>"; };
-		13A1A93E1980A50900E09666 /* garea.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = garea.sqlite; sourceTree = "<group>"; };
 		13A1A9401980AC7A00E09666 /* LShareSheetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LShareSheetView.h; sourceTree = "<group>"; };
 		13A1A9411980AC7A00E09666 /* LShareSheetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LShareSheetView.m; sourceTree = "<group>"; };
 		13A1A9431980ADB100E09666 /* LImageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LImageButton.h; sourceTree = "<group>"; };
 		13A1A9441980ADB100E09666 /* LImageButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LImageButton.m; sourceTree = "<group>"; };
+		13C4D8731986573E00281521 /* XMPPMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPMessageModel.h; sourceTree = "<group>"; };
+		13C4D8741986573E00281521 /* XMPPMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPMessageModel.m; sourceTree = "<group>"; };
 		13C7170C19824B5A008F7B42 /* QQConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QQConnection.framework; sourceTree = "<group>"; };
 		13C7170D19824B5A008F7B42 /* SinaWeiboConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SinaWeiboConnection.framework; sourceTree = "<group>"; };
 		13C7170E19824B5A008F7B42 /* WeChatConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WeChatConnection.framework; sourceTree = "<group>"; };
@@ -1083,7 +1086,7 @@
 		138074ED196D3D9400AD3D03 /* DataBase */ = {
 			isa = PBXGroup;
 			children = (
-				13A1A93E1980A50900E09666 /* garea.sqlite */,
+				137926DF1987464D00377ED5 /* garea.sqlite */,
 				138074EE196D3DA100AD3D03 /* DataBase.h */,
 				138074EF196D3DA100AD3D03 /* DataBase.m */,
 				138074F1196D3E1000AD3D03 /* FBCityData.h */,
@@ -1132,6 +1135,7 @@
 		138B4A1719667E2500B974A5 /* 聊天 */ = {
 			isa = PBXGroup;
 			children = (
+				13C4D872198656DE00281521 /* model */,
 				138B4A3119669B7800B974A5 /* FBChatHeader.h */,
 				1336BC19196B91F70011B4D9 /* views */,
 				1336BC0A196B89940011B4D9 /* XMPPTools */,
@@ -1300,6 +1304,15 @@
 				1391EF161977A4AF00FDC52A /* LCWTools.m */,
 			);
 			path = LCWAPI;
+			sourceTree = "<group>";
+		};
+		13C4D872198656DE00281521 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				13C4D8731986573E00281521 /* XMPPMessageModel.h */,
+				13C4D8741986573E00281521 /* XMPPMessageModel.m */,
+			);
+			path = model;
 			sourceTree = "<group>";
 		};
 		13C7170A19824B5A008F7B42 /* ShareSDK */ = {
@@ -2401,7 +2414,6 @@
 				138B4AB91966A4BD00B974A5 /* face34.png in Resources */,
 				13D5DFE31961758E00804835 /* cheyuan_down46_46@2x.png in Resources */,
 				138B4AD41966A4BD00B974A5 /* face59.png in Resources */,
-				13A1A93F1980A50900E09666 /* garea.sqlite in Resources */,
 				13D5E0111961758E00804835 /* wancheng_button82_46@2x.png in Resources */,
 				138B4AD21966A4BD00B974A5 /* face57.png in Resources */,
 				138B4AB51966A4BD00B974A5 /* face30.png in Resources */,
@@ -2521,6 +2533,7 @@
 				138B4AE21966A4BD00B974A5 /* face71.gif in Resources */,
 				138B4AB81966A4BD00B974A5 /* face33.gif in Resources */,
 				13D5E0021961758E00804835 /* huquyanzhengma600_100@2x.png in Resources */,
+				137926E01987464D00377ED5 /* garea.sqlite in Resources */,
 				190BFD93195AB15C0098E0F4 /* fbselectios7@2x.png in Resources */,
 				13D5DFEF1961758E00804835 /* zhankaijiantou22_10@2x.png in Resources */,
 				138B4B001966A4BD00B974A5 /* face99.gif in Resources */,
@@ -2660,6 +2673,7 @@
 				13807502196E74A500AD3D03 /* EGORefreshTableHeaderView.m in Sources */,
 				13D5E0FF196406AA00804835 /* UIView+Frame.m in Sources */,
 				E34B74A7196E974100451C65 /* GHolderTextView.m in Sources */,
+				13C4D8751986573E00281521 /* XMPPMessageModel.m in Sources */,
 				1336BC23196B91F70011B4D9 /* CWInputView.m in Sources */,
 				1391EF1A1977A4CC00FDC52A /* RefreshTableView.m in Sources */,
 				E34B74A1196E341A00451C65 /* GperInfoTableViewCell.m in Sources */,
@@ -2845,6 +2859,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F2B6939735024693BB7F96CA /* Pods.xcconfig */;
 			buildSettings = {
+				ARCHS = armv7;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2866,8 +2881,10 @@
 					"$(PROJECT_DIR)/FBAuto/ShareSDK/Extend/SinaWeiboSDK",
 					"$(PROJECT_DIR)/FBAuto/ShareSDK/Extend/WeChatSDK",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2876,6 +2893,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F2B6939735024693BB7F96CA /* Pods.xcconfig */;
 			buildSettings = {
+				ARCHS = armv7;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2897,8 +2915,10 @@
 					"$(PROJECT_DIR)/FBAuto/ShareSDK/Extend/SinaWeiboSDK",
 					"$(PROJECT_DIR)/FBAuto/ShareSDK/Extend/WeChatSDK",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -26,6 +26,7 @@
 #import "FBChatImage.h"
 
 #import "ASIFormDataRequest.h"
+#import "GDataXMLNode.h"
 
 #define MESSAGE_PAGE_SIZE 10
 
@@ -46,6 +47,9 @@
     int currentPage;
     
     BOOL notStart;//刚出现键盘
+    
+    NSString *userState;//xmpp在线状态
+    
 }
 
 @property (nonatomic,assign)BOOL                        reloading;         //是否正在loading
@@ -128,7 +132,40 @@
     
     [self loadarchivemsg:currentPage];
     [self createHeaderView];
+    
+    //获取用户在线状态
+    
+    [self requestUserState:self.chatWithUser];
+    
+    //好友列表
+    
+    [self freindArray];
 }
+
+- (void)freindArray
+{
+    NSManagedObjectContext *context = [[xmppServer xmppRosterStorage] mainThreadManagedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"XMPPUserCoreDataStorageObject" inManagedObjectContext:context];
+    NSFetchRequest *request = [[NSFetchRequest alloc]init];
+    [request setEntity:entity];
+    NSError *error ;
+    NSArray *friends = [context executeFetchRequest:request error:&error];
+    
+    for (XMPPUserCoreDataStorageObject *object in friends) {
+        
+        NSString *name = [object displayName];
+        if (!name) {
+            name = [object nickname];
+        }
+        if (!name) {
+            name = [object jidStr];
+        }
+        
+        
+        NSLog(@"freindArray %@ display %@ nickname %@",name,[object displayName],[object nickname]);
+    }
+}
+
 
 #pragma - mark 聊天历史记录
 
@@ -304,8 +341,6 @@
     [self scrollToBottom];
     //
 }
-
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -680,6 +715,14 @@
     
     NSLog(@"toUser %@",toUser);
     
+    //聊天对象在线状态
+    
+    [mes addAttributeWithName:@"status" stringValue:userState];
+    
+    //聊天对象nickName
+    
+    [mes addAttributeWithName:@"nickName" stringValue:self.chatWithUserName];
+    
     [mes addAttributeWithName:@"to" stringValue:toUser];
     
     //由谁发送
@@ -882,24 +925,83 @@
     }
 }
 
+#pragma - mark 获取用户在线状态
+
+- (NSString *)requestUserState:(NSString *)userId
+{
+    //http://60.18.147.4:9090/plugins/presence/status?jid=18612389982@60.18.147.4&type=xml
+    
+    NSString *server = [[NSUserDefaults standardUserDefaults]objectForKey:XMPP_SERVER];
+    
+    NSString *url = [NSString stringWithFormat:@"http://%@:9090/plugins/presence/status?jid=%@@%@&type=xml",server,userId,server];
+    NSString *newUrl = [url stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL *urlS = [NSURL URLWithString:newUrl];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urlS cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:2];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        
+        if (data.length > 0) {
+            
+            NSError *erro;
+            GDataXMLDocument *document = [[GDataXMLDocument alloc]initWithData:data error:&erro];
+            GDataXMLElement *rootElement = [document rootElement];
+            
+            NSString *rootString = [NSString stringWithFormat:@"%@",rootElement];
+            NSString *str = [rootElement stringValue];
+            
+            if ([rootString rangeOfString:@"erro"].length > 0) {
+                
+                NSLog(@"说明有错误");
+                
+                userState = @"unavailable";
+                
+            }else if (str && [str isEqualToString:@"Unavailable"]) {
+                
+                //离线状态
+                
+                NSLog(@"离线");
+                
+                userState = @"unavailable";
+                
+            }else
+            {
+                NSLog(@"在线");
+                
+                userState = @"vailable";
+            }
+            
+            
+            //{type:1 name:presence xml:"<presence type="unavailable" from="13301072337@60.18.147.4"><status>Unavailable</status></presence>
+            
+            //{type:1 name:presence xml:"<presence from="13301072337@60.18.147.4/714c0af9" to="13301072337@60.18.147.4/714c0af9"/>"}
+            
+            NSLog(@"erro %@ rootElement %@ str %@",erro,rootElement,str);
+            
+        }
+    }];
+    
+    return @"no";
+}
+
 #pragma - mark XMPP 用户状态代理 chatDelegate
 
 -(void)userOnline:(User *)user
 {
     NSLog(@"userOnline:%@  type:%@",user.userName,user.presentType);
-    
-//    //用户上线
-//    
-//    user.jid = [NSString stringWithFormat:@"%@@%@",user.userName,[[NSUserDefaults standardUserDefaults]objectForKey:XMPP_SERVER]];
-//    
-//    [self changeOnlineState:user];
+    if ([self.chatWithUser isEqualToString:user.userName]) {
+        //聊天对象离线
+        userState = @"available";
+        
+    }
 }
 -(void)userOffline:(User *)user
 {
     NSLog(@"userOffline %@ %@",user.userName,user.presentType);
     
-//    user.jid = [NSString stringWithFormat:@"%@@%@",user.userName,[[NSUserDefaults standardUserDefaults]objectForKey:XMPP_SERVER]];
-//    [self changeOnlineState:user];
+    if ([self.chatWithUser isEqualToString:user.userName]) {
+        //聊天对象离线
+       userState = @"unavailable";
+    }
 }
 
 - (void)friendsArray:(NSArray *)array //好友列表

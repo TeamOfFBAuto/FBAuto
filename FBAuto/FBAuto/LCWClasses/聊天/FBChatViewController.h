@@ -16,10 +16,11 @@ typedef enum{
 /**
  *  聊天、好友信息页
  */
-@interface FBChatViewController : FBBaseViewController<UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface FBChatViewController : FBBaseViewController<UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,NSXMLParserDelegate>
 
 @property(nonatomic,retain)UITableView *table;
 
 @property(nonatomic,retain)NSString *chatWithUser;//交流用户id
+@property(nonatomic,retain)NSString *chatWithUserName;//交流用户Name
 
 @end

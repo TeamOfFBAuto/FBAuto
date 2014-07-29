@@ -102,7 +102,11 @@
 - (void)actionToDo:(UIButton *)button
 {
     //0,1,2
-    actionBlock(button.tag,[items objectAtIndex:button.tag - 100]);
+    
+    if (button.tag - 100 < items.count) {
+        actionBlock(button.tag,[items objectAtIndex:button.tag - 100]);
+    }
+    
     [self hidden];
 }
 

@@ -222,7 +222,7 @@
     
     [cell getCellData:aModel cellBlock:^(NSString *friendInfo) {
         
-        [weakSelf clickToChatWithUser:aModel.phone];
+        [weakSelf clickToChatWithUser:aModel.phone userName:aModel.buddyname ? aModel.buddyname : aModel.name];
         
     }];
     
@@ -246,10 +246,11 @@
     return 0.01f;
 }
 
-- (void)clickToChatWithUser:(NSString *)user
+- (void)clickToChatWithUser:(NSString *)user userName:(NSString *)userName
 {
     FBChatViewController *chat = [[FBChatViewController alloc]init];
     chat.chatWithUser = user;
+    chat.chatWithUserName = userName;
     [self.navigationController pushViewController:chat animated:YES];
 }
 
