@@ -77,6 +77,8 @@
         self.titileLabel.text = @"联系我们";
     }else if (theIndexPatch.row == 2 && theIndexPatch.section == 1){
         self.titileLabel.text = @"消息设置";
+    }else if (theIndexPatch.row == 3 && theIndexPatch.section == 1){
+        self.titileLabel.text = @"退出登录";
     }
     
 }
@@ -103,7 +105,7 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 

@@ -32,7 +32,7 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 
@@ -97,7 +97,7 @@
         self.clickImv.tag = theIndexPatch.row;
         [self.clickImv setImage:[UIImage imageNamed:@"xuanze_up_44_44.png"]];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doTap:)];
-//        [self.clickImv addGestureRecognizer:tap];
+        //        [self.clickImv addGestureRecognizer:tap];
         
         
         UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 50, 60)];

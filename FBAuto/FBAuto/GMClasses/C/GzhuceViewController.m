@@ -114,6 +114,11 @@
     _data = [NSArray arrayWithContentsOfFile:path];
     
     
+    _gerenTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _shangjiaTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    
+    
 }
 
 -(void)fanhui{
@@ -187,7 +192,7 @@
             height = 505;
         }
     }else if (indexPath.row ==1){
-        height = 80;
+        height = 50;
     }
     return height;
 }
@@ -216,7 +221,7 @@
         
     }
     
-   
+    
     
     
     if (indexPath.row == 1) {
@@ -225,15 +230,17 @@
         }
         
         UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 300, 32)];
-        UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 36, 300, 32)];
-        
         label1.font = [UIFont systemFontOfSize:12];
-        label2.font = [UIFont systemFontOfSize:12];
         
-        
-        label1.text = @"1.请输入一个您常用的";
+        label1.numberOfLines = 2;
         [Gcell.contentView addSubview:label1];
-        [Gcell.contentView addSubview:label2];
+        
+        if (tableView.tag == 5) {
+            label1.text = @"经纪人请使用个人注册，注册简单、永久免费，无需审核马上使用。";
+        }else if (tableView.tag == 6){
+            label1.text = @"商家注册需要人工审核，后期申请认证的商家需要提供企业营业执照等相关信息。";
+        }
+        
         
         
     }

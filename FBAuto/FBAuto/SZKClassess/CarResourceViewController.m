@@ -47,7 +47,7 @@
     Menu_Normal *menu_Timelimit;//期限
     Menu_Car *menu_Car;//车型选择
     
-//    ZkingSearchView *zkingSearchV;
+    //    ZkingSearchView *zkingSearchV;
     
     UIView *navigationView;
     LSearchView *searchView;
@@ -70,7 +70,7 @@
     //搜索参数
     int _searchPage;//搜索页数
     
-//    BOOL _isSearch;//是否在搜索(只有当点击搜索之后变为YES,此时刷新、加载更多都基于 搜索；只有点击了选项按钮才设为 NO)
+    //    BOOL _isSearch;//是否在搜索(只有当点击搜索之后变为YES,此时刷新、加载更多都基于 搜索；只有点击了选项按钮才设为 NO)
     
     NSString *_lastRequest;//判断两次 请求接口是否一致,如果一致需要更新dataArray
     
@@ -96,8 +96,11 @@
     return self;
 }
 -(void)viewWillAppear:(BOOL)animated{
-
+    
     [super viewWillAppear:YES];
+    
+    
+    NSLog(@"%d",[GMAPI getUsername].length);
     
     if (![GMAPI getUsername].length) {
         
@@ -126,7 +129,7 @@
     
     if ([self needGetCarTypeData]) {
         
-//        [self getCarData];
+        //        [self getCarData];
     }
 }
 
@@ -160,6 +163,9 @@
     
     //搜索遮罩
     [_table showRefreshHeader:YES];
+    
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -167,6 +173,11 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+
+
+
 
 #pragma - mark 添加寻车信息
 
@@ -392,7 +403,7 @@
         {
             _table.isHaveMoreData = NO;
         }
-
+        
         
         NSArray *data = [dataInfo objectForKey:@"data"];
         
@@ -418,10 +429,10 @@
             [_table performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
         }else
         {
-           [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
+            [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
         }
     }];
-
+    
 }
 
 #pragma - mark 判读是否获取车型数据
@@ -490,7 +501,7 @@
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
-                        [weak_menu_car reloadFirstTable];
+                    [weak_menu_car reloadFirstTable];
                 });
             });
         }
@@ -528,7 +539,7 @@
         [brand_Arr addObject:aCarBrand];
         
         [FBCityData insertCarBrandId:[self carCodeForIndex:i] brandName:brandName firstLetter:firstLetter];
-
+        
         
         for (int j = 1; j < carTypeArray.count; j ++) {
             
@@ -556,13 +567,13 @@
                 
                 [FBCityData insertCarStyleId:[self carCodeForIndex:k] parentId:style_parentId StyleName:carStyle];
             }
-
+            
         }
     }
-//    
-//    [[[LCWTools alloc]init]insertDataClassType:CARSOURCE_BRAND_INSERT dataArray:brand_Arr unique:nil];
-//    [[[LCWTools alloc]init]insertDataClassType:CARSOURCE_TYPE_INSETT dataArray:type_arr unique:nil];
-//    [[[LCWTools alloc]init]insertDataClassType:CARSOURCE_STYLE_INSETT dataArray:style_arr unique:nil];
+    //
+    //    [[[LCWTools alloc]init]insertDataClassType:CARSOURCE_BRAND_INSERT dataArray:brand_Arr unique:nil];
+    //    [[[LCWTools alloc]init]insertDataClassType:CARSOURCE_TYPE_INSETT dataArray:type_arr unique:nil];
+    //    [[[LCWTools alloc]init]insertDataClassType:CARSOURCE_STYLE_INSETT dataArray:style_arr unique:nil];
     
     NSLog(@"车型数据保存完成");
     
@@ -570,7 +581,7 @@
     
     [[NSUserDefaults standardUserDefaults]setObject:[NSDate date] forKey:FBAUTO_CARSOURCE_TIME];
     [[NSUserDefaults standardUserDefaults]synchronize];
-
+    
 }
 
 /**
@@ -587,11 +598,11 @@
         
     }else if (index < 100)
     {
-       code = [NSString stringWithFormat:@"0%d",index];
+        code = [NSString stringWithFormat:@"0%d",index];
         
     }else
     {
-       code = [NSString stringWithFormat:@"0%d",index];
+        code = [NSString stringWithFormat:@"0%d",index];
     }
     return code;
 }
@@ -625,7 +636,7 @@
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"车源列表erro%@",[result objectForKey:@"errinfo"]);
-//        NSLog(@"车源列表 result %@",result);
+        //        NSLog(@"车源列表 result %@",result);
         
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
         
@@ -688,23 +699,23 @@
  */
 - (void)reloadData:(NSArray *)dataArr isReload:(BOOL)isReload requestType:(NSString *)requestType
 {
-//    if ([requestType isEqualToString:_lastRequest]) { //两次请求一致
-//        
-//        NSLog(@"两次一致");
-//        
-//        if ([requestType isEqualToString:CAR_SEARCH]) {
-//            
-////            isReload = YES;
-//        }
-//        
-//    }else //两次请求不一致
-//    {
-//        isReload = YES;//强制刷新
-//        
-//        NSLog(@"两次不一致");
-//    }
-//    
-//    _lastRequest = requestType;
+    //    if ([requestType isEqualToString:_lastRequest]) { //两次请求一致
+    //
+    //        NSLog(@"两次一致");
+    //
+    //        if ([requestType isEqualToString:CAR_SEARCH]) {
+    //
+    ////            isReload = YES;
+    //        }
+    //
+    //    }else //两次请求不一致
+    //    {
+    //        isReload = YES;//强制刷新
+    //
+    //        NSLog(@"两次不一致");
+    //    }
+    //
+    //    _lastRequest = requestType;
     
     if (isReload) {
         
@@ -745,7 +756,7 @@
 
 - (void)clickToDo:(Menu_Button *)selectButton
 {
-//    _isSearch = NO;
+    //    _isSearch = NO;
     
     //搜索框恢复
     
@@ -892,7 +903,7 @@
     }
     
     openIndex = newIndex;
-
+    
 }
 
 #pragma - mark RefreshDelegate <NSObject>
@@ -901,39 +912,39 @@
 {
     NSLog(@"loadNewData");
     
-//    if (_isSearch) {
-//        
-//        [self searchCarSourceWithKeyword:_searchKeyword page:1];
-//        
-//    }else
-//    {
-        _car = @"000000000";
-        _spot_future = 0;
-        _color_out = 0;
-        _color_in = 0;
-        _carfrom = 0;
-        _usertype = 0;
-        _province = 0;
-        _city = 0;
-        _page = 1;
-        [self getCarSourceList];
-//    }
+    //    if (_isSearch) {
+    //
+    //        [self searchCarSourceWithKeyword:_searchKeyword page:1];
+    //
+    //    }else
+    //    {
+    _car = @"000000000";
+    _spot_future = 0;
+    _color_out = 0;
+    _color_in = 0;
+    _carfrom = 0;
+    _usertype = 0;
+    _province = 0;
+    _city = 0;
+    _page = 1;
+    [self getCarSourceList];
+    //    }
 }
 
 - (void)loadMoreData
 {
-   NSLog(@"loadMoreData");
+    NSLog(@"loadMoreData");
     
-//    if (_isSearch) {
-//        
-//        _searchPage ++;
-//        [self searchCarSourceWithKeyword:_searchKeyword page:_searchPage];
-//        
-//    }else
-//    {
-        _page ++;
-        [self getCarSourceList];
-//    }
+    //    if (_isSearch) {
+    //
+    //        _searchPage ++;
+    //        [self searchCarSourceWithKeyword:_searchKeyword page:_searchPage];
+    //
+    //    }else
+    //    {
+    _page ++;
+    [self getCarSourceList];
+    //    }
 }
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath

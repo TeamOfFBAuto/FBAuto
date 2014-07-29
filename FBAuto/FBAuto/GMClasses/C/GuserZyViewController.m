@@ -1,37 +1,43 @@
 //
-//  GyhzyViewController.m
+//  GuserZyViewController.m
 //  FBAuto
 //
-//  Created by gaomeng on 14-7-11.
+//  Created by gaomeng on 14-7-29.
 //  Copyright (c) 2014年 szk. All rights reserved.
 //
 
-#import "GyhzyViewController.h"
+#import "GuserZyViewController.h"
+
+#import "FBChatViewController.h"
 #import "GyhzyTableViewCell.h"
 
 #import "GuserModel.h"
 
-@interface GyhzyViewController ()
+@interface GuserZyViewController ()
 
 @end
 
-@implementation GyhzyViewController
+@implementation GuserZyViewController
 
-- (void)dealloc
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    NSLog(@"%s",__FUNCTION__);
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    // Do any additional setup after loading the view from its nib.
     
     self.titleLabel.text = self.title;
     
     NSLog(@"%s",__FUNCTION__);
     
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 569-64-44) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64-75) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
@@ -39,6 +45,9 @@
     _page = 1;
     [self prepareUeserInfo];//获取用户信息
     [self prepareUserCar];//获取用户车源信息
+    
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,8 +55,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 
 #pragma mark - 请求网络数据
 //获取用户信息
@@ -64,6 +71,26 @@
         
         GuserModel *guserModel = [[GuserModel alloc]initWithDic:dataInfo];
         self.guserModel = guserModel;
+        
+        //商家信息
+        self.nameLabel.text = guserModel.name;
+        self.saleTypeBtn.titleLabel.text = guserModel.usertype;//商家类型
+        if ([guserModel.usertype intValue] == 1) {
+            self.saleTypeBtn.titleLabel.text = @"个人";
+        }else if ([guserModel.usertype intValue] == 2){
+            self.saleTypeBtn.titleLabel.text = @"商家";
+        }
+        self.phoneNumLabel.text = guserModel.phone;
+        self.addressLabel.text = [NSString stringWithFormat:@"%@%@",guserModel.province,guserModel.city];
+        [self.headImage sd_setImageWithURL:[NSURL URLWithString:guserModel.headimage] placeholderImage:[UIImage imageNamed:@"detail_test"]];
+        
+        
+        NSLog(@"%@",self.phoneNumLabel.text);
+        NSLog(@"%@",self.nameLabel.text);
+        NSLog(@"%@",self.addressLabel.text);
+        NSLog(@"%@",self.saleTypeBtn);
+        
+        
         [_tableView reloadData];
         
     }];
@@ -80,6 +107,16 @@
     NSURL *url = [NSURL URLWithString:api];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        
+        
+        NSDictionary *dataInfoDic = [dic objectForKey:@"datainfo"];
+        NSArray *carSourceArray = [dataInfoDic objectForKey:@"data"];
+        
+        _dataArray = carSourceArray;
+        
+        [_tableView reloadData];
+        
         
     }];
 }
@@ -107,7 +144,11 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    NSInteger num = 0;
+    num = _dataArray.count +4;
+    
+    NSLog(@"%d",num);
+    return num;
     
 }
 
@@ -128,6 +169,29 @@
 
 
 
+#pragma mark - 最下面的view的点击事件
+- (IBAction)clickToDial:(UIButton *)sender {
+    NSString *num = [[NSString alloc] initWithFormat:@"tel://%@",self.phoneNumLabel.text];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:num]];
+}
 
+- (IBAction)clickToChat:(UIButton *)sender {
+    if ([self.phoneNumLabel.text isEqualToString:[[NSUserDefaults standardUserDefaults]stringForKey:XMPP_USERID]]) {
+        
+        [LCWTools alertText:@"本人发布信息"];
+        return;
+    }
+    
+    FBChatViewController *chat = [[FBChatViewController alloc]init];
+    chat.chatWithUser = self.phoneNumLabel.text;
+    
+    [self.navigationController pushViewController:chat animated:YES];
+    
+}
+
+- (IBAction)clickToPersonal:(UIButton *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
 
 @end

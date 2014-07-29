@@ -27,29 +27,30 @@
 }
 
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationController.navigationBarHidden = YES;
 }
 
--(void)viewDidAppear:(BOOL)animated{
-    
-    [super viewDidAppear:animated];
-    //隐藏navigationBar
-    self.navigationController.navigationBarHidden = YES;
-    
-}
+
+
+
+
+//-(void)viewDidAppear:(BOOL)animated{
+//
+//    [super viewDidAppear:animated];
+//    //隐藏navigationBar
+//    self.navigationController.navigationBarHidden = YES;
+//
+//}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.button_back.hidden = YES;
+    //self.button_back.hidden = YES;
+    
+    self.view.backgroundColor = [UIColor whiteColor];
     
     NSLog(@"%s",__FUNCTION__);
     
@@ -111,13 +112,16 @@
     [self.view addSubview:j];
     [j startAnimating];
     
-    NSString *str = [NSString stringWithFormat:FBAUTO_LOG_IN,name,passw,@"textToken"];
+    NSString *str = [NSString stringWithFormat:FBAUTO_LOG_IN,name,passw,[GMAPI getDeviceToken]];
     
     NSLog(@"登录请求接口======%@",str);
     
     NSURL *url = [NSURL URLWithString:str];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        
+        
+        NSLog(@"error-----------%@",connectionError);
         
         [j stopAnimating];
         if ([data length] == 0) {
@@ -135,7 +139,7 @@
             NSString *username = [datainfo objectForKey:@"name"];
             NSString *authkey = [datainfo objectForKey:@"authkey"];
             
-//            NSString *phone = [datainfo objectForKey:@"phone"];
+            //            NSString *phone = [datainfo objectForKey:@"phone"];
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             
@@ -143,7 +147,7 @@
             //聊天使用
             
             [defaults setObject:name forKey:XMPP_USERID];
-//            [defaults setObject:[LCWTools md5:passw] forKey:XMPP_PASS];
+            //            [defaults setObject:[LCWTools md5:passw] forKey:XMPP_PASS];
             
             [defaults setObject:passw forKey:XMPP_PASS];
             

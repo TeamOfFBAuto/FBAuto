@@ -23,8 +23,8 @@
 #import "GxiaoxiViewController.h"//消息
 
 //测试
-#import "GyhzyViewController.h"//用户主页
-
+//用户主页
+#import "GuserZyViewController.h"
 
 @interface PersonalViewController ()
 

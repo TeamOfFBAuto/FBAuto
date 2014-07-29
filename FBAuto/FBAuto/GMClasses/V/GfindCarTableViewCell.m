@@ -72,7 +72,7 @@
     [self.contentView addSubview:self.addBtn];
     [self.addBtn addTarget:self action:@selector(tianjia) forControlEvents:UIControlEventTouchUpInside];
     
-
+    
     //根据vc的indexPathArray 和 cell高度标示展示cell
     
     if (self.delegate.indexPathArray.count == 2) {//有last 有flag
@@ -109,7 +109,7 @@
     }
     
     
-        
+    
     NSLog(@"%f",height);
     
     return height;
@@ -196,7 +196,7 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 

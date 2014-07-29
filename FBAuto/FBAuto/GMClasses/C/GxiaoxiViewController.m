@@ -50,7 +50,7 @@
 
 #pragma mark - UITableViewDelegate && UITableViewDatasource
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-//    return _dataArray.count;
+    //    return _dataArray.count;
     return 20;
 }
 
@@ -111,9 +111,9 @@
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    CarSourceClass *aCar = (CarSourceClass *)[_dataArray objectAtIndex:indexPath.row];
-//    
-//    [self clickToDetail:aCar.id car:aCar];
+    //    CarSourceClass *aCar = (CarSourceClass *)[_dataArray objectAtIndex:indexPath.row];
+    //
+    //    [self clickToDetail:aCar.id car:aCar];
 }
 
 

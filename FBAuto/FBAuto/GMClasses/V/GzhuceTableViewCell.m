@@ -32,7 +32,7 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 
@@ -443,8 +443,8 @@
                 
                 UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:errorindo message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [alertV show];
-            
-            
+                
+                
             }
             
             
@@ -546,7 +546,7 @@
     }
     
     
-   // [textField resignFirstResponder];
+    // [textField resignFirstResponder];
     
     return YES;
 }

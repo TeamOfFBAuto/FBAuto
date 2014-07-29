@@ -27,8 +27,8 @@
     if (self) {
         // Initialization code
         
-//        //弹出键盘通知
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
+        //        //弹出键盘通知
+        //        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
         
         
         if (iPhone5) {

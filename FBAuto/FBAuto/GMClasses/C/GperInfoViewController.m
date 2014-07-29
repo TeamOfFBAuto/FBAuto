@@ -37,7 +37,7 @@
     
     self.titleLabel.text = @"个人资料";
     
-        
+    
     NSLog(@"%s",__FUNCTION__);
     
     //主tableview
@@ -61,7 +61,7 @@
     
     
     
-
+    
     
 }
 

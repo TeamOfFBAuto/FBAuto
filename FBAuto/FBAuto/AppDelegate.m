@@ -394,4 +394,25 @@
     
 }
 
+
+//devicetoken
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
+    
+    NSLog(@"My token is: %@", deviceToken);
+    
+    
+    NSString *string_pushtoken=[NSString stringWithFormat:@"%@",deviceToken];
+    
+    while ([string_pushtoken rangeOfString:@"<"].length||[string_pushtoken rangeOfString:@">"].length||[string_pushtoken rangeOfString:@" "].length) {
+        string_pushtoken=[string_pushtoken stringByReplacingOccurrencesOfString:@"<" withString:@""];
+        string_pushtoken=[string_pushtoken stringByReplacingOccurrencesOfString:@">" withString:@""];
+        string_pushtoken=[string_pushtoken stringByReplacingOccurrencesOfString:@" " withString:@""];
+        
+    }
+    
+    
+    [[NSUserDefaults standardUserDefaults]setObject:string_pushtoken forKey:DEVICETOKEN];
+}
+
 @end

@@ -8,8 +8,11 @@
 
 #import "FBFindCarDetailController.h"
 #import "FBChatViewController.h"
-#import "GyhzyViewController.h"
+
 #import "LShareSheetView.h"
+
+
+#import "GuserZyViewController.h"
 #import <ShareSDK/ShareSDK.h>
 
 @interface FBFindCarDetailController ()
@@ -177,7 +180,7 @@
 
 - (IBAction)clickToPersonal:(id)sender {
     
-    GyhzyViewController *personal = [[GyhzyViewController alloc]init];
+    GuserZyViewController *personal = [[GuserZyViewController alloc]init];
     personal.title = self.nameLabel.text;
     [self.navigationController pushViewController:personal animated:YES];
 }

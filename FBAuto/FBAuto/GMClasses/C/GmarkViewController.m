@@ -46,7 +46,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     
     // Do any additional setup after loading the view.
     
@@ -109,7 +109,7 @@
     
     
     //添加到window上
-//    [[[UIApplication sharedApplication]keyWindow] addSubview:_dview];
+    //    [[[UIApplication sharedApplication]keyWindow] addSubview:_dview];
     
     [self.view addSubview:_dview];
     
@@ -324,7 +324,7 @@
         }];
         NSLog(@"%@",api);
     }
-
+    
     
     [self ggDel];
 }

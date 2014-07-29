@@ -39,7 +39,6 @@
 		137927031987776900377ED5 /* GperInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137926F21987776900377ED5 /* GperInfoViewController.m */; };
 		137927041987776900377ED5 /* GpersonTZViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137926F41987776900377ED5 /* GpersonTZViewController.m */; };
 		137927051987776900377ED5 /* GxiaoxiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137926F61987776900377ED5 /* GxiaoxiViewController.m */; };
-		137927061987776900377ED5 /* GyhzyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137926F81987776900377ED5 /* GyhzyViewController.m */; };
 		137927071987776900377ED5 /* GzhuceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137926FA1987776900377ED5 /* GzhuceViewController.m */; };
 		137FEB031974C9E700CDBD89 /* carData1.rtfd in Resources */ = {isa = PBXBuildFile; fileRef = 137FEB021974C9E700CDBD89 /* carData1.rtfd */; };
 		137FEB061974D48100CDBD89 /* CarStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 137FEB051974D48100CDBD89 /* CarStyle.m */; };
@@ -379,6 +378,8 @@
 		E362358119657588003B23CC /* GloginView.m in Sources */ = {isa = PBXBuildFile; fileRef = E362357919657588003B23CC /* GloginView.m */; };
 		E362358219657588003B23CC /* GzhuceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E362357B19657588003B23CC /* GzhuceTableViewCell.m */; };
 		E362358519657FA6003B23CC /* GMAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = E362358419657FA6003B23CC /* GMAPI.m */; };
+		E37126CF19878DD100CB69CA /* GuserZyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E37126CD19878DD100CB69CA /* GuserZyViewController.m */; };
+		E37126D019878DD100CB69CA /* GuserZyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E37126CE19878DD100CB69CA /* GuserZyViewController.xib */; };
 		E37D2C9C1974CFA500EBA627 /* shanchu_button_600_100@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37D2C991974CFA500EBA627 /* shanchu_button_600_100@2x.png */; };
 		E37D2C9D1974CFA500EBA627 /* xuanze_down_44_44@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37D2C9A1974CFA500EBA627 /* xuanze_down_44_44@2x.png */; };
 		E37D2C9E1974CFA500EBA627 /* xuanze_up_44_44@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37D2C9B1974CFA500EBA627 /* xuanze_up_44_44@2x.png */; };
@@ -454,8 +455,6 @@
 		137926F41987776900377ED5 /* GpersonTZViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GpersonTZViewController.m; sourceTree = "<group>"; };
 		137926F51987776900377ED5 /* GxiaoxiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GxiaoxiViewController.h; sourceTree = "<group>"; };
 		137926F61987776900377ED5 /* GxiaoxiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GxiaoxiViewController.m; sourceTree = "<group>"; };
-		137926F71987776900377ED5 /* GyhzyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GyhzyViewController.h; sourceTree = "<group>"; };
-		137926F81987776900377ED5 /* GyhzyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GyhzyViewController.m; sourceTree = "<group>"; };
 		137926F91987776900377ED5 /* GzhuceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GzhuceViewController.h; sourceTree = "<group>"; };
 		137926FA1987776900377ED5 /* GzhuceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GzhuceViewController.m; sourceTree = "<group>"; };
 		137FEB021974C9E700CDBD89 /* carData1.rtfd */ = {isa = PBXFileReference; lastKnownFileType = wrapper.rtfd; path = carData1.rtfd; sourceTree = "<group>"; };
@@ -904,6 +903,9 @@
 		E362357B19657588003B23CC /* GzhuceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GzhuceTableViewCell.m; sourceTree = "<group>"; };
 		E362358319657FA6003B23CC /* GMAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GMAPI.h; path = ../C/GMAPI.h; sourceTree = "<group>"; };
 		E362358419657FA6003B23CC /* GMAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GMAPI.m; path = ../C/GMAPI.m; sourceTree = "<group>"; };
+		E37126CC19878DD100CB69CA /* GuserZyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuserZyViewController.h; sourceTree = "<group>"; };
+		E37126CD19878DD100CB69CA /* GuserZyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuserZyViewController.m; sourceTree = "<group>"; };
+		E37126CE19878DD100CB69CA /* GuserZyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GuserZyViewController.xib; sourceTree = "<group>"; };
 		E37D2C991974CFA500EBA627 /* shanchu_button_600_100@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shanchu_button_600_100@2x.png"; sourceTree = "<group>"; };
 		E37D2C9A1974CFA500EBA627 /* xuanze_down_44_44@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xuanze_down_44_44@2x.png"; sourceTree = "<group>"; };
 		E37D2C9B1974CFA500EBA627 /* xuanze_up_44_44@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xuanze_up_44_44@2x.png"; sourceTree = "<group>"; };
@@ -2084,6 +2086,9 @@
 		E362356C19657588003B23CC /* C */ = {
 			isa = PBXGroup;
 			children = (
+				E37126CC19878DD100CB69CA /* GuserZyViewController.h */,
+				E37126CD19878DD100CB69CA /* GuserZyViewController.m */,
+				E37126CE19878DD100CB69CA /* GuserZyViewController.xib */,
 				137926E11987776900377ED5 /* GChangePwViewController.h */,
 				137926E21987776900377ED5 /* GChangePwViewController.m */,
 				137926E31987776900377ED5 /* GfindCarViewController.h */,
@@ -2106,8 +2111,6 @@
 				137926F41987776900377ED5 /* GpersonTZViewController.m */,
 				137926F51987776900377ED5 /* GxiaoxiViewController.h */,
 				137926F61987776900377ED5 /* GxiaoxiViewController.m */,
-				137926F71987776900377ED5 /* GyhzyViewController.h */,
-				137926F81987776900377ED5 /* GyhzyViewController.m */,
 				137926F91987776900377ED5 /* GzhuceViewController.h */,
 				137926FA1987776900377ED5 /* GzhuceViewController.m */,
 			);
@@ -2336,6 +2339,7 @@
 				1391EF02197670E300FDC52A /* CarSourceCell.xib in Resources */,
 				13D5E0011961758E00804835 /* xubxhe_fabu_44_44@2x.png in Resources */,
 				13C7172B19824B5A008F7B42 /* Resource.bundle in Resources */,
+				E37126D019878DD100CB69CA /* GuserZyViewController.xib in Resources */,
 				13D5DFDE1961758E00804835 /* dianhua40_46@2x.png in Resources */,
 				13D5DFEB1961758E00804835 /* xiala_sanjiao_down14_8@2x.png in Resources */,
 				13C7173019824B5A008F7B42 /* WeiboSDK.bundle in Resources */,
@@ -2516,6 +2520,7 @@
 				1351C5C9197A4F8E000F7391 /* FBSearchResultController.m in Sources */,
 				138B4A0A19664EC100B974A5 /* Section_Button.m in Sources */,
 				138B4A1319664ED500B974A5 /* FBSearchFriendsController.m in Sources */,
+				E37126CF19878DD100CB69CA /* GuserZyViewController.m in Sources */,
 				190BFD51195AA0FB0098E0F4 /* AppDelegate.m in Sources */,
 				13D5DF7E19615A3500804835 /* NSString+PinYin.m in Sources */,
 				138074FB196E317700AD3D03 /* SzkAPI.m in Sources */,
@@ -2611,7 +2616,6 @@
 				E362358519657FA6003B23CC /* GMAPI.m in Sources */,
 				13D5E0C91963DB0300804835 /* QBShowImageDetailViewController.m in Sources */,
 				E362358119657588003B23CC /* GloginView.m in Sources */,
-				137927061987776900377ED5 /* GyhzyViewController.m in Sources */,
 				138074F3196D3E1000AD3D03 /* FBCityData.m in Sources */,
 				137927001987776900377ED5 /* GlxwmViewController.m in Sources */,
 				137926FC1987776900377ED5 /* GfindCarViewController.m in Sources */,
