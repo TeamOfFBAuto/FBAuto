@@ -37,8 +37,8 @@
 #define Appkey @"2831cfc47791"
 #define App @"2354df12a6dd38312f3425b39e735d21"
 
-#define SinaAppKey @"2462467829"
-#define SinaAppSecret @"af2efc15a4eb91bf6b2efe31065544b3"
+#define SinaAppKey @"2437553400"
+#define SinaAppSecret @"7379cf0aa245ba45a66cc7c9ae9b1dba"
 
 //#define QQAPPID @"101030950"
 #define WXAPPID @"wxd747942b226f56d5"

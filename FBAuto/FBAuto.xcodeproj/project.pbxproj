@@ -11,6 +11,12 @@
 		1315537B1979243B0044C010 /* FindCarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 131553791979243B0044C010 /* FindCarCell.m */; };
 		1315537C1979243B0044C010 /* FindCarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1315537A1979243B0044C010 /* FindCarCell.xib */; };
 		1315537F19792FC60044C010 /* LSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1315537E19792FC60044C010 /* LSearchView.m */; };
+		133019D51988FF150083CEA8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 133019D21988FF150083CEA8 /* Default-568h@2x.png */; };
+		133019D61988FF150083CEA8 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 133019D31988FF150083CEA8 /* Default.png */; };
+		133019D71988FF150083CEA8 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 133019D41988FF150083CEA8 /* Default@2x.png */; };
+		133019DB198900230083CEA8 /* icon57.png in Resources */ = {isa = PBXBuildFile; fileRef = 133019D8198900230083CEA8 /* icon57.png */; };
+		133019DC198900230083CEA8 /* icon114.png in Resources */ = {isa = PBXBuildFile; fileRef = 133019D9198900230083CEA8 /* icon114.png */; };
+		133019DD198900230083CEA8 /* icon120.png in Resources */ = {isa = PBXBuildFile; fileRef = 133019DA198900230083CEA8 /* icon120.png */; };
 		1336BC06196A88410011B4D9 /* duihuahuang1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1336BC04196A88410011B4D9 /* duihuahuang1@2x.png */; };
 		1336BC09196A8CE70011B4D9 /* FBAreaFriensController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC08196A8CE70011B4D9 /* FBAreaFriensController.m */; };
 		1336BC0D196B89A00011B4D9 /* XMPPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1336BC0C196B89A00011B4D9 /* XMPPServer.m */; };
@@ -403,6 +409,12 @@
 		1315537A1979243B0044C010 /* FindCarCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FindCarCell.xib; sourceTree = "<group>"; };
 		1315537D19792FC60044C010 /* LSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSearchView.h; sourceTree = "<group>"; };
 		1315537E19792FC60044C010 /* LSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSearchView.m; sourceTree = "<group>"; };
+		133019D21988FF150083CEA8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		133019D31988FF150083CEA8 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		133019D41988FF150083CEA8 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		133019D8198900230083CEA8 /* icon57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon57.png; sourceTree = "<group>"; };
+		133019D9198900230083CEA8 /* icon114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon114.png; sourceTree = "<group>"; };
+		133019DA198900230083CEA8 /* icon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon120.png; sourceTree = "<group>"; };
 		1336BC04196A88410011B4D9 /* duihuahuang1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "duihuahuang1@2x.png"; sourceTree = "<group>"; };
 		1336BC07196A8CE70011B4D9 /* FBAreaFriensController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBAreaFriensController.h; sourceTree = "<group>"; };
 		1336BC08196A8CE70011B4D9 /* FBAreaFriensController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBAreaFriensController.m; sourceTree = "<group>"; };
@@ -1921,6 +1933,12 @@
 		190BFD47195AA0FB0098E0F4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				133019D8198900230083CEA8 /* icon57.png */,
+				133019D9198900230083CEA8 /* icon114.png */,
+				133019DA198900230083CEA8 /* icon120.png */,
+				133019D21988FF150083CEA8 /* Default-568h@2x.png */,
+				133019D31988FF150083CEA8 /* Default.png */,
+				133019D41988FF150083CEA8 /* Default@2x.png */,
 				190BFD48195AA0FB0098E0F4 /* FBAuto-Info.plist */,
 				190BFD49195AA0FB0098E0F4 /* InfoPlist.strings */,
 				190BFD4C195AA0FB0098E0F4 /* main.m */,
@@ -2247,7 +2265,9 @@
 				13D5E01D1961758E00804835 /* quxiao_button600_90@2x.png in Resources */,
 				190BFD96195AB15C0098E0F4 /* personalselected@2x.png in Resources */,
 				138B4AEA1966A4BD00B974A5 /* face79.png in Resources */,
+				133019D71988FF150083CEA8 /* Default@2x.png in Resources */,
 				13D5E01E1961758E00804835 /* weibo90_72@2x.png in Resources */,
+				133019DD198900230083CEA8 /* icon120.png in Resources */,
 				138B4ACC1966A4BD00B974A5 /* face51.png in Resources */,
 				138B4AB31966A4BD00B974A5 /* face29.png in Resources */,
 				138B4ACD1966A4BD00B974A5 /* face52.png in Resources */,
@@ -2302,6 +2322,7 @@
 				138B4AA31966A4BD00B974A5 /* face14.png in Resources */,
 				13D5E07B1962B93A00804835 /* hui_button554_90@2x.png in Resources */,
 				13D5DFF91961758E00804835 /* jiantou_bai10_18@2x.png in Resources */,
+				133019D61988FF150083CEA8 /* Default.png in Resources */,
 				13D5DFE01961758E00804835 /* geren _bg50_28@2x.png in Resources */,
 				13D5E118196513AF00804835 /* FBDetail2Controller.xib in Resources */,
 				13D5E0C41963DB0300804835 /* QBImagePickerController.bundle in Resources */,
@@ -2318,6 +2339,7 @@
 				138B4AC81966A4BD00B974A5 /* face48.png in Resources */,
 				138B4AAD1966A4BD00B974A5 /* face23.png in Resources */,
 				E37D2C9D1974CFA500EBA627 /* xuanze_down_44_44@2x.png in Resources */,
+				133019DC198900230083CEA8 /* icon114.png in Resources */,
 				138B4AE41966A4BD00B974A5 /* face73.png in Resources */,
 				138B4ADC1966A4BD00B974A5 /* face66.png in Resources */,
 				138B4AB41966A4BD00B974A5 /* face3.png in Resources */,
@@ -2433,6 +2455,7 @@
 				138B4AE21966A4BD00B974A5 /* face71.gif in Resources */,
 				138B4AB81966A4BD00B974A5 /* face33.gif in Resources */,
 				13D5E0021961758E00804835 /* huquyanzhengma600_100@2x.png in Resources */,
+				133019DB198900230083CEA8 /* icon57.png in Resources */,
 				190BFD93195AB15C0098E0F4 /* fbselectios7@2x.png in Resources */,
 				13D5DFEF1961758E00804835 /* zhankaijiantou22_10@2x.png in Resources */,
 				138B4B001966A4BD00B974A5 /* face99.gif in Resources */,
@@ -2452,6 +2475,7 @@
 				138B4ADB1966A4BD00B974A5 /* face65.png in Resources */,
 				138B4ABC1966A4BD00B974A5 /* face37.png in Resources */,
 				138B4AF71966A4BD00B974A5 /* face90.png in Resources */,
+				133019D51988FF150083CEA8 /* Default-568h@2x.png in Resources */,
 				13D5E0191961758E00804835 /* yanzhengma_bg194_90@2x.png in Resources */,
 				13D5E00F1961758E00804835 /* xiaoxidian36_36@2x.png in Resources */,
 				13D5E0EB1963E19300804835 /* wnacheng-button-kedian-100_58@2x.png in Resources */,
@@ -2759,8 +2783,6 @@
 			baseConfigurationReference = F2B6939735024693BB7F96CA /* Pods.xcconfig */;
 			buildSettings = {
 				ARCHS = armv7;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2795,8 +2817,6 @@
 			baseConfigurationReference = F2B6939735024693BB7F96CA /* Pods.xcconfig */;
 			buildSettings = {
 				ARCHS = armv7;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bing Jin (KMZ2AD5LZY)";
 				FRAMEWORK_SEARCH_PATHS = (
