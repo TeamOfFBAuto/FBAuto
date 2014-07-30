@@ -28,20 +28,23 @@
         //姓名
         UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame)+6, CGRectGetMinY(imageView.frame)+3, 150, 17)];
         nameLabel.backgroundColor = [UIColor redColor];
+        nameLabel.textAlignment = NSTextAlignmentLeft;
         [self.contentView addSubview:nameLabel];
         self.nameLabel = nameLabel;
         
         
         //时间
-        UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(nameLabel.frame)+10, nameLabel.frame.origin.y, 95, 13)];
+        UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(nameLabel.frame)+10, nameLabel.frame.origin.y+4, 90, 13)];
         timeLabel.font = [UIFont systemFontOfSize:12];
         timeLabel.backgroundColor = [UIColor redColor];
+        timeLabel.textAlignment = NSTextAlignmentLeft;
         [self.contentView addSubview:timeLabel];
         self.timeLabel = timeLabel;
         
         //内容
         UILabel *contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(nameLabel.frame.origin.x, CGRectGetMaxY(nameLabel.frame)+8, 250, 15)];
         contentLabel.backgroundColor = [UIColor redColor];
+        contentLabel.textAlignment = NSTextAlignmentLeft;
         contentLabel.font = [UIFont systemFontOfSize:14];
         [self.contentView addSubview:contentLabel];
         
@@ -58,15 +61,13 @@
 
 
 
--(CGFloat)loadViewWithIndexPath:(NSIndexPath *)theIndexPath;{
-    CGFloat height = 65.0f;
+-(void)configWithData:(XMPPMessageModel *)model{
+    NSString *imageUrlUtf8 = [LCWTools md5:model.fromId];
+    NSString *jiequ = [imageUrlUtf8 substringFromIndex:imageUrlUtf8.length-4];
     
-    return height;
 }
 
--(void)configWithNetData:(NSMutableArray*)array indexPath:(NSIndexPath*)theIndexPath{
-    
-}
+
 
 
 

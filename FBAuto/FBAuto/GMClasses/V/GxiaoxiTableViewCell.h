@@ -9,6 +9,7 @@
 
 //站内消息
 #import <UIKit/UIKit.h>
+#import "XMPPMessageModel.h"
 @class GxiaoxiViewController;
 
 @interface GxiaoxiTableViewCell : UITableViewCell
@@ -22,8 +23,6 @@
 
 @property(nonatomic,assign)GxiaoxiViewController *delegate;
 
--(CGFloat)loadViewWithIndexPath:(NSIndexPath *)theIndexPath;
-
--(void)configWithNetData:(NSMutableArray*)array indexPath:(NSIndexPath*)theIndexPath;
+-(void)configWithData:(XMPPMessageModel*)model;
 
 @end

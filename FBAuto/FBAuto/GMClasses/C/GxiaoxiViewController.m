@@ -87,7 +87,7 @@
     
     XMPPMessageModel *aModel = [_dataArray objectAtIndex:indexPath.row];
     
-    
+    [cell configWithData:aModel];
     
     
     cell.textLabel.text = aModel.newestMessage;
@@ -107,13 +107,13 @@
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat height = 0;
-    if (_tmpCell) {
-        height = [_tmpCell loadViewWithIndexPath:indexPath];
-    }else{
-        _tmpCell = [[GxiaoxiTableViewCell alloc]init];
-        _tmpCell.delegate = self;
-        height = [_tmpCell loadViewWithIndexPath:indexPath];
-    }
+//    if (_tmpCell) {
+//        height = [_tmpCell loadViewWithIndexPath:indexPath];
+//    }else{
+//        _tmpCell = [[GxiaoxiTableViewCell alloc]init];
+//        _tmpCell.delegate = self;
+//        height = [_tmpCell loadViewWithIndexPath:indexPath];
+//    }
     
     height = 65;
     return height;

@@ -320,7 +320,8 @@
         sqlite3_bind_text(stmt, 3, [fromName UTF8String], -1, NULL);
         sqlite3_bind_text(stmt, 4, [message UTF8String], -1, NULL);
         sqlite3_bind_text(stmt, 5, [time UTF8String], -1, NULL);
-        sqlite3_bind_text(stmt, 6, [fromId UTF8String], -1, NULL);
+        
+        sqlite3_bind_text(stmt, 7, [fromId UTF8String], -1, NULL);
         
         if (clearSum) {
             number = 0;
@@ -419,7 +420,7 @@
             const unsigned char *fromName = sqlite3_column_text(stmt, 2);
             const unsigned char *message = sqlite3_column_text(stmt, 3);
             const unsigned char *time = sqlite3_column_text(stmt, 4);
-            const unsigned char *fromId = sqlite3_column_text(stmt, 4);;
+            const unsigned char *fromId = sqlite3_column_text(stmt, 6);
             
             XMPPMessageModel *aModel = [[XMPPMessageModel alloc]initWithFromPhone:[NSString stringWithUTF8String:(const char *)fromPhone] fromName:[NSString stringWithUTF8String:(const char *)fromName] fromId:[NSString stringWithUTF8String:(const char *)fromId]  newestMessage:[NSString stringWithUTF8String:(const char *)message] time:[NSString stringWithUTF8String:(const char *)time]];
             [resultArr addObject:aModel];
