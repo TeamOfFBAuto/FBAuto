@@ -45,11 +45,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.bigBgScroll.frame = CGRectMake(0, 64, 320, self.view.height - 44 - 20 - 75);
-    
-    CGRect thirdFrame = self.thirdBgView.frame;
-    thirdFrame.origin.y = self.view.bottom - 75 - 44 - (iPhone5 ? 20 : 0);
-    self.thirdBgView.frame = thirdFrame;
+    self.bigBgScroll.contentSize = CGSizeMake(320, self.bigBgScroll.height + 100);
     
     [self getSingleCarInfoWithId:self.infoId];
 }

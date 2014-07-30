@@ -100,7 +100,7 @@
     UIBarButtonItem *save_item2=[[UIBarButtonItem alloc]initWithCustomView:rightButton2];
     self.navigationItem.rightBarButtonItems = @[save_item,save_item2];
     
-    self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, self.view.height - 44 - (iPhone5 ? 20 : 0) - 50) style:UITableViewStylePlain];
+    self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, self.view.height - 44 - 20 - 50) style:UITableViewStylePlain];
     _table.delegate = self;
     _table.dataSource = self;
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -588,7 +588,7 @@
 - (void)createInputView
 {
     //键盘
-    inputBar = [[CWInputView alloc]initWithFrame:CGRectMake(0, self.view.height - 50 - (iPhone5 ? 20 : 0) - 44, 320, 50)];
+    inputBar = [[CWInputView alloc]initWithFrame:CGRectMake(0, self.view.height - 50 - 20 - 44, 320, 50)];
     inputBar.delegate = self;
     inputBar.clearInputWhenSend = YES;
     inputBar.resignFirstResponderWhenSend = NO;
@@ -653,13 +653,13 @@
         
         CGSize contentSize = self.table.contentSize;
         
-        CGFloat visibleHeight = inputBar.top - (iPhone5 ? 20 : 0) - 44;//聊天可视高度
+        CGFloat visibleHeight = inputBar.top - 20 - 44;//聊天可视高度
         
         NSLog(@",,,,,%f",visibleHeight);
         
         if (contentSize.height > self.table.height) {
             
-            aFrameY = inputBar.top - (self.view.height - 50 - (iPhone5 ? 20 : 0) - 44) - inputBar.height - 10;
+            aFrameY = inputBar.top - (self.view.height - 50 - 20 - 44) - inputBar.height - 10;
         }
     }
     

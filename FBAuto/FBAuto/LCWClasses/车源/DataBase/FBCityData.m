@@ -304,6 +304,14 @@
 + (void)updateCurrentUserPhone:(NSString *)currentPhone fromUserPhone:(NSString *)FromPhone fromName:(NSString *)fromName fromId:(NSString *)fromId newestMessage:(NSString *)message time:(NSString *)time clearReadSum:(BOOL)clearSum
 {
     
+    currentPhone = currentPhone ? currentPhone : @"";
+    FromPhone = FromPhone ? FromPhone : @"";
+    fromName = fromName ? fromName : @"";
+    fromId = fromId ? fromId : @"";
+    message = message ? message : @"";
+    time = time ? time : @"";
+    
+    NSLog(@"updateCurrentUserPhone %@ %@ %@ %@ %@",currentPhone,FromPhone,fromName,fromId,message);
     int number = [self numberOfExist:currentPhone fromUser:FromPhone];
     
     sqlite3 *db = [DataBase openDB];

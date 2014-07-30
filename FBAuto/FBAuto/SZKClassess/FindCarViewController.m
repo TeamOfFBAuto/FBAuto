@@ -114,7 +114,7 @@
     
     //数据展示table
     
-    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, menuBgView.bottom, 320, self.view.height -searchView.height - menuBgView.height - 49 - 15 - (iPhone5 ? 20 : 0))];
+    _table = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, menuBgView.bottom, 320, self.view.height -searchView.height - menuBgView.height - 49 - 15 - 20)];
     
     _table.refreshDelegate = self;
     _table.dataSource = self;

@@ -36,7 +36,7 @@
     // Do any additional setup after loading the view from its nib.
     
     CGRect thirdFrame = self.bottomBgView.frame;
-    thirdFrame.origin.y = self.view.bottom - 75 - 44 - (iPhone5 ? 20 : 0);
+    thirdFrame.origin.y = self.view.bottom - 75 - 44 - 20;
     self.bottomBgView.frame = thirdFrame;
     
     [self createViews];

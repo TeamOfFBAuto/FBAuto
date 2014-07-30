@@ -254,7 +254,7 @@
 
 - (void)createThirdSection
 {
-    UIView *thirdView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.bottom - 75 - 44 - (iPhone5 ? 20 : 0), 320, 75)];
+    UIView *thirdView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.bottom - 75 - 44 - 20, 320, 75)];
     thirdView.backgroundColor = [UIColor lightGrayColor];
     [self.view addSubview:thirdView];
     

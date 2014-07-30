@@ -479,7 +479,7 @@
     
     [UIView animateWithDuration:0.5 animations:^{
         
-        bigBgScroll.contentOffset = CGPointMake(0, 200);
+        bigBgScroll.contentOffset = CGPointMake(0, iPhone5 ? 200 : 150 + 101);
     }];
 }
 

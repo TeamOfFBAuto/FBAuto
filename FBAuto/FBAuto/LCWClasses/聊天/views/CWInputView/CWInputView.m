@@ -235,7 +235,7 @@
     
     [UIView animateWithDuration:animationDuration animations:^{
         CGRect aFrame = self.originalFrame;
-        aFrame.origin.y = keyboardRect.origin.y - aFrame.size.height - UPDARE_HEIGHT - (iPhone5 ? 20 : 0);
+        aFrame.origin.y = keyboardRect.origin.y - aFrame.size.height - UPDARE_HEIGHT - 20;
         self.frame = aFrame;
         current_FrameY = aFrame.origin.y;//记录当前y
         current_KeyBoard_Y = keyboardRect.origin.y;
@@ -319,7 +319,7 @@
     
     CGRect input_Frame = self.frame;
     input_Frame.size.height = SELF_HEIGHT - TEXT_HEIGHT + newHeight;
-    input_Frame.origin.y = current_KeyBoard_Y - input_Frame.size.height - UPDARE_HEIGHT - (iPhone5 ? 20 : 0);
+    input_Frame.origin.y = current_KeyBoard_Y - input_Frame.size.height - UPDARE_HEIGHT - 20;
     
     self.frame = input_Frame;
     

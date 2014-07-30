@@ -43,7 +43,7 @@
     
     self.titleLabel.text = @"我的好友";
     
-    secondTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.width - 2 * KLEFT, self.view.height - (iPhone5 ? 20 : 0) - 44) style:UITableViewStylePlain];
+    secondTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.width - 2 * KLEFT, self.view.height - 20 - 44) style:UITableViewStylePlain];
     
     secondTable.separatorInset = UIEdgeInsetsMake(0, 10, 0, 10);
     secondTable.delegate = self;
@@ -91,74 +91,6 @@
 }
 
 #pragma - mark 二级、三级table管理
-
-//- (void)loadCityData
-//{
-//    
-//    __block typeof (FBAreaFriensController *)weakSelf = self;
-//    
-//    NSString * path = [[NSBundle mainBundle] pathForResource:@"city.plist" ofType:nil];
-//    
-//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-//        
-//        NSMutableArray *cityArray = [[NSMutableArray alloc] initWithContentsOfFile:path];
-//        
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            
-//            
-//            NSArray *states = [[cityArray objectAtIndex:0]objectForKey:@"states"];
-//            
-//            [weakSelf groupCityWithArray:states];
-//            
-//        });
-//    });
-//}
-//
-////城市分组
-//
-//- (void)groupCityWithArray:(NSArray *)states
-//{
-//    cityDic = [NSMutableDictionary dictionary];
-//    
-//    for (NSDictionary *aState in states) {
-//        NSString *stateName = [aState objectForKey:@"state"];
-//        NSString *firstLetter = [stateName getFirstLetter];
-//        NSArray *cities = [aState objectForKey:@"cities"];
-//        City *aCity = [[City alloc]initWithTitle:stateName subCities:cities];
-//        
-//        NSMutableArray *cityGroup = [NSMutableArray arrayWithArray:[cityDic objectForKey:firstLetter]];
-//        [cityGroup addObject:aCity];
-//        
-//        [cityDic setObject:cityGroup forKey:firstLetter];
-//    }
-//    
-//    NSArray* arr = [cityDic allKeys];
-//    arr = [arr sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2){
-//        NSComparisonResult result = [obj1 compare:obj2];
-//        return result==NSOrderedDescending;
-//    }];
-//    
-//    firstLetterArray = arr;
-//    
-//    [self reloadSecondTable];
-//}
-//
-////二级table
-//
-//- (void)reloadSecondTable
-//{
-//    
-//    if (secondTable == nil) {
-//        
-//        secondTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 220, self.view.height - (iPhone5 ? 20 : 0) - 44) style:UITableViewStylePlain];
-//        secondTable.delegate = self;
-//        secondTable.dataSource = self;
-//        [self.view addSubview:secondTable];
-//        
-//    }
-//    
-//    [secondTable reloadData];
-//}
 
 
 
