@@ -30,7 +30,7 @@
 //退出登录
 #import "CarResourceViewController.h"
 #import "FBCityData.h"
-
+#import "XMPPServer.h"
 
 @interface PersonalViewController ()
 
@@ -424,6 +424,7 @@
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         if (connectionError==0) {
             NSLog(@"成功");
+            [[XMPPServer shareInstance]disconnect];
             
         }else{
             NSLog(@"xxssx===%@",connectionError);
