@@ -14,9 +14,9 @@
 
 #import "XMPPMessageModel.h"
 
-@interface GxiaoxiViewController ()<RefreshDelegate>
+@interface GxiaoxiViewController ()
 {
-    int _page;//第几页
+    
     NSArray *_dataArray;//数据源
     
 }
@@ -43,9 +43,6 @@
     [self.view addSubview:_tableView];
     
     
-    //网路请求页码标示
-    _page =1;
-    
     [self queryHistoryMessage];
     
 }
@@ -58,6 +55,7 @@
 
 #pragma - mark 消息历史最新一条
 
+//获取数据 : 来自本地数据库
 - (void)queryHistoryMessage
 {
     NSUserDefaults *defalts = [NSUserDefaults standardUserDefaults];
@@ -81,12 +79,16 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *identifier = @"identifier";
+    
     GxiaoxiTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[GxiaoxiTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
     XMPPMessageModel *aModel = [_dataArray objectAtIndex:indexPath.row];
+    
+    
+    
     
     cell.textLabel.text = aModel.newestMessage;
     
@@ -98,30 +100,8 @@
     return 65.f;
 }
 
-#pragma mark - 请求网络数据
--(void)prepareNetData{
-    
-}
 
 
-
-#pragma - mark RefreshDelegate <NSObject>
-
-- (void)loadNewData
-{
-    _page = 1;
-    
-    [self prepareNetData];
-}
-
-- (void)loadMoreData
-{
-    NSLog(@"loadMoreData");
-    
-    _page ++;
-    
-    [self prepareNetData];
-}
 
 
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
