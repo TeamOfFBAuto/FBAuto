@@ -93,8 +93,6 @@
     
     perSonalVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"个人中心" image:[UIImage imageNamed:@"geren_down46_46"] tag:3];
     
-    
-    
     UITabBarController * tabbar = [[UITabBarController alloc] init];
     tabbar.tabBar.backgroundImage=[UIImage imageNamed:@"testV.png"];
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:232.0/255.0f green:128/255.0f blue:24/255.0f alpha:1]];
@@ -109,20 +107,33 @@
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }
 
+    //注册远程通知
     
-    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    [[UIApplication sharedApplication]registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeAlert |UIRemoteNotificationTypeBadge |UIRemoteNotificationTypeSound)];
+    //图标显示
+    application.applicationIconBadgeNumber = 0;
+    
+    //UIApplicationLaunchOptionsRemoteNotificationKey,判断是通过推送消息启动的
+    NSDictionary *infoDic = [launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"];
+    if (infoDic)
+    {
+        NSLog(@"infoDic %@",infoDic);
+        
+        NSString *str = [NSString stringWithFormat:@"%@",infoDic];
+        
+        [LCWTools alertText:@"haha"];
+    }
+    
     
     //开启网络状况的监听
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
     self.hostReach = [Reachability reachabilityWithHostname:@"http://fbautoapp.fblife.com"];
     
     //开始监听，会启动一个run loop
-    
     [self.hostReach startNotifier];
     
     //分享
-    
     [ShareSDK registerApp:Appkey];
     [self initSharePlat];
     
@@ -238,13 +249,12 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -390,6 +400,7 @@
     
 }
 
+#pragma - mark 远程通知
 
 //devicetoken
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
@@ -409,6 +420,36 @@
     
     
     [[NSUserDefaults standardUserDefaults]setObject:string_pushtoken forKey:DEVICETOKEN];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    NSString *str = [NSString stringWithFormat: @"Error: %@", error];
+    NSLog(@"erro  %@",str);
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"注册失败" message:str delegate:Nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+    [alert show];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    //正在前台,获取推送时，此处可以获取
+    //后台，点击进入,此处可以获取
+    UIApplicationState state = [application applicationState];
+    if (state == UIApplicationStateInactive){
+        NSLog(@"UIApplicationStateInactive %@",userInfo);
+        //点击消息进入走此处,做相应处理
+        
+    }
+    if (state == UIApplicationStateActive) {
+        NSLog(@"UIApplicationStateActive %@",userInfo);
+        //程序就在前台
+        //弹框
+        
+    }
+    if (state == UIApplicationStateBackground)
+    {
+        NSLog(@"UIApplicationStateBackground %@",userInfo);
+    }
 }
 
 @end
