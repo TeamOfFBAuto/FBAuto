@@ -28,27 +28,29 @@
 #import <TencentOpenAPI/QQApiInterface.h>
 #import <TencentOpenAPI/TencentOAuth.h>
 
-//shareSDK fbauto@qq.com
-
+//shareSDK fbauto2014@qq.com 123abc
+//新浪 fbauto2014@qq.com  123abc 或者 fbauto2014
 // 邮箱 fbauto2014@qq.com
 // QQ: 2609534839
 // 密码: 123abc
 
-#define Appkey @"2767e6ead1a0"
-#define App @"3dfded7d59ea1015aea147bad5d006a4"
+#define Appkey @"2831cfc47791"
+#define App @"2354df12a6dd38312f3425b39e735d21"
 
-//#define SinaAppKey @"3264973609"
-//#define SinaAppSecret @"5f23a738ceeaff81863614301a5bb635"
+#define SinaAppKey @"2462467829"
+#define SinaAppSecret @"af2efc15a4eb91bf6b2efe31065544b3"
 
 //#define QQAPPID @"101030950"
-//#define WXAPPID @"wx1083e61dfbcb9cf7"
+#define WXAPPID @"wxd747942b226f56d5"
+
 
 // shareSDK 测试数据
-#define SinaAppKey @"568898243"
-#define SinaAppSecret @"38a4f8204cc784f81f9f0daaf31e02e3"
+
+//#define SinaAppKey @"568898243"
+//#define SinaAppSecret @"38a4f8204cc784f81f9f0daaf31e02e3"
 
 #define QQAPPID @"100371282"
-#define WXAPPID @"wx4868b35061f87885"
+//#define WXAPPID @"wx4868b35061f87885"
 
 #define RedirectUrl @"http://www.sharesdk.cn"
 //#define RedirectUrl @"http://www.sina.com"

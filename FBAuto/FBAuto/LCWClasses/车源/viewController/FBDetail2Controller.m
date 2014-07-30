@@ -292,7 +292,7 @@
     [shareView actionBlock:^(NSInteger buttonIndex, NSString *shareStyle) {
         
         NSArray *text =  @[@"微信",@"QQ",@"朋友圈",@"微博",@"站内好友"];
-        NSString *imageUrl = @"http://fbautoapp.fblife.com/resource/photo/63/bd/thumb_34_small.jpg";
+        NSString *imageUrl = @"";
         
         buttonIndex -= 100;
         NSLog(@"share %d %@",buttonIndex,shareStyle);
@@ -342,7 +342,7 @@
 
     id<ISSContent> publishContent = [ShareSDK content:text
                                        defaultContent:@"FBAuto分享"
-                                                image:[ShareSDK imageWithUrl:imageUrl]
+                                                image:nil
                                                 title:nil
                                                   url:nil
                                           description:nil
@@ -389,7 +389,8 @@
                                  }
                                  else if (state == SSPublishContentStateFail)
                                  {
-                                     NSLog(NSLocalizedString(@"TEXT_SHARE_FAI", @"发布失败!error code == %d, error code == %@"), [error errorCode], [error errorDescription]);
+                                     NSLog(@"分享失败!error code == %d, error code == %@ 原因:分享图片错误", [error errorCode], [error errorDescription]);
+
                                  }
                              }];
 }
