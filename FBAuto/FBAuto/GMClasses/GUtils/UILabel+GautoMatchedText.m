@@ -16,10 +16,7 @@
     
     if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0)) {
         r = [self.text boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName: self.font} context:nil];
-    }else{
-        r.size = [self.text sizeWithFont:[UIFont systemFontOfSize:13] forWidth:width lineBreakMode:NSLineBreakByWordWrapping];
     }
-    
     return r;
     
 }

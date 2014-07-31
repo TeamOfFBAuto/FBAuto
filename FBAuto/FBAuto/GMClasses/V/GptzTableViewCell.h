@@ -10,4 +10,8 @@
 
 @interface GptzTableViewCell : UITableViewCell
 
+@property(nonatomic,strong)UILabel *timeLabel;//时间label
+@property(nonatomic,strong)UILabel *contentLabel;//内容label
+
+
 @end

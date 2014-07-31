@@ -13,7 +13,13 @@
 
 {
     UITableView *_tableView;
+    NSArray *_dataArray;//数据源
 }
+
+@property(nonatomic,strong)NSString *userId;//用户id
+
+
+
 
 
 @end

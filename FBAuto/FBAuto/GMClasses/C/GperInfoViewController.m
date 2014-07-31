@@ -77,6 +77,7 @@
     GmLoadData *aaa = [[GmLoadData alloc]init];
     //请求地址str
     NSString *str = [NSString stringWithFormat:FBAUTO_GET_USER_INFORMATION,[GMAPI getUid]];
+    
     NSLog(@"请求用户信息接口 %@",str);
     [aaa SeturlStr:str block:^(NSDictionary *dataInfo, NSString *errorinfo, NSInteger errcode) {
         NSLog(@"%@",dataInfo);

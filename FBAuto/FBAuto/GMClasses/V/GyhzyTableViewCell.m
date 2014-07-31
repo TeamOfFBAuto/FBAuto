@@ -9,6 +9,8 @@
 #import "GyhzyTableViewCell.h"
 #import "GuserModel.h"
 
+#import "CarSourceClass.h"
+
 @implementation GyhzyTableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -132,6 +134,7 @@
         tLabel.backgroundColor = [UIColor grayColor];
         //tLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:16];
         tLabel.text = @"奥迪Q5 豪华型";
+        self.carNameLabel = tLabel;
         [self.contentView addSubview:tLabel];
         
         //价钱
@@ -141,9 +144,29 @@
         pLabel.textColor = [UIColor redColor];
         pLabel.backgroundColor = [UIColor grayColor];
         pLabel.text = @"100.00万元";
+        self.carPriceLabel = pLabel;
         [self.contentView addSubview:pLabel];
         
+        //描述1
+        self.carClabel1 = [[UILabel alloc]initWithFrame:CGRectMake(tLabel.frame.origin.x, CGRectGetMaxY(tLabel.frame)+9, 48, 13)];
+        self.carClabel1.font = [UIFont systemFontOfSize:12];
+        self.carClabel1.textColor = RGBCOLOR(129, 129, 129);
+        [self.contentView addSubview:self.carClabel1];
         
+        //描述2
+        self.carClale2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.carClabel1.frame)+9, self.carClabel1.frame.origin.y, self.carClabel1.frame.size.width, self.carClabel1.frame.size.height)];
+        self.carClale2.font = [UIFont systemFontOfSize:12];
+        self.carClale2.textColor = RGBCOLOR(129, 129, 129);
+        [self.contentView addSubview:self.carClale2];
+        
+        
+        
+        //商家描述
+        self.carUserNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.carClabel1.frame.origin.x, CGRectGetMaxY(self.carClabel1.frame)+9, 250, 14)];
+        self.carUserNameLabel.font = [UIFont systemFontOfSize:13];
+        self.carUserNameLabel.textColor = RGBCOLOR(129, 129, 129);
+        self.carUserNameLabel.backgroundColor = [UIColor redColor];
+        [self.contentView addSubview:self.carUserNameLabel];
         
         
         height = 84;
@@ -167,6 +190,27 @@
 }
 
 
+
+-(void)configWithCarModel:(CarSourceClass *)car userModel:(GuserModel*)userModel{
+    self.carNameLabel.text = car.car_name;
+    self.carPriceLabel.text = car.price;
+    NSString *carfrom = car.carfrom;//汽车规格
+    NSString *spot_future = car.spot_future;//现货或期货
+    NSString *color_out = [car.color_out substringWithRange:NSMakeRange(0, 1)];//外观颜色
+    NSString *color_in = [car.color_in substringWithRange:NSMakeRange(0, 1)];//内饰颜色
+    
+    self.carClabel1.text = [NSString stringWithFormat:@"%@%@",carfrom,spot_future];
+    self.carClale2.text = [NSString stringWithFormat:@"外%@内%@",color_out,color_in];
+    NSString *str = nil;
+    if ([userModel.usertype intValue] == 1 ) {
+        str = @"个人";
+    }else if ([userModel.usertype intValue] == 2){
+        str = @"商家";
+    }
+    self.carUserNameLabel.text = [NSString stringWithFormat:@"%@（%@）",userModel.name,str];
+    
+    
+}
 
 
 

@@ -96,6 +96,13 @@ alpha:(a)]
 //修改完用户信息发送的通知
 #define FBAUTO_CHANGEPERSONALINFO @"changePersonalInfoMation"
 
+//获取系统通知列表
+#define FBAUTO_PERSONTZLB @"http://fbautoapp.fblife.com/index.php?c=interface&a=getnoticelist"
+
+
+//获取通知详细内容
+#define FBAUTO_PERSONTZ @"http://fbautoapp.fblife.com/index.php?c=interface&a=getnotice&nid=%@"
+
 //好友API=================
 
 //好友列表

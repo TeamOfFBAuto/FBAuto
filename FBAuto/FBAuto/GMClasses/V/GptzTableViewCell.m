@@ -21,14 +21,26 @@
         
         //内容
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, 25, 185, 17)];
-        label.backgroundColor = [UIColor purpleColor];
+        label.textAlignment = NSTextAlignmentLeft;
+        [self.contentView addSubview:label];
+        self.contentLabel = label;
+        self.contentLabel.font = [UIFont systemFontOfSize:15];
         
         //时间
-        UILabel *lable1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(label.frame)+28, 25, 90, 17)];
-        lable1.backgroundColor = [UIColor orangeColor];
+        UILabel *lable1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(label.frame)+20, 25, 98, 17)];
+        self.timeLabel = lable1;
+        self.timeLabel.font = [UIFont systemFontOfSize:12];
+        label.textAlignment = NSTextAlignmentLeft;
+        
         
         [self.contentView addSubview:label];
         [self.contentView addSubview:lable1];
+        
+        
+        //分割线
+        UIView *fenView = [[UIView alloc]initWithFrame:CGRectMake(0, 65, 320, 0.5)];
+        fenView.backgroundColor = RGBCOLOR(180, 180, 180);
+        [self.contentView addSubview:fenView];
         
     }
     return self;

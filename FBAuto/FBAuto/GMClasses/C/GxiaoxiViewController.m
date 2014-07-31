@@ -14,6 +14,9 @@
 
 #import "XMPPMessageModel.h"
 
+
+#import "FBChatViewController.h"
+
 @interface GxiaoxiViewController ()
 {
     
@@ -36,10 +39,11 @@
     self.titleLabel.text = @"我的消息";
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64) style:UITableViewStylePlain];
-//    _tableView.refreshDelegate = self;
+
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.separatorColor = [UIColor whiteColor];
+    _tableView.separatorStyle = UITableViewCellSelectionStyleNone;
+    
     [self.view addSubview:_tableView];
     
     
@@ -89,8 +93,7 @@
     
     [cell configWithData:aModel];
     
-    
-    cell.textLabel.text = aModel.newestMessage;
+    cell.separatorInset = UIEdgeInsetsZero;
     
     return cell;
 }
@@ -107,73 +110,35 @@
 - (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat height = 0;
-//    if (_tmpCell) {
-//        height = [_tmpCell loadViewWithIndexPath:indexPath];
-//    }else{
-//        _tmpCell = [[GxiaoxiTableViewCell alloc]init];
-//        _tmpCell.delegate = self;
-//        height = [_tmpCell loadViewWithIndexPath:indexPath];
-//    }
-    
+
     height = 65;
     return height;
     
 }
 
 
-
-- (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    //    CarSourceClass *aCar = (CarSourceClass *)[_dataArray objectAtIndex:indexPath.row];
-    //
-    //    [self clickToDetail:aCar.id car:aCar];
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSLog(@"%@",indexPath);
+    FBChatViewController *chat = [[FBChatViewController alloc]init];
+    XMPPMessageModel *aModel = [_dataArray objectAtIndex:indexPath.row];
+    chat.chatWithUser = aModel.fromPhone;
+    chat.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:chat animated:YES];
 }
 
 
-//- (void)clickToDetail:(NSString *)info car:(CarSourceClass *)aCar
-//{
-//    NSLog(@"%@",aCar.stype_name);
-//    if ([aCar.stype_name isEqualToString:@"车源"]) {
-//        FBDetail2Controller *detail = [[FBDetail2Controller alloc]init];
-//        detail.style = Navigation_Special;
-//        detail.navigationTitle = @"详情";
-//        detail.infoId = info;
-//        detail.carId = aCar.car;
-//        detail.hidesBottomBarWhenPushed = YES;
-//        [self.navigationController pushViewController:detail animated:YES];
-//    }else if ([aCar.stype_name isEqualToString:@"寻车"]){
-//        FBFindCarDetailController *detail = [[FBFindCarDetailController alloc]init];
-//        detail.style = Navigation_Special;
-//        detail.navigationTitle = @"详情";
-//        detail.infoId = info;
-//        detail.carId = aCar.car;
-//        detail.hidesBottomBarWhenPushed = YES;
-//        [self.navigationController pushViewController:detail animated:YES];
-//    }
-//}
-
-
-/**
- *  刷新数据列表
- *
- *  @param dataArr  新请求的数据
- *  @param isReload 判断在刷新或者加载更多
- */
-- (void)reloadData:(NSArray *)dataArr isReload:(BOOL)isReload
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    if (isReload) {
-        
-        _dataArray = [NSMutableArray arrayWithArray:dataArr];
-        
-    }else
-    {
-        NSMutableArray *newArr = [NSMutableArray arrayWithArray:_dataArray];
-        [newArr addObjectsFromArray:dataArr];
-        _dataArray = newArr;
-    }
-    
-    [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+    return [UIView new];
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.01f;
+}
+
+
 
 
 @end

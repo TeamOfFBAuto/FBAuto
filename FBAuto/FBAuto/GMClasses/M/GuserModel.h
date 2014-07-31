@@ -6,6 +6,8 @@
 //  Copyright (c) 2014年 szk. All rights reserved.
 //
 
+
+//用户信息
 #import <Foundation/Foundation.h>
 
 @interface GuserModel : NSObject

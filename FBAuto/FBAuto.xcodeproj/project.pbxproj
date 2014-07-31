@@ -378,6 +378,8 @@
 		E35871ED196A946F0002813C /* GPersonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E35871EC196A946F0002813C /* GPersonTableViewCell.m */; };
 		E35871F6196AA63E0002813C /* duihuahuang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E35871F4196AA63E0002813C /* duihuahuang@2x.png */; };
 		E35871F7196AA63E0002813C /* duihuahuang1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E35871F5196AA63E0002813C /* duihuahuang1@2x.png */; };
+		E359273F1988D0C800A3F1B0 /* GtzDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E359273E1988D0C800A3F1B0 /* GtzDetailViewController.m */; };
+		E35927421988E56C00A3F1B0 /* GpersonTZdetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E35927411988E56C00A3F1B0 /* GpersonTZdetailTableViewCell.m */; };
 		E3611459197BA8E000F9234E /* DXAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3611457197BA8E000F9234E /* DXAlertView.m */; };
 		E362357F19657588003B23CC /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = E362357419657588003B23CC /* area.plist */; };
 		E362358019657588003B23CC /* GuserZhuce.m in Sources */ = {isa = PBXBuildFile; fileRef = E362357619657588003B23CC /* GuserZhuce.m */; };
@@ -904,6 +906,10 @@
 		E35871EC196A946F0002813C /* GPersonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPersonTableViewCell.m; sourceTree = "<group>"; };
 		E35871F4196AA63E0002813C /* duihuahuang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "duihuahuang@2x.png"; sourceTree = "<group>"; };
 		E35871F5196AA63E0002813C /* duihuahuang1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "duihuahuang1@2x.png"; sourceTree = "<group>"; };
+		E359273D1988D0C800A3F1B0 /* GtzDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GtzDetailViewController.h; sourceTree = "<group>"; };
+		E359273E1988D0C800A3F1B0 /* GtzDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GtzDetailViewController.m; sourceTree = "<group>"; };
+		E35927401988E56C00A3F1B0 /* GpersonTZdetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GpersonTZdetailTableViewCell.h; sourceTree = "<group>"; };
+		E35927411988E56C00A3F1B0 /* GpersonTZdetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GpersonTZdetailTableViewCell.m; sourceTree = "<group>"; };
 		E3611457197BA8E000F9234E /* DXAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXAlertView.m; sourceTree = "<group>"; };
 		E3611458197BA8E000F9234E /* DXAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXAlertView.h; sourceTree = "<group>"; };
 		E362357419657588003B23CC /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
@@ -2127,6 +2133,8 @@
 				137926F21987776900377ED5 /* GperInfoViewController.m */,
 				137926F31987776900377ED5 /* GpersonTZViewController.h */,
 				137926F41987776900377ED5 /* GpersonTZViewController.m */,
+				E359273D1988D0C800A3F1B0 /* GtzDetailViewController.h */,
+				E359273E1988D0C800A3F1B0 /* GtzDetailViewController.m */,
 				137926F51987776900377ED5 /* GxiaoxiViewController.h */,
 				137926F61987776900377ED5 /* GxiaoxiViewController.m */,
 				137926F91987776900377ED5 /* GzhuceViewController.h */,
@@ -2171,6 +2179,8 @@
 				E351A0C2196F943800C78CFE /* GyhzyTableViewCell.m */,
 				E380B4961980FC4400A86F12 /* GxiaoxiTableViewCell.h */,
 				E380B4971980FC4400A86F12 /* GxiaoxiTableViewCell.m */,
+				E35927401988E56C00A3F1B0 /* GpersonTZdetailTableViewCell.h */,
+				E35927411988E56C00A3F1B0 /* GpersonTZdetailTableViewCell.m */,
 			);
 			path = V;
 			sourceTree = "<group>";
@@ -2578,6 +2588,7 @@
 				13D5E05D1962A14E00804835 /* MenuCell.m in Sources */,
 				137927021987776900377ED5 /* GMessageSViewController.m in Sources */,
 				13D5E0881963AAF100804835 /* PhotoImageView.m in Sources */,
+				E359273F1988D0C800A3F1B0 /* GtzDetailViewController.m in Sources */,
 				1391EF0A1977A1FF00FDC52A /* GloadingView.m in Sources */,
 				138B4B141966A65E00B974A5 /* MarkupParser.m in Sources */,
 				137926FE1987776900377ED5 /* GjjxxViewController.m in Sources */,
@@ -2590,6 +2601,7 @@
 				190BFD4D195AA0FB0098E0F4 /* main.m in Sources */,
 				1336BC25196B91F70011B4D9 /* SJAvatarBrowser.m in Sources */,
 				138B4A0619664E9800B974A5 /* FBFriend2Cell.m in Sources */,
+				E35927421988E56C00A3F1B0 /* GpersonTZdetailTableViewCell.m in Sources */,
 				E35871ED196A946F0002813C /* GPersonTableViewCell.m in Sources */,
 				138B4B0F1966A51700B974A5 /* OHAttributedLabel.m in Sources */,
 				13D5E0F91964061100804835 /* FBPhotoBrowserController.m in Sources */,

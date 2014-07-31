@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 @class GyhzyTableViewCell;
 @class GuserModel;
-@interface GuserZyViewController : FBBaseViewController<UITableViewDataSource,UITableViewDelegate>
+@interface GuserZyViewController : FBBaseViewController<UITableViewDataSource,UITableViewDelegate,RefreshDelegate>
 
 {
-    UITableView *_tableView;//主tableview
+    RefreshTableView *_tableView;//主tableview
     
     GyhzyTableViewCell *_tmpCell;//临时用来获取高度的cell
     
@@ -27,6 +27,7 @@
 @property(nonatomic,strong)NSString *userId;//用于获取数据的用户id
 
 @property(nonatomic,strong)GuserModel *guserModel;
+
 
 
 

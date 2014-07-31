@@ -13,6 +13,9 @@
 
 #import "GuserModel.h"
 
+
+#import "CarSourceClass.h"//车源modle
+
 @interface GuserZyViewController ()
 
 @end
@@ -37,8 +40,8 @@
     
     NSLog(@"%s",__FUNCTION__);
     
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64-75) style:UITableViewStylePlain];
-    _tableView.delegate = self;
+    _tableView = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64-75)];
+    _tableView.refreshDelegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
@@ -46,7 +49,7 @@
     [self prepareUeserInfo];//获取用户信息
     [self prepareUserCar];//获取用户车源信息
     
-    
+    [_tableView showRefreshHeader:YES];
     
 }
 
@@ -91,6 +94,7 @@
         NSLog(@"%@",self.saleTypeBtn);
         
         
+        
         [_tableView reloadData];
         
     }];
@@ -104,25 +108,94 @@
     
     NSLog(@"用户车源信息接口:%@",api);
     
-    NSURL *url = [NSURL URLWithString:api];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+//    NSURL *url = [NSURL URLWithString:api];
+//    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+//    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+//        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+//        
+//        if (data.length == 0) {
+//            return ;
+//        }
+//        
+//        NSLog(@"%@",dic);
+//        
+//        NSDictionary *dataInfoDic = [dic objectForKey:@"datainfo"];
+//        NSArray *carSourceArray = [dataInfoDic objectForKey:@"data"];
+//        
+//        NSMutableArray *marray = [NSMutableArray arrayWithCapacity:1];
+//        
+//        
+//        for (NSDictionary *dic in carSourceArray) {
+//            CarSourceClass *car = [[CarSourceClass alloc]initWithDictionary:dic];
+//            [marray addObject:car];
+//        }
+//        
+//        _dataArray = marray;
+//        
+//        [_tableView reloadData];
+//        
+//        
+//    }];
+    
+    
+    
+    
+    __weak typeof (self)weakSelf = self;
+    
+    LCWTools *tool = [[LCWTools alloc]initWithUrl:api isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
+        NSLog(@"用户车源列表erro%@",[result objectForKey:@"errinfo"]);
         
-        NSDictionary *dataInfoDic = [dic objectForKey:@"datainfo"];
-        NSArray *carSourceArray = [dataInfoDic objectForKey:@"data"];
+        NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
+        int total = [[dataInfo objectForKey:@"total"]intValue];
         
-        _dataArray = carSourceArray;
+        if (_page < total) {
+            
+            _tableView.isHaveMoreData = YES;
+        }else
+        {
+            _tableView.isHaveMoreData = NO;
+        }
         
-        [_tableView reloadData];
+        NSArray *data = [dataInfo objectForKey:@"data"];
         
+        NSMutableArray *arr = [NSMutableArray arrayWithCapacity:data.count];
+        
+        for (NSDictionary *aDic in data) {
+            
+            CarSourceClass *aCar = [[CarSourceClass alloc]initWithDictionary:aDic];
+            
+            [arr addObject:aCar];
+        }
+        
+        [weakSelf reloadData:arr isReload:_tableView.isReloadData];
+        
+    }failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failDic %@",failDic);
+        
+        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
+        
+        if (_tableView.isReloadData) {
+            
+            _page --;
+            
+            [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+        }
         
     }];
+    
+    
+    
+    
+    
+    
+    
 }
 
 
-#pragma mark - UITableViewDataSource && UITableViewDelegate
+#pragma mark - UITableViewDataSource
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *identifier = @"identifer";
@@ -137,8 +210,21 @@
     
     [cell loadViewWithIndexPath:indexPath model:self.guserModel];
     [cell configWithUserModel:self.guserModel];
+    if (indexPath.row>3) {
+        [cell configWithCarModel:_dataArray[indexPath.row-4] userModel:self.guserModel];
+    }
+    
+    
+    if (indexPath.row == _dataArray.count+3) {
+        UIView *fenView = [[UIView alloc]initWithFrame:CGRectMake(0, 84, 320, 0.5)];
+        fenView.backgroundColor = RGBCOLOR(214, 214, 214);
+        [cell.contentView addSubview:fenView];
+    }
     
     cell.separatorInset = UIEdgeInsetsZero;
+    
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 }
@@ -153,8 +239,59 @@
 }
 
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+
+
+
+/**
+ *  刷新数据列表
+ *
+ *  @param dataArr  新请求的数据
+ *  @param isReload 判断在刷新或者加载更多
+ */
+- (void)reloadData:(NSArray *)dataArr isReload:(BOOL)isReload
+{
+    if (isReload) {
+        
+        _dataArray = dataArr;
+        
+    }else
+    {
+        NSMutableArray *newArr = [NSMutableArray arrayWithArray:_dataArray];
+        [newArr addObjectsFromArray:dataArr];
+        _dataArray = newArr;
+    }
     
+    [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+}
+
+
+
+
+#pragma - mark RefreshDelegate <NSObject>
+
+- (void)loadNewData
+{
+    _page = 1;
+    
+    [self prepareUserCar];
+}
+
+- (void)loadMoreData
+{
+    NSLog(@"loadMoreData");
+    
+    _page ++;
+    
+    [self prepareUserCar];
+}
+
+- (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
+- (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
+{
     CGFloat height = 0;
     
     if (_tmpCell) {
@@ -166,6 +303,21 @@
     
     return height;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -194,5 +346,21 @@
     [self.navigationController popViewControllerAnimated:YES];
     
 }
+
+
+
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    return [UIView new];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.01f;
+}
+
+
+
 
 @end
