@@ -288,7 +288,7 @@
     [shareView actionBlock:^(NSInteger buttonIndex, NSString *shareStyle) {
         
         NSArray *text =  @[@"微信",@"QQ",@"朋友圈",@"微博",@"站内好友"];
-        NSString *imageUrl = @"";
+        NSString *imageUrl = @"http://img2.imgtn.bdimg.com/it/u=2510813707,1886329985&fm=23&gp=0.jpg";
         
         buttonIndex -= 100;
         NSLog(@"share %d %@",buttonIndex,shareStyle);
@@ -336,10 +336,13 @@
     
     //创建分享内容
 
+    
+    UIImage *aImage = [UIImage imageNamed:@"detail_test"];
+    
+    
     id<ISSContent> publishContent = [ShareSDK content:text
                                        defaultContent:@"FBAuto分享"
-                                                image:nil
-                                                title:nil
+                                                image:[ShareSDK pngImageWithImage:aImage]                                                title:nil
                                                   url:nil
                                           description:nil
                                             mediaType:SSPublishContentMediaTypeText];
