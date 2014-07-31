@@ -379,6 +379,9 @@
     }
     
     sqlite3_finalize(stmt);
+    
+    NSDictionary *dic = @{@"fromPhone":FromPhone ? FromPhone : @"",@"fromName":fromName ? fromName : @"",@"unreadNum":[NSString stringWithFormat:@"%d",number]};
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"fromUnread" object:nil userInfo:dic];
 }
 
 //当前用户所有未读条数
@@ -405,6 +408,28 @@
     sqlite3_finalize(stmt);
     
     return sum;
+}
+
++ (int)numberOfUnreadMessageFromUser:(NSString *)fromPhone
+{
+    sqlite3 *db = [DataBase openDB];
+    sqlite3_stmt *stmt = nil;
+   
+    int result1= sqlite3_prepare_v2(db, "select unReadSum from xmppMessage where fromPhone = ?", -1, &stmt, nil);
+    if (result1 == SQLITE_OK) {
+        
+        sqlite3_bind_text(stmt, 1, [fromPhone UTF8String], -1, nil);
+        
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            
+            int num = sqlite3_column_int(stmt, 0);
+            
+            return num;
+        }
+    }
+    sqlite3_finalize(stmt);
+    
+    return 0;
 }
 
 + (NSArray *)queryAllNewestMessageForUser:(NSString *)currentUser
