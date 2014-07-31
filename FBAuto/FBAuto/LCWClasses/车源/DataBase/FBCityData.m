@@ -303,14 +303,6 @@
 
 + (void)updateCurrentUserPhone:(NSString *)currentPhone fromUserPhone:(NSString *)FromPhone fromName:(NSString *)fromName fromId:(NSString *)fromId newestMessage:(NSString *)message time:(NSString *)time clearReadSum:(BOOL)clearSum
 {
-    
-    currentPhone = currentPhone ? currentPhone : @"";
-    FromPhone = FromPhone ? FromPhone : @"";
-    fromName = fromName ? fromName : @"";
-    fromId = fromId ? fromId : @"";
-    message = message ? message : @"";
-    time = time ? time : @"";
-    
     NSLog(@"updateCurrentUserPhone %@ %@ %@ %@ %@",currentPhone,FromPhone,fromName,fromId,message);
     int number = [self numberOfExist:currentPhone fromUser:FromPhone];
     
@@ -319,6 +311,12 @@
     
     if (number == -1) {
         //插入
+        
+        //满足nil时说明消息无效,此时不记录
+        if (currentPhone == nil || FromPhone == nil || fromName == nil || fromId == nil || message == nil || time == nil) {
+            return;
+        }
+        
         
         //unReadSum = 0,说明没有未读消息 > 0有未读消息
         int result = sqlite3_prepare(db, "insert into xmppMessage(currentUser,fromPhone,fromName,newestMessage,time,unReadSum,fromId) values(?,?,?,?,?,?,?)", -1, &stmt, nil);//?相当于%@格式

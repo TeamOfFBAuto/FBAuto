@@ -248,6 +248,9 @@
             {
                 NSLog(@"微博");
                 [self shareText:[text objectAtIndex:buttonIndex] imageName:imageUrl ShareType:ShareTypeSinaWeibo];
+                
+                //http://fbautoapp.fblife.com/resource/head/86/2c/thumb_2_Thu.jpg?1406776627
+                //http://fbautoapp.fblife.com/resource/head/86/2c/thumb_1_Thu.jpg
             }
                 break;
             case 4:
@@ -267,10 +270,11 @@
 - (void)shareText:(NSString *)text imageName:(NSString *)imageUrl ShareType:(ShareType)aShareType{
     
     //创建分享内容
+    UIImage *aImage = [UIImage imageNamed:@"detail_test"];
     
     id<ISSContent> publishContent = [ShareSDK content:text
                                        defaultContent:@"FBAuto分享"
-                                                image:[ShareSDK imageWithUrl:imageUrl]
+                                                image:[ShareSDK pngImageWithImage:aImage]
                                                 title:nil
                                                   url:nil
                                           description:nil

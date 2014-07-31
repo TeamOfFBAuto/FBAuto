@@ -282,10 +282,65 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //    NSString *select = [_dataArray objectAtIndex:indexPath.row];
-    //    self.selectLabel.text = select;
-    //    [self clickToBack:nil];
+    FBFriendModel *aModel = [_dataArray objectAtIndex:indexPath.row];
+    
+    if ([aModel.isbuddy intValue] == 1) {
+        
+        [LCWTools showMBProgressWithText:@"已是好友关系" addToView:self.view];
+        
+        return;
+    }
+    
+    NSString *name = aModel.name ? aModel.name : aModel.buddyname;
+    NSString *message = [NSString stringWithFormat:@"是否添加%@为好友",name];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:message delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"添加好友", nil];
+    alert.tag = [aModel.uid intValue] + 100;
+    
+    [alert show];
 }
 
+#pragma - mark UIAlertViewDelegate <NSObject>
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        [self addFriend:[NSString stringWithFormat:@"%d",alertView.tag - 100]];
+    }
+}
+
+/**
+ *  添加好友
+ *
+ *  @param friendId userId
+ */
+- (void)addFriend:(NSString *)friendId
+{
+    NSLog(@"provinceId %@",friendId);
+    
+    //    __block typeof (FBMayKnowFriendsController *)weakSelf = self;
+    
+    
+    LCWTools *tools = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_ADD,[GMAPI getAuthkey],friendId]isPost:NO postData:nil];
+    
+    [tools requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"result %@ erro %@",result,[result objectForKey:@"errinfo"]);
+        
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            
+            int erroCode = [[result objectForKey:@"errcode"]intValue];
+            NSString *erroInfo = [result objectForKey:@"errinfo"];
+            
+            if (erroCode != 0) {
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:erroInfo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [alert show];
+                
+                return ;
+            }
+        }
+    }failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"failDic %@",failDic);
+        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
+    }];
+}
 
 @end
