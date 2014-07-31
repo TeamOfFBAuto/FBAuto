@@ -261,12 +261,16 @@
     
     FBDetail2Controller *fbdetailvc = [[FBDetail2Controller alloc]init];
     
-    CarSourceClass *car = _dataArray[indexPath.row-4];
+    if (indexPath.row>3) {
+        CarSourceClass *car = _dataArray[indexPath.row-4];
+        fbdetailvc.infoId = car.id;
+        fbdetailvc.isHiddenUeserInfo = YES;
+        
+        [self.navigationController pushViewController:fbdetailvc animated:YES];
+    }
     
-    fbdetailvc.infoId = car.id;
-    fbdetailvc.isHiddenUeserInfo = YES;
     
-    [self.navigationController pushViewController:fbdetailvc animated:YES];
+    
     
     
 }

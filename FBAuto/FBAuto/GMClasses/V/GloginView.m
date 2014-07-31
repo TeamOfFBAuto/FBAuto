@@ -44,7 +44,7 @@
             
             
             _Frame_logoDown = CGRectMake(53, 118, 220, 60);
-            _Frame_logoUp = CGRectMake(60, 25, 320-60-60, 50);
+            _Frame_logoUp = CGRectMake(105, 40, 110, 30);
         }
         
         
