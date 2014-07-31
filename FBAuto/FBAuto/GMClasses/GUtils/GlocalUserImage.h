@@ -24,6 +24,10 @@
 //获取document路径
 + (NSString *)documentFolder;
 
+//设置开关
++(void)setMessageOnOrOff:(BOOL)onOrOff;
+
+
 
 
 
@@ -36,8 +40,8 @@
 +(UIImage *)getUserFaceImage;
 
 
-
-
+//获取开关状态
++(BOOL)getMessageOnOrOff;
 
 
 @end

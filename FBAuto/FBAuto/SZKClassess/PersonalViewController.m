@@ -407,15 +407,36 @@
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
-    
+    //清除UserDefaults里的数据
     NSUserDefaults *standUDef=[NSUserDefaults standardUserDefaults];
     [standUDef setObject:@""  forKey:USERAUTHKEY];
     [standUDef setObject:@""  forKey:USERID];
     [standUDef setObject:@""  forKey:USERNAME];
+    [standUDef setObject:NO forKey:@"switchOnorOff"];
     
     [standUDef synchronize];
     
     NSLog(@"authkey===%@",[GMAPI getAuthkey]);
+    
+    
+    
+    //清除沙盒里的数据
+    
+    //上传标志位
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"gIsUpFace"];
+    
+    
+    
+    //document路径
+    NSString *documentPathStr = [GlocalUserImage documentFolder];
+    NSString *userFace = @"/guserFaceImage.png";
+    
+    //文件管理器
+    NSFileManager *fileM = [NSFileManager defaultManager];
+    
+    //清除 头像和 banner
+    [fileM removeItemAtPath:[documentPathStr stringByAppendingString:userFace] error:nil];
+    
     
     
     

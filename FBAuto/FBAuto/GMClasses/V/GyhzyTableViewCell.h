@@ -29,7 +29,7 @@
 @property(nonatomic,strong)UILabel *carClabel1;//描述1
 @property(nonatomic,strong)UILabel *carClale2;//描述2
 @property(nonatomic,strong)UILabel *carUserNameLabel;//车源商家label
-
+@property(nonatomic,strong)UILabel *carTimeLabel;//时间
 
 
 

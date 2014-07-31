@@ -12,6 +12,8 @@
 @interface GMessageSViewController : FBBaseViewController
 
 
+@property(nonatomic,strong)UISwitch *mySwitch;//开关控件
 
+@property(nonatomic,assign)BOOL onOrOff;//开或关  开yes  关no
 
 @end

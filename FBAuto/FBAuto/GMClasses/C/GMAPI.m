@@ -12,6 +12,11 @@
 
 //用户名
 
++(NSString *)getUserPhoneNumber{
+    NSString *phoneNumber = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults]objectForKey:USERPHONENUMBER]];
+    return phoneNumber;
+}
+
 
 //获取用户的devicetoken
 

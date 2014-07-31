@@ -63,7 +63,10 @@
 }
 
 
-
++(void)setMessageOnOrOff:(BOOL)onOrOff{
+    [[NSUserDefaults standardUserDefaults]setBool:onOrOff forKey:@"switchOnorOff"];
+    
+}
 
 
 
@@ -105,7 +108,10 @@
 }
 
 
-
+//获取开关状态
++(BOOL)getMessageOnOrOff{
+    return [[NSUserDefaults standardUserDefaults]boolForKey:@"switchOnorOff"];
+}
 
 
 

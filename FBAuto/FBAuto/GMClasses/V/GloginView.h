@@ -23,8 +23,12 @@ typedef void (^dengluBlock)(NSString *usern,NSString *passw);//登录
     UILabel *_placeHolder1;//账号
     UILabel *_placeHolder2;//密码
     
-    CGRect _Frame_row3Up;
-    CGRect _Frame_row3Down;
+    CGRect _Frame_row3Up;//账号密码登录按钮 出键盘时的位置
+    CGRect _Frame_row3Down;//账号密码登录按钮 没键盘时的位置
+    
+    
+    CGRect _Frame_logoUp;//有键盘时 logo位置
+    CGRect _Frame_logoDown;//没键盘时 logo位置
     
     
 }
@@ -42,6 +46,7 @@ typedef void (^dengluBlock)(NSString *usern,NSString *passw);//登录
 @property(nonatomic)float keyboardeHight;//键盘的高度
 
 @property(nonatomic,strong)UIView *Row3backView;//用户名 密码 登录 的下层view
+@property(nonatomic,strong)UIImageView *logoImv;//logo
 
 @property(nonatomic,strong)NSString *userName;//用户输入的用户名
 @property(nonatomic,strong)NSString *userPassWord;//用户输入的密码

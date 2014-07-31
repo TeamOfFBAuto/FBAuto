@@ -21,4 +21,6 @@
 
 +(NSString *)getUserPassWord;
 
++(NSString *)getUserPhoneNumber;
+
 @end

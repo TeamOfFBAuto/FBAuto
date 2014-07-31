@@ -114,6 +114,9 @@
     
     NSString *str = [NSString stringWithFormat:FBAUTO_LOG_IN,name,passw,[GMAPI getDeviceToken]];
     
+    //保存用户手机号
+    [[NSUserDefaults standardUserDefaults]setObject:name forKey:USERPHONENUMBER];
+    
     NSLog(@"登录请求接口======%@",str);
     
     NSURL *url = [NSURL URLWithString:str];

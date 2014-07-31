@@ -34,9 +34,17 @@
         if (iPhone5) {
             _Frame_row3Down = CGRectMake(24, 312, 275, 210);
             _Frame_row3Up = CGRectMake(24, 312-180, 275, 210);
+            
+            _Frame_logoDown = CGRectMake(53, 118, 220, 60);
+            _Frame_logoUp = CGRectMake(60, 50, 320-60-60, 60);
+            
         }else{
             _Frame_row3Down = CGRectMake(24, 312-44, 275, 210);
             _Frame_row3Up = CGRectMake(24, 312-44-190, 275, 210);
+            
+            
+            _Frame_logoDown = CGRectMake(53, 118, 220, 60);
+            _Frame_logoUp = CGRectMake(60, 25, 320-60-60, 50);
         }
         
         
@@ -50,6 +58,13 @@
         UIImageView *backGroundImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"denglu_bg640_1096.png"]];
         backGroundImageView.frame = CGRectMake(0, 0, 320, 568);
         [self addSubview:backGroundImageView];
+        
+        //logo图
+        UIImageView *logoImv = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"elogo440_120.png"] highlightedImage:nil];
+        logoImv.frame = CGRectMake(53, 118, 220, 60);
+        [self addSubview:logoImv];
+        self.logoImv = logoImv;
+        
         
         
         //账号 密码 登录 底层view
@@ -170,6 +185,12 @@
         
     }];
     
+    [UIView animateWithDuration:0.3 animations:^{
+        self.logoImv.frame = _Frame_logoDown;
+    } completion:^(BOOL finished) {
+        
+    }];
+    
     
 }
 
@@ -213,13 +234,20 @@
 
 
 
-
+//键盘出现
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
     [UIView animateWithDuration:0.3 animations:^{
         self.Row3backView.frame = _Frame_row3Up;
     } completion:^(BOOL finished) {
         
     }];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.logoImv.frame = _Frame_logoUp;
+    } completion:^(BOOL finished) {
+        
+    }];
+    
     return YES;
 }
 

@@ -48,6 +48,12 @@
     self.bigBgScroll.contentSize = CGSizeMake(320, self.bigBgScroll.height + 100);
     
     [self getSingleCarInfoWithId:self.infoId];
+    
+    
+    
+    if (self.isHiddenUeserInfo) {
+        thirdBgView.hidden = YES;
+    }
 }
 
 - (void)didReceiveMemoryWarning

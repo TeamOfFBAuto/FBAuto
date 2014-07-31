@@ -36,6 +36,9 @@
 @property (nonatomic,retain)NSString *infoId;//车源信息id
 @property (nonatomic,retain)NSString *carId;//车源信息id(如:006005002)
 
+//是否隐藏商家信息页面
+@property(nonatomic,assign)BOOL isHiddenUeserInfo;//yes的时候隐藏 
+
 - (IBAction)clickToDial:(id)sender;//打电话
 - (IBAction)clickToChat:(id)sender;//聊天
 - (IBAction)clickToPersonal:(id)sender;//个人信息页

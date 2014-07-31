@@ -16,6 +16,10 @@
 
 #import "CarSourceClass.h"//车源modle
 
+
+#import "FBDetail2Controller.h"
+
+
 @interface GuserZyViewController ()
 
 @end
@@ -107,39 +111,6 @@
     NSString *api = [NSString stringWithFormat:FBAUTO_CARSOURCE_MYSELF,self.userId,_page,10];
     
     NSLog(@"用户车源信息接口:%@",api);
-    
-//    NSURL *url = [NSURL URLWithString:api];
-//    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-//    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-//        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-//        
-//        if (data.length == 0) {
-//            return ;
-//        }
-//        
-//        NSLog(@"%@",dic);
-//        
-//        NSDictionary *dataInfoDic = [dic objectForKey:@"datainfo"];
-//        NSArray *carSourceArray = [dataInfoDic objectForKey:@"data"];
-//        
-//        NSMutableArray *marray = [NSMutableArray arrayWithCapacity:1];
-//        
-//        
-//        for (NSDictionary *dic in carSourceArray) {
-//            CarSourceClass *car = [[CarSourceClass alloc]initWithDictionary:dic];
-//            [marray addObject:car];
-//        }
-//        
-//        _dataArray = marray;
-//        
-//        [_tableView reloadData];
-//        
-//        
-//    }];
-    
-    
-    
-    
     __weak typeof (self)weakSelf = self;
     
     LCWTools *tool = [[LCWTools alloc]initWithUrl:api isPost:NO postData:nil];
@@ -285,8 +256,18 @@
     [self prepareUserCar];
 }
 
-- (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"%d",indexPath.row);
+    
+    FBDetail2Controller *fbdetailvc = [[FBDetail2Controller alloc]init];
+    
+    CarSourceClass *car = _dataArray[indexPath.row-4];
+    
+    fbdetailvc.infoId = car.id;
+    fbdetailvc.isHiddenUeserInfo = YES;
+    
+    [self.navigationController pushViewController:fbdetailvc animated:YES];
+    
     
 }
 
@@ -303,18 +284,6 @@
     
     return height;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

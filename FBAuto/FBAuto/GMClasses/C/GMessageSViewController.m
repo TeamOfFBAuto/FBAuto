@@ -7,6 +7,7 @@
 //
 
 #import "GMessageSViewController.h"
+#import "GlocalUserImage.h"
 
 @interface GMessageSViewController ()
 
@@ -47,10 +48,11 @@
     swi.on = YES;
     [swi addTarget:self action:@selector(onOrOff:) forControlEvents:UIControlEventValueChanged];
     
+    self.mySwitch = swi;
     
     
     
-    
+    self.mySwitch.on = [GlocalUserImage getMessageOnOrOff];
     
     [self.view addSubview:swi];
     
@@ -62,11 +64,23 @@
 
 
 -(void)onOrOff:(UISwitch*)sender{
-    BOOL isButtonOn = [sender isOn];
-    if (isButtonOn) {//开
-        
-    }else {//关
-        
+    
+    NSLog(@"---------------%d",sender.on);
+    
+    if (sender.on) {//开
+        NSString *api = [NSString stringWithFormat:FBAUTO_MESSAGE_TYPE,[GMAPI getAuthkey],1];
+        NSURL *url = [NSURL URLWithString:api];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            [GlocalUserImage setMessageOnOrOff:YES];
+        }];
+    }else{//关
+        NSString *api = [NSString stringWithFormat:FBAUTO_MESSAGE_TYPE,[GMAPI getAuthkey],2];
+        NSURL *url = [NSURL URLWithString:api];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            [GlocalUserImage setMessageOnOrOff:NO];
+        }];
     }
 }
 

@@ -11,6 +11,8 @@
 
 #import "CarSourceClass.h"
 
+#import "GTimeSwitch.h"
+
 @implementation GyhzyTableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -131,9 +133,9 @@
     }else{
         //车名
         UILabel *tLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 13, 216, 16)];
-        tLabel.backgroundColor = [UIColor grayColor];
+        
         //tLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:16];
-        tLabel.text = @"奥迪Q5 豪华型";
+        
         self.carNameLabel = tLabel;
         [self.contentView addSubview:tLabel];
         
@@ -142,8 +144,6 @@
         pLabel.font = [UIFont systemFontOfSize:15];
         pLabel.textAlignment = NSTextAlignmentRight;
         pLabel.textColor = [UIColor redColor];
-        pLabel.backgroundColor = [UIColor grayColor];
-        pLabel.text = @"100.00万元";
         self.carPriceLabel = pLabel;
         [self.contentView addSubview:pLabel];
         
@@ -165,8 +165,16 @@
         self.carUserNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.carClabel1.frame.origin.x, CGRectGetMaxY(self.carClabel1.frame)+9, 250, 14)];
         self.carUserNameLabel.font = [UIFont systemFontOfSize:13];
         self.carUserNameLabel.textColor = RGBCOLOR(129, 129, 129);
-        self.carUserNameLabel.backgroundColor = [UIColor redColor];
+        
         [self.contentView addSubview:self.carUserNameLabel];
+        
+        //时间
+        self.carTimeLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.carUserNameLabel.frame)+10, self.carUserNameLabel.frame.origin.y, 40, 14)];
+        
+        self.carTimeLabel.font = [UIFont systemFontOfSize:13];
+        self.carTimeLabel.textAlignment = NSTextAlignmentRight;
+        self.carTimeLabel.textColor = [UIColor blackColor];
+        [self.contentView addSubview:self.carTimeLabel];
         
         
         height = 84;
@@ -193,7 +201,7 @@
 
 -(void)configWithCarModel:(CarSourceClass *)car userModel:(GuserModel*)userModel{
     self.carNameLabel.text = car.car_name;
-    self.carPriceLabel.text = car.price;
+    self.carPriceLabel.text = [NSString stringWithFormat:@"%@万元",car.price];
     NSString *carfrom = car.carfrom;//汽车规格
     NSString *spot_future = car.spot_future;//现货或期货
     NSString *color_out = [car.color_out substringWithRange:NSMakeRange(0, 1)];//外观颜色
@@ -207,7 +215,13 @@
     }else if ([userModel.usertype intValue] == 2){
         str = @"商家";
     }
-    self.carUserNameLabel.text = [NSString stringWithFormat:@"%@（%@）",userModel.name,str];
+    self.carUserNameLabel.text = [NSString stringWithFormat:@"%@（%@）",userModel.name,str];//商家简介
+    
+    //时间
+    
+    NSString *timeStr = [GTimeSwitch testtime:car.dateline];
+    self.carTimeLabel.text = [timeStr substringFromIndex:car.dateline.length-5];
+    
     
     
 }

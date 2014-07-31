@@ -363,6 +363,7 @@
 		190BFD96195AB15C0098E0F4 /* personalselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 190BFD90195AB15C0098E0F4 /* personalselected@2x.png */; };
 		190BFD99195ABA2D0098E0F4 /* testV@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 190BFD98195ABA2D0098E0F4 /* testV@2x.png */; };
 		190BFE21195C362F0098E0F4 /* SzkLoadData.m in Sources */ = {isa = PBXBuildFile; fileRef = 190BFE20195C362F0098E0F4 /* SzkLoadData.m */; };
+		E3134EDA198A32B500A8958E /* elogo440_120@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E3134ED9198A32B500A8958E /* elogo440_120@2x.png */; };
 		E31F538D19737DDC00540124 /* GmLoadData.m in Sources */ = {isa = PBXBuildFile; fileRef = E31F538C19737DDC00540124 /* GmLoadData.m */; };
 		E31F53951974044A00540124 /* MLImageCrop.m in Sources */ = {isa = PBXBuildFile; fileRef = E31F53941974044A00540124 /* MLImageCrop.m */; };
 		E31F5398197405DC00540124 /* GlocalUserImage.m in Sources */ = {isa = PBXBuildFile; fileRef = E31F5397197405DC00540124 /* GlocalUserImage.m */; };
@@ -878,6 +879,7 @@
 		190BFE1F195C362F0098E0F4 /* SzkLoadData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SzkLoadData.h; sourceTree = "<group>"; };
 		190BFE20195C362F0098E0F4 /* SzkLoadData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SzkLoadData.m; sourceTree = "<group>"; };
 		2BE98169392244209FCDCF04 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3134ED9198A32B500A8958E /* elogo440_120@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "elogo440_120@2x.png"; sourceTree = "<group>"; };
 		E31F538B19737DDC00540124 /* GmLoadData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmLoadData.h; sourceTree = "<group>"; };
 		E31F538C19737DDC00540124 /* GmLoadData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmLoadData.m; sourceTree = "<group>"; };
 		E31F53931974044A00540124 /* MLImageCrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLImageCrop.h; sourceTree = "<group>"; };
@@ -2146,6 +2148,7 @@
 		E362357319657588003B23CC /* M */ = {
 			isa = PBXGroup;
 			children = (
+				E3134ED9198A32B500A8958E /* elogo440_120@2x.png */,
 				E37D2C991974CFA500EBA627 /* shanchu_button_600_100@2x.png */,
 				E37D2C9A1974CFA500EBA627 /* xuanze_down_44_44@2x.png */,
 				E37D2C9B1974CFA500EBA627 /* xuanze_up_44_44@2x.png */,
@@ -2273,6 +2276,7 @@
 				190BFD4B195AA0FB0098E0F4 /* InfoPlist.strings in Resources */,
 				13D5E0051961758E00804835 /* denglu_botton550_100@2x.png in Resources */,
 				13D5E01D1961758E00804835 /* quxiao_button600_90@2x.png in Resources */,
+				E3134EDA198A32B500A8958E /* elogo440_120@2x.png in Resources */,
 				190BFD96195AB15C0098E0F4 /* personalselected@2x.png in Resources */,
 				138B4AEA1966A4BD00B974A5 /* face79.png in Resources */,
 				133019D71988FF150083CEA8 /* Default@2x.png in Resources */,
