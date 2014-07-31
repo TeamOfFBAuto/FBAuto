@@ -57,6 +57,9 @@
 
 
 @implementation AppDelegate
+{
+    NSString *_fromPhone;//消息来源号码
+}
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
@@ -165,7 +168,6 @@
     self.messageLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, _statusBarBack.width, _statusBarBack.height)];
     _messageLabel.textColor = [UIColor orangeColor];
     _messageLabel.font = [UIFont systemFontOfSize:12];
-//    _messageLabel.text = @"RNai()";
     [_statusBarBack addSubview:_messageLabel];
 }
 
@@ -187,13 +189,15 @@
         
     }else
     {
-        if ([fromName isEqualToString:name]) {
+        if ([_fromPhone isEqualToString:fromPhone]) {
             _messageLabel.text = @"";//不显示
         }else
         {
             
         }
     }
+    
+    _fromPhone = fromPhone;
 }
 
 #pragma - mark 分享

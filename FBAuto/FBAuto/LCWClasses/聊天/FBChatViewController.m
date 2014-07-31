@@ -153,6 +153,9 @@
     NSString *userName = [defalts objectForKey:XMPP_USERID];
     [FBCityData updateCurrentUserPhone:userName fromUserPhone:self.chatWithUser fromName:Nil fromId:nil newestMessage:Nil time:Nil clearReadSum:YES];
     
+    NSDictionary *dic = @{@"fromPhone":self.chatWithUser,@"unreadNum":@"0"};
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"fromUnread" object:nil userInfo:dic];
+    
     //记录当前聊天人
     
     [defalts setObject:self.chatWithUser forKey:CHATING_USER];

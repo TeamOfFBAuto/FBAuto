@@ -76,7 +76,7 @@ alpha:(a)]
 #define FBAUTO_GET_USER_INFORMATION @"http://fbautoapp.fblife.com/index.php?c=interface&a=getuser&uid=%@"
 
 //修改用户密码
-#define  FBAUTO_MODIFY_PASSWORD @"http://fbautoapp.fblife.com/index.php?c=interface&a=edituser&authkey=%@&password=%@&op=pass"
+#define  FBAUTO_MODIFY_PASSWORD @"http://fbautoapp.fblife.com/index.php?c=interface&a=edituser&authkey=%@&password=%@&op=pass&phone=%@"
 
 //修改个人信息-消息模式
 #define  FBAUTO_MESSAGE_TYPE @"http://fbautoapp.fblife.com/index.php?c=interface&a=edituser&authkey=%@&msg_visible=%d&op=msg_visib"

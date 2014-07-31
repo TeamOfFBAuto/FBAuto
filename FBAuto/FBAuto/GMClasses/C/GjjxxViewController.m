@@ -27,13 +27,18 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     
+    if (self.gtype == 3) {//详细地址
+        
+        self.titleLabel.text = @"详细地址";
+    }else if (self.gtype == 4)
+    {
+        self.titleLabel.text = @"简介";
+    }
+    
     NSLog(@"%s",__FUNCTION__);
     
     UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(gsave)];
     self.navigationItem.rightBarButtonItem = rightBtn;
-    
-    
-    
     
     
     //框
@@ -76,11 +81,12 @@
         
         NSString *dizhi = [_textView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         
+        //不需要转码
         
-        //转码
-        NSString *dizhiUtf8 = [dizhi stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//        //转码
+//        NSString *dizhiUtf8 = [dizhi stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         
-        NSString *str = [NSString stringWithFormat:FBAUTO_MODIFY_ADDRESS,[GMAPI getAuthkey],dizhiUtf8];
+        NSString *str = [NSString stringWithFormat:FBAUTO_MODIFY_ADDRESS,[GMAPI getAuthkey],dizhi];
         
         //get
         [_test SeturlStr:str block:^(NSDictionary *dataInfo, NSString *errorinfo, NSInteger errcode) {
