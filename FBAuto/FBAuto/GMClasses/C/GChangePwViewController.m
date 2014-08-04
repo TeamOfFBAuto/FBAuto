@@ -29,6 +29,8 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
+    self.titleLabel.text = @"修改密码";
+    
     self.tfArray = [NSMutableArray arrayWithCapacity:1];
     
     NSLog(@"%s",__FUNCTION__);
@@ -112,11 +114,17 @@
     NSString *newPassWord = [pw stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     GmLoadData *_test=[[GmLoadData alloc]init];
-    NSString *str = [NSString stringWithFormat:FBAUTO_MODIFY_PASSWORD,[GMAPI getAuthkey],newPassWord];
+    NSString *str = [NSString stringWithFormat:FBAUTO_MODIFY_PASSWORD,[GMAPI getAuthkey],newPassWord,[GMAPI getUserPhoneNumber]];
+    NSLog(@"修改密码 %@",str);
     
     //get
     [_test SeturlStr:str block:^(NSDictionary *dataInfo, NSString *errorinfo, NSInteger errcode) {
+        
+        NSLog(@"dataInfo %@errorinfo %@",dataInfo,errorinfo);
+        
         if (errcode == 0) {
+            
+            
             NSLog(@"修改密码成功");
             UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"修改密码成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [al show];

@@ -61,6 +61,7 @@
 		13807502196E74A500AD3D03 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13807500196E74A500AD3D03 /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13807505196E751F00AD3D03 /* bluedown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13807503196E751F00AD3D03 /* bluedown@2x.png */; };
 		13807506196E751F00AD3D03 /* blueup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13807504196E751F00AD3D03 /* blueup@2x.png */; };
+		138427F1198A31EF001DAA8D /* LMessageBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 138427F0198A31EF001DAA8D /* LMessageBadge.m */; };
 		138B49F0196552F500B974A5 /* FBFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 138B49EE196552F500B974A5 /* FBFriendCell.m */; };
 		138B49F1196552F500B974A5 /* FBFriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 138B49EF196552F500B974A5 /* FBFriendCell.xib */; };
 		138B4A0619664E9800B974A5 /* FBFriend2Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 138B4A0419664E9800B974A5 /* FBFriend2Cell.m */; };
@@ -498,6 +499,8 @@
 		13807500196E74A500AD3D03 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		13807503196E751F00AD3D03 /* bluedown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bluedown@2x.png"; sourceTree = "<group>"; };
 		13807504196E751F00AD3D03 /* blueup@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueup@2x.png"; sourceTree = "<group>"; };
+		138427EF198A31EF001DAA8D /* LMessageBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMessageBadge.h; sourceTree = "<group>"; };
+		138427F0198A31EF001DAA8D /* LMessageBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMessageBadge.m; sourceTree = "<group>"; };
 		138B49ED196552F500B974A5 /* FBFriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBFriendCell.h; sourceTree = "<group>"; };
 		138B49EE196552F500B974A5 /* FBFriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBFriendCell.m; sourceTree = "<group>"; };
 		138B49EF196552F500B974A5 /* FBFriendCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FBFriendCell.xib; sourceTree = "<group>"; };
@@ -1054,6 +1057,8 @@
 				1336BC2A196B93CC0011B4D9 /* FBChatImage.m */,
 				1336BC1A196B91F70011B4D9 /* CWInputView */,
 				1336BC20196B91F70011B4D9 /* SJImageBrowser */,
+				138427EF198A31EF001DAA8D /* LMessageBadge.h */,
+				138427F0198A31EF001DAA8D /* LMessageBadge.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -2630,6 +2635,7 @@
 				E31F538D19737DDC00540124 /* GmLoadData.m in Sources */,
 				1391EF05197776A300FDC52A /* ClickImageView.m in Sources */,
 				E362358219657588003B23CC /* GzhuceTableViewCell.m in Sources */,
+				138427F1198A31EF001DAA8D /* LMessageBadge.m in Sources */,
 				13D5E0F61963F70100804835 /* SendCarParamsController.m in Sources */,
 				190BFD54195AA0FB0098E0F4 /* FBAuto.xcdatamodeld in Sources */,
 				137927031987776900377ED5 /* GperInfoViewController.m in Sources */,

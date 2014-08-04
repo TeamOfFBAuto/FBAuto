@@ -40,7 +40,7 @@
 #define SinaAppKey @"2437553400"
 #define SinaAppSecret @"7379cf0aa245ba45a66cc7c9ae9b1dba"
 
-//#define QQAPPID @"101030950"
+#define QQAPPID @"1101950003" //十六进制:41AE6C33; 生成方法:echo 'ibase=10;obase=16;1101950003'|bc
 #define WXAPPID @"wxd747942b226f56d5"
 
 
@@ -49,14 +49,17 @@
 //#define SinaAppKey @"568898243"
 //#define SinaAppSecret @"38a4f8204cc784f81f9f0daaf31e02e3"
 
-#define QQAPPID @"100371282"
+//#define QQAPPID @"100371282"
 //#define WXAPPID @"wx4868b35061f87885"
 
-#define RedirectUrl @"http://www.sharesdk.cn"
-//#define RedirectUrl @"http://www.sina.com"
+//#define RedirectUrl @"http://www.sharesdk.cn"
+#define RedirectUrl @"http://www.sina.com"
 
 
 @implementation AppDelegate
+{
+    NSString *_fromPhone;//消息来源号码
+}
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
@@ -127,6 +130,8 @@
         [LCWTools alertText:@"haha"];
     }
     
+    //消息提醒
+    [self initMessageAlert];
     
     //开启网络状况的监听
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
@@ -141,12 +146,58 @@
     
     //发送未读消息通知
     [[NSNotificationCenter defaultCenter]postNotificationName:@"unReadNumber" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateMessageCount:) name:@"fromUnread" object:nil];
 
     self.window.rootViewController=tabbar;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
     return YES;
+}
+
+#pragma mark - 消息提示
+
+- (void)initMessageAlert
+{
+    CGFloat aHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    self.statusBarBack = [[UIWindow alloc]initWithFrame:CGRectMake(200, 0, 80, aHeight)];
+    _statusBarBack.backgroundColor = [UIColor clearColor];
+    [_statusBarBack setWindowLevel:UIWindowLevelStatusBar+1];
+    [_statusBarBack makeKeyAndVisible];
+    
+    self.messageLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, _statusBarBack.width, _statusBarBack.height)];
+    _messageLabel.textColor = [UIColor orangeColor];
+    _messageLabel.font = [UIFont systemFontOfSize:12];
+    [_statusBarBack addSubview:_messageLabel];
+}
+
+- (void)updateMessageCount:(NSNotification *)notification
+{
+    NSArray *messages = [_messageLabel.text componentsSeparatedByString:@"("];
+    NSString *name = @"";
+    if (messages.count > 0) {
+        name = [messages objectAtIndex:0];
+    }
+    NSLog(@"notification %@",notification.userInfo);
+    int number = [[notification.userInfo objectForKey:@"unreadNum"]intValue];
+    NSString *fromName = [notification.userInfo objectForKey:@"fromName"];
+    NSString *fromPhone = [notification.userInfo objectForKey:@"fromPhone"];
+    
+    if (number > 0) {
+        
+        _messageLabel.text = [NSString stringWithFormat:@"%@(%d)",fromName,number];
+        
+    }else
+    {
+        if ([_fromPhone isEqualToString:fromPhone]) {
+            _messageLabel.text = @"";//不显示
+        }else
+        {
+            
+        }
+    }
+    
+    _fromPhone = fromPhone;
 }
 
 #pragma - mark 分享
