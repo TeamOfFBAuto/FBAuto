@@ -18,4 +18,8 @@
 }
 @property(nonatomic,retain)NSArray *dataArray;
 @property(nonatomic,retain)UITableView *table;
+
+@property(nonatomic,assign)BOOL isShare;//判断是否是分享
+@property(nonatomic,retain)NSDictionary *shareContent;//分享的内容  {@"text",@"infoId"}
+
 @end

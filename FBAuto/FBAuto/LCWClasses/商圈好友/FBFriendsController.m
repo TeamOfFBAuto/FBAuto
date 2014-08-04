@@ -13,8 +13,14 @@
 #import "FBChatViewController.h"
 #import "FBAreaFriensController.h"
 #import "FBFriendModel.h"
+#import "DXAlertView.h"
 
-@interface FBFriendsController ()
+#import "XMPPServer.h"
+
+@interface FBFriendsController ()<chatDelegate>
+{
+    XMPPServer *xmppServer;//xmpp 中心
+}
 
 @end
 
@@ -42,9 +48,14 @@
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_table];
     
-    _table.tableHeaderView = [self tableHeaderView];
+    if (self.isShare == NO) {
+        _table.tableHeaderView = [self tableHeaderView];
+    }
     
     [self getFriendlist];
+    
+    xmppServer = [XMPPServer shareInstance];
+    xmppServer.chatDelegate = self;
     
     //添加好友，测试用
     
@@ -220,11 +231,19 @@
     
     __block typeof(FBFriendsController *)weakSelf = self;
     
-    [cell getCellData:aModel cellBlock:^(NSString *friendInfo) {
+    [cell getCellData:aModel cellBlock:^(NSString *friendInfo,int tag) {
         
-        [weakSelf clickToChatWithUser:aModel.phone userName:aModel.buddyname ? aModel.buddyname : aModel.name];
+        if (tag == 0) {
+            [weakSelf clickToChatWithUser:aModel.phone userName:aModel.buddyname ? aModel.buddyname : aModel.name];
+        }else if (tag == 1)
+        {
+            [weakSelf clickToShare:aModel.phone userName:aModel.buddyname];
+        }
         
     }];
+    if (self.isShare) {
+        cell.chatToolBgView.hidden = YES;
+    }
     
     return cell;
 }
@@ -251,7 +270,34 @@
     FBChatViewController *chat = [[FBChatViewController alloc]init];
     chat.chatWithUser = user;
     chat.chatWithUserName = userName;
+    chat.isShare = self.isShare;
+    if (self.isShare) {
+        chat.shareContent = self.shareContent;
+    }
     [self.navigationController pushViewController:chat animated:YES];
+}
+
+- (void)clickToShare:(NSString *)user userName:(NSString *)userName
+{
+    DXAlertView *alert = [[DXAlertView alloc]initWithTitle:nil contentText:[self.shareContent objectForKey:@"text"] leftButtonTitle:@"取消" rightButtonTitle:@"分享" isInput:YES];
+    [alert show];
+    
+    __block typeof(DXAlertView *)weakAlert = alert;
+    alert.leftBlock = ^(){
+        NSLog(@"取消");
+    };
+    alert.rightBlock = ^(){
+        NSLog(@"确定");
+        [xmppServer sendMessage:weakAlert.inputTextView.text toUser:user shareLink:[self.shareContent objectForKey:@"infoId"] messageBlock:^(NSDictionary *params, int tag) {
+            
+            if (tag == 1) {
+                [LCWTools showMBProgressWithText:@"分享成功" addToView:self.view];
+            }else{
+                [LCWTools showMBProgressWithText:@"分享失败" addToView:self.view];
+            }
+            
+        }];
+    };
 }
 
 @end

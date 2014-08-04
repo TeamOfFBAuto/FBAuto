@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 @class FBFriendModel;
 
-typedef void(^ CellBlock) (NSString *friendInfo);
+typedef void(^ CellBlock) (NSString *friendInfo,int aTag);//0 聊天，1 分享
+typedef void(^ CellToShare) (NSString *friendInfo);
 
 @interface FBFriendCell : UITableViewCell
 {
@@ -25,6 +26,11 @@ typedef void(^ CellBlock) (NSString *friendInfo);
 @property (strong, nonatomic) IBOutlet UIButton *saleTypeLabel;//类型,个人或者商家等
 @property (strong, nonatomic) IBOutlet UILabel *phoneNumLabel;
 @property (strong, nonatomic) IBOutlet UILabel *addressLabel;
+@property (strong, nonatomic) IBOutlet UIView *chatToolBgView;
+
+
+- (IBAction)clickToShare:(id)sender;
+
 - (IBAction)clickToDial:(id)sender;//电话
 - (IBAction)clickToChat:(id)sender;
 

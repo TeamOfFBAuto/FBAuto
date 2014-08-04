@@ -18,6 +18,12 @@
     leftButtonTitle:(NSString *)leftTitle
    rightButtonTitle:(NSString *)rigthTitle;
 
+- (id)initWithTitle:(NSString *)title
+        contentText:(NSString *)content
+    leftButtonTitle:(NSString *)leftTitle
+   rightButtonTitle:(NSString *)rigthTitle
+            isInput:(BOOL)isInput;
+
 
 
 - (void)show;
@@ -25,6 +31,8 @@
 @property (nonatomic, copy) dispatch_block_t leftBlock;
 @property (nonatomic, copy) dispatch_block_t rightBlock;
 @property (nonatomic, copy) dispatch_block_t dismissBlock;
+
+@property (nonatomic,strong)UITextView *inputTextView;
 
 @end
 

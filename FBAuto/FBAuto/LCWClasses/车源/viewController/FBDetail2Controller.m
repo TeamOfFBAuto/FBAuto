@@ -13,6 +13,7 @@
 #import "ClickImageView.h"
 #import "LShareSheetView.h"
 #import "GuserZyViewController.h"
+#import "FBFriendsController.h"
 
 #import <ShareSDK/ShareSDK.h>
 
@@ -293,8 +294,15 @@
     LShareSheetView *shareView = [[LShareSheetView alloc]initWithFrame:self.view.frame];
     [shareView actionBlock:^(NSInteger buttonIndex, NSString *shareStyle) {
         
-        NSArray *text =  @[@"微信",@"QQ",@"朋友圈",@"微博",@"站内好友"];
-        NSString *imageUrl = @"http://img2.imgtn.bdimg.com/it/u=2510813707,1886329985&fm=23&gp=0.jpg";
+//        NSArray *text =  @[@"微信",@"QQ",@"朋友圈",@"微博",@"站内好友"];
+        
+        NSString *contentText = [NSString stringWithFormat:@"车源:%@%@ 外观%@、内饰%@ 价格%@。%@",self.car_standard_label.text,self.car_timelimit_label.text,self.car_outColor_Label.text,self.car_inColor_label.text,self.car_realPrice_label.text,self.car_detail_label.text];
+        
+        NSString *contentWithUrl = [NSString stringWithFormat:@"%@%@",contentText,FBAUTO_APPSTORE_URL];
+        
+        ClickImageView *clickImage = (ClickImageView *)[photosScroll viewWithTag:100];
+        
+        UIImage *aImage = clickImage.image;
         
         buttonIndex -= 100;
         NSLog(@"share %d %@",buttonIndex,shareStyle);
@@ -303,30 +311,39 @@
             {
                 NSLog(@"微信");
                 
-                [self shareText:[text objectAtIndex:buttonIndex] imageName:imageUrl ShareType:ShareTypeWeixiSession];
+                [self shareText:contentWithUrl image:aImage ShareType:ShareTypeWeixiSession];
             }
                 break;
             case 1:
             {
                 NSLog(@"QQ");
-                [self shareText:[text objectAtIndex:buttonIndex] imageName:imageUrl ShareType:ShareTypeQQ];
+                [self shareText:contentWithUrl image:aImage ShareType:ShareTypeQQ];
             }
                 break;
             case 2:
             {
                 NSLog(@"朋友圈");
-                [self shareText:[text objectAtIndex:buttonIndex] imageName:imageUrl ShareType:ShareTypeWeixiTimeline];
+                [self shareText:contentWithUrl image:aImage ShareType:ShareTypeWeixiTimeline];
             }
                 break;
             case 3:
             {
                 NSLog(@"微博");
-                [self shareText:[text objectAtIndex:buttonIndex] imageName:imageUrl ShareType:ShareTypeSinaWeibo];
+                [self shareText:contentWithUrl image:aImage ShareType:ShareTypeSinaWeibo];
             }
                 break;
             case 4:
             {
                 NSLog(@"站内好友");
+                
+                FBFriendsController *friend = [[FBFriendsController alloc]init];
+                friend.isShare = YES;
+                //分享的内容  {@"text",@"infoId"}
+                
+                NSString *infoId = [NSString stringWithFormat:@"%@,%@",self.infoId,self.carId];
+                friend.shareContent = @{@"text": contentText,@"infoId":infoId};
+                [self.navigationController pushViewController:friend animated:YES];
+                
             }
                 break;
                 
@@ -338,18 +355,18 @@
 
 
 
-- (void)shareText:(NSString *)text imageName:(NSString *)imageUrl ShareType:(ShareType)aShareType{
+- (void)shareText:(NSString *)text image:(UIImage *)aImage ShareType:(ShareType)aShareType{
     
     //创建分享内容
 
     
-    UIImage *aImage = [UIImage imageNamed:@"detail_test"];
+//    UIImage *aImage = [UIImage imageNamed:@"icon114"];
     
     
     id<ISSContent> publishContent = [ShareSDK content:text
                                        defaultContent:@"FBAuto分享"
-                                                image:[ShareSDK pngImageWithImage:aImage]                                                title:nil
-                                                  url:nil
+                                                image:[ShareSDK pngImageWithImage:aImage]                                                title:self.car_modle_label.text
+                                                  url:FBAUTO_APPSTORE_URL
                                           description:nil
                                             mediaType:SSPublishContentMediaTypeText];
     

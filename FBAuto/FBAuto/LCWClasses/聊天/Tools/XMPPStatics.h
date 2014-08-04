@@ -18,6 +18,15 @@ static NSString *XMPP_SERVER = @"server";
 #define ONLINE_TIME @"onelineTime" //上线时间
 #define OFFLINE_TIME @"offlineTime" //离线时间
 
+#define padding 20
+
+#define MESSAGE_SENDER @"sender" //发送者
+#define MESSAGE_MSG @"msg" //消息
+#define MESSAGE_TIME @"time" //时间
+#define MESSAGE_CHAT_TYPE @"type"//消息类型
+#define MESSAGE_MESSAGE_LOCAL @"localImage" //是否本地图片
+#define MESSAGE_SHATE_LINK @"MESSAGE_SHATE_LINK" //分享
+
 @interface XMPPStatics : NSObject
 
 +(NSString *)getCurrentTime;

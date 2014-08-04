@@ -107,7 +107,28 @@
     return self;
 }
 
-
+- (id)initWithTitle:(NSString *)title
+        contentText:(NSString *)content
+    leftButtonTitle:(NSString *)leftTitle
+   rightButtonTitle:(NSString *)rigthTitle
+            isInput:(BOOL)isInput
+{
+    if (self = [self initWithTitle:title contentText:content leftButtonTitle:leftTitle rightButtonTitle:rigthTitle]) {
+        
+        if (isInput) {
+            
+            self.inputTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, 10, kAlertWidth - 20, 30)];
+            _inputTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+            _inputTextView.layer.borderWidth = 1.0;
+            _inputTextView.font = [UIFont systemFontOfSize:14];
+            [self addSubview:_inputTextView];
+            
+            _inputTextView.text = content;
+            
+        }
+    }
+    return self;
+}
 
 
 

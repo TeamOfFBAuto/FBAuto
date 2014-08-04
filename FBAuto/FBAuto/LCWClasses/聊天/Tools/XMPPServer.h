@@ -26,6 +26,9 @@ typedef void(^ loginAction) (BOOL result);
 //添加好友相关
 typedef void(^ friendAction) (id);
 
+//发送消息
+
+typedef void(^ MessageAction)(NSDictionary *params,int tag);// 0 失败 1 成功
 
 //用户信息相关
 @protocol chatDelegate <NSObject>
@@ -40,7 +43,10 @@ typedef void(^ friendAction) (id);
 //聊天信息相关
 @protocol messageDelegate <NSObject>
 
+@optional
 - (void)newMessage:(NSDictionary *)messageDic;
+- (void)didSendMessage;
+- (void)failSendMessage;
 
 @end
 
@@ -50,6 +56,7 @@ typedef void(^ friendAction) (id);
     roomBackBlock callBack;
     loginAction loginBack;
     friendAction friendBack;
+    MessageAction message_Back;
 }
 
 @property (nonatomic,retain)XMPPStream *xmppStream;
@@ -83,6 +90,7 @@ typedef void(^ friendAction) (id);
 
 - (void)loginTimes:(int)times loginBack:(loginAction)loginBack;//多次联系登录
 
+- (void)sendMessage:(NSString *)messageText toUser:(NSString *)userPhone shareLink:(NSString *)shareLink messageBlock:(MessageAction)messageBlock;
 
 @end
 

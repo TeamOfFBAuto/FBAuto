@@ -525,7 +525,6 @@
 		138B4A2C1966945E00B974A5 /* RTLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTLabel.m; sourceTree = "<group>"; };
 		138B4A2E196698AE00B974A5 /* ZSNApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSNApi.h; sourceTree = "<group>"; };
 		138B4A2F196698AE00B974A5 /* ZSNApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSNApi.m; sourceTree = "<group>"; };
-		138B4A3119669B7800B974A5 /* FBChatHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBChatHeader.h; sourceTree = "<group>"; };
 		138B4A331966A4BD00B974A5 /* face1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face1.png; sourceTree = "<group>"; };
 		138B4A341966A4BD00B974A5 /* face10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face10.png; sourceTree = "<group>"; };
 		138B4A351966A4BD00B974A5 /* face100.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = face100.gif; sourceTree = "<group>"; };
@@ -1163,7 +1162,6 @@
 			isa = PBXGroup;
 			children = (
 				13C4D872198656DE00281521 /* model */,
-				138B4A3119669B7800B974A5 /* FBChatHeader.h */,
 				1336BC19196B91F70011B4D9 /* views */,
 				1336BC0A196B89940011B4D9 /* XMPPTools */,
 				138B4B011966A51700B974A5 /* RichViewAndGif */,
