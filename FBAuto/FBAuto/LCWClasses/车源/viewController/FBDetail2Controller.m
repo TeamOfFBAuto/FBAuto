@@ -14,6 +14,7 @@
 #import "LShareSheetView.h"
 #import "GuserZyViewController.h"
 #import "FBFriendsController.h"
+#import "DXAlertView.h"
 
 #import <ShareSDK/ShareSDK.h>
 
@@ -277,11 +278,34 @@
         
         NSLog(@"添加收藏 result %@, erro%@",result,[result objectForKey:@"errinfo"]);
         
-        [LCWTools showMBProgressWithText:[result objectForKey:@"errinfo"] addToView:self.view];
+//        [LCWTools showMBProgressWithText:[result objectForKey:@"errinfo"] addToView:self.view];
+        
+        DXAlertView *alert = [[DXAlertView alloc]initWithTitle:[result objectForKey:@"errinfo"] contentText:nil leftButtonTitle:nil rightButtonTitle:@"确定"];
+        [alert show];
+        
+        alert.leftBlock = ^(){
+            NSLog(@"确定");
+            
+        };
+        alert.rightBlock = ^(){
+            NSLog(@"取消");
+            
+        };
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"failDic %@",failDic);
-        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
+//        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
+        DXAlertView *alert = [[DXAlertView alloc]initWithTitle:[failDic objectForKey:ERROR_INFO] contentText:nil leftButtonTitle:nil rightButtonTitle:@"确定"];
+        [alert show];
+        
+        alert.leftBlock = ^(){
+            NSLog(@"确定");
+            
+        };
+        alert.rightBlock = ^(){
+            NSLog(@"取消");
+            
+        };
     }];
 
     

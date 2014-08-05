@@ -117,7 +117,14 @@
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self hidden];
+    UITouch *touch = [touches anyObject];
+    
+    NSLog(@"touch view %@",touch.view);
+    
+    if ([touch.view isKindOfClass:[LShareSheetView class]]) {
+        [self hidden];
+        
+    }
 }
 
 @end
