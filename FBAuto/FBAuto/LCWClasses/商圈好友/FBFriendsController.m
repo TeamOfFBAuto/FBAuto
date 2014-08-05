@@ -178,8 +178,18 @@
             break;
         case 102:
         {
-            FBChatViewController *addFriend = [[FBChatViewController alloc]init];
-            [self.navigationController pushViewController:addFriend animated:YES];
+            DXAlertView *alert = [[DXAlertView alloc]initWithTitle:@"暂未开通客服" contentText:nil leftButtonTitle:nil rightButtonTitle:@"确定"];
+            [alert show];
+            
+//            __weak typeof(self)weakSelf = self;
+            alert.leftBlock = ^(){
+                NSLog(@"确定");
+
+            };
+            alert.rightBlock = ^(){
+                NSLog(@"取消");
+                
+            };
         }
             break;
             
@@ -237,7 +247,7 @@
             [weakSelf clickToChatWithUser:aModel.phone userName:aModel.buddyname ? aModel.buddyname : aModel.name];
         }else if (tag == 1)
         {
-            [weakSelf clickToShare:aModel.phone userName:aModel.buddyname];
+//            [weakSelf clickToShare:aModel.phone userName:aModel.buddyname];
         }
         
     }];
@@ -250,9 +260,13 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    NSString *select = [_dataArray objectAtIndex:indexPath.row];
-//    self.selectLabel.text = select;
-//    [self clickToBack:nil];
+    if (self.isShare) {
+        NSArray *arr = [friendsDic objectForKey:[firstLetterArr objectAtIndex:indexPath.section]];
+        FBFriendModel *aModel = [arr objectAtIndex:indexPath.row];
+        
+        [self clickToChatWithUser:aModel.phone userName:aModel.buddyname];
+    }
+    
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section

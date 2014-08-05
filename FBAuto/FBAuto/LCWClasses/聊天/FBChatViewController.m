@@ -30,6 +30,8 @@
 #import "FBDetail2Controller.h"
 #import "FBFindCarDetailController.h"
 
+#import "DXAlertView.h"
+
 #define MESSAGE_PAGE_SIZE 10
 
 
@@ -114,7 +116,6 @@
     
     
     xmppServer = [XMPPServer shareInstance];
-    
     xmppServer.chatDelegate = self;
     xmppServer.messageDelegate = self;
     
@@ -131,22 +132,13 @@
         }];
     }
     
+    
+    
     messages = [NSMutableArray array];
     labelArr = [NSMutableArray array];
     rowHeights = [NSMutableArray array];
     
-//    [self testData];//测试数据
-    
     [self createInputView];
-    
-    if (self.isShare) {
-        inputBar.textView.text = [self.shareContent objectForKey:@"text"];
-    }
-    
-    currentPage = 0;
-    
-    [self loadarchivemsg:currentPage];
-    [self createHeaderView];
     
     //获取用户在线状态
     
@@ -165,6 +157,22 @@
     
     [defalts setObject:self.chatWithUser forKey:CHATING_USER];
     [defalts synchronize];
+    
+    if (self.isShare) {
+        [self share];
+    }else
+    {
+        
+    }
+    
+    [self getMessageData];
+}
+
+- (void)getMessageData
+{
+    currentPage = 0;
+    [self loadarchivemsg:currentPage];
+    [self createHeaderView];
 }
 
 - (void)freindArray
@@ -191,6 +199,27 @@
     }
 }
 
+#pragma mark - 分享操作
+
+- (void)share
+{
+    DXAlertView *alert = [[DXAlertView alloc]initWithTitle:nil contentText:[self.shareContent objectForKey:@"text"] leftButtonTitle:@"取消" rightButtonTitle:@"分享" isInput:YES];
+    [alert show];
+    
+    __weak typeof(self)weakSelf=self;
+    __block typeof(DXAlertView *)weakAlert = alert;
+    alert.leftBlock = ^(){
+        NSLog(@"取消");
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    };
+    alert.rightBlock = ^(){
+        NSLog(@"确定");
+        
+        [weakSelf xmppAuthenticatedWithMessage:weakAlert.inputTextView.text MessageType:Message_Normal image:nil];
+     };
+
+}
 
 #pragma - mark 聊天历史记录
 
@@ -494,15 +523,13 @@
     [self creatAttributedLabel:text Label:label];
     
     NSString *infoId = [dic objectForKey:MESSAGE_SHATE_LINK];
-    if (infoId) {
-        
-        NSLog(@"----info id %@",infoId);
+    
+    if (infoId && infoId.length > 0) {
         [label addCustomLink:[NSURL URLWithString:text] inRange:NSMakeRange(0,text.length)];
         label.params = @{MESSAGE_SHATE_LINK: infoId};
     }
     
     NSNumber *heightNum = [[NSNumber alloc] initWithFloat:label.frame.size.height];
-    
     
     if (isInsert) {
         [labelArr insertObject:label atIndex:0];
@@ -525,18 +552,6 @@
     return [heightNum floatValue];
 }
 
-- (void)creatLabelArr
-{
-    for (int i = 0; i < [messages count]; i++) {
-        OHAttributedLabel *label = [[OHAttributedLabel alloc] initWithFrame:CGRectZero];
-        NSString *text = [[messages objectAtIndex:i]objectForKey:MESSAGE_MSG];
-        [self creatAttributedLabel:text Label:label];
-        NSNumber *heightNum = [[NSNumber alloc] initWithFloat:label.frame.size.height];
-        [labelArr addObject:label];
-        [self drawImage:label];
-        [rowHeights addObject:heightNum];
-    }
-}
 
 - (void)creatAttributedLabel:(NSString *)o_text Label:(OHAttributedLabel *)label
 {
@@ -602,7 +617,7 @@
     
     NSString *info = [attributedLabel.params objectForKey:MESSAGE_SHATE_LINK];
     NSArray *params = [info componentsSeparatedByString:@","];
-    if (params.count > 0) {
+    if (params.count > 1) {
         
         NSString *infoId = [params objectAtIndex:0];
         NSString *carId = [params objectAtIndex:1];
@@ -764,6 +779,9 @@
         [dictionary setObject:[NSNumber numberWithBool:YES] forKey:MESSAGE_MESSAGE_LOCAL];
     }
     
+    //分享链接
+    [dictionary setObject:[self.shareContent objectForKey:@"infoId"] forKey:MESSAGE_SHATE_LINK];
+    
     [messages addObject:dictionary];
     
     //重新刷新tableView
@@ -780,12 +798,30 @@
 
 - (void)xmppSendMessage:(NSString *)messageText
 {
+ 
+    __weak typeof(FBChatViewController *)weakSelf = self;
     
-    [xmppServer sendMessage:messageText toUser:self.chatWithUser shareLink:Nil messageBlock:^(NSDictionary *params, int tag) {
+    [xmppServer sendMessage:messageText toUser:self.chatWithUser shareLink:[self.shareContent objectForKey:@"infoId"] messageBlock:^(NSDictionary *params, int tag) {
         
         if (tag == 1) {
 
             NSLog(@"发送成功");
+            
+            if (self.isShare) {
+                
+                DXAlertView *alert = [[DXAlertView alloc]initWithTitle:@"分享成功" contentText:nil leftButtonTitle:@"返回" rightButtonTitle:@"留在此页" isInput:NO];
+                [alert show];
+                
+                alert.leftBlock = ^(){
+                    NSLog(@"返回");
+                    
+                    [weakSelf.navigationController popViewControllerAnimated:YES];
+                };
+                alert.rightBlock = ^(){
+                    NSLog(@"确定");
+                    
+                };
+            }
             
         }else{
             
@@ -815,6 +851,7 @@
 
 - (void)xmppAuthenticatedWithMessage:(NSString *)text MessageType:(MESSAGE_TYPE)type image:(UIImage *)aImage
 {
+    
     [self localSendMessage:text MessageType:type image:aImage];
     
     if (![xmppServer.xmppStream isAuthenticated])
