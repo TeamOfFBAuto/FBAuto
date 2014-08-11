@@ -393,6 +393,7 @@
 		E37D2C9D1974CFA500EBA627 /* xuanze_down_44_44@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37D2C9A1974CFA500EBA627 /* xuanze_down_44_44@2x.png */; };
 		E37D2C9E1974CFA500EBA627 /* xuanze_up_44_44@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37D2C9B1974CFA500EBA627 /* xuanze_up_44_44@2x.png */; };
 		E380B4981980FC4400A86F12 /* GxiaoxiTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E380B4971980FC4400A86F12 /* GxiaoxiTableViewCell.m */; };
+		E3A34C99198F7D050099ACB5 /* GmPrepareNetData.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A34C98198F7D050099ACB5 /* GmPrepareNetData.m */; };
 		E3FFFCEA196BE28F00596186 /* GfindCarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FFFCE9196BE28F00596186 /* GfindCarTableViewCell.m */; };
 /* End PBXBuildFile section */
 
@@ -931,6 +932,8 @@
 		E37D2C9B1974CFA500EBA627 /* xuanze_up_44_44@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xuanze_up_44_44@2x.png"; sourceTree = "<group>"; };
 		E380B4961980FC4400A86F12 /* GxiaoxiTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GxiaoxiTableViewCell.h; sourceTree = "<group>"; };
 		E380B4971980FC4400A86F12 /* GxiaoxiTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GxiaoxiTableViewCell.m; sourceTree = "<group>"; };
+		E3A34C97198F7D050099ACB5 /* GmPrepareNetData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmPrepareNetData.h; sourceTree = "<group>"; };
+		E3A34C98198F7D050099ACB5 /* GmPrepareNetData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmPrepareNetData.m; sourceTree = "<group>"; };
 		E3FFFCE8196BE28F00596186 /* GfindCarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GfindCarTableViewCell.h; sourceTree = "<group>"; };
 		E3FFFCE9196BE28F00596186 /* GfindCarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GfindCarTableViewCell.m; sourceTree = "<group>"; };
 		F2B6939735024693BB7F96CA /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
@@ -2094,6 +2097,8 @@
 				E31F5397197405DC00540124 /* GlocalUserImage.m */,
 				E362358319657FA6003B23CC /* GMAPI.h */,
 				E362358419657FA6003B23CC /* GMAPI.m */,
+				E3A34C97198F7D050099ACB5 /* GmPrepareNetData.h */,
+				E3A34C98198F7D050099ACB5 /* GmPrepareNetData.m */,
 			);
 			path = GUtils;
 			sourceTree = "<group>";
@@ -2649,6 +2654,7 @@
 				1336BC28196B921C0011B4D9 /* XMPPStatics.m in Sources */,
 				E362358019657588003B23CC /* GuserZhuce.m in Sources */,
 				13D5E0C71963DB0300804835 /* QBImagePickerGroupCell.m in Sources */,
+				E3A34C99198F7D050099ACB5 /* GmPrepareNetData.m in Sources */,
 				137FEB0C1974D48100CDBD89 /* CarType.m in Sources */,
 				13D5E0631962A14E00804835 /* Menu_Advanced.m in Sources */,
 				138B4A1219664ED500B974A5 /* FBMayKnowFriendsController.m in Sources */,

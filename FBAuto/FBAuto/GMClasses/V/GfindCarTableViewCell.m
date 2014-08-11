@@ -31,7 +31,7 @@
     
     //多少次浏览
     self.ciLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 18, 75, 13)];
-    _ciLable.backgroundColor = [UIColor orangeColor];
+//    _ciLable.backgroundColor = [UIColor orangeColor];
     _ciLable.textAlignment = NSTextAlignmentCenter;
     _ciLable.font = [UIFont systemFontOfSize:12];
     [self.contentView addSubview:_ciLable];

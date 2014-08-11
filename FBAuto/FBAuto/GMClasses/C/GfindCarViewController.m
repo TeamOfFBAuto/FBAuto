@@ -47,7 +47,7 @@
     
     self.flagHeight = 60;
     
-    _tableView = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64-44)];
+    _tableView = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?568-64:415)];
     _tableView.refreshDelegate = self;
     _tableView.dataSource = self;
     
@@ -409,7 +409,7 @@
     
     if (indexPath.row < _dataArray.count) {
         CarSourceClass *aCar = [_dataArray objectAtIndex:indexPath.row];
-        cell.ciLable.text = @"1000";
+        cell.ciLable.text = @"1000次";
         cell.cLabel.text = aCar.car_name;
         cell.tLabel.text = [LCWTools timechange3:aCar.dateline];
     }
@@ -417,10 +417,6 @@
     return cell;
 }
 
-#pragma mark - UIAlerViewDelegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSLog(@"%ld",buttonIndex);
-}
 
 
 

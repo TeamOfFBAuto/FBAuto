@@ -9,11 +9,13 @@
 //个人中心 通知vc
 #import <UIKit/UIKit.h>
 
-@interface GpersonTZViewController : FBBaseViewController<UITableViewDataSource,UITableViewDelegate>
+#import "GmPrepareNetData.h"
+
+@interface GpersonTZViewController : FBBaseViewController<UITableViewDataSource,UITableViewDelegate,RefreshDelegate>
 
 {
-    UITableView *_tableView;
-    NSArray *_dataArray;//数据源
+    RefreshTableView *_tableView;
+    
 }
 
 @property(nonatomic,strong)NSString *userId;//用户id

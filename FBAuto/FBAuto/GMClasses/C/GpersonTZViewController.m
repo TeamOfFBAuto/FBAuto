@@ -16,7 +16,10 @@
 #import "GtzDetailViewController.h"
 
 @interface GpersonTZViewController ()
-
+{
+    int _page;//第几页
+    NSArray *_dataArray;//数据源
+}
 @end
 
 @implementation GpersonTZViewController
@@ -33,9 +36,11 @@
     
     NSLog(@"%s",__FUNCTION__);
     
+    self.titleLabel.text = @"通知";
+    
     self.view.backgroundColor = [UIColor whiteColor];
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64-44) style:UITableViewStylePlain];
-    _tableView.delegate = self;
+    _tableView = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?455:365)];
+    _tableView.refreshDelegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
@@ -43,9 +48,13 @@
     
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    [self prepareNetData];
     
     
+    
+    _page = 1;
+    
+    [_tableView showRefreshHeader:YES];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,25 +66,87 @@
 
 -(void)prepareNetData{
     
-    NSURL *url = [NSURL URLWithString:FBAUTO_PERSONTZLB];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSString *api = [FBAUTO_PERSONTZLB stringByAppendingString:[NSString stringWithFormat:@"&page=%d",_page]];
+    //请求用户通知接口
+    NSLog(@"请求用户通知接口:%@",api);
     
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    __weak typeof (self)bself = self;
+    
+    GmPrepareNetData *cc = [[GmPrepareNetData alloc]initWithUrl:api isPost:NO postData:nil];
+    [cc requestCompletion:^(NSDictionary *result, NSError *erro) {
+
         
-        if (data.length == 0) {
-            return;
-        }
-        NSDictionary *datainfo = [dic objectForKey:@"datainfo"];
-        
+        NSDictionary *datainfo = [result objectForKey:@"datainfo"];
+
         NSArray *dataArray = [datainfo objectForKey:@"data"];
         
-        _dataArray = dataArray;
+        if (dataArray.count < 10) {
+
+            _tableView.isHaveMoreData = NO;
+        }else
+        {
+            _tableView.isHaveMoreData = YES;
+        }
         
-        [_tableView reloadData];
         
+        [bself reloadData:dataArray isReload:_tableView.isReloadData];
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+            if (_tableView.isReloadData) {
+
+                _page --;
+
+                [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+            }
     }];
+    
+    
+    
+    
+    
+//    NSURL *url = [NSURL URLWithString:api];
+//
+//    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+//    
+//    __weak typeof (self)bself = self;
+//    
+//    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+//        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+//        
+//        if (data.length == 0) {
+//            return;
+//        }
+//        NSDictionary *datainfo = [dic objectForKey:@"datainfo"];
+//        
+//        NSArray *dataArray = [datainfo objectForKey:@"data"];
+//        
+//        
+//        
+//        if (dataArray.count < 10) {
+//            
+//            _tableView.isHaveMoreData = NO;
+//        }else
+//        {
+//            _tableView.isHaveMoreData = YES;
+//        }
+//        
+//        
+//        [bself reloadData:dataArray isReload:_tableView.isReloadData];
+//        
+//        
+//        
+////        if (!data.length) {
+////            if (_tableView.isReloadData) {
+////                
+////                _page --;
+////                
+////                [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+////            }
+////        }
+//        
+////        [_tableView reloadData];
+//        
+//    }];
     
 }
 
@@ -108,9 +179,6 @@
     return _dataArray.count;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 65;
-}
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
@@ -122,17 +190,73 @@
     return 0.01f;
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 65;
+}
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+
+
+
+
+#pragma mark - 下拉刷新上提加载更多
+/**
+ *  刷新数据列表
+ *
+ *  @param dataArr  新请求的数据
+ *  @param isReload 判断在刷新或者加载更多
+ */
+- (void)reloadData:(NSArray *)dataArr isReload:(BOOL)isReload
+{
+    if (isReload) {
+        
+        _dataArray = dataArr;
+        
+    }else
+    {
+        NSMutableArray *newArr = [NSMutableArray arrayWithArray:_dataArray];
+        [newArr addObjectsFromArray:dataArr];
+        _dataArray = newArr;
+    }
+    
+    [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+}
+
+
+
+#pragma - mark RefreshDelegate <NSObject>
+
+- (void)loadNewData
+{
+    _page = 1;
+    
+    [self prepareNetData];
+}
+
+- (void)loadMoreData
+{
+    NSLog(@"loadMoreData");
+    
+    _page ++;
+    
+    [self prepareNetData];
+}
+
+- (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     
     GtzDetailViewController *tzd = [[GtzDetailViewController alloc]init];
     tzd.uid = [_dataArray[indexPath.row]objectForKey:@"id"];
     NSLog(@"%@",tzd.uid);
     [self.navigationController pushViewController:tzd animated:YES];
-    
-    
 }
+
+- (CGFloat)heightForRowIndexPath:(NSIndexPath *)indexPath
+{
+    return 65;
+}
+
+
 
 
 @end
