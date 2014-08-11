@@ -53,22 +53,31 @@
     self.view.backgroundColor=[UIColor redColor];
     NSLog(@"%s",__FUNCTION__);
     
+    
     self.titleLabel.text = @"我的收藏";
     
-    UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"lajitong44_44.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(ggDel)];
+//    UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"lajitong44_44.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(ggDel)];
     
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 22, 22)];
+    UIImageView *imv = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"lajitong44_44.png"] highlightedImage:nil];
+    [view addSubview:imv];
+    
+    UITapGestureRecognizer * delle = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ggDel)];
+    [view addGestureRecognizer:delle];
+    
+    UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithCustomView:view];
     self.navigationItem.rightBarButtonItem = right;
     
     self.delClicked = NO;
     
-    _tableview = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64)];
+    _tableview = [[RefreshTableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?568-64:415)];
     _tableview.refreshDelegate = self;
     _tableview.dataSource = self;
     _tableview.separatorColor = [UIColor whiteColor];
     [self.view addSubview:_tableview];
     
     //底部删除view
-    _dview = [[UIView alloc]initWithFrame:CGRectMake(0, 568, 320, 80)];
+    _dview = [[UIView alloc]initWithFrame:CGRectMake(0, iPhone5?568-64:415, 320, 80)];
     _dview.backgroundColor = [UIColor whiteColor];
     _dview.userInteractionEnabled = YES;
     
@@ -136,7 +145,7 @@
     __weak typeof(GmarkViewController *)weakSelf = self;
     
     NSString *url = [NSString stringWithFormat:@"%@&page=%d&ps=%d",api,_page,KPageSize];
-    LCWTools *tool = [[LCWTools alloc]initWithUrl:url isPost:nil postData:nil];
+    LCWTools *tool = [[LCWTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
         NSLog(@"我的收藏erro%@",[result objectForKey:@"errinfo"]);
@@ -261,14 +270,14 @@
         [self.indexes removeAllObjects];
         self.numLabel.text =  @"(  )";
         [UIView animateWithDuration:0.1 animations:^{
-            _dview.frame = CGRectMake(0, 568-80-64, 320, 80);
+            _dview.frame = CGRectMake(0, iPhone5?568-64-80:415-80, 320, 80);
         } completion:^(BOOL finished) {
             [_tableview reloadData];
         }];
     }else{//正常界面
         self.delType = 2;
         [UIView animateWithDuration:0.1 animations:^{
-            _dview.frame = CGRectMake(0, 568, 320, 80);
+            _dview.frame = CGRectMake(0, iPhone5?568-64:415, 320, 80);
         } completion:^(BOOL finished) {
             [_tableview reloadData];
         }];

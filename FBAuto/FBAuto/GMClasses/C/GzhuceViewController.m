@@ -9,6 +9,10 @@
 #import "GzhuceViewController.h"
 #import "GzhuceTableViewCell.h"
 
+#define Iphone5TableViewHeight 444
+#define Iphone4TableViewHeight 360
+
+
 @interface GzhuceViewController ()
 
 @end
@@ -79,14 +83,14 @@
     
     
     //个人注册
-    _gerenTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 60, 320, 568-124) style:UITableViewStylePlain];
+    _gerenTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 60, 320, iPhone5?Iphone5TableViewHeight:Iphone4TableViewHeight) style:UITableViewStylePlain];
     _gerenTableView.delegate = self;
     _gerenTableView.dataSource = self;
     _gerenTableView.tag = 5;
     [self.view addSubview:_gerenTableView];
     
     //商家注册
-    _shangjiaTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 60, 320, 568-124) style:UITableViewStylePlain];
+    _shangjiaTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 60, 320, iPhone5?Iphone5TableViewHeight:Iphone4TableViewHeight) style:UITableViewStylePlain];
     _shangjiaTableView.delegate = self;
     _shangjiaTableView.dataSource = self;
     _shangjiaTableView.tag = 6;
@@ -256,27 +260,102 @@
     //上移tableview
     [Gcell setTfBlock:^(long tt) {
         
-        if (tt == 13|| tt == 14 || tt == 15 ) {
-            [UIView animateWithDuration:0.3 animations:^{
-                bgerenTableView.frame = CGRectMake(0, -50, 320, 444);
-            } completion:^(BOOL finished) {
+        NSLog(@"%ld",tt);
+        
+        if (iPhone5) {
+            if (tt == 13|| tt == 14 || tt == 15 ) {
+                [UIView animateWithDuration:0.3 animations:^{
+                    bgerenTableView.frame = CGRectMake(0, -50, 320, Iphone5TableViewHeight);
+                } completion:^(BOOL finished) {
+                    
+                }];
+            }else if (tt == 23 || tt == 24 || tt == 25 || tt == 26 ) {
+                [UIView animateWithDuration:0.3 animations:^{
+                    bshangjiaTableView.frame = CGRectMake(0, -90, 320, Iphone5TableViewHeight);
+                } completion:^(BOOL finished) {
+                    
+                }];
                 
-            }];
-        }else if (tt == 23 || tt == 24 || tt == 25 || tt == 26 ) {
-            [UIView animateWithDuration:0.3 animations:^{
-                bshangjiaTableView.frame = CGRectMake(0, -90, 320, 444);
-            } completion:^(BOOL finished) {
                 
-            }];
+            }else if (tt == 27) {
+                [UIView animateWithDuration:0.3 animations:^{
+                    bshangjiaTableView.frame = CGRectMake(0, -150, 320, 500);
+                } completion:^(BOOL finished) {
+                    
+                }];
+            }
+        }else{//不是iphone5屏幕适配
+            
+            if ( tt == 12 || tt == 13|| tt == 14 || tt == 15 ) {
+                if (tt == 12) {
+                    [UIView animateWithDuration:0.3 animations:^{
+                        bgerenTableView.frame = CGRectMake(0, -50, 320, Iphone4TableViewHeight);
+                    } completion:^(BOOL finished) {
+                        
+                    }];
+                }else if (tt == 13) {//重复密码
+                    [UIView animateWithDuration:0.3 animations:^{
+                        bgerenTableView.frame = CGRectMake(0, -60, 320, Iphone4TableViewHeight);
+                    } completion:^(BOOL finished) {
+                        
+                    }];
+                }else if (tt == 14 || tt == 15){
+                    [UIView animateWithDuration:0.3 animations:^{
+                        bgerenTableView.frame = CGRectMake(0, -150, 320, Iphone4TableViewHeight);
+                    } completion:^(BOOL finished) {
+                        
+                    }];
+                }
+                
+            }else if (tt == 21 || tt == 22 || tt == 23 || tt == 24 || tt == 25 || tt == 26 || tt == 27) {//商家注册 地址23
+                
+                if (tt == 21) {
+                    
+                    [UIView animateWithDuration:0.3 animations:^{
+                        bshangjiaTableView.frame = CGRectMake(0, 40, 320, Iphone4TableViewHeight);
+                    } completion:^(BOOL finished) {
+                        
+                    }];
+                }else if (tt == 23){
+                    [UIView animateWithDuration:0.3 animations:^{
+                        bshangjiaTableView.frame = CGRectMake(0, -70, 320, Iphone4TableViewHeight);
+                    } completion:^(BOOL finished) {
+                        
+                    }];
+                }else if (tt == 24){
+                    [UIView animateWithDuration:0.3 animations:^{
+                        bshangjiaTableView.frame = CGRectMake(0, -150, 320, Iphone4TableViewHeight);
+                    } completion:^(BOOL finished) {
+                        
+                    }];
+                }else if (tt == 25){
+                    [UIView animateWithDuration:0.3 animations:^{
+                        bshangjiaTableView.frame = CGRectMake(0, -190, 320, Iphone4TableViewHeight+100);
+                    } completion:^(BOOL finished) {
+                        
+                    }];
+                }else if (tt ==26){
+                    [UIView animateWithDuration:0.3 animations:^{
+                        bshangjiaTableView.frame = CGRectMake(0, -240, 320, Iphone4TableViewHeight+100);
+                    } completion:^(BOOL finished) {
+                        
+                    }];
+                }
+                
+                
+                
+            }
+                
             
             
-        }else if (tt == 27) {
-            [UIView animateWithDuration:0.3 animations:^{
-                bshangjiaTableView.frame = CGRectMake(0, -150, 320, 500);
-            } completion:^(BOOL finished) {
-                
-            }];
+            
+            
         }
+        
+        
+        
+        
+        
         
     }];
     
@@ -284,8 +363,8 @@
     [Gcell setShouTablevBlock:^{
         _isChooseArea = NO;
         [UIView animateWithDuration:0.3 animations:^{
-            bgerenTableView.frame = CGRectMake(0, 60, 320, 444);
-            bshangjiaTableView.frame = CGRectMake(0, 60, 320, 444);
+            bgerenTableView.frame = CGRectMake(0, 60, 320, iPhone5?Iphone5TableViewHeight:Iphone4TableViewHeight);
+            bshangjiaTableView.frame = CGRectMake(0, 60, 320, iPhone5?Iphone5TableViewHeight:Iphone4TableViewHeight);
             [bself areaHidden];
         } completion:^(BOOL finished) {
             
@@ -324,7 +403,7 @@
     NSLog(@"_backPickView");
     __weak typeof (self)bself = self;
     [UIView animateWithDuration:0.3 animations:^{
-        bself.backPickView.frame = CGRectMake(0, 300, 320, 216);
+        bself.backPickView.frame = CGRectMake(0,iPhone5?300:216, 320, 216);
     }];
     
     
@@ -340,7 +419,7 @@
         [_shangjiaTableView reloadData];
     }
     [UIView animateWithDuration:0.3 animations:^{
-        bself.backPickView.frame = CGRectMake(0, 568, 320, 216);
+        bself.backPickView.frame = CGRectMake(0, 568, 320, iPhone5?Iphone5TableViewHeight:Iphone4TableViewHeight);
         
     }];
     
@@ -378,7 +457,11 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
     
     if (component == 0) {
+        
+        _str2 = nil;
+        
         _flagRow = row;
+        
         _str1 = _data[row][@"State"];
         NSLog(@"%@",_str1);
         
@@ -396,6 +479,9 @@
         }
         
         _isChooseArea = YES;
+        if (row > 0) {//动态赋值城市
+            self.city =  _data[_flagRow][@"Cities"][row-1][@"city"];
+        }
         
         
     } else if (component == 1) {

@@ -13,6 +13,8 @@
 
 #import "GzhuceViewController.h"
 
+#import "FBCityData.h"
+
 @implementation GzhuceTableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -425,7 +427,8 @@
         
         SzkLoadData *netr = [[SzkLoadData alloc]init];
         
-        NSString *str = [NSString stringWithFormat:FBAUTO_REGISTERED,guerzhuce.phone,guerzhuce.password,guerzhuce.name,guerzhuce.province,guerzhuce.city,1,guerzhuce.code,guerzhuce.token];
+        
+        NSString *str = [NSString stringWithFormat:FBAUTO_REGISTERED,guerzhuce.phone,guerzhuce.password,guerzhuce.name,(long)guerzhuce.province,(long)guerzhuce.city,1,guerzhuce.code,guerzhuce.token];
         
         NSLog(@"个人注册接口======= %@",str);
         
@@ -479,7 +482,7 @@
         
         SzkLoadData *netr = [[SzkLoadData alloc]init];
         
-        NSString *str = [NSString stringWithFormat:FBAUTO_REGISTERED,userzc.phone,userzc.password,userzc.name,userzc.province,userzc.city,2,userzc.code,userzc.token];
+        NSString *str = [NSString stringWithFormat:FBAUTO_REGISTERED,userzc.phone,userzc.password,userzc.name,(long)userzc.province,(long)userzc.city,2,userzc.code,userzc.token];
         
         NSLog(@"商家注册接口======= %@",str);
         

@@ -28,9 +28,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568) style:UITableViewStylePlain];
+    
+    self.titleLabel.text = @"内容";
+    
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?455:365) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    
     
     [self.view addSubview:_tableView];
     

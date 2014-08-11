@@ -125,7 +125,7 @@
     
     
     //展示信息的tableView
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 114, 320, 568-64-164) style:UITableViewStyleGrouped];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 114, 320, iPhone5?568-64-164:250) style:UITableViewStyleGrouped];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.delegate = self;
     _tableView.dataSource = self;

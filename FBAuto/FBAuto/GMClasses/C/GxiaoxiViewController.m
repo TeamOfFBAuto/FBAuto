@@ -38,7 +38,7 @@
     
     self.titleLabel.text = @"我的消息";
     
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-64) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, iPhone5?455:365) style:UITableViewStylePlain];
 
     _tableView.delegate = self;
     _tableView.dataSource = self;
