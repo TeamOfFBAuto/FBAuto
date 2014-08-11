@@ -54,6 +54,8 @@ alpha:(a)]
 
 #define FBAUTO_BACK_IMAGE [UIImage imageNamed:@"fanhui_24_42"] //返回按钮
 
+#define FBAUTO_APPSTORE_URL @"https://itunes.apple.com/us/app/e-zu-qi-che/id904576362?l=zh&ls=1&mt=8"//APPStore下载地址
+
 
 //用户相关API=================
 

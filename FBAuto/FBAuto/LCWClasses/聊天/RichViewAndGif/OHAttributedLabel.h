@@ -72,6 +72,8 @@ CTLineBreakMode CTLineBreakModeFromUILineBreakMode(UILineBreakMode lineBreakMode
 /* Attributed String accessors */
 @property(nonatomic, copy) NSAttributedString* attributedText; //!< Use this instead of the "text" property inherited from UILabel to set and get text
 
+@property (nonatomic,retain)NSDictionary *params;//lcw
+
 -(void)resetAttributedText; //!< rebuild the attributedString based on UILabel's text/font/color/alignment/... properties
 - (CGSize)sizeThatFits:(CGSize)size;
 

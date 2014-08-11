@@ -28,6 +28,10 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)clickToShare:(id)sender {
+    cellBlock(chatWithUser,1);
+}
+
 - (IBAction)clickToDial:(id)sender {
     
     NSString *num = [[NSString alloc] initWithFormat:@"tel://%@",phoneNum];
@@ -36,7 +40,7 @@
 }
 - (IBAction)clickToChat:(id)sender {
     
-    cellBlock(chatWithUser);
+    cellBlock(chatWithUser,0);
 }
 
 /**

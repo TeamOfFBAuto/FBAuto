@@ -10,8 +10,6 @@
 #import "CWInputView.h"
 #import "KKMessageCell.h"
 
-#import "FBChatHeader.h"
-
 #import "NSAttributedString+Attributes.h"
 #import "FBHelper.h"
 #import "MarkupParser.h"
@@ -28,6 +26,11 @@
 #import "ASIFormDataRequest.h"
 #import "GDataXMLNode.h"
 #import "FBCityData.h"
+
+#import "FBDetail2Controller.h"
+#import "FBFindCarDetailController.h"
+
+#import "DXAlertView.h"
 
 #define MESSAGE_PAGE_SIZE 10
 
@@ -113,7 +116,6 @@
     
     
     xmppServer = [XMPPServer shareInstance];
-    
     xmppServer.chatDelegate = self;
     xmppServer.messageDelegate = self;
     
@@ -130,18 +132,13 @@
         }];
     }
     
+    
+    
     messages = [NSMutableArray array];
     labelArr = [NSMutableArray array];
     rowHeights = [NSMutableArray array];
     
-//    [self testData];//测试数据
-    
     [self createInputView];
-    
-    currentPage = 0;
-    
-    [self loadarchivemsg:currentPage];
-    [self createHeaderView];
     
     //获取用户在线状态
     
@@ -160,6 +157,22 @@
     
     [defalts setObject:self.chatWithUser forKey:CHATING_USER];
     [defalts synchronize];
+    
+    if (self.isShare) {
+        [self share];
+    }else
+    {
+        
+    }
+    
+    [self getMessageData];
+}
+
+- (void)getMessageData
+{
+    currentPage = 0;
+    [self loadarchivemsg:currentPage];
+    [self createHeaderView];
 }
 
 - (void)freindArray
@@ -186,6 +199,27 @@
     }
 }
 
+#pragma mark - 分享操作
+
+- (void)share
+{
+    DXAlertView *alert = [[DXAlertView alloc]initWithTitle:nil contentText:[self.shareContent objectForKey:@"text"] leftButtonTitle:@"取消" rightButtonTitle:@"分享" isInput:YES];
+    [alert show];
+    
+    __weak typeof(self)weakSelf=self;
+    __block typeof(DXAlertView *)weakAlert = alert;
+    alert.leftBlock = ^(){
+        NSLog(@"取消");
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    };
+    alert.rightBlock = ^(){
+        NSLog(@"确定");
+        
+        [weakSelf xmppAuthenticatedWithMessage:weakAlert.inputTextView.text MessageType:Message_Normal image:nil];
+     };
+
+}
 
 #pragma - mark 聊天历史记录
 
@@ -258,6 +292,7 @@
             [format setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
             NSString *time = [format stringFromDate:message.timestamp];
             
+            
             if(msg)
             {
                 NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -270,6 +305,13 @@
                     from = @"you";
                 }
                 [dict setObject:from forKey:@"sender"];
+                
+                //分享信息id
+                NSString *infoId = [[message12 attributeForName:MESSAGE_SHATE_LINK] stringValue];
+                if (infoId) {
+                    [dict setObject:infoId forKey:MESSAGE_SHATE_LINK];
+                    NSLog(@"info ---> %@",infoId);
+                }
                 
                 //消息接收到的时间
                 [dict setObject:(time ? time : @"") forKey:@"time"];
@@ -382,7 +424,6 @@
 {
 //    MESSAGE_TYPE type = [[dic objectForKey:@"type"]integerValue];
     
-    
     //本地发送 图片
     
     BOOL isLocal = [[dic objectForKey:MESSAGE_MESSAGE_LOCAL]boolValue];
@@ -481,8 +522,14 @@
     NSString *text = [dic objectForKey:MESSAGE_MSG];
     [self creatAttributedLabel:text Label:label];
     
-    NSNumber *heightNum = [[NSNumber alloc] initWithFloat:label.frame.size.height];
+    NSString *infoId = [dic objectForKey:MESSAGE_SHATE_LINK];
     
+    if (infoId && infoId.length > 0) {
+        [label addCustomLink:[NSURL URLWithString:text] inRange:NSMakeRange(0,text.length)];
+        label.params = @{MESSAGE_SHATE_LINK: infoId};
+    }
+    
+    NSNumber *heightNum = [[NSNumber alloc] initWithFloat:label.frame.size.height];
     
     if (isInsert) {
         [labelArr insertObject:label atIndex:0];
@@ -505,18 +552,6 @@
     return [heightNum floatValue];
 }
 
-- (void)creatLabelArr
-{
-    for (int i = 0; i < [messages count]; i++) {
-        OHAttributedLabel *label = [[OHAttributedLabel alloc] initWithFrame:CGRectZero];
-        NSString *text = [[messages objectAtIndex:i]objectForKey:MESSAGE_MSG];
-        [self creatAttributedLabel:text Label:label];
-        NSNumber *heightNum = [[NSNumber alloc] initWithFloat:label.frame.size.height];
-        [labelArr addObject:label];
-        [self drawImage:label];
-        [rowHeights addObject:heightNum];
-    }
-}
 
 - (void)creatAttributedLabel:(NSString *)o_text Label:(OHAttributedLabel *)label
 {
@@ -546,13 +581,13 @@
             [label addCustomLink:[NSURL URLWithString:httpStr] inRange:[string rangeOfString:httpStr]];
         }
     }
-    
+        
     label.delegate = self;
     CGRect labelRect = label.frame;
     labelRect.size.width = [label sizeThatFits:CGSizeMake(200, CGFLOAT_MAX)].width;
     labelRect.size.height = [label sizeThatFits:CGSizeMake(200, CGFLOAT_MAX)].height;
     label.frame = labelRect;
-    //    label.onlyCatchTouchesOnLinks = NO;
+    label.onlyCatchTouchesOnLinks = NO;
     label.underlineLinks = YES;//链接是否带下划线
     [label.layer display];
     // 调用这个方法立即触发label的|drawTextInRect:|方法，
@@ -579,6 +614,39 @@
 {
     NSString *requestString = [linkInfo.URL absoluteString];
     NSLog(@"%@",requestString);
+    
+    NSString *info = [attributedLabel.params objectForKey:MESSAGE_SHATE_LINK];
+    NSArray *params = [info componentsSeparatedByString:@","];
+    if (params.count > 1) {
+        
+        NSString *infoId = [params objectAtIndex:0];
+        NSString *carId = [params objectAtIndex:1];
+        
+        NSString *text = [attributedLabel.attributedText string];
+        if([text hasPrefix:@"车源:"] || [text rangeOfString:@"车源"].length > 0)
+        {
+            NSLog(@"车源");
+            FBDetail2Controller *detail = [[FBDetail2Controller alloc]init];
+            detail.style = Navigation_Special;
+            detail.navigationTitle = @"详情";
+            detail.infoId = infoId;
+            detail.carId = carId;
+            detail.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:detail animated:YES];
+            
+        }else
+        {
+            NSLog(@"寻车");
+            FBFindCarDetailController *detail = [[FBFindCarDetailController alloc]init];
+            detail.style = Navigation_Special;
+            detail.navigationTitle = @"详情";
+            detail.infoId = info;
+            detail.carId = carId;
+            detail.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:detail animated:YES];
+        }
+    }
+    
     if ([[UIApplication sharedApplication]canOpenURL:linkInfo.URL]) {
         [[UIApplication sharedApplication]openURL:linkInfo.URL];
     }
@@ -711,6 +779,9 @@
         [dictionary setObject:[NSNumber numberWithBool:YES] forKey:MESSAGE_MESSAGE_LOCAL];
     }
     
+    //分享链接
+    [dictionary setObject:[self.shareContent objectForKey:@"infoId"] forKey:MESSAGE_SHATE_LINK];
+    
     [messages addObject:dictionary];
     
     //重新刷新tableView
@@ -727,45 +798,37 @@
 
 - (void)xmppSendMessage:(NSString *)messageText
 {
-    //XMPPFramework主要是通过KissXML来生成XML文件
-    //生成<body>文档
-    NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-    [body setStringValue:messageText];
+ 
+    __weak typeof(FBChatViewController *)weakSelf = self;
     
-    //生成XML消息文档
-    NSXMLElement *mes = [NSXMLElement elementWithName:@"message"];
-    //消息类型
-    [mes addAttributeWithName:@"type" stringValue:@"chat"];
-    //发送给谁
-    
-    NSString *toUser = [NSString stringWithFormat:@"%@@%@",self.chatWithUser,[[NSUserDefaults standardUserDefaults] stringForKey:XMPP_SERVER]];
-    
-    NSLog(@"_chatWithUser %@ server %@",self.chatWithUser,[[NSUserDefaults standardUserDefaults] stringForKey:XMPP_SERVER]);
-    
-    NSLog(@"toUser %@",toUser);
-    
-    //聊天对象在线状态
-    
-    [mes addAttributeWithName:@"status" stringValue:userState];
-    
-    //聊天对象nickName
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *senderName = [defaults objectForKey:USERNAME];
-    NSString *senderId = [defaults objectForKey:USERID];
-    
-    [mes addAttributeWithName:@"senderName" stringValue:senderName ? senderName : @""];
-    [mes addAttributeWithName:@"senderId" stringValue:senderId ? senderId : @""];
-    
-    [mes addAttributeWithName:@"to" stringValue:toUser];
-    
-    //由谁发送
-    [mes addAttributeWithName:@"from" stringValue:[[NSUserDefaults standardUserDefaults] stringForKey:XMPP_USERID]];
-    //组合
-    [mes addChild:body];
-    
-    //发送消息
-    [[xmppServer xmppStream] sendElement:mes];
+    [xmppServer sendMessage:messageText toUser:self.chatWithUser shareLink:[self.shareContent objectForKey:@"infoId"] messageBlock:^(NSDictionary *params, int tag) {
+        
+        if (tag == 1) {
+
+            NSLog(@"发送成功");
+            
+            if (self.isShare) {
+                
+                DXAlertView *alert = [[DXAlertView alloc]initWithTitle:@"分享成功" contentText:nil leftButtonTitle:@"返回" rightButtonTitle:@"留在此页" isInput:NO];
+                [alert show];
+                
+                alert.leftBlock = ^(){
+                    NSLog(@"返回");
+                    
+                    [weakSelf.navigationController popViewControllerAnimated:YES];
+                };
+                alert.rightBlock = ^(){
+                    NSLog(@"确定");
+                    
+                };
+            }
+            
+        }else{
+            
+            NSLog(@"发送失败");
+        }
+        
+    }];
 }
 
 #pragma - mark 输入框点击发送消息 CWInputDelegate
@@ -788,6 +851,7 @@
 
 - (void)xmppAuthenticatedWithMessage:(NSString *)text MessageType:(MESSAGE_TYPE)type image:(UIImage *)aImage
 {
+    
     [self localSendMessage:text MessageType:type image:aImage];
     
     if (![xmppServer.xmppStream isAuthenticated])

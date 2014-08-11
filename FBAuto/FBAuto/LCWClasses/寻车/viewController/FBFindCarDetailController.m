@@ -10,7 +10,7 @@
 #import "FBChatViewController.h"
 
 #import "LShareSheetView.h"
-
+#import "FBFriendsController.h"
 
 #import "GuserZyViewController.h"
 #import <ShareSDK/ShareSDK.h>
@@ -219,8 +219,13 @@
     LShareSheetView *shareView = [[LShareSheetView alloc]initWithFrame:self.view.frame];
     [shareView actionBlock:^(NSInteger buttonIndex, NSString *shareStyle) {
         
-        NSArray *text =  @[@"微信",@"QQ",@"朋友圈",@"微博",@"站内好友"];
-        NSString *imageUrl = @"http://fbautoapp.fblife.com/resource/photo/63/bd/thumb_34_small.jpg";
+//        NSArray *text =  @[@"微信",@"QQ",@"朋友圈",@"微博",@"站内好友"];
+        
+        ////@"发河北 寻美规 奥迪Q7 14款 豪华"
+        NSString *contentText = [NSString stringWithFormat:@"寻车:发%@ 寻%@。%@",[self labelWithTag:109].text,[self labelWithTag:108].text,[self labelWithTag:115].text];
+        NSString *contentWithUrl = [NSString stringWithFormat:@"%@%@",contentText,FBAUTO_APPSTORE_URL];
+        
+        UIImage *aImage = [UIImage imageNamed:@"icon114"];
         
         buttonIndex -= 100;
         NSLog(@"share %d %@",buttonIndex,shareStyle);
@@ -229,25 +234,25 @@
             {
                 NSLog(@"微信");
                 
-                [self shareText:[text objectAtIndex:buttonIndex] imageName:imageUrl ShareType:ShareTypeWeixiSession];
+                [self shareText:contentWithUrl image:aImage ShareType:ShareTypeWeixiSession];
             }
                 break;
             case 1:
             {
                 NSLog(@"QQ");
-                [self shareText:[text objectAtIndex:buttonIndex] imageName:imageUrl ShareType:ShareTypeQQ];
+                [self shareText:contentWithUrl image:aImage ShareType:ShareTypeQQ];
             }
                 break;
             case 2:
             {
                 NSLog(@"朋友圈");
-                [self shareText:[text objectAtIndex:buttonIndex] imageName:imageUrl ShareType:ShareTypeWeixiTimeline];
+                [self shareText:contentWithUrl image:aImage ShareType:ShareTypeWeixiTimeline];
             }
                 break;
             case 3:
             {
                 NSLog(@"微博");
-                [self shareText:[text objectAtIndex:buttonIndex] imageName:imageUrl ShareType:ShareTypeSinaWeibo];
+                [self shareText:contentWithUrl image:aImage ShareType:ShareTypeSinaWeibo];
                 
                 //http://fbautoapp.fblife.com/resource/head/86/2c/thumb_2_Thu.jpg?1406776627
                 //http://fbautoapp.fblife.com/resource/head/86/2c/thumb_1_Thu.jpg
@@ -256,6 +261,13 @@
             case 4:
             {
                 NSLog(@"站内好友");
+                FBFriendsController *friend = [[FBFriendsController alloc]init];
+                friend.isShare = YES;
+                //分享的内容  {@"text",@"infoId"}
+                
+                NSString *info = [NSString stringWithFormat:@"%@,%@",self.infoId,self.carId];
+                friend.shareContent = @{@"text": contentText,@"infoId":info};
+                [self.navigationController pushViewController:friend animated:YES];
             }
                 break;
                 
@@ -267,10 +279,10 @@
 
 
 
-- (void)shareText:(NSString *)text imageName:(NSString *)imageUrl ShareType:(ShareType)aShareType{
+- (void)shareText:(NSString *)text image:(UIImage *)aImage ShareType:(ShareType)aShareType{
     
     //创建分享内容
-    UIImage *aImage = [UIImage imageNamed:@"detail_test"];
+//    UIImage *aImage = [UIImage imageNamed:@"detail_test"];
     
     id<ISSContent> publishContent = [ShareSDK content:text
                                        defaultContent:@"FBAuto分享"

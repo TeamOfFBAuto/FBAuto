@@ -9,6 +9,7 @@
 #import "XMPPServer.h"
 
 #import "FBCityData.h"
+
 /**
  *  先建立连接，然后进行秘密验证，验证通过后上线
  */
@@ -175,7 +176,40 @@ static int x = 10;
     NSLog(@"testDate:%@", date);
 }
 
+#pragma mark - 登录
 
+- (void)sendMessage:(NSString *)messageText toUser:(NSString *)userPhone shareLink:(NSString *)shareLink messageBlock:(MessageAction)messageBlock
+{
+    message_Back = messageBlock;
+    
+    NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
+    [body setStringValue:messageText];
+    
+    //生成XML消息文档
+    NSXMLElement *mes = [NSXMLElement elementWithName:@"message"];
+    //消息类型
+    [mes addAttributeWithName:@"type" stringValue:@"chat"];
+    //发送给谁
+    [mes addAttributeWithName:MESSAGE_SHATE_LINK stringValue:shareLink];
+    NSString *toUser = [NSString stringWithFormat:@"%@@%@",userPhone,[[NSUserDefaults standardUserDefaults] stringForKey:XMPP_SERVER]];
+    
+    //聊天对象nickName
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *senderName = [defaults objectForKey:USERNAME];
+    NSString *senderId = [defaults objectForKey:USERID];
+    
+    [mes addAttributeWithName:@"senderName" stringValue:senderName ? senderName : @""];
+    [mes addAttributeWithName:@"senderId" stringValue:senderId ? senderId : @""];
+    [mes addAttributeWithName:@"to" stringValue:toUser];
+    
+    //由谁发送
+    [mes addAttributeWithName:@"from" stringValue:[[NSUserDefaults standardUserDefaults] stringForKey:XMPP_USERID]];
+    //组合
+    [mes addChild:body];
+    
+    //发送消息
+    [[self xmppStream] sendElement:mes];
+}
 
 - (void)loginTimes:(int)times loginBack:(loginAction)login_Back//多次联系登录
 {
@@ -347,6 +381,18 @@ static int x = 10;
             [_messageDelegate newMessage:dict];
         }
     }
+}
+
+- (void)xmppStream:(XMPPStream *)sender didSendMessage:(XMPPMessage *)message
+{
+    NSLog(@"didSendMessage");
+    message_Back(nil,1);
+}
+
+- (void)xmppStream:(XMPPStream *)sender didFailToSendMessage:(XMPPMessage *)message error:(NSError *)error
+{
+    NSLog(@"didFailToSendMessage %@",error);
+    message_Back(nil,0);;
 }
 
 //监控好友状态

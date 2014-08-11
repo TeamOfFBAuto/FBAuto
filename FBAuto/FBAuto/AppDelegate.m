@@ -41,18 +41,8 @@
 #define SinaAppSecret @"7379cf0aa245ba45a66cc7c9ae9b1dba"
 
 #define QQAPPID @"1101950003" //十六进制:41AE6C33; 生成方法:echo 'ibase=10;obase=16;1101950003'|bc
-#define WXAPPID @"wxd747942b226f56d5"
+#define WXAPPID @"wx0ad0d507a8933b9d"
 
-
-// shareSDK 测试数据
-
-//#define SinaAppKey @"568898243"
-//#define SinaAppSecret @"38a4f8204cc784f81f9f0daaf31e02e3"
-
-//#define QQAPPID @"100371282"
-//#define WXAPPID @"wx4868b35061f87885"
-
-//#define RedirectUrl @"http://www.sharesdk.cn"
 #define RedirectUrl @"http://www.sina.com"
 
 

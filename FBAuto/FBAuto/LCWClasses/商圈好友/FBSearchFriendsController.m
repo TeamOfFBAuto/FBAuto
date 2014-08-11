@@ -11,6 +11,7 @@
 #import "ZkingSearchView.h"
 #import "FBFriendModel.h"
 #import "LSearchView.h"
+#import "DXAlertView.h"
 
 @interface FBSearchFriendsController ()
 {
@@ -293,10 +294,19 @@
     
     NSString *name = aModel.name ? aModel.name : aModel.buddyname;
     NSString *message = [NSString stringWithFormat:@"是否添加%@为好友",name];
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:message delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"添加好友", nil];
-    alert.tag = [aModel.uid intValue] + 100;
-    
+    DXAlertView *alert = [[DXAlertView alloc]initWithTitle:message contentText:nil leftButtonTitle:@"添加" rightButtonTitle:@"取消" isInput:NO];
     [alert show];
+    
+    __weak typeof(self)weakSelf = self;
+    alert.leftBlock = ^(){
+        NSLog(@"确定");
+        [weakSelf addFriend:aModel.uid];
+    };
+    alert.rightBlock = ^(){
+        NSLog(@"取消");
+        
+    };
+
 }
 
 #pragma - mark UIAlertViewDelegate <NSObject>

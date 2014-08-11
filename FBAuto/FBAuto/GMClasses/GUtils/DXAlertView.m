@@ -16,6 +16,7 @@
 @interface DXAlertView ()
 {
     BOOL _leftLeave;
+    CGFloat newHeight;
 }
 
 @property (nonatomic, strong) UILabel *alertTitleLabel;
@@ -99,6 +100,8 @@
         [self addSubview:self.leftBtn];
         [self addSubview:self.rightBtn];
         
+        newHeight = 0.f;
+        
         self.alertTitleLabel.text = title;
         self.alertContentLabel.text = content;
         
@@ -107,13 +110,45 @@
     return self;
 }
 
-
+- (id)initWithTitle:(NSString *)title
+        contentText:(NSString *)content
+    leftButtonTitle:(NSString *)leftTitle
+   rightButtonTitle:(NSString *)rigthTitle
+            isInput:(BOOL)isInput
+{
+    if (self = [self initWithTitle:title contentText:content leftButtonTitle:leftTitle rightButtonTitle:rigthTitle]) {
+        
+        if (isInput) {
+            
+            newHeight = 50.f;
+            self.inputTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, 10 + newHeight - 20, kAlertWidth - 20, 30 + 20)];
+            _inputTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+            _inputTextView.layer.borderWidth = 1.0;
+            _inputTextView.font = [UIFont systemFontOfSize:14];
+            [self addSubview:_inputTextView];
+            
+            _inputTextView.text = content;
+            _alertTitleLabel.text = @"站内分享";
+            
+            CGRect leftFrame = _leftBtn.frame;
+            leftFrame.origin.y += newHeight;
+            _leftBtn.frame = leftFrame;
+            
+            CGRect rightFrame = _rightBtn.frame;
+            rightFrame.origin.y += newHeight;
+            _rightBtn.frame = rightFrame;
+            
+        }
+    }
+    return self;
+}
 
 
 
 - (void)leftBtnClicked:(id)sender
 {
     _leftLeave = YES;
+    
     [self dismissAlert];
     if (self.leftBlock) {
         self.leftBlock();
@@ -132,13 +167,16 @@
 - (void)show
 {
     UIViewController *topVC = [self appRootViewController];
-    self.frame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - kAlertWidth) * 0.5, - kAlertHeight - 30, kAlertWidth, kAlertHeight);
+    self.frame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - kAlertWidth) * 0.5, - kAlertHeight - 30, kAlertWidth, kAlertHeight + newHeight);
     [topVC.view addSubview:self];
 }
 
 - (void)dismissAlert
 {
     [self removeFromSuperview];
+    
+    [self resignTextViewFirstResponder:nil];
+    
     if (self.dismissBlock) {
         self.dismissBlock();
     }
@@ -160,7 +198,7 @@
     [self.backImageView removeFromSuperview];
     self.backImageView = nil;
     UIViewController *topVC = [self appRootViewController];
-    CGRect afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - kAlertWidth) * 0.5, CGRectGetHeight(topVC.view.bounds), kAlertWidth, kAlertHeight);
+    CGRect afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - kAlertWidth) * 0.5, CGRectGetHeight(topVC.view.bounds), kAlertWidth, kAlertHeight + newHeight);
     
 //    //带动画
 //    [UIView animateWithDuration:0.35f delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
@@ -193,10 +231,12 @@
         self.backImageView.backgroundColor = [UIColor blackColor];
         self.backImageView.alpha = 0.6f;
         self.backImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(resignTextViewFirstResponder:)];
+        [_backImageView addGestureRecognizer:tap];
     }
     [topVC.view addSubview:self.backImageView];
     self.transform = CGAffineTransformMakeRotation(-M_1_PI / 2);
-    CGRect afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - kAlertWidth) * 0.5, (CGRectGetHeight(topVC.view.bounds) - kAlertHeight) * 0.5, kAlertWidth, kAlertHeight);
+    CGRect afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - kAlertWidth) * 0.5, (CGRectGetHeight(topVC.view.bounds) - kAlertHeight) * 0.5, kAlertWidth, kAlertHeight + newHeight);
     
     //无动画
     self.transform = CGAffineTransformMakeRotation(0);
@@ -211,6 +251,16 @@
     
     
     [super willMoveToSuperview:newSuperview];
+}
+
+-(void)resignTextViewFirstResponder:(UIGestureRecognizer *)gesture
+{
+   [self.inputTextView resignFirstResponder];
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.inputTextView resignFirstResponder];
 }
 
 @end

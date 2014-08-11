@@ -22,5 +22,7 @@ typedef enum{
 
 @property(nonatomic,retain)NSString *chatWithUser;//交流用户id
 @property(nonatomic,retain)NSString *chatWithUserName;//交流用户Name
+@property(nonatomic,assign)BOOL isShare;//是否来自分享
+@property(nonatomic,retain)NSDictionary *shareContent;//分享的内容  {@"text",@"infoId"}
 
 @end

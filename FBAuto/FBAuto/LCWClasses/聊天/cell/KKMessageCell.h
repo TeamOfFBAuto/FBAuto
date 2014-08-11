@@ -4,7 +4,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FBChatHeader.h"
 #import "OHAttributedLabel.h"
 
 @interface KKMessageCell : UITableViewCell
