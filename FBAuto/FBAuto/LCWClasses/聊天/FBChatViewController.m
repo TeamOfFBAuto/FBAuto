@@ -779,8 +779,12 @@
         [dictionary setObject:[NSNumber numberWithBool:YES] forKey:MESSAGE_MESSAGE_LOCAL];
     }
     
+    if (self.shareContent) {
+        [dictionary setObject:[self.shareContent objectForKey:@"infoId"] forKey:MESSAGE_SHATE_LINK];
+    }
+    
     //分享链接
-    [dictionary setObject:[self.shareContent objectForKey:@"infoId"] forKey:MESSAGE_SHATE_LINK];
+    
     
     [messages addObject:dictionary];
     

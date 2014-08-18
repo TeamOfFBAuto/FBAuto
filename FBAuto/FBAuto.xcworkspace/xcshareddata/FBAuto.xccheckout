@@ -5,20 +5,19 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>EF1A5EA0-1A0D-4E9A-B2DC-AD51BD2CBF28</string>
-	<string>16A4817E-6A80-4FC1-9FEB-E5600B8DDDE7</string>
+	<string>8170E2A3-5429-467C-9BC0-868BE76CBF2F</string>
 	<key>IDESourceControlProjectName</key>
 	<string>FBAuto</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>C7EAB9F9-42DE-4073-90C4-84D3AB50DFAC</key>
+		<key>B2460EBC-AC8C-4058-98B7-03C69DAF5A33</key>
 		<string>https://github.com/TeamOfFBAuto/FBAuto.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>FBAuto/FBAuto.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>C7EAB9F9-42DE-4073-90C4-84D3AB50DFAC</key>
+		<key>B2460EBC-AC8C-4058-98B7-03C69DAF5A33</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -26,14 +25,14 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>C7EAB9F9-42DE-4073-90C4-84D3AB50DFAC</string>
+	<string>B2460EBC-AC8C-4058-98B7-03C69DAF5A33</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>C7EAB9F9-42DE-4073-90C4-84D3AB50DFAC</string>
+			<string>B2460EBC-AC8C-4058-98B7-03C69DAF5A33</string>
 			<key>IDESourceControlWCCName</key>
 			<string>FBAuto</string>
 		</dict>
