@@ -927,14 +927,17 @@
     [uploadImageRequest setResponseEncoding:NSUTF8StringEncoding];
     [uploadImageRequest setPostValue:[GMAPI getAuthkey] forKey:@"authkey"];//参数一 authkey
     [uploadImageRequest setPostFormat:ASIMultipartFormDataPostFormat];
+    [uploadImageRequest setTimeOutSeconds:30];
     
-    NSData *imageData=UIImageJPEGRepresentation(eImage,0.5);
+    UIImage *new = [SzkAPI scaleToSizeWithImage:eImage size:CGSizeMake(eImage.size.width>1024?1024:eImage.size.width,eImage.size.width>1024?eImage.size.height*1024/eImage.size.width:eImage.size.height)];
+    
+    NSData *imageData=UIImageJPEGRepresentation(new, 0.5);
     
     UIImage * newImage = [UIImage imageWithData:imageData];
     
     NSString *photoName=[NSString stringWithFormat:@"FBAuto_xmpp.png"];
     NSLog(@"photoName:%@",photoName);
-    NSLog(@"图片大小:%d",(int)[imageData length]/1024/1024);
+    NSLog(@"图片大小:%f",(float)[imageData length]/1024/1024);
     
     [uploadImageRequest addData:imageData withFileName:photoName andContentType:@"image/png" forKey:@"talkpic"];
     
@@ -999,7 +1002,7 @@
     //失败
     [uploadImageRequest setFailedBlock:^{
         
-        NSLog(@"uploadFail %@",weakRequst.responseString);
+        NSLog(@"uploadFail %@ erro %@",weakRequst.responseString,uploadImageRequest.responseStatusMessage);
         
         [weakChatV stopLoadingWithFailBlock:^(FBChatImage *chatImageView) {
             
@@ -1277,29 +1280,29 @@
         //压缩图片 不展示原图
         UIImage *originImage = [info objectForKey:UIImagePickerControllerOriginalImage];
         
-        UIImage *scaleImage = [self scaleImage:originImage toScale:0.5];
+//        UIImage *scaleImage = [self scaleImage:originImage toScale:0.5];
         
-        NSData *data;
-        
-        //以下这两步都是比较耗时的操作，最好开一个HUD提示用户，这样体验会好些，不至于阻塞界面
-        if (UIImagePNGRepresentation(scaleImage) == nil) {
-            //将图片转换为JPG格式的二进制数据
-            data = UIImageJPEGRepresentation(scaleImage, 0.8);
-        } else {
-            //将图片转换为PNG格式的二进制数据
-            data = UIImagePNGRepresentation(scaleImage);
-        }
-        
-        //将二进制数据生成UIImage
-        UIImage *image = [UIImage imageWithData:data];
+//        NSData *data;
+//        
+//        //以下这两步都是比较耗时的操作，最好开一个HUD提示用户，这样体验会好些，不至于阻塞界面
+//        if (UIImagePNGRepresentation(scaleImage) == nil) {
+//            //将图片转换为JPG格式的二进制数据
+//            data = UIImageJPEGRepresentation(scaleImage, 0.5);
+//        } else {
+//            //将图片转换为PNG格式的二进制数据
+//            data = UIImagePNGRepresentation(scaleImage);
+//        }
+//        
+//        //将二进制数据生成UIImage
+//        UIImage *image = [UIImage imageWithData:data];
         
         //先上传图片
         
-        [self localSendMessage:Nil MessageType:Message_Image image:image];
+        [self localSendMessage:Nil MessageType:Message_Image image:originImage];
         
         //再实际发送
 
-        [self postImages:image];
+        [self postImages:originImage];
         
         [picker dismissViewControllerAnimated:NO completion:^{
             

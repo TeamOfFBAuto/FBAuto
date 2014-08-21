@@ -153,7 +153,7 @@
 {
     CGFloat aHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
     self.statusBarBack = [[UIWindow alloc]initWithFrame:CGRectMake(200, 0, 80, aHeight)];
-    _statusBarBack.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"NavigationBG"]];
+    _statusBarBack.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"daohanglan_bg_640_88"]];
     [_statusBarBack setWindowLevel:UIWindowLevelStatusBar+1];
     [_statusBarBack makeKeyAndVisible];
     
