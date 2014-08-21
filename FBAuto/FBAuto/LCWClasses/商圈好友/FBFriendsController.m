@@ -42,7 +42,7 @@
     
     self.titleLabel.text = @"我的好友";
     
-    self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, self.view.height - 44 - 20) style:UITableViewStylePlain];
+    _table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, self.view.height - 44 - 20) style:UITableViewStylePlain];
     _table.delegate = self;
     _table.dataSource = self;
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -55,7 +55,6 @@
     [self getFriendlist];
     
     xmppServer = [XMPPServer shareInstance];
-    xmppServer.chatDelegate = self;
     
 }
 
@@ -65,12 +64,21 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc
+{
+    NSLog(@"--------%s",__FUNCTION__);
+    _table.dataSource = nil;
+    _table.delegate = nil;
+    _table = nil;
+    firstLetterArr = nil;
+    friendsDic = nil;
+}
+
 #pragma - mark 网络请求
 
 - (void)getFriendlist
 {
-    __block typeof (FBFriendsController *)weakSelf = self;
-    
+    __weak typeof (self)weakSelf = self;
     
     LCWTools *tools = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_LIST,[GMAPI getUid]]isPost:NO postData:nil];
     
@@ -126,8 +134,8 @@
             return result==NSOrderedDescending;
         }];
     firstLetterArr = arr;
-    
-    [self.table reloadData];
+
+    [_table reloadData];
 }
 
 #pragma - mark 创建headerView
@@ -225,7 +233,7 @@
     NSArray *arr = [friendsDic objectForKey:[firstLetterArr objectAtIndex:indexPath.section]];
     FBFriendModel *aModel = [arr objectAtIndex:indexPath.row];
     
-    __block typeof(FBFriendsController *)weakSelf = self;
+    __weak typeof(self)weakSelf = self;
     
     [cell getCellData:aModel cellBlock:^(NSString *friendInfo,int tag) {
         
@@ -283,7 +291,8 @@
     DXAlertView *alert = [[DXAlertView alloc]initWithTitle:nil contentText:[self.shareContent objectForKey:@"text"] leftButtonTitle:@"取消" rightButtonTitle:@"分享" isInput:YES];
     [alert show];
     
-    __block typeof(DXAlertView *)weakAlert = alert;
+    __weak typeof(DXAlertView *)weakAlert = alert;
+    __weak typeof(self)weakSelf = self;
     alert.leftBlock = ^(){
         NSLog(@"取消");
     };
@@ -292,9 +301,9 @@
         [xmppServer sendMessage:weakAlert.inputTextView.text toUser:user shareLink:[self.shareContent objectForKey:@"infoId"] messageBlock:^(NSDictionary *params, int tag) {
             
             if (tag == 1) {
-                [LCWTools showMBProgressWithText:@"分享成功" addToView:self.view];
+                [LCWTools showMBProgressWithText:@"分享成功" addToView:weakSelf.view];
             }else{
-                [LCWTools showMBProgressWithText:@"分享失败" addToView:self.view];
+                [LCWTools showMBProgressWithText:@"分享失败" addToView:weakSelf.view];
             }
             
         }];
