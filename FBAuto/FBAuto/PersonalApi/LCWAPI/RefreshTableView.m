@@ -27,7 +27,13 @@
     }
     return self;
 }
-
+- (void)dealloc
+{
+    NSLog(@"%@ dealloc",NSStringFromClass([self class]));
+    self.delegate = nil;
+    _refreshHeaderView.delegate = nil;
+    _refreshHeaderView = nil;
+}
 
 -(void)createHeaderView
 {
@@ -217,12 +223,6 @@
     }
     return cell;
 }
-
-- (void)dealloc
-{
-    
-}
-
 
 #pragma - mark 创建所需label 和 UIActivityIndicatorView
 

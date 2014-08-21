@@ -34,6 +34,7 @@
     _tableView.refreshDelegate = nil;
     _tableView.dataSource = nil;
     _tableView.delegate = nil;
+    _tableView = nil;
 }
 
 - (void)viewDidLoad
