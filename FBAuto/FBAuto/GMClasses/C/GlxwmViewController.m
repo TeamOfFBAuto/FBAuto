@@ -58,7 +58,13 @@
     [self.view addSubview:chuanzhenLabel];
     
     //地图
-    UIImageView *dituImv = [[UIImageView alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(chuanzhenLabel.frame)+22, 290, 220)];
+    UIImageView *dituImv = [[UIImageView alloc]init];
+    if (iPhone5) {
+        dituImv.frame = CGRectMake(15, CGRectGetMaxY(chuanzhenLabel.frame)+22, 290, 220);
+    }else{
+        dituImv.frame = CGRectMake(15, CGRectGetMaxY(chuanzhenLabel.frame)+10, 290, 200);
+    }
+    
     [dituImv setImage:[UIImage imageNamed:@"ditu572_440.png"]];
     [self.view addSubview:dituImv];
     
