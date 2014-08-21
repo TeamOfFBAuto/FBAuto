@@ -29,6 +29,9 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
+    
+    self.titleLabel.text = @"消息设置";
+    
     //框
     UIView *kuang = [[UIView alloc]initWithFrame:CGRectMake(10, 15, 300, 45)];
     kuang.layer.borderWidth = 0.5;

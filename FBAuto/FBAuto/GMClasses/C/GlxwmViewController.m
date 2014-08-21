@@ -25,7 +25,7 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     
-    
+    self.titleLabel.text = @"联系我们";
     
     //姓名
     UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 19, 285, 15)];
@@ -59,7 +59,7 @@
     
     //地图
     UIImageView *dituImv = [[UIImageView alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(chuanzhenLabel.frame)+22, 290, 220)];
-    dituImv.backgroundColor = [UIColor redColor];
+    [dituImv setImage:[UIImage imageNamed:@"ditu572_440.png"]];
     [self.view addSubview:dituImv];
     
     NSLog(@"%s",__FUNCTION__);

@@ -368,6 +368,7 @@
 		E31F53951974044A00540124 /* MLImageCrop.m in Sources */ = {isa = PBXBuildFile; fileRef = E31F53941974044A00540124 /* MLImageCrop.m */; };
 		E31F5398197405DC00540124 /* GlocalUserImage.m in Sources */ = {isa = PBXBuildFile; fileRef = E31F5397197405DC00540124 /* GlocalUserImage.m */; };
 		E3219BD91982431700EA026D /* GuserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3219BD81982431700EA026D /* GuserModel.m */; };
+		E33BACD119A5CFA300401587 /* ditu572_440@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E33BACD019A5CFA300401587 /* ditu572_440@2x.png */; };
 		E33ECB08196D230A00DDD72D /* GptzTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E33ECB07196D230A00DDD72D /* GptzTableViewCell.m */; };
 		E33ECB0C196D25CD00DDD72D /* GTimeSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = E33ECB0B196D25CD00DDD72D /* GTimeSwitch.m */; };
 		E33ECB56196D4D1600DDD72D /* GmarkTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E33ECB55196D4D1600DDD72D /* GmarkTableViewCell.m */; };
@@ -889,6 +890,7 @@
 		E31F5397197405DC00540124 /* GlocalUserImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlocalUserImage.m; sourceTree = "<group>"; };
 		E3219BD71982431700EA026D /* GuserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuserModel.h; sourceTree = "<group>"; };
 		E3219BD81982431700EA026D /* GuserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuserModel.m; sourceTree = "<group>"; };
+		E33BACD019A5CFA300401587 /* ditu572_440@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ditu572_440@2x.png"; sourceTree = "<group>"; };
 		E33ECB06196D230A00DDD72D /* GptzTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GptzTableViewCell.h; sourceTree = "<group>"; };
 		E33ECB07196D230A00DDD72D /* GptzTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GptzTableViewCell.m; sourceTree = "<group>"; };
 		E33ECB0A196D25CD00DDD72D /* GTimeSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTimeSwitch.h; sourceTree = "<group>"; };
@@ -2153,6 +2155,7 @@
 		E362357319657588003B23CC /* M */ = {
 			isa = PBXGroup;
 			children = (
+				E33BACD019A5CFA300401587 /* ditu572_440@2x.png */,
 				E3134ED9198A32B500A8958E /* elogo440_120@2x.png */,
 				E37D2C991974CFA500EBA627 /* shanchu_button_600_100@2x.png */,
 				E37D2C9A1974CFA500EBA627 /* xuanze_down_44_44@2x.png */,
@@ -2398,6 +2401,7 @@
 				138B4AA01966A4BD00B974A5 /* face11.png in Resources */,
 				138B4ACE1966A4BD00B974A5 /* face53.png in Resources */,
 				138B4ACB1966A4BD00B974A5 /* face50.png in Resources */,
+				E33BACD119A5CFA300401587 /* ditu572_440@2x.png in Resources */,
 				138B4AE71966A4BD00B974A5 /* face76.png in Resources */,
 				13D5DFFC1961758E00804835 /* jiantou_down18_10@2x.png in Resources */,
 				13D5DFE51961758E00804835 /* fabu_up46_46@2x.png in Resources */,

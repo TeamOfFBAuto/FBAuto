@@ -14,6 +14,9 @@
 #import "GlocalUserImage.h"//缓存沙盒类
 
 
+#import "FBCityData.h"//地区转换
+
+
 
 
 
@@ -90,10 +93,34 @@
         //地区
         NSString *province = [NSString stringWithFormat:@"%@",[dataInfo objectForKey:@"province"]];
         NSString *city = [NSString stringWithFormat:@"%@",[dataInfo objectForKey:@"city"]];
-        self.area = [NSString stringWithFormat:@"%@",[province stringByAppendingString:city]];
+        
+        NSInteger sheng;
+        NSInteger shi;
+        NSString *p = nil;//省
+        NSString *s = nil;//市
+        if (province.length>0) {
+            sheng = [province integerValue];
+            p = [FBCityData cityNameForId:sheng];
+        }
+        if (city.length>0) {
+            shi = [city integerValue];
+            s = [FBCityData cityNameForId:shi];
+        }
+        
+        if (p != nil && s != nil) {
+            self.area = [NSString stringWithFormat:@"%@%@",p,s];
+        }
+        if (p == nil) {
+            self.area = [NSString stringWithFormat:@"%@",s];
+        }
+        if (s == nil) {
+            self.area = [NSString stringWithFormat:@"%@",p];
+        }
+        
         
         //地址
         self.address = [NSString stringWithFormat:@"%@",[dataInfo objectForKey:@"address"]];
+        
         NSLog(@"%@",self.address);
         
         //简介
