@@ -32,6 +32,10 @@
 - (void)dealloc
 {
     NSLog(@"%s",__FUNCTION__);
+    
+    _tableview.refreshDelegate = nil;
+    _tableview.dataSource = nil;
+    _tableview.delegate = nil;
 }
 
 //-(void)viewWillAppear:(BOOL)animated{

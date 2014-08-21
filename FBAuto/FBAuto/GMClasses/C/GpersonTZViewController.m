@@ -100,54 +100,6 @@
             }
     }];
     
-    
-    
-    
-    
-//    NSURL *url = [NSURL URLWithString:api];
-//
-//    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-//    
-//    __weak typeof (self)bself = self;
-//    
-//    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-//        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-//        
-//        if (data.length == 0) {
-//            return;
-//        }
-//        NSDictionary *datainfo = [dic objectForKey:@"datainfo"];
-//        
-//        NSArray *dataArray = [datainfo objectForKey:@"data"];
-//        
-//        
-//        
-//        if (dataArray.count < 10) {
-//            
-//            _tableView.isHaveMoreData = NO;
-//        }else
-//        {
-//            _tableView.isHaveMoreData = YES;
-//        }
-//        
-//        
-//        [bself reloadData:dataArray isReload:_tableView.isReloadData];
-//        
-//        
-//        
-////        if (!data.length) {
-////            if (_tableView.isReloadData) {
-////                
-////                _page --;
-////                
-////                [_tableView performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
-////            }
-////        }
-//        
-////        [_tableView reloadData];
-//        
-//    }];
-    
 }
 
 
