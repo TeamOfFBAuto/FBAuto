@@ -97,7 +97,7 @@
 - (void)getMayknowFriendlistNameArr:(NSArray *)nameArr phoneArr:(NSArray *)phoneArr
 {
     
-    __block typeof (FBMayKnowFriendsController *)weakSelf = self;
+    __weak typeof (FBMayKnowFriendsController *)weakSelf = self;
     
     NSString *phoneString = [phoneArr componentsJoinedByString:@","];
     NSString *nameString = [nameArr componentsJoinedByString:@","];
@@ -171,7 +171,7 @@
 {
     NSLog(@"provinceId %@",provinceId);
     
-    __block typeof (FBMayKnowFriendsController *)weakSelf = self;
+    __weak typeof (FBMayKnowFriendsController *)weakSelf = self;
     
     
     LCWTools *tools = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_AREA,[GMAPI getAuthkey],provinceId,cityId]isPost:NO postData:nil];
@@ -214,10 +214,7 @@
 - (void)addFriend:(NSString *)friendId
 {
     NSLog(@"provinceId %@",friendId);
-    
-//    __block typeof (FBMayKnowFriendsController *)weakSelf = self;
-    
-    
+
     LCWTools *tools = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_ADD,[GMAPI getAuthkey],friendId]isPost:NO postData:nil];
     
     [tools requestCompletion:^(NSDictionary *result, NSError *erro) {

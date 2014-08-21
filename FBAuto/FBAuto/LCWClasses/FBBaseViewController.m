@@ -84,6 +84,11 @@
     }
 }
 
+- (void)dealloc
+{
+    NSLog(@"--------%@",NSStringFromClass([self class]));
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

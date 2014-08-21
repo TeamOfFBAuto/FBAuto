@@ -665,10 +665,10 @@
     CGSize scrollSize = photosScroll.contentSize;
     CGFloat scrollSizeWidth = scrollSize.width;
     
-    __block typeof (UIScrollView *)weakScroll = photosScroll;
-    __block typeof (NSMutableArray *)weakPhotoArray = photosArray;
-    __block typeof (NSMutableArray *)weakPhotoViewArray = photoViewArray;
-    __block typeof (SendCarViewController *)weakSelf = self;
+    __weak typeof (UIScrollView *)weakScroll = photosScroll;
+    __weak typeof (NSMutableArray *)weakPhotoArray = photosArray;
+    __weak typeof (NSMutableArray *)weakPhotoViewArray = photoViewArray;
+    __weak typeof (SendCarViewController *)weakSelf = self;
     
     
     PhotoImageView *newImageV= [[PhotoImageView alloc]initWithFrame:CGRectMake(scrollSizeWidth + 15,0, 90, 90) image:aImage deleteBlock:^(UIImageView *deleteImageView, UIImage *deleteImage) {

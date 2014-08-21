@@ -147,8 +147,7 @@
 {
     LCWTools *tools = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_SEARCH,[GMAPI getAuthkey],keyWord] isPost:NO postData:nil];
     
-    __block typeof (FBSearchFriendsController *)weakSelf = self;
-    
+    __weak typeof (self)weakSelf = self;
     
     [tools requestCompletion:^(NSDictionary *result, NSError *erro){
         
@@ -327,8 +326,7 @@
 {
     NSLog(@"provinceId %@",friendId);
     
-    //    __block typeof (FBMayKnowFriendsController *)weakSelf = self;
-    
+    __weak typeof (self)weakSelf = self;
     
     LCWTools *tools = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_ADD,[GMAPI getAuthkey],friendId]isPost:NO postData:nil];
     
@@ -349,7 +347,7 @@
         }
     }failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"failDic %@",failDic);
-        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
+        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:weakSelf.view];
     }];
 }
 

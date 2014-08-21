@@ -209,7 +209,7 @@
     [alert show];
     
     __weak typeof(self)weakSelf=self;
-    __block typeof(DXAlertView *)weakAlert = alert;
+    __weak typeof(DXAlertView *)weakAlert = alert;
     alert.leftBlock = ^(){
         NSLog(@"取消");
         
@@ -638,7 +638,7 @@
     inputBar.resignFirstResponderWhenSend = NO;
     
     
-    __block typeof(FBChatViewController *)weakSelf = self;
+    __weak typeof(self)weakSelf = self;
     [inputBar setToolBlock:^(int aTag) {
         
         switch (aTag) {

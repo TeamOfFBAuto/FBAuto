@@ -136,7 +136,7 @@
         [self insertSubview:colorTable belowSubview:secondTable];
     }
     
-    __block typeof (Menu_Advanced *)weakSelf = self;
+    __weak typeof (Menu_Advanced *)weakSelf = self;
     
     NSString * path = [[NSBundle mainBundle] pathForResource:@"city.plist" ofType:nil];
     
