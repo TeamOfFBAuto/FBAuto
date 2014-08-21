@@ -134,8 +134,6 @@
         }];
     }
     
-    
-    
     messages = [NSMutableArray array];
     labelArr = [NSMutableArray array];
     rowHeights = [NSMutableArray array];
@@ -161,14 +159,28 @@
     [defalts synchronize];
     
     if (self.isShare) {
-        [self share];
-    }else
-    {
-        
+        [self goToShare];
     }
     
     [self getMessageData];
 }
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc
+{
+    NSLog(@" %s ",__FUNCTION__);
+    xmppServer.chatDelegate = nil;
+    xmppServer.messageDelegate = nil;
+
+}
+
+#pragma mark - 数据解析
+#pragma mark
 
 - (void)getMessageData
 {
@@ -201,28 +213,6 @@
     }
 }
 
-#pragma mark - 分享操作
-
-- (void)share
-{
-    DXAlertView *alert = [[DXAlertView alloc]initWithTitle:nil contentText:[self.shareContent objectForKey:@"text"] leftButtonTitle:@"取消" rightButtonTitle:@"分享" isInput:YES];
-    [alert show];
-    
-    __weak typeof(self)weakSelf=self;
-    __weak typeof(DXAlertView *)weakAlert = alert;
-    alert.leftBlock = ^(){
-        NSLog(@"取消");
-        
-        [self.navigationController popViewControllerAnimated:YES];
-    };
-    alert.rightBlock = ^(){
-        NSLog(@"确定");
-        
-        [weakSelf xmppAuthenticatedWithMessage:weakAlert.inputTextView.text MessageType:Message_Normal image:nil];
-     };
-
-}
-
 #pragma - mark 聊天历史记录
 
 - (void)loadarchivemsg:(int)offset
@@ -247,7 +237,7 @@
     
     NSString *chatWithJid = [NSString stringWithFormat:@"%@@%@",self.chatWithUser,server];
     NSString *currentJid = [NSString stringWithFormat:@"%@@%@",userName,server];
-
+    
     //bareJidStr 代表与谁聊天
     //body 内容
     //streamBareJidStr 当前用户
@@ -255,7 +245,7 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(bareJidStr like[cd] %@ )&& (streamBareJidStr like[cd] %@)",chatWithJid,currentJid];
     
     [request setPredicate:predicate];
-
+    
     [request setEntity:entityDescription];
     NSError *error;
     NSArray *messages_arc = [moc executeFetchRequest:request error:&error];
@@ -302,7 +292,7 @@
                 
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                 NSString *userName = [defaults objectForKey:XMPP_USERID];
-
+                
                 if ([from hasPrefix:userName]) {
                     from = @"you";
                 }
@@ -355,33 +345,267 @@
     if (messages.count > 1) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:messages.count - 1 inSection:0];;
         [self.table scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-
+        
     }
 }
+#pragma - mark 缩放图片
 
-#pragma - mark  click事件
-
-- (void)clickToHideKeyboard
+-(UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize
 {
-    [inputBar resignFirstResponder];
+    UIGraphicsBeginImageContext(CGSizeMake(image.size.width*scaleSize,image.size.height*scaleSize));
+    [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height *scaleSize)];
+    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;
 }
 
-- (void)clickToAdd:(UIButton *)btn
+
+#pragma mark - 网络请求
+#pragma mark
+
+#pragma - mark 获取用户在线状态
+
+- (NSString *)requestUserState:(NSString *)userId
 {
-    FBAddFriendsController *add = [[FBAddFriendsController alloc]init];
-    [self.navigationController pushViewController:add animated:YES];
+    //http://60.18.147.4:9090/plugins/presence/status?jid=18612389982@60.18.147.4&type=xml
+    
+    NSString *server = [[NSUserDefaults standardUserDefaults]objectForKey:XMPP_SERVER];
+    
+    NSString *url = [NSString stringWithFormat:@"http://%@:9090/plugins/presence/status?jid=%@@%@&type=xml",server,userId,server];
+    NSString *newUrl = [url stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL *urlS = [NSURL URLWithString:newUrl];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urlS cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:2];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        
+        if (data.length > 0) {
+            
+            NSError *erro;
+            GDataXMLDocument *document = [[GDataXMLDocument alloc]initWithData:data error:&erro];
+            GDataXMLElement *rootElement = [document rootElement];
+            
+            NSString *rootString = [NSString stringWithFormat:@"%@",rootElement];
+            NSString *str = [rootElement stringValue];
+            
+            if ([rootString rangeOfString:@"erro"].length > 0) {
+                
+                NSLog(@"说明有错误");
+                
+                userState = @"unavailable";
+                
+                sendOffline = YES;
+                
+            }else if (str && [str isEqualToString:@"Unavailable"]) {
+                
+                //离线状态
+                
+                NSLog(@"离线");
+                
+                userState = @"unavailable";
+                sendOffline = YES;
+                
+            }else
+            {
+                NSLog(@"在线");
+                
+                userState = @"vailable";
+                
+                sendOffline = NO;
+            }
+            
+            
+            //{type:1 name:presence xml:"<presence type="unavailable" from="13301072337@60.18.147.4"><status>Unavailable</status></presence>
+            
+            //{type:1 name:presence xml:"<presence from="13301072337@60.18.147.4/714c0af9" to="13301072337@60.18.147.4/714c0af9"/>"}
+            
+            NSLog(@"erro %@ rootElement %@ str %@",erro,rootElement,str);
+            
+        }
+    }];
+    
+    return @"no";
 }
 
-- (void)clickToHome:(UIButton *)btn
+/**
+ *  发送离线消息时通知服务端
+ */
+- (void)sendOffline
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    NSString *url = [NSString stringWithFormat:FBAUTO_CHAT_OFFLINE,self.chatUserId,@"1",[GMAPI getUid],[GMAPI getUserPhoneNumber]];
+    LCWTools *tool = [[LCWTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result %@ erro %@",result,erro);
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failDic %@ erro %@",failDic,erro);
+        
+    }];
 }
 
-- (void)didReceiveMemoryWarning
+#pragma - mark XMPP发送消息
+
+- (void)xmppSendMessage:(NSString *)messageText
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
+    if (sendOffline) {
+        
+        [self sendOffline];
+        
+        NSLog(@"需要sendOffline");
+        
+    }else
+    {
+        NSLog(@"不需要sendOffline");
+    }
+    
+    
+    __weak typeof(self)weakSelf = self;
+    
+    [xmppServer sendMessage:messageText toUser:self.chatWithUser shareLink:[self.shareContent objectForKey:@"infoId"] messageBlock:^(NSDictionary *params, int tag) {
+        
+        if (tag == 1) {
+            
+            NSLog(@"发送成功");
+            
+            if (weakSelf.isShare) {
+                
+                DXAlertView *alert = [[DXAlertView alloc]initWithTitle:@"分享成功" contentText:nil leftButtonTitle:@"返回" rightButtonTitle:@"留在此页" isInput:NO];
+                [alert show];
+                
+                alert.leftBlock = ^(){
+                    NSLog(@"返回");
+                    
+                    [weakSelf.navigationController popViewControllerAnimated:YES];
+                };
+                alert.rightBlock = ^(){
+                    NSLog(@"确定");
+                    
+                };
+            }
+            
+        }else{
+            
+            NSLog(@"发送失败");
+        }
+        
+    }];
 }
+
+#pragma - mark 图片上传
+
+- (void)postImages:(UIImage *)eImage
+{
+    
+    FBChatImage *chatImage = nil;
+    
+    id aView = [labelArr lastObject];
+    
+    if ([aView isKindOfClass:[FBChatImage class]]) {
+        
+        chatImage = aView;
+    }
+    
+    [chatImage startLoading];//开始菊花
+    
+    NSString* url = [NSString stringWithFormat:FBAUTO_CHAT_TALK_PIC];
+    
+    ASIFormDataRequest *uploadImageRequest= [ ASIFormDataRequest requestWithURL : [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] ]];
+    [uploadImageRequest setStringEncoding:NSUTF8StringEncoding];
+    [uploadImageRequest setRequestMethod:@"POST"];
+    [uploadImageRequest setResponseEncoding:NSUTF8StringEncoding];
+    [uploadImageRequest setPostValue:[GMAPI getAuthkey] forKey:@"authkey"];//参数一 authkey
+    [uploadImageRequest setPostFormat:ASIMultipartFormDataPostFormat];
+    [uploadImageRequest setTimeOutSeconds:30];
+    
+    UIImage *new = [SzkAPI scaleToSizeWithImage:eImage size:CGSizeMake(eImage.size.width>1024?1024:eImage.size.width,eImage.size.width>1024?eImage.size.height*1024/eImage.size.width:eImage.size.height)];
+    
+    NSData *imageData=UIImageJPEGRepresentation(new, 0.5);
+    
+    UIImage * newImage = [UIImage imageWithData:imageData];
+    
+    NSString *photoName=[NSString stringWithFormat:@"FBAuto_xmpp.png"];
+    NSLog(@"photoName:%@",photoName);
+    NSLog(@"图片大小:%f",(float)[imageData length]/1024/1024);
+    
+    [uploadImageRequest addData:imageData withFileName:photoName andContentType:@"image/png" forKey:@"talkpic"];
+    
+    [uploadImageRequest setDelegate : self ];
+    
+    [uploadImageRequest startAsynchronous];
+    
+    __weak typeof(ASIFormDataRequest *)weakRequst = uploadImageRequest;
+    
+    __weak typeof (FBChatImage *)weakChatV = chatImage;
+    
+    __weak typeof(self)weakSelf = self;
+    //完成
+    [uploadImageRequest setCompletionBlock:^{
+        
+        NSDictionary *result = [NSJSONSerialization JSONObjectWithData:weakRequst.responseData options:0 error:nil];
+        
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            
+            int erroCode = [[result objectForKey:@"errcode"]intValue];
+            NSString *erroInfo = [result objectForKey:@"errinfo"];
+            
+            if (erroCode != 0) {
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:erroInfo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [alert show];
+                
+                return ;
+            }
+            
+            NSArray *dataInfo = [result objectForKey:@"datainfo"];
+            NSMutableArray *imageIdArr = [NSMutableArray arrayWithCapacity:dataInfo.count];
+            
+            NSString *imageLink = @"";
+            
+            for (NSDictionary *imageDic in dataInfo) {
+                NSString *imageId = [imageDic objectForKey:@"imageid"];
+                imageLink = [imageDic objectForKey:@"image"];
+                [imageIdArr addObject:imageId];
+            }
+            
+            [weakChatV stopLoadingWithFailBlock:nil];//停止菊花
+            [weakChatV sd_setImageWithURL:[NSURL URLWithString:imageLink] placeholderImage:[UIImage imageNamed:@"detail_test"]];
+            
+            
+            CGFloat imageWidth = newImage.size.width;
+            CGFloat imageHeight = newImage.size.height;
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                
+                
+                NSString *sendImage = [NSString stringWithFormat:@"<img height=\"%f\" width=\"%f\" src=\"%@\"/>>",imageHeight,imageWidth,imageLink];
+                NSLog(@"sendImage %@",sendImage);
+                
+                [weakSelf xmppSendMessage:sendImage];
+                
+            });
+        }
+        
+        
+    }];
+    
+    //失败
+    [uploadImageRequest setFailedBlock:^{
+        
+        NSLog(@"uploadFail %@ erro %@",weakRequst.responseString,weakRequst.responseStatusMessage);
+        
+        [weakChatV stopLoadingWithFailBlock:^(FBChatImage *chatImageView) {
+            
+            [weakSelf postImages:eImage];
+            
+        }];//停止菊花
+    }];
+    
+}
+
+
+#pragma mark - 视图创建
+#pragma mark
 
 #pragma - mark 创建 richLabel 和 imageView
 
@@ -395,7 +619,7 @@
  */
 - (CGFloat)createRichLabelWithMessage:(NSDictionary *)dic isInsert:(BOOL)isInsert
 {
-//    MESSAGE_TYPE type = [[dic objectForKey:@"type"]integerValue];
+    //    MESSAGE_TYPE type = [[dic objectForKey:@"type"]integerValue];
     
     //本地发送 图片
     
@@ -412,13 +636,13 @@
             [labelArr insertObject:aImageView atIndex:0];
         }else
         {
-           [labelArr addObject:aImageView];
+            [labelArr addObject:aImageView];
         }
         
         [aImageView showBigImage:^(UIImageView *imageView) {
             
             [SJAvatarBrowser showImage:imageView];
-
+            
         }];
         
         //最多高度 200,最大宽度 200
@@ -431,13 +655,13 @@
         }else
         {
             [rowHeights addObject:heightNum];
-        
+            
         }
         
         
         return [heightNum floatValue];
     }
-
+    
     //网络获取 图片
     
     NSString *msg = [dic objectForKey:MESSAGE_MSG];
@@ -466,7 +690,7 @@
             
         }];
         
-         __weak typeof (FBChatImage *)weakChatV = aImageView;
+        __weak typeof (FBChatImage *)weakChatV = aImageView;
         
         [aImageView startLoading];
         
@@ -512,7 +736,7 @@
     }
     
     [self drawImage:label];
-//    [rowHeights addObject:heightNum];
+    //    [rowHeights addObject:heightNum];
     
     if (isInsert) {
         [rowHeights insertObject:heightNum atIndex:0];
@@ -554,7 +778,7 @@
             [label addCustomLink:[NSURL URLWithString:httpStr] inRange:[string rangeOfString:httpStr]];
         }
     }
-        
+    
     label.delegate = self;
     CGRect labelRect = label.frame;
     labelRect.size.width = [label sizeThatFits:CGSizeMake(200, CGFLOAT_MAX)].width;
@@ -578,52 +802,6 @@
         [label addSubview:imageView];//label内添加图片层
         [label bringSubviewToFront:imageView];
     }
-}
-
-
-#pragma - mark OHAttributedLabelDelegate
-
--(BOOL)attributedLabel:(OHAttributedLabel*)attributedLabel shouldFollowLink:(NSTextCheckingResult*)linkInfo
-{
-    NSString *requestString = [linkInfo.URL absoluteString];
-    NSLog(@"%@",requestString);
-    
-    NSString *info = [attributedLabel.params objectForKey:MESSAGE_SHATE_LINK];
-    NSArray *params = [info componentsSeparatedByString:@","];
-    if (params.count > 1) {
-        
-        NSString *infoId = [params objectAtIndex:0];
-        NSString *carId = [params objectAtIndex:1];
-        
-        NSString *text = [attributedLabel.attributedText string];
-        if([text hasPrefix:@"车源:"] || [text rangeOfString:@"车源"].length > 0)
-        {
-            NSLog(@"车源");
-            FBDetail2Controller *detail = [[FBDetail2Controller alloc]init];
-            detail.style = Navigation_Special;
-            detail.navigationTitle = @"详情";
-            detail.infoId = infoId;
-            detail.carId = carId;
-            detail.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:detail animated:YES];
-            
-        }else
-        {
-            NSLog(@"寻车");
-            FBFindCarDetailController *detail = [[FBFindCarDetailController alloc]init];
-            detail.style = Navigation_Special;
-            detail.navigationTitle = @"详情";
-            detail.infoId = info;
-            detail.carId = carId;
-            detail.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:detail animated:YES];
-        }
-    }
-    
-    if ([[UIApplication sharedApplication]canOpenURL:linkInfo.URL]) {
-        [[UIApplication sharedApplication]openURL:linkInfo.URL];
-    }
-    return NO;
 }
 
 
@@ -729,129 +907,11 @@
 }
 
 
-#pragma - mark 本地发送信息处理
 
-//发送图片的时候,aImage不能为空
+#pragma mark - 事件处理
+#pragma mark
 
-- (void)localSendMessage:(NSString *)message MessageType:(MESSAGE_TYPE)type image:(UIImage *)aImage
-{
-    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-    
-    if (message) {
-        [dictionary setObject:message forKey:@"msg"];
-    }
-    
-    [dictionary setObject:@"you" forKey:@"sender"];
-    //加入发送时间
-    [dictionary setObject:[XMPPStatics getCurrentTime] forKey:@"time"];
-    [dictionary setObject:[NSString stringWithFormat:@"%d",type] forKey:@"type"];
-    
-    if (aImage) {
-        
-        [dictionary setObject:aImage forKey:MESSAGE_MSG];
-        [dictionary setObject:[NSNumber numberWithBool:YES] forKey:MESSAGE_MESSAGE_LOCAL];
-    }
-    
-    if (self.shareContent) {
-        [dictionary setObject:[self.shareContent objectForKey:@"infoId"] forKey:MESSAGE_SHATE_LINK];
-    }
-    
-    //分享链接
-    
-    
-    [messages addObject:dictionary];
-    
-    //重新刷新tableView
-    [self.table reloadData];
-    
-    if (_reloading) {
-        
-        return;
-    }
-    [self scrollToBottom];
-}
 
-#pragma mark - 网络
-/**
- *  发送离线消息时通知服务端
- */
-- (void)sendOffline
-{
-    NSString *url = [NSString stringWithFormat:FBAUTO_CHAT_OFFLINE,self.chatUserId,@"1",[GMAPI getUid],[GMAPI getUserPhoneNumber]];
-    LCWTools *tool = [[LCWTools alloc]initWithUrl:url isPost:NO postData:nil];
-    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-        
-        NSLog(@"result %@ erro %@",result,erro);
-        
-    } failBlock:^(NSDictionary *failDic, NSError *erro) {
-        
-        NSLog(@"failDic %@ erro %@",failDic,erro);
-        
-    }];
-}
-
-#pragma - mark XMPP发送消息
-
-- (void)xmppSendMessage:(NSString *)messageText
-{
- 
-    if (sendOffline) {
-        
-        [self sendOffline];
-        
-        NSLog(@"需要sendOffline");
-        
-    }else
-    {
-        NSLog(@"不需要sendOffline"); 
-    }
-    
-    
-    __weak typeof(FBChatViewController *)weakSelf = self;
-    
-    [xmppServer sendMessage:messageText toUser:self.chatWithUser shareLink:[self.shareContent objectForKey:@"infoId"] messageBlock:^(NSDictionary *params, int tag) {
-        
-        if (tag == 1) {
-
-            NSLog(@"发送成功");
-            
-            if (self.isShare) {
-                
-                DXAlertView *alert = [[DXAlertView alloc]initWithTitle:@"分享成功" contentText:nil leftButtonTitle:@"返回" rightButtonTitle:@"留在此页" isInput:NO];
-                [alert show];
-                
-                alert.leftBlock = ^(){
-                    NSLog(@"返回");
-                    
-                    [weakSelf.navigationController popViewControllerAnimated:YES];
-                };
-                alert.rightBlock = ^(){
-                    NSLog(@"确定");
-                    
-                };
-            }
-            
-        }else{
-            
-            NSLog(@"发送失败");
-        }
-        
-    }];
-}
-
-#pragma - mark 输入框点击发送消息 CWInputDelegate
-
-- (void)inputView:(CWInputView *)inputView sendBtn:(UIButton*)sendBtn inputText:(NSString*)text
-{
-    NSLog(@"text %@",text);
-    
-    if (![text isEqualToString:@""] && text.length > 0) {
-        
-        NSLog(@"直接发送");
-        
-        [self xmppAuthenticatedWithMessage:text MessageType:Message_Normal image:nil];
-    }
-}
 
 #pragma - mark 验证是否登录成功,否则自动登录再fasong
 
@@ -900,117 +960,227 @@
     }
     
 }
+#pragma - mark 本地发送信息处理
 
+//发送图片的时候,aImage不能为空
 
-
-#pragma - mark 图片上传
-
-- (void)postImages:(UIImage *)eImage
+- (void)localSendMessage:(NSString *)message MessageType:(MESSAGE_TYPE)type image:(UIImage *)aImage
 {
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     
-    FBChatImage *chatImage = nil;
-    
-    id aView = [labelArr lastObject];
-    
-    if ([aView isKindOfClass:[FBChatImage class]]) {
-        
-        chatImage = aView;
+    if (message) {
+        [dictionary setObject:message forKey:@"msg"];
     }
     
-    [chatImage startLoading];//开始菊花
+    [dictionary setObject:@"you" forKey:@"sender"];
+    //加入发送时间
+    [dictionary setObject:[XMPPStatics getCurrentTime] forKey:@"time"];
+    [dictionary setObject:[NSString stringWithFormat:@"%d",type] forKey:@"type"];
     
-    NSString* url = [NSString stringWithFormat:FBAUTO_CHAT_TALK_PIC];
-    
-    ASIFormDataRequest *uploadImageRequest= [ ASIFormDataRequest requestWithURL : [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] ]];
-    [uploadImageRequest setStringEncoding:NSUTF8StringEncoding];
-    [uploadImageRequest setRequestMethod:@"POST"];
-    [uploadImageRequest setResponseEncoding:NSUTF8StringEncoding];
-    [uploadImageRequest setPostValue:[GMAPI getAuthkey] forKey:@"authkey"];//参数一 authkey
-    [uploadImageRequest setPostFormat:ASIMultipartFormDataPostFormat];
-    [uploadImageRequest setTimeOutSeconds:30];
-    
-    UIImage *new = [SzkAPI scaleToSizeWithImage:eImage size:CGSizeMake(eImage.size.width>1024?1024:eImage.size.width,eImage.size.width>1024?eImage.size.height*1024/eImage.size.width:eImage.size.height)];
-    
-    NSData *imageData=UIImageJPEGRepresentation(new, 0.5);
-    
-    UIImage * newImage = [UIImage imageWithData:imageData];
-    
-    NSString *photoName=[NSString stringWithFormat:@"FBAuto_xmpp.png"];
-    NSLog(@"photoName:%@",photoName);
-    NSLog(@"图片大小:%f",(float)[imageData length]/1024/1024);
-    
-    [uploadImageRequest addData:imageData withFileName:photoName andContentType:@"image/png" forKey:@"talkpic"];
-    
-    [uploadImageRequest setDelegate : self ];
-    
-    [uploadImageRequest startAsynchronous];
-    
-    __weak typeof(ASIFormDataRequest *)weakRequst = uploadImageRequest;
-    
-    __weak typeof (FBChatImage *)weakChatV = chatImage;
-    
-    __weak typeof(FBChatViewController *)weakSelf = self;
-    //完成
-    [uploadImageRequest setCompletionBlock:^{
+    if (aImage) {
         
-        NSDictionary *result = [NSJSONSerialization JSONObjectWithData:weakRequst.responseData options:0 error:nil];
+        [dictionary setObject:aImage forKey:MESSAGE_MSG];
+        [dictionary setObject:[NSNumber numberWithBool:YES] forKey:MESSAGE_MESSAGE_LOCAL];
+    }
+    
+    if (self.shareContent) {
+        [dictionary setObject:[self.shareContent objectForKey:@"infoId"] forKey:MESSAGE_SHATE_LINK];
+    }
+    
+    //分享链接
+    
+    
+    [messages addObject:dictionary];
+    
+    //重新刷新tableView
+    [self.table reloadData];
+    
+    if (_reloading) {
         
-        if ([result isKindOfClass:[NSDictionary class]]) {
+        return;
+    }
+    [self scrollToBottom];
+}
+
+#pragma - mark 点击发送消息 CWInputDelegate
+
+- (void)inputView:(CWInputView *)inputView sendBtn:(UIButton*)sendBtn inputText:(NSString*)text
+{
+    NSLog(@"text %@",text);
+    
+    if (![text isEqualToString:@""] && text.length > 0) {
+        
+        NSLog(@"直接发送");
+        
+        [self xmppAuthenticatedWithMessage:text MessageType:Message_Normal image:nil];
+    }
+}
+
+#pragma - mark 分享操作
+
+- (void)goToShare
+{
+    DXAlertView *alert = [[DXAlertView alloc]initWithTitle:nil contentText:[self.shareContent objectForKey:@"text"] leftButtonTitle:@"取消" rightButtonTitle:@"分享" isInput:YES];
+    [alert show];
+    
+    __weak typeof(self)weakSelf=self;
+    __weak typeof(DXAlertView *)weakAlert = alert;
+    alert.leftBlock = ^(){
+        NSLog(@"取消");
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    };
+    alert.rightBlock = ^(){
+        NSLog(@"确定");
+        
+        [weakSelf xmppAuthenticatedWithMessage:weakAlert.inputTextView.text MessageType:Message_Normal image:nil];
+     };
+
+}
+
+
+#pragma - mark  click事件
+
+- (void)clickToHideKeyboard
+{
+    [inputBar resignFirstResponder];
+}
+
+- (void)clickToAdd:(UIButton *)btn
+{
+    FBAddFriendsController *add = [[FBAddFriendsController alloc]init];
+    [self.navigationController pushViewController:add animated:YES];
+}
+
+- (void)clickToHome:(UIButton *)btn
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+#pragma - mark 发送图片
+
+//打开相册
+
+- (IBAction)clickToAlbum:(id)sender {
+    
+    BOOL is =  [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary];
+    if (is) {
+        UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+        picker.delegate = self;
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:picker animated:YES completion:^{
+    }];
+    }else
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"不支持相册" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+}
+
+//打开相机
+
+- (IBAction)clickToCamera:(id)sender {
+    
+    BOOL is =  [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
+    if (is) {
+        UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+        picker.delegate = self;
+        
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        
+        [self presentViewController:picker animated:YES completion:^{
             
-            int erroCode = [[result objectForKey:@"errcode"]intValue];
-            NSString *erroInfo = [result objectForKey:@"errinfo"];
+        }];
+    }else
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"不支持相机" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+}
+
+#pragma  mark  - delegate
+#pragma  mark
+
+#pragma - mark imagePicker delegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+    
+    if ([mediaType isEqualToString:@"public.image"]) {
+        
+        //压缩图片 不展示原图
+        UIImage *originImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+        
+        //先上传图片
+        
+        [self localSendMessage:Nil MessageType:Message_Image image:originImage];
+        
+        //再实际发送
+        
+        [self postImages:originImage];
+        
+        [picker dismissViewControllerAnimated:NO completion:^{
             
-            if (erroCode != 0) {
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:erroInfo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                [alert show];
-                
-                return ;
-            }
             
-            NSArray *dataInfo = [result objectForKey:@"datainfo"];
-            NSMutableArray *imageIdArr = [NSMutableArray arrayWithCapacity:dataInfo.count];
+        }];
+        
+    }
+}
+
+#pragma - mark QBImagePicker delegate
+
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)aImagePickerController
+{
+    [aImagePickerController dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
+
+#pragma - mark OHAttributedLabelDelegate
+
+-(BOOL)attributedLabel:(OHAttributedLabel*)attributedLabel shouldFollowLink:(NSTextCheckingResult*)linkInfo
+{
+    NSString *requestString = [linkInfo.URL absoluteString];
+    NSLog(@"%@",requestString);
+    
+    NSString *info = [attributedLabel.params objectForKey:MESSAGE_SHATE_LINK];
+    NSArray *params = [info componentsSeparatedByString:@","];
+    if (params.count > 1) {
+        
+        NSString *infoId = [params objectAtIndex:0];
+        NSString *carId = [params objectAtIndex:1];
+        
+        NSString *text = [attributedLabel.attributedText string];
+        if([text hasPrefix:@"车源:"] || [text rangeOfString:@"车源"].length > 0)
+        {
+            NSLog(@"车源");
+            FBDetail2Controller *detail = [[FBDetail2Controller alloc]init];
+            detail.style = Navigation_Special;
+            detail.navigationTitle = @"详情";
+            detail.infoId = infoId;
+            detail.carId = carId;
+            detail.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:detail animated:YES];
             
-            NSString *imageLink = @"";
-            
-            for (NSDictionary *imageDic in dataInfo) {
-                NSString *imageId = [imageDic objectForKey:@"imageid"];
-                imageLink = [imageDic objectForKey:@"image"];
-                [imageIdArr addObject:imageId];
-            }
-            
-            [weakChatV stopLoadingWithFailBlock:nil];//停止菊花
-            [weakChatV sd_setImageWithURL:[NSURL URLWithString:imageLink] placeholderImage:[UIImage imageNamed:@"detail_test"]];
-            
-            
-            CGFloat imageWidth = newImage.size.width;
-            CGFloat imageHeight = newImage.size.height;
-            
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                
-                
-                NSString *sendImage = [NSString stringWithFormat:@"<img height=\"%f\" width=\"%f\" src=\"%@\"/>>",imageHeight,imageWidth,imageLink];
-                NSLog(@"sendImage %@",sendImage);
-                
-                [weakSelf xmppSendMessage:sendImage];
-                
-            });
+        }else
+        {
+            NSLog(@"寻车");
+            FBFindCarDetailController *detail = [[FBFindCarDetailController alloc]init];
+            detail.style = Navigation_Special;
+            detail.navigationTitle = @"详情";
+            detail.infoId = info;
+            detail.carId = carId;
+            detail.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:detail animated:YES];
         }
-        
-        
-    }];
+    }
     
-    //失败
-    [uploadImageRequest setFailedBlock:^{
-        
-        NSLog(@"uploadFail %@ erro %@",weakRequst.responseString,uploadImageRequest.responseStatusMessage);
-        
-        [weakChatV stopLoadingWithFailBlock:^(FBChatImage *chatImageView) {
-            
-            [weakSelf postImages:eImage];
-            
-        }];//停止菊花
-    }];
-    
+    if ([[UIApplication sharedApplication]canOpenURL:linkInfo.URL]) {
+        [[UIApplication sharedApplication]openURL:linkInfo.URL];
+    }
+    return NO;
 }
 
 
@@ -1034,68 +1204,6 @@
     }
 }
 
-#pragma - mark 获取用户在线状态
-
-- (NSString *)requestUserState:(NSString *)userId
-{
-    //http://60.18.147.4:9090/plugins/presence/status?jid=18612389982@60.18.147.4&type=xml
-    
-    NSString *server = [[NSUserDefaults standardUserDefaults]objectForKey:XMPP_SERVER];
-    
-    NSString *url = [NSString stringWithFormat:@"http://%@:9090/plugins/presence/status?jid=%@@%@&type=xml",server,userId,server];
-    NSString *newUrl = [url stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSURL *urlS = [NSURL URLWithString:newUrl];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urlS cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:2];
-    
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        
-        if (data.length > 0) {
-            
-            NSError *erro;
-            GDataXMLDocument *document = [[GDataXMLDocument alloc]initWithData:data error:&erro];
-            GDataXMLElement *rootElement = [document rootElement];
-            
-            NSString *rootString = [NSString stringWithFormat:@"%@",rootElement];
-            NSString *str = [rootElement stringValue];
-            
-            if ([rootString rangeOfString:@"erro"].length > 0) {
-                
-                NSLog(@"说明有错误");
-                
-                userState = @"unavailable";
-                
-                sendOffline = YES;
-                
-            }else if (str && [str isEqualToString:@"Unavailable"]) {
-                
-                //离线状态
-                
-                NSLog(@"离线");
-                
-                userState = @"unavailable";
-                sendOffline = YES;
-                
-            }else
-            {
-                NSLog(@"在线");
-                
-                userState = @"vailable";
-                
-                sendOffline = NO;
-            }
-            
-            
-            //{type:1 name:presence xml:"<presence type="unavailable" from="13301072337@60.18.147.4"><status>Unavailable</status></presence>
-            
-            //{type:1 name:presence xml:"<presence from="13301072337@60.18.147.4/714c0af9" to="13301072337@60.18.147.4/714c0af9"/>"}
-            
-            NSLog(@"erro %@ rootElement %@ str %@",erro,rootElement,str);
-            
-        }
-    }];
-    
-    return @"no";
-}
 
 #pragma - mark XMPP 用户状态代理 chatDelegate
 
@@ -1116,7 +1224,7 @@
     
     if ([self.chatWithUser isEqualToString:user.userName]) {
         //聊天对象离线
-       userState = @"unavailable";
+        userState = @"unavailable";
         
         sendOffline = YES;
     }
@@ -1138,11 +1246,11 @@
 
 - (BOOL)isUserAdded:(User *)user
 {
-//    for (User *aUser in onlineUsers) {
-//        if ([user.userName isEqualToString:aUser.userName]) {
-//            return YES;
-//        }
-//    }
+    //    for (User *aUser in onlineUsers) {
+    //        if ([user.userName isEqualToString:aUser.userName]) {
+    //            return YES;
+    //        }
+    //    }
     return NO;
 }
 
@@ -1171,7 +1279,7 @@
     
     NSMutableDictionary *dict = [messages objectAtIndex:indexPath.row];
     if (labelArr.count > indexPath.row && [labelArr objectAtIndex:indexPath.row]) {
-
+        
     }else
     {
         //否则没有,需要新创建
@@ -1229,108 +1337,9 @@
 }
 
 
-#pragma - mark 发送图片
+#pragma mark -  下拉加载更多
+#pragma mark
 
-//打开相册
-
-- (IBAction)clickToAlbum:(id)sender {
-    
-    BOOL is =  [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary];
-    if (is) {
-        UIImagePickerController *picker = [[UIImagePickerController alloc]init];
-        picker.delegate = self;
-        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        [self presentViewController:picker animated:YES completion:^{
-    }];
-    }else
-    {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"不支持相册" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alert show];
-    }
-}
-
-//打开相机
-
-- (IBAction)clickToCamera:(id)sender {
-    
-    BOOL is =  [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
-    if (is) {
-        UIImagePickerController *picker = [[UIImagePickerController alloc]init];
-        picker.delegate = self;
-        
-        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        
-        [self presentViewController:picker animated:YES completion:^{
-            
-        }];
-    }else
-    {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"不支持相机" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alert show];
-    }
-}
-#pragma - mark imagePicker 代理
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
-    
-    if ([mediaType isEqualToString:@"public.image"]) {
-        
-        //压缩图片 不展示原图
-        UIImage *originImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-        
-//        UIImage *scaleImage = [self scaleImage:originImage toScale:0.5];
-        
-//        NSData *data;
-//        
-//        //以下这两步都是比较耗时的操作，最好开一个HUD提示用户，这样体验会好些，不至于阻塞界面
-//        if (UIImagePNGRepresentation(scaleImage) == nil) {
-//            //将图片转换为JPG格式的二进制数据
-//            data = UIImageJPEGRepresentation(scaleImage, 0.5);
-//        } else {
-//            //将图片转换为PNG格式的二进制数据
-//            data = UIImagePNGRepresentation(scaleImage);
-//        }
-//        
-//        //将二进制数据生成UIImage
-//        UIImage *image = [UIImage imageWithData:data];
-        
-        //先上传图片
-        
-        [self localSendMessage:Nil MessageType:Message_Image image:originImage];
-        
-        //再实际发送
-
-        [self postImages:originImage];
-        
-        [picker dismissViewControllerAnimated:NO completion:^{
-            
-            
-        }];
-        
-    }
-}
-
-#pragma - mark QBImagePicker 代理
-
--(void)imagePickerControllerDidCancel:(UIImagePickerController *)aImagePickerController
-{
-    [aImagePickerController dismissViewControllerAnimated:YES completion:^{
-        
-    }];
-}
-
-#pragma mark- 缩放图片
-
--(UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize
-{
-    UIGraphicsBeginImageContext(CGSizeMake(image.size.width*scaleSize,image.size.height*scaleSize));
-    [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height *scaleSize)];
-    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return scaledImage;
-}
 
 #pragma - mark EGORefresh
 

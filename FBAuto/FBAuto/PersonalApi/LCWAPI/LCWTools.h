@@ -36,6 +36,9 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 
 - (void)requestCompletion:(void(^)(NSDictionary *result,NSError *erro))completionBlock failBlock:(void(^)(NSDictionary *failDic,NSError *erro))failedBlock;//处理请求结果
 
+#pragma - mark 获取头像
+
++ (NSString *)headImageForUserId:(NSString *)userId;
 
 #pragma - mark 小工具
 

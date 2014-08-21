@@ -140,6 +140,19 @@
 
 }
 
++ (NSString *)headImageForUserId:(NSString *)userId
+{
+    //头像
+    NSString *imageUrlUtf8 = [LCWTools md5:userId];
+    NSString *jiequ = [imageUrlUtf8 substringFromIndex:imageUrlUtf8.length-4];
+    NSString *str1 = [jiequ substringToIndex:2];
+    NSString *str2 = [jiequ substringFromIndex:2];
+    
+    NSString *headImageUrlStr = [NSString stringWithFormat:@"http://fbautoapp.fblife.com/resource/head/%@/%@/thumb_%@_Thu.jpg",str1,str2,userId];
+    
+    return headImageUrlStr;
+}
+
 #pragma - mark 验证邮箱、电话等有效性
 
 /*匹配正整数*/

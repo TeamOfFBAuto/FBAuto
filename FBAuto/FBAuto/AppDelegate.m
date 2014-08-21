@@ -154,13 +154,15 @@
     CGFloat aHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
     self.statusBarBack = [[UIWindow alloc]initWithFrame:CGRectMake(200, 0, 80, aHeight)];
     _statusBarBack.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"daohanglan_bg_640_88"]];
-    [_statusBarBack setWindowLevel:UIWindowLevelStatusBar+1];
+    [_statusBarBack setWindowLevel:UIWindowLevelStatusBar];
     [_statusBarBack makeKeyAndVisible];
     
     self.messageLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, _statusBarBack.width, _statusBarBack.height)];
     _messageLabel.textColor = [UIColor orangeColor];
     _messageLabel.font = [UIFont systemFontOfSize:12];
     [_statusBarBack addSubview:_messageLabel];
+    
+    _statusBarBack.hidden = YES;
 }
 
 - (void)updateMessageCount:(NSNotification *)notification
@@ -178,11 +180,14 @@
     if (number > 0) {
         
         _messageLabel.text = [NSString stringWithFormat:@"%@(%d)",fromName,number];
+        _statusBarBack.hidden = NO;
         
     }else
     {
         if ([_fromPhone isEqualToString:fromPhone]) {
             _messageLabel.text = @"";//不显示
+            
+            _statusBarBack.hidden = YES;
         }else
         {
             
