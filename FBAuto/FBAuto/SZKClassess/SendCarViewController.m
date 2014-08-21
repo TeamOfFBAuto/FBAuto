@@ -466,6 +466,10 @@
         
         NSLog(@"uploadFail %@",weakRequst.responseString);
         
+        [loadingHub hide:YES];
+        
+        [LCWTools showMBProgressWithText:@"上传失败，重新发布" addToView:self.view];
+        
     }];
 
 }

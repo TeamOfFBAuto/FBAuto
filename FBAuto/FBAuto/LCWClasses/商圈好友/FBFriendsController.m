@@ -57,20 +57,6 @@
     xmppServer = [XMPPServer shareInstance];
     xmppServer.chatDelegate = self;
     
-    //添加好友，测试用
-    
-//    LCWTools *tools = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_ADD,[GMAPI getAuthkey],@"1"]];
-//    [tools requestCompletion:^(NSDictionary *result, NSError *erro) {
-//        NSLog(@"---result %@ erro %@",result,[result objectForKey:@"errinfo"]);
-//        }
-//    ];
-    
-//    //删除好友
-//    
-//    LCWTools *tool = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_DELETE,[GMAPI getAuthkey],@"1"]isPost:NO postData:nil];
-//    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
-//        NSLog(@"---result %@ erro %@",result,[result objectForKey:@"errinfo"]);
-//    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -244,7 +230,7 @@
     [cell getCellData:aModel cellBlock:^(NSString *friendInfo,int tag) {
         
         if (tag == 0) {
-            [weakSelf clickToChatWithUser:aModel.phone userName:aModel.buddyname ? aModel.buddyname : aModel.name];
+            [weakSelf clickToChatWithUser:aModel.phone userName:aModel.buddyname ? aModel.buddyname : aModel.name userId:aModel.buddyid];
         }else if (tag == 1)
         {
 //            [weakSelf clickToShare:aModel.phone userName:aModel.buddyname];
@@ -264,7 +250,7 @@
         NSArray *arr = [friendsDic objectForKey:[firstLetterArr objectAtIndex:indexPath.section]];
         FBFriendModel *aModel = [arr objectAtIndex:indexPath.row];
         
-        [self clickToChatWithUser:aModel.phone userName:aModel.buddyname];
+        [self clickToChatWithUser:aModel.phone userName:aModel.buddyname userId:aModel.buddyid];
     }
     
 }
@@ -279,11 +265,12 @@
     return 0.01f;
 }
 
-- (void)clickToChatWithUser:(NSString *)user userName:(NSString *)userName
+- (void)clickToChatWithUser:(NSString *)user userName:(NSString *)userName userId:(NSString *)userId
 {
     FBChatViewController *chat = [[FBChatViewController alloc]init];
     chat.chatWithUser = user;
     chat.chatWithUserName = userName;
+    chat.chatUserId = userId;
     chat.isShare = self.isShare;
     if (self.isShare) {
         chat.shareContent = self.shareContent;

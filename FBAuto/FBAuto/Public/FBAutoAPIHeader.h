@@ -176,4 +176,6 @@ alpha:(a)]
 #define FBAUTO_CHAT_TALK_PIC @"http://fbautoapp.fblife.com/index.php?c=interface&a=talkpic"//聊天发送图片
 #define FBAUTO_CHAT_TALK_VOICE @"http://fbautoapp.fblife.com/index.php?c=interface&a=talkvoice"//聊天发送语音
 
+#define FBAUTO_CHAT_OFFLINE @"http://fbautoapp.fblife.com/index.php?c=interface&a=pushmsg&uid=%@&optype=%@&fromuid=%@&fromphone=%@"//离线消息通知服务端
+
 #endif

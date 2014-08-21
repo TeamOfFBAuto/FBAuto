@@ -323,7 +323,7 @@
     
     self.frame = input_Frame;
     
-    NSLog(@"resetFrame %f",input_Frame.origin.y);
+//    NSLog(@"resetFrame %f",input_Frame.origin.y);
     
     toolBlock(3);
     

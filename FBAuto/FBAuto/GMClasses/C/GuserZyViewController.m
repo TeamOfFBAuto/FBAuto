@@ -91,7 +91,6 @@
         self.addressLabel.text = [NSString stringWithFormat:@"%@%@",guserModel.province,guserModel.city];
         [self.headImage sd_setImageWithURL:[NSURL URLWithString:guserModel.headimage] placeholderImage:[UIImage imageNamed:@"detail_test"]];
         
-        
         NSLog(@"%@",self.phoneNumLabel.text);
         NSLog(@"%@",self.nameLabel.text);
         NSLog(@"%@",self.addressLabel.text);
@@ -310,7 +309,7 @@
     FBChatViewController *chat = [[FBChatViewController alloc]init];
     chat.chatWithUser = self.phoneNumLabel.text;
     chat.chatWithUserName = self.nameLabel.text;
-    
+    chat.chatUserId = _userId;
     [self.navigationController pushViewController:chat animated:YES];
     
 }

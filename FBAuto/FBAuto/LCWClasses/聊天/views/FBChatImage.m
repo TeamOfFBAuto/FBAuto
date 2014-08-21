@@ -45,7 +45,14 @@
 - (void)stopLoadingWithFailBlock:(LoadFailBlock)failBlock
 {
     aFailBlock = failBlock;
-    maskView.hidden = YES;
+    
+    if (failBlock) {
+        maskView.hidden = NO;
+    }else
+    {
+        maskView.hidden = YES;
+    }
+    
     [indicator stopAnimating];
 }
 

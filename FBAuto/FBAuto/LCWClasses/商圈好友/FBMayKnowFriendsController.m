@@ -73,10 +73,10 @@
         NSString *fistName = [aDic objectForKey:@"tmpFirstName"];
         NSString *name = [aDic objectForKey:@"tmpLastName"];
         NSString *phone = [aDic objectForKey:@"tmpPhoneIndex0"];
+        
         if (![fistName isEqualToString:@"noresault"]) {
             name = [NSString stringWithFormat:@"%@%@",fistName,name];
         }
-        
         if (name && phone) {
             
             [nameArr addObject:name];
@@ -225,15 +225,20 @@
         
         if ([result isKindOfClass:[NSDictionary class]]) {
             
-            int erroCode = [[result objectForKey:@"errcode"]intValue];
+//            int erroCode = [[result objectForKey:@"errcode"]intValue];
             NSString *erroInfo = [result objectForKey:@"errinfo"];
             
-            if (erroCode != 0) {
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:erroInfo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                [alert show];
+            DXAlertView *alert = [[DXAlertView alloc]initWithTitle:erroInfo contentText:nil leftButtonTitle:nil rightButtonTitle:@"确定" isInput:NO];
+            [alert show];
+            
+            alert.leftBlock = ^(){
+                NSLog(@"确定");
+            };
+            alert.rightBlock = ^(){
+                NSLog(@"取消");
                 
-                return ;
-            }
+            };
+
         }
     }failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"failDic %@",failDic);

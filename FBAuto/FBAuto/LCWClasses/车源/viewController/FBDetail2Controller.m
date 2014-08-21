@@ -250,7 +250,7 @@
     FBChatViewController *chat = [[FBChatViewController alloc]init];
     chat.chatWithUser = self.phoneNumLabel.text;
     chat.chatWithUserName = self.nameLabel.text;
-    
+    chat.chatUserId = userId;
     [self.navigationController pushViewController:chat animated:YES];
     
 }

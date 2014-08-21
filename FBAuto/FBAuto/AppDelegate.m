@@ -17,6 +17,8 @@
 
 #import "PersonalViewController.h"//个人中心
 
+#import "FBChatViewController.h"//聊天界面
+
 #import "ASIHTTPRequest.h"
 
 #import "XMPPServer.h"
@@ -151,7 +153,7 @@
 {
     CGFloat aHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
     self.statusBarBack = [[UIWindow alloc]initWithFrame:CGRectMake(200, 0, 80, aHeight)];
-    _statusBarBack.backgroundColor = [UIColor clearColor];
+    _statusBarBack.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"NavigationBG"]];
     [_statusBarBack setWindowLevel:UIWindowLevelStatusBar+1];
     [_statusBarBack makeKeyAndVisible];
     
@@ -467,6 +469,7 @@
     
     
     [[NSUserDefaults standardUserDefaults]setObject:string_pushtoken forKey:DEVICETOKEN];
+    [[NSUserDefaults standardUserDefaults]synchronize];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
@@ -479,12 +482,44 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+//    UIApplicationStateInactive {
+//        aps =     {
+//            alert = "\U60a8\U6536\U5230\U4e00\U6761\U79bb\U7ebf\U6d88\U606f";
+//            badge = 1;
+//            headimg = "http://bbs.fblife.com/ucenter/avatar.php?uid=1&type=virtual&size=middle";
+//            sound = default;
+//            tophone = 18612389982;
+//            type = 1;
+//        };
+//    }
+    
     //正在前台,获取推送时，此处可以获取
     //后台，点击进入,此处可以获取
     UIApplicationState state = [application applicationState];
     if (state == UIApplicationStateInactive){
         NSLog(@"UIApplicationStateInactive %@",userInfo);
         //点击消息进入走此处,做相应处理
+        NSDictionary *aps = [userInfo objectForKey:@"aps"];
+        NSString *headimg = [aps objectForKey:@"headimg"];
+        NSString *fromphone = [aps objectForKey:@"fromphone"];
+        NSString *fromId = [aps objectForKey:@"fromuid"];
+        NSString *type = [aps objectForKey:@"type"];
+        
+        NSLog(@"aps --- >%@ %@ %@",headimg,fromphone,type);
+        
+        if ([type integerValue] == 1) {
+            NSLog(@"聊天离线消息");
+            
+            UITabBarController *tabV =  (UITabBarController *)self.window.rootViewController;
+            tabV.selectedIndex = 3;
+            UINavigationController *unVc = [[tabV viewControllers]objectAtIndex:3];
+            
+            FBChatViewController *chat = [[FBChatViewController alloc]init];
+            chat.chatWithUser = fromphone;
+            chat.chatUserId = fromId;
+            chat.hidesBottomBarWhenPushed = YES;
+            [unVc pushViewController:chat animated:YES];
+        }
         
     }
     if (state == UIApplicationStateActive) {

@@ -16,6 +16,9 @@
 #import <ShareSDK/ShareSDK.h>
 
 @interface FBFindCarDetailController ()
+{
+    NSString *userId;
+}
 
 @end
 
@@ -89,6 +92,8 @@
         self.addressLabel.text = [NSString stringWithFormat:@"%@%@",[dic objectForKey:@"province"],[dic objectForKey:@"city"]];
         
         [self.headImage sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"headimage"]] placeholderImage:[UIImage imageNamed:@"detail_test"]];
+        
+        userId = [dic objectForKey:@"uid"];//用户id
         
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
@@ -173,7 +178,7 @@
     FBChatViewController *chat = [[FBChatViewController alloc]init];
     chat.chatWithUser = self.phoneNumLabel.text;
     chat.chatWithUserName = self.nameLabel.text;
-    
+    chat.chatUserId = userId;
     [self.navigationController pushViewController:chat animated:YES];
     
 }

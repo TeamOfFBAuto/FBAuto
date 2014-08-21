@@ -54,6 +54,8 @@
     
     NSString *userState;//xmpp在线状态
     
+    BOOL sendOffline;//是否发送离线消息通知给服务端
+    
 }
 
 @property (nonatomic,assign)BOOL                        reloading;         //是否正在loading
@@ -373,35 +375,6 @@
 - (void)clickToHome:(UIButton *)btn
 {
     [self.navigationController popToRootViewControllerAnimated:YES];
-}
-
-- (void)testData
-{
-    NSDictionary *dic = @{MESSAGE_SENDER: @"张三",MESSAGE_MSG:@"发送的[哈哈]消息有多长呢",MESSAGE_TIME:@"2014-07-04"};
-    NSDictionary *dic1 = @{MESSAGE_SENDER: @"you",MESSAGE_MSG:@"发送的[抓狂]消息[抓狂]有多长呢",MESSAGE_TIME:@"2014-07-04"};
-    NSDictionary *dic2 = @{MESSAGE_SENDER: @"张三",MESSAGE_MSG:@"现在在宠物医[熊猫]看着你努力的抬头望着这个多彩的世界当，看着你努力的环视着llllll",MESSAGE_TIME:@"2014-07-04"};
-    NSDictionary *dic3 = @{MESSAGE_SENDER: @"you",MESSAGE_MSG:@"诺诺你好我最爱的漂亮金毛姑娘刚离别小半天，我想你了，好想好像你希望你在另一个美丽的世界中依然还[熊猫]褐色的皮毛是那样的光滑柔顺当，看着你努力的抬头望着这个多彩的世界当，看着你努力的环视着[熊猫]发送[bed凌乱][bed凌乱][bed凌乱][的消息有多长呢",MESSAGE_TIME:@"2014-07-04"};
-    NSDictionary *dic4 = @{MESSAGE_SENDER: @"张三",MESSAGE_MSG:@"消息[懒得理你]有息有多长呢发送的消的消息有的消息有[抓狂]的消息有的消[大笑][大笑]消[懒得理你]息有息有多长呢发送的呢发送的消的消多长呢",MESSAGE_TIME:@"2014-07-04"};
-    
-     NSString *test = @"<img height=\"195\" width=\"325\" src=\"http://imgsrc.baidu.com/forum/pic/item/41dadb43ad4bd113c9ec23c95aafa40f4afb05f3.jpg\"/>>";
-    NSDictionary *dic5 = @{MESSAGE_SENDER: @"张三",MESSAGE_MSG:test,MESSAGE_TIME:@"2014-07-04"};
-    
-    NSDictionary *dic6 = @{MESSAGE_SENDER: @"you",MESSAGE_MSG:@"发送的消息有多长呢",MESSAGE_TIME:@"2014-07-04"};
-    NSDictionary *dic7 = @{MESSAGE_SENDER: @"you",MESSAGE_MSG:@"有息有[懒得理你]多长呢[熊猫]想念我不停的祈祷，我不停的对自己说，没事没事一切都会好起来的现在在宠物医院急救着我的头脑嗡嗡的响，怎么会这样，怎么有多长呢",MESSAGE_TIME:@"2014-07-04"};
-    
-    
-   NSString *test1 = @"<img height=\"195\" width=\"325\" src=\"http://imgsrc.baidu.com/forum/pic/item/839e68d9f2d3572ce5ff08278a13632763d0c3f8.jpg\"/>>";
-    
-    NSDictionary *dic8 = @{MESSAGE_SENDER: @"张三",MESSAGE_MSG:test1,MESSAGE_TIME:@"2014-07-04"};
-    
-    NSDictionary *dic9 = @{MESSAGE_SENDER: @"张三",MESSAGE_MSG:@"发送[抓狂]的消的消息有息有多长呢",MESSAGE_TIME:@"2014-07-04"};
-    
-    [messages addObjectsFromArray:@[dic,dic8,dic1,dic2,dic5,dic3,dic4,dic5,dic6,dic7,dic9]];
-    
-    [self.table reloadData];
-    
-    [self scrollToBottom];
-    //
 }
 
 - (void)didReceiveMemoryWarning
@@ -798,11 +771,42 @@
     [self scrollToBottom];
 }
 
+#pragma mark - 网络
+/**
+ *  发送离线消息时通知服务端
+ */
+- (void)sendOffline
+{
+    NSString *url = [NSString stringWithFormat:FBAUTO_CHAT_OFFLINE,self.chatUserId,@"1",[GMAPI getUid],[GMAPI getUserPhoneNumber]];
+    LCWTools *tool = [[LCWTools alloc]initWithUrl:url isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        
+        NSLog(@"result %@ erro %@",result,erro);
+        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        
+        NSLog(@"failDic %@ erro %@",failDic,erro);
+        
+    }];
+}
+
 #pragma - mark XMPP发送消息
 
 - (void)xmppSendMessage:(NSString *)messageText
 {
  
+    if (sendOffline) {
+        
+        [self sendOffline];
+        
+        NSLog(@"需要sendOffline");
+        
+    }else
+    {
+        NSLog(@"不需要sendOffline"); 
+    }
+    
+    
     __weak typeof(FBChatViewController *)weakSelf = self;
     
     [xmppServer sendMessage:messageText toUser:self.chatWithUser shareLink:[self.shareContent objectForKey:@"infoId"] messageBlock:^(NSDictionary *params, int tag) {
@@ -924,13 +928,13 @@
     [uploadImageRequest setPostValue:[GMAPI getAuthkey] forKey:@"authkey"];//参数一 authkey
     [uploadImageRequest setPostFormat:ASIMultipartFormDataPostFormat];
     
-    NSData *imageData=UIImageJPEGRepresentation(eImage,0.8);
+    NSData *imageData=UIImageJPEGRepresentation(eImage,0.5);
     
     UIImage * newImage = [UIImage imageWithData:imageData];
     
     NSString *photoName=[NSString stringWithFormat:@"FBAuto_xmpp.png"];
     NSLog(@"photoName:%@",photoName);
-    NSLog(@"图片大小:%d",[imageData length]);
+    NSLog(@"图片大小:%d",(int)[imageData length]/1024/1024);
     
     [uploadImageRequest addData:imageData withFileName:photoName andContentType:@"image/png" forKey:@"talkpic"];
     
@@ -1057,6 +1061,8 @@
                 
                 userState = @"unavailable";
                 
+                sendOffline = YES;
+                
             }else if (str && [str isEqualToString:@"Unavailable"]) {
                 
                 //离线状态
@@ -1064,12 +1070,15 @@
                 NSLog(@"离线");
                 
                 userState = @"unavailable";
+                sendOffline = YES;
                 
             }else
             {
                 NSLog(@"在线");
                 
                 userState = @"vailable";
+                
+                sendOffline = NO;
             }
             
             
@@ -1094,6 +1103,8 @@
         //聊天对象离线
         userState = @"available";
         
+        sendOffline = NO;
+        
     }
 }
 -(void)userOffline:(User *)user
@@ -1103,6 +1114,8 @@
     if ([self.chatWithUser isEqualToString:user.userName]) {
         //聊天对象离线
        userState = @"unavailable";
+        
+        sendOffline = YES;
     }
 }
 
@@ -1271,7 +1284,7 @@
         //以下这两步都是比较耗时的操作，最好开一个HUD提示用户，这样体验会好些，不至于阻塞界面
         if (UIImagePNGRepresentation(scaleImage) == nil) {
             //将图片转换为JPG格式的二进制数据
-            data = UIImageJPEGRepresentation(scaleImage, 1);
+            data = UIImageJPEGRepresentation(scaleImage, 0.8);
         } else {
             //将图片转换为PNG格式的二进制数据
             data = UIImagePNGRepresentation(scaleImage);

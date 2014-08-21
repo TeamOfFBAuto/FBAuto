@@ -46,6 +46,7 @@
     NSArray* tmpPeoples = (NSArray*)CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(tmpAddressBook));
     
     
+    
     for(id tmpPerson in tmpPeoples)
         
     {
@@ -57,7 +58,6 @@
         NSString* tmpFirstName = (NSString*)CFBridgingRelease(ABRecordCopyValue(CFBridgingRetain(tmpPerson), kABPersonFirstNameProperty));
         
       tmpFirstName=  [self changestrkongge:tmpFirstName];
-      
         
         if (tmpFirstName.length!=0) {
             [dic setObject:tmpFirstName forKey:@"tmpFirstName"];

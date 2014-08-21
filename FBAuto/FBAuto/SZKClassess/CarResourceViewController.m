@@ -108,7 +108,7 @@
         }];
         
     }else{
-        NSLog(@"xxname===%@",[GMAPI getUsername]);
+        NSLog(@"xxname===%@ id:%@",[GMAPI getUsername],[GMAPI getUid]);
     }
     
 }
