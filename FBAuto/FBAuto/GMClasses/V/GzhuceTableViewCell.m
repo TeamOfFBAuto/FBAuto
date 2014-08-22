@@ -434,7 +434,7 @@
         
         if ([guerzhuce.password isEqualToString:guerzhuce.password1] && [self indoGeren]) {
             SzkLoadData *netr = [[SzkLoadData alloc]init];
-            NSString *str = [NSString stringWithFormat:FBAUTO_REGISTERED,guerzhuce.phone,guerzhuce.password,guerzhuce.name,(long)guerzhuce.province,(long)guerzhuce.city,1,guerzhuce.code,guerzhuce.token];
+            NSString *str = [NSString stringWithFormat:FBAUTO_REGISTERED,guerzhuce.phone,guerzhuce.password,guerzhuce.name,(long)guerzhuce.province,(long)guerzhuce.city,1,guerzhuce.code,guerzhuce.token,@""];
             
             NSLog(@"个人注册接口======= %@",str);
             
@@ -489,7 +489,7 @@
         
         if ([userzc.password isEqualToString:userzc.password1] && [self indoShangjia]) {
             SzkLoadData *netr = [[SzkLoadData alloc]init];
-            NSString *str = [NSString stringWithFormat:FBAUTO_REGISTERED,userzc.phone,userzc.password,userzc.name,(long)userzc.province,(long)userzc.city,2,userzc.code,userzc.token];
+            NSString *str = [NSString stringWithFormat:FBAUTO_REGISTERED,userzc.phone,userzc.password,userzc.name,(long)userzc.province,(long)userzc.city,2,userzc.code,userzc.token,userzc.fullname];
             NSLog(@"商家注册接口======= %@",str);
             [netr SeturlStr:str block:^(NSArray *arrayinfo, NSString *errorindo, NSInteger errcode) {
                 if (errcode==0) {

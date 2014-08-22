@@ -86,10 +86,18 @@
         }
         
         
+        //箭头
+        UIImageView *jiantou = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"jiantou_hui10_18.png"] highlightedImage:nil];
+        jiantou.frame = CGRectMake(CGRectGetMaxX(touxiangImv.frame)+10, 42, 5, 8);
+        
+        
+        
+        
         //添加视图
         [self.contentView addSubview:kuang];
         [self.contentView addSubview:titielLabel];
         [self.contentView addSubview:touxiangImv];
+        [self.contentView addSubview:jiantou];
         
         
     }else if (theIndexPath.section == 1){//详细信息
@@ -118,15 +126,24 @@
         contentLabel.font = [UIFont systemFontOfSize:15];
         
         
+        
         if (theIndexPath.row == 0) {//姓名
             contentLabel.text = self.delegate.userName;
         }else if (theIndexPath.row == 1){//地区
             contentLabel.text = self.delegate.area;
         }else if (theIndexPath.row == 2){//电话
             contentLabel.text = self.delegate.phoneNum;
-        }else if (theIndexPath.row == 3){//地址
+        }else if (theIndexPath.row == 3){//详细地址
+            contentLabel.frame =CGRectMake(CGRectGetMaxX(titleLable.frame)+30, titleLable.frame.origin.y-3, 175, titleLable.frame.size.height+6);
+            UIImageView *jiantou = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"jiantou_hui10_18.png"]];
+            jiantou.frame = CGRectMake(CGRectGetMaxX(contentLabel.frame)+10, 18, 5, 8);
+            [self.contentView addSubview:jiantou];
             contentLabel.text = self.delegate.address;
         }else if (theIndexPath.row == 4){//简介
+            contentLabel.frame =CGRectMake(CGRectGetMaxX(titleLable.frame)+30, titleLable.frame.origin.y-3, 175, titleLable.frame.size.height+6);
+            UIImageView *jiantou = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"jiantou_hui10_18.png"]];
+            jiantou.frame = CGRectMake(CGRectGetMaxX(contentLabel.frame)+10, 18, 5, 8);
+            [self.contentView addSubview:jiantou];
             contentLabel.text = self.delegate.jianjie;
         }
         

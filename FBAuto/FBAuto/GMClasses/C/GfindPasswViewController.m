@@ -38,6 +38,9 @@
     }
     
     
+    self.titleLabel.text = @"找回密码";
+    self.titleLabel.font = [UIFont boldSystemFontOfSize:16];
+    
     NSArray *titleArray = @[@"手机号",@"验证码",@"新密码"];
     
     //加载视图

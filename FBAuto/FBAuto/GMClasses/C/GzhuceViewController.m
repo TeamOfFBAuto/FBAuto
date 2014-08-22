@@ -281,7 +281,7 @@
         NSLog(@"%ld",tt);
         
         if (iPhone5) {
-            if (tt == 13|| tt == 14 || tt == 15 ) {
+            if (tt == 13|| tt == 14) {
                 [UIView animateWithDuration:0.3 animations:^{
                     bgerenTableView.frame = CGRectMake(0, -50, 320, Iphone5TableViewHeight);
                 } completion:^(BOOL finished) {
@@ -298,6 +298,12 @@
             }else if (tt == 27) {
                 [UIView animateWithDuration:0.3 animations:^{
                     bshangjiaTableView.frame = CGRectMake(0, -150, 320, 500);
+                } completion:^(BOOL finished) {
+                    
+                }];
+            }else if (tt == 15){
+                [UIView animateWithDuration:0.3 animations:^{
+                    bgerenTableView.frame = CGRectMake(0, -110, 320, Iphone5TableViewHeight);
                 } completion:^(BOOL finished) {
                     
                 }];

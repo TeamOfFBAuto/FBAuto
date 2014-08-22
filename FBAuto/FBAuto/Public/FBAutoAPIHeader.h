@@ -66,7 +66,7 @@ alpha:(a)]
 #define FBAUTO_YANZHENG_VERIFICATION_CODE @"http://fbautoapp.fblife.com/index.php?c=interface&a=checkphonecode&phone=%@&code=%@"
 
 //用户注册
-#define FBAUTO_REGISTERED @"http://fbautoapp.fblife.com/index.php?c=interface&a=register&phone=%@&password=%@&name=%@&province=%ld&city=%ld&usertype=%d&code=%@&token=%@"
+#define FBAUTO_REGISTERED @"http://fbautoapp.fblife.com/index.php?c=interface&a=register&phone=%@&password=%@&name=%@&province=%ld&city=%ld&usertype=%d&code=%@&token=%@&fullname=%@"
 
 //用户登录
 #define FBAUTO_LOG_IN @"http://fbautoapp.fblife.com/index.php?c=interface&a=dologin&phone=%@&upass=%@&token=%@"

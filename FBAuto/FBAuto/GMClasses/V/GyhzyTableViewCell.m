@@ -194,10 +194,18 @@
     self.phoneLabel.text = userModel.phone;
     self.dizhiLabel.text = userModel.address;
     
-    NSString *sheng = [FBCityData cityNameForId:[userModel.province intValue]];
-    NSString *shi = [FBCityData cityNameForId:[userModel.city intValue]];
+    if ([userModel.usertype intValue] == 1) {//个人
+        NSString *sheng = [FBCityData cityNameForId:[userModel.province intValue]];
+        NSString *shi = [FBCityData cityNameForId:[userModel.city intValue]];
+        
+        self.areaLable.text = [NSString stringWithFormat:@"%@%@",sheng,shi];
+    }else if ([userModel.usertype intValue] == 2){//商家
+        NSString *sheng = [FBCityData cityNameForId:[userModel.province intValue]];
+        self.nameLabel.text = [NSString stringWithFormat:@"%@（%@）",userModel.name,sheng];
+        
+        self.areaLable.text = userModel.fullname;
+    }
     
-    self.areaLable.text = [NSString stringWithFormat:@"%@%@",sheng,shi];
     
     self.jianjieLabel.text = userModel.intro;
     [self.jianjieLabel setMatchedFrame4LabelWithOrigin:CGPointMake(45, 12) width:266];
