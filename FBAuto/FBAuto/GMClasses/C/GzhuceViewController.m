@@ -100,16 +100,23 @@
     
     
     //地区pickview
-    _pickeView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, 0, 320, 216)];
+    _pickeView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, 20, 320, 216)];
     _pickeView.delegate = self;
     _pickeView.dataSource = self;
     [self.view addSubview:_pickeView];
     _isChooseArea = NO;
     
-    //地区选择
-    UIView *backPickView = [[UIView alloc]initWithFrame:CGRectMake(0, 568, 320, 216)];
-    backPickView.backgroundColor = [UIColor whiteColor];
+    //确定按钮
+    UIButton *quedingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    quedingBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [quedingBtn setTitle:@"确定" forState:UIControlStateNormal];
+    quedingBtn.backgroundColor = [UIColor orangeColor];
+    quedingBtn.frame = CGRectMake(270, 5, 30, 30);
     
+    //地区选择
+    UIView *backPickView = [[UIView alloc]initWithFrame:CGRectMake(0, 568, 320, 216+20)];
+    backPickView.backgroundColor = [UIColor whiteColor];
+    [backPickView addSubview:quedingBtn];
     [backPickView addSubview:_pickeView];
     self.backPickView = backPickView;
     [self.view addSubview:self.backPickView];

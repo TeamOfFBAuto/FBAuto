@@ -14,6 +14,7 @@
 
 @property(nonatomic,strong)NSString *phone;//手机号
 @property(nonatomic,strong)NSString *password;//密码
+@property(nonatomic,strong)NSString *password1;//重复密码
 @property(nonatomic,strong)NSString *name;//用户名/商家公司简介
 @property(nonatomic,assign)NSInteger province;//省份
 @property(nonatomic,assign)NSInteger city;//城市

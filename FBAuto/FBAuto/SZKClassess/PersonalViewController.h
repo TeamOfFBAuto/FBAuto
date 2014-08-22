@@ -10,7 +10,7 @@
 //个人中心
 #import <UIKit/UIKit.h>
 
-@interface PersonalViewController : FBBaseViewController<UITableViewDelegate,UITableViewDataSource>
+@interface PersonalViewController : FBBaseViewController<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
 
 {
     UITableView *_tableView;//主tableview

@@ -150,7 +150,7 @@
         self.contentTfArray1 = [[NSMutableArray alloc]init];
         
         //标题数组
-        _titielArray = @[@"公司全称",@"公司简介",@"地区",@"地址",@"密码",@"重复密码",@"手机",@"验证码"];
+        _titielArray = @[@"公司全称",@"公司简称",@"地区",@"详细地址",@"密码",@"重复密码",@"手机",@"验证码"];
         
         //注册界面的view
         self.zhuceView1 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 568-68)];
@@ -182,7 +182,7 @@
             
             //titile
             UILabel *titleLable = [[UILabel alloc]initWithFrame:CGRectMake(20, 20+i*55, 30, 15)];
-            if (i == 5 || i ==0 || i==1) {//重复密码 公司全称 公司简介
+            if (i == 5 || i ==0 || i==1 || i == 3) {//重复密码 公司全称 公司简介 详细地址
                 titleLable.frame = CGRectMake(20, 20+i*55, 60, 15);
             }else if (i == 7){//验证码
                 titleLable.frame = CGRectMake(20, 20+i*55, 45, 15);
@@ -198,7 +198,7 @@
             contentTf.delegate = self;
             contentTf.tag = 20+i;//根据tag判读是哪个tf
             NSLog(@"%@",NSStringFromCGRect(contentTf.frame));
-            if (i == 5 || i ==0 || i==1) {//重复密码 公司全称 公司简介
+            if (i == 5 || i ==0 || i==1 || i == 3) {//重复密码 公司全称 公司简介
                 contentTf.frame = CGRectMake(85, 20+i*55, 200, 15);
             }else if (i == 7){//验证码
                 contentTf.frame = CGRectMake(70, 20+i*55, 130, 15);
@@ -422,36 +422,37 @@
                 guerzhuce.code = tf.text;
             }else if (i == 0){//用户名
                 guerzhuce.name = tf.text;
+            }else if (i == 3){
+                guerzhuce.password1 = tf.text;
             }
         }
         
-        SzkLoadData *netr = [[SzkLoadData alloc]init];
         
-        
-        NSString *str = [NSString stringWithFormat:FBAUTO_REGISTERED,guerzhuce.phone,guerzhuce.password,guerzhuce.name,(long)guerzhuce.province,(long)guerzhuce.city,1,guerzhuce.code,guerzhuce.token];
-        
-        NSLog(@"个人注册接口======= %@",str);
-        
-        [netr SeturlStr:str block:^(NSArray *arrayinfo, NSString *errorindo, NSInteger errcode) {
+        if ([guerzhuce.password isEqualToString:guerzhuce.password1] && [self indoGeren]) {
+            SzkLoadData *netr = [[SzkLoadData alloc]init];
+            NSString *str = [NSString stringWithFormat:FBAUTO_REGISTERED,guerzhuce.phone,guerzhuce.password,guerzhuce.name,(long)guerzhuce.province,(long)guerzhuce.city,1,guerzhuce.code,guerzhuce.token];
             
-            if (errcode==0) {
-                UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"注册成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                [al show];
-                
-                NSLog(@"cccarray==%@",arrayinfo);
-                
-            }else{
-                
-                NSLog(@"%@",errorindo);
-                
-                UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:errorindo message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                [alertV show];
-                
-                
-            }
+            NSLog(@"个人注册接口======= %@",str);
             
-            
-        }];
+            [netr SeturlStr:str block:^(NSArray *arrayinfo, NSString *errorindo, NSInteger errcode) {
+                if (errcode==0) {
+                    UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"注册成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    [al show];
+                    NSLog(@"cccarray==%@",arrayinfo);
+                }else{
+                    NSLog(@"%@",errorindo);
+                    UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:errorindo message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    [alertV show];
+                }
+                
+            }];
+        }else if (![guerzhuce.password isEqualToString:guerzhuce.password1]){
+            UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"重复密码和密码填写不一致" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [al show];
+        }
+        
+        
+        
         
         
         
@@ -476,36 +477,29 @@
                 userzc.name = tf.text;
             }else if (i == 7){//验证码
                 userzc.code = tf.text;
+            }else if (i == 5){//重复密码
+                userzc.password1 = tf.text;
             }
         }
         
         
-        SzkLoadData *netr = [[SzkLoadData alloc]init];
-        
-        NSString *str = [NSString stringWithFormat:FBAUTO_REGISTERED,userzc.phone,userzc.password,userzc.name,(long)userzc.province,(long)userzc.city,2,userzc.code,userzc.token];
-        
-        NSLog(@"商家注册接口======= %@",str);
-        
-        [netr SeturlStr:str block:^(NSArray *arrayinfo, NSString *errorindo, NSInteger errcode) {
+        if ([userzc.password isEqualToString:userzc.password1] && [self indoShangjia]) {
+            SzkLoadData *netr = [[SzkLoadData alloc]init];
+            NSString *str = [NSString stringWithFormat:FBAUTO_REGISTERED,userzc.phone,userzc.password,userzc.name,(long)userzc.province,(long)userzc.city,2,userzc.code,userzc.token];
+            NSLog(@"商家注册接口======= %@",str);
+            [netr SeturlStr:str block:^(NSArray *arrayinfo, NSString *errorindo, NSInteger errcode) {
+                if (errcode==0) {
+                    NSLog(@"cccarray==%@",arrayinfo);
+                }else{
+                    UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:errorindo message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    [alertV show];
+                }
+            }];
             
-            if (errcode==0) {
-                
-                
-                
-                NSLog(@"cccarray==%@",arrayinfo);
-                
-            }else{
-                
-                
-                UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:errorindo message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                [alertV show];
-                
-                
-            }
-            
-            
-        }];
-        
+        }else if (![userzc.password isEqualToString:userzc.password1]){
+            UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"重复密码和密码填写不一致" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [al show];
+        }
         
     }
     

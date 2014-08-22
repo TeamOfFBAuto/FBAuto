@@ -38,6 +38,10 @@
 
 @implementation PersonalViewController
 
+
+
+
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -48,21 +52,24 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    if (self.userFaceImv) {
-        if ([GlocalUserImage getUserFaceImage]) {
-            [self.userFaceImv setImage:[GlocalUserImage getUserFaceImage]];
-        }
+    
+    for (UIView *view in self.view.subviews) {
+        [view removeFromSuperview];
     }
+    
+    
+    
+//    if (self.userFaceImv) {
+//        if ([GlocalUserImage getUserFaceImage]) {
+//            [self.userFaceImv setImage:[GlocalUserImage getUserFaceImage]];
+//        }
+//    }
     
     //进入页面更新未读消息
     
     [self updateUnreadNumber:nil];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    self.view.backgroundColor=RGBCOLOR(22, 23, 3);
+    
+    
     
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
@@ -183,7 +190,25 @@
     
     //未读消息通知
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateUnreadNumber:) name:@"unReadNumber" object:nil];
+    
+    
+    
+    
+    
+    
 }
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.view.backgroundColor=RGBCOLOR(22, 23, 3);
+    
+    
+    
+}
+
+
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -220,10 +245,9 @@
         if (errcode == 0) {
             NSLog(@"请求用户信息成功");
             //公司头像
-            [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:[dataInfo objectForKey:@"headimage"]] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                [GlocalUserImage setUserFaceImageWithData:UIImageJPEGRepresentation(image, 0.5)];
-            }];
-            
+             
+             [self.userFaceImv sd_setImageWithURL:[NSURL URLWithString:[dataInfo objectForKey:@"headimage"]]];
+             
             //公司名称
             self.nameLabel.text = [dataInfo objectForKey:@"name"];
             NSLog(@"公司名称：%@",self.nameLabel);
@@ -363,7 +387,9 @@
         }else if (index == 7){//消息设置
             [self.navigationController pushViewController:[[GMessageSViewController alloc]init]animated:YES];
         }else if (index == 8){//退出登录
-            [self tuichuDenglu];
+            
+            UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"退出登录" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            [al show];
         }
         
         
@@ -376,7 +402,12 @@
 
 
 
-
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (buttonIndex == 1) {
+        [self tuichuDenglu];
+    }
+}
 
 
 
