@@ -85,8 +85,38 @@
         
         NSDictionary *dic = [dataInfo objectAtIndex:0];
         
+        
+        NSString *carName = [dic objectForKey:@"car_name"];
+        
+        UILabel *nameLabel = self.car_modle_label;
+        nameLabel.numberOfLines = 0;
+        nameLabel.lineBreakMode = NSLineBreakByCharWrapping;
+        
+        CGFloat newHeight = [LCWTools heightForText:carName width:200 font:14];
+        
+        CGRect oldFrame = nameLabel.frame;
+        
+        CGFloat dis = newHeight - oldFrame.size.height;
+        
+        oldFrame.size.height = newHeight;
+        nameLabel.frame = oldFrame;
+        
+        //        //参数
+        
+        
+        for (int i = 1; i < 8; i ++) {
+            UILabel *label = (UILabel *)[self.view viewWithTag:108 + i];
+            label.top += dis;
+            
+            UILabel *label2 = (UILabel *)[self.view viewWithTag:100 + i];
+            label2.top += dis;
+        }
+        
+        nameLabel.text = carName;
+        
         //参数
-        self.car_modle_label.text = [dic objectForKey:@"car_name"];
+        self.car_modle_label.text = carName;
+        
         self.car_realPrice_label.text = [NSString stringWithFormat:@"%@万元",[dic objectForKey:@"price"]];
         self.car_timelimit_label.text = [dic objectForKey:@"spot_future"];
         self.car_outColor_Label.text = [dic objectForKey:@"color_out"];

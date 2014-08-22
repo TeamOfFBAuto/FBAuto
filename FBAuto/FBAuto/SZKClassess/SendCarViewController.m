@@ -27,6 +27,10 @@
 
 #import "Menu_Header.h"
 
+#import "FBDetail2Controller.h"
+
+#import "DXAlertView.h"
+
 #define KFistSectionHeight 110 //上部分高度
 
 @interface SendCarViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,QBImagePickerControllerDelegate,UIScrollViewDelegate,UITextFieldDelegate>
@@ -185,6 +189,7 @@
         NSLog(@"修改车源 %@",url);
     }
     
+    __weak typeof(self)weakSelf = self;
     
     LCWTools *tool = [[LCWTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
@@ -193,9 +198,21 @@
         
         [loadingHub hide:NO];
         
-        [self showMBProgressWithText:[result objectForKey:@"errinfo"]];
+//        [self showMBProgressWithText:[result objectForKey:@"errinfo"]];
         
         [self refreshUI];
+        
+        DXAlertView *alert = [[DXAlertView alloc]initWithTitle:@"寻车发布成功" contentText:nil leftButtonTitle:nil rightButtonTitle:@"确定" isInput:NO];
+        [alert show];
+        
+        alert.rightBlock = ^(){
+            NSLog(@"取消");
+            
+            int infoId = [[result objectForKey:@"datainfo"]integerValue];
+            
+            [weakSelf clickToDetail:[NSString stringWithFormat:@"%d",infoId]];
+            
+        };
 
     }failBlock:^(NSDictionary *failDic, NSError *erro) {
         [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
@@ -214,6 +231,8 @@
     
     NSLog(@"车源列表 %@",url);
     
+    __weak typeof(self)weakSelf = self;
+    
     LCWTools *tool = [[LCWTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
@@ -221,13 +240,32 @@
         
         [loadingHub hide:NO];
         
-        [self showMBProgressWithText:@"车源信息发布成功"];
+        [weakSelf showMBProgressWithText:@"车源信息发布成功"];
         
-        [self refreshUI];
+        [weakSelf refreshUI];
         
     }failBlock:^(NSDictionary *failDic, NSError *erro) {
         [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
     }];
+    
+}
+
+/**
+ *  跳转到 车源详情页
+ *
+ *  @param infoId 车源信息id
+ *  @param car    汽车编码
+ */
+
+- (void)clickToDetail:(NSString *)infoId
+{
+    FBDetail2Controller *detail = [[FBDetail2Controller alloc]init];
+    detail.style = Navigation_Special;
+    detail.navigationTitle = @"详情";
+    detail.infoId = infoId;
+    detail.carId = _car;
+    detail.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:detail animated:YES];
     
 }
 

@@ -26,8 +26,9 @@
 - (void)setCellDataWithModel:(CarSourceClass *)aCar
 {
     //@"发河北 寻美规 奥迪Q7 14款 豪华"
-    NSString *contentText = [NSString stringWithFormat:@"发%@%@ 寻%@",aCar.province,aCar.city,aCar.car_name];
+    NSString *contentText = [NSString stringWithFormat:@"寻%@",aCar.car_name];
     self.contentLabel.text = contentText;
+    self.toAddressLabel.text = [NSString stringWithFormat:@"发%@%@",aCar.province,aCar.city];
     self.moneyLabel.text = [self depositWithText:aCar.deposit];
     self.nameLabel.text = aCar.username;
     self.timeLabel.text = [LCWTools timechange:aCar.dateline];

@@ -116,7 +116,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="detail_test.png" width="152" height="158"/>
+        <image name="detail_test.png" width="302" height="304"/>
         <image name="geren _bg50_28.png" width="25" height="14"/>
         <image name="haoyou_dianhua40_46.png" width="20" height="23"/>
         <image name="haoyou_liaotian46_46.png" width="23" height="23"/>

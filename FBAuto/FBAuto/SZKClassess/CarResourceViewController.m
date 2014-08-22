@@ -227,6 +227,7 @@
     }else if (aStyle == Search_Cancel)
     {
         [self updateSearchViewNormal:YES];
+        searchView.searchField.text = @"";
     }
 }
 
@@ -697,23 +698,6 @@
  */
 - (void)reloadData:(NSArray *)dataArr isReload:(BOOL)isReload requestType:(NSString *)requestType
 {
-    //    if ([requestType isEqualToString:_lastRequest]) { //两次请求一致
-    //
-    //        NSLog(@"两次一致");
-    //
-    //        if ([requestType isEqualToString:CAR_SEARCH]) {
-    //
-    ////            isReload = YES;
-    //        }
-    //
-    //    }else //两次请求不一致
-    //    {
-    //        isReload = YES;//强制刷新
-    //
-    //        NSLog(@"两次不一致");
-    //    }
-    //
-    //    _lastRequest = requestType;
     
     if (isReload) {
         

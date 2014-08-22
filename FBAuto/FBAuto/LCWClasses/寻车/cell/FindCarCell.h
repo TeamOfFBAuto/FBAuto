@@ -15,6 +15,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *moneyLabel;
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *toAddressLabel;
+
 
 - (void)setCellDataWithModel:(CarSourceClass *)aCar;
 

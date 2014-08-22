@@ -56,6 +56,11 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 
 + (NSString *)NSStringNotNull:(NSString *)text;
 
+#pragma mark - 计算宽度、高度
+
++ (CGFloat)widthForText:(NSString *)text font:(CGFloat)size;
++ (CGFloat)heightForText:(NSString *)text width:(CGFloat)width font:(CGFloat)size;
+
 /**
  *  验证 邮箱、电话等
  */

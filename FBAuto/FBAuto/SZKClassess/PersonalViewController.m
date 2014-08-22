@@ -466,8 +466,6 @@
     //上传标志位
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"gIsUpFace"];
     
-    
-    
     //document路径
     NSString *documentPathStr = [GlocalUserImage documentFolder];
     NSString *userFace = @"/guserFaceImage.png";

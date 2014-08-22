@@ -11,6 +11,8 @@
 #import "Section_Button.h"
 #import "Menu_Header.h"
 #import "FBCityData.h"
+#import "FBFindCarDetailController.h"
+#import "DXAlertView.h"
 
 @interface FindCarPublishController ()<UITextFieldDelegate>
 {
@@ -312,6 +314,20 @@
     [self.navigationController pushViewController:base animated:YES];
 }
 
+/**
+ *  寻车信息页
+ */
+- (void)clickToDetail:(NSString *)info
+{
+    FBFindCarDetailController *detail = [[FBFindCarDetailController alloc]init];
+    detail.style = Navigation_Special;
+    detail.navigationTitle = @"详情";
+    detail.infoId = info;
+    detail.carId = _car;
+    detail.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:detail animated:YES];
+}
+
 #pragma - mark 发布车源
 
 - (void)clickToPublish:(UIButton *)btn
@@ -362,6 +378,8 @@
                @"%@&authkey=%@&xid=%@&province=%d&city=%d&car=%@&spot_future=%d&color_out=%d&color_in=%d&deposit=%d&carfrom=%d&cardiscrib=%@",FBAUTO_FINDCAR_EDIT,[GMAPI getAuthkey],self.infoId,_province,_city,_car,_spot_future,_color_out,_color_in,_deposit,_carfrom,descrip];
     }
     
+    __weak typeof(self)weakSelf = self;
+    
     LCWTools *tool = [[LCWTools alloc]initWithUrl:url isPost:NO postData:nil];
     [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
         
@@ -369,13 +387,25 @@
         
         [loadingHub hide:NO];
         
-        [LCWTools showMBProgressWithText:[result objectForKey:@"errinfo"] addToView:self.view];
-        [self refreshUI];
+//        [LCWTools showMBProgressWithText:[result objectForKey:@"errinfo"] addToView:weakSelf.view];
+        [weakSelf refreshUI];
         
-        [self performSelector:@selector(clickToBack:) withObject:nil afterDelay:0.5];
+        
+        DXAlertView *alert = [[DXAlertView alloc]initWithTitle:@"寻车发布成功" contentText:nil leftButtonTitle:nil rightButtonTitle:@"确定" isInput:NO];
+        [alert show];
+        
+        alert.rightBlock = ^(){
+            NSLog(@"取消");
+            
+            int infoId = [[result objectForKey:@"datainfo"]integerValue];
+            
+            [weakSelf clickToDetail:[NSString stringWithFormat:@"%d",infoId]];
+            
+        };
+        
         
     }failBlock:^(NSDictionary *failDic, NSError *erro) {
-        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
+        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:weakSelf.view];
     }];
     
 }

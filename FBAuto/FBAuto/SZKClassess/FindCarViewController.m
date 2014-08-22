@@ -207,6 +207,7 @@
     {
         cancelButton.hidden = YES;
         editButton.hidden = NO;
+        searchView.searchField.text = @"";
     }
 }
 

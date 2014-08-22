@@ -74,8 +74,26 @@
         
         NSDictionary *dic = [dataInfo objectAtIndex:0];
         
+        NSString *carName = [dic objectForKey:@"car_name"];
+        
+        UILabel *nameLabel = [self labelWithTag:108];
+        nameLabel.numberOfLines = 0;
+        nameLabel.lineBreakMode = NSLineBreakByCharWrapping;
+//        nameLabel.backgroundColor = [UIColor orangeColor];
+        
+        CGFloat newHeight = [LCWTools heightForText:carName width:200 font:14];
+        
+        CGRect oldFrame = nameLabel.frame;
+        
+        CGFloat dis = newHeight - oldFrame.size.height;
+        
+        oldFrame.size.height = newHeight;
+        nameLabel.frame = oldFrame;
+        
 //        //参数
-        [self labelWithTag:108].text = [dic objectForKey:@"car_name"];
+        
+        nameLabel.text = carName;
+        
         [self labelWithTag:109].text  =[self showForText:[NSString stringWithFormat:@"%@%@",[dic objectForKey:@"province"],[dic objectForKey:@"city"]]] ;
         [self labelWithTag:110].text  = [self showForText:[dic objectForKey:@"carfrom"]];
         [self labelWithTag:111].text  = [self showForText:[dic objectForKey:@"spot_future"]];
@@ -83,6 +101,16 @@
         [self labelWithTag:113].text  = [self showForText:[dic objectForKey:@"color_in"]];
         [self labelWithTag:114].text  = [self depositWithText:[dic objectForKey:@"deposit"]];
         [self labelWithTag:115].text  = [[dic objectForKey:@"cardiscrib"] isEqualToString:@""] ? @"无" : [dic objectForKey:@"cardiscrib"];
+        
+        
+        for (int i = 1; i < 8; i ++) {
+            UILabel *label = [self labelWithTag:108 + i];
+            label.top += dis;
+            
+            UILabel *label2 = [self labelWithTag:100 + i];
+            label2.top += dis;
+        }
+        
         
         //商家信息
         
