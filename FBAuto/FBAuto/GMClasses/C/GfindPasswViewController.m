@@ -149,7 +149,8 @@
     [szk SeturlStr:str block:^(NSArray *arrayinfo, NSString *errorindo, NSInteger errcode) {
         
         if (errcode==0) {
-            UIAlertView *aler = [[UIAlertView alloc]initWithTitle:@"重置成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            UIAlertView *aler = [[UIAlertView alloc]initWithTitle:@"重置成功" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            aler.tag = 2000;
             [aler show];
         }else{
             UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:errorindo message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -160,6 +161,15 @@
     }];
     
 }
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 2000) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+
 
 
 - (void)didReceiveMemoryWarning
