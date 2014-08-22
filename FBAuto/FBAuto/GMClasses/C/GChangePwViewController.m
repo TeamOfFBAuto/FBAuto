@@ -11,6 +11,11 @@
 
 #import "GmLoadData.h"//网络请求类
 
+
+#import "GlocalUserImage.h"
+
+#import "XMPPServer.h"
+
 @interface GChangePwViewController ()
 
 @end
@@ -29,7 +34,7 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.titleLabel.text = @"修改密码";
+    self.titleLabel.text = @"密码修改";
     
     self.tfArray = [NSMutableArray arrayWithCapacity:1];
     
@@ -126,12 +131,77 @@
             
             
             NSLog(@"修改密码成功");
-            UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"修改密码成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"修改密码成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            al.tag = 1000;
             [al show];
         }else{
+            
             NSLog(@"修改密码失败 == %@",errorinfo);
+            
+            UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"新密码与旧密码相同" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [al show];
         }
     }];
+}
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 1000) {
+        NSString *api = [NSString stringWithFormat:FBAUTO_LOG_OUT,[GMAPI getUid]];
+        NSLog(@"%@",api);
+        
+        NSURL *url = [NSURL URLWithString:api];
+        
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        
+        //清除UserDefaults里的数据
+        NSUserDefaults *standUDef=[NSUserDefaults standardUserDefaults];
+        [standUDef setObject:@""  forKey:USERAUTHKEY];
+        [standUDef setObject:@""  forKey:USERID];
+        [standUDef setObject:@""  forKey:USERNAME];
+        [standUDef setObject:NO forKey:@"switchOnorOff"];
+        
+        [standUDef synchronize];
+        
+        NSLog(@"authkey===%@",[GMAPI getAuthkey]);
+        
+        
+        
+        //清除沙盒里的数据
+        
+        //上传标志位
+        [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"gIsUpFace"];
+        
+        
+        
+        //document路径
+        NSString *documentPathStr = [GlocalUserImage documentFolder];
+        NSString *userFace = @"/guserFaceImage.png";
+        
+        //文件管理器
+        NSFileManager *fileM = [NSFileManager defaultManager];
+        
+        //清除 头像和 banner
+        [fileM removeItemAtPath:[documentPathStr stringByAppendingString:userFace] error:nil];
+        
+        
+        
+        
+        
+        
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            if (connectionError==0) {
+                NSLog(@"成功");
+                [[XMPPServer shareInstance]disconnect];
+                
+            }else{
+                NSLog(@"xxssx===%@",connectionError);
+            }
+        }];
+        
+        
+        self.tabBarController.selectedIndex = 0;
+    }
 }
 
 - (void)didReceiveMemoryWarning

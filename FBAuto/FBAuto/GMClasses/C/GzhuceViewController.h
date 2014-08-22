@@ -11,6 +11,9 @@
 
 #import <UIKit/UIKit.h>
 
+
+typedef void (^sjpBlock)();//收键盘block
+
 @interface GzhuceViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 {
     
@@ -67,6 +70,13 @@
 //商家
 @property(nonatomic,assign)NSInteger provinceIn1;
 @property(nonatomic,assign)NSInteger cityIn1;
+
+
+//收键盘
+@property(nonatomic,copy)sjpBlock sjpBlock;
+
+
+-(void)setSjpBlock:(sjpBlock)sjpBlock;
 
 
 

@@ -43,15 +43,16 @@
     self.contenTfArray = [[NSMutableArray alloc]init];
     
     //自定义navigation
-    
     UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [leftBtn setImage:[UIImage imageNamed:@"fanhui_24_42.png"] forState:UIControlStateNormal];
-    leftBtn.frame = CGRectMake(0, 0, 12, 21);
+    leftBtn.frame = CGRectMake(-8, 0, 40, 21);
     [leftBtn addTarget:self action:@selector(fanhui) forControlEvents:UIControlEventTouchUpInside];
-    UIView *leftV = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 12, 21)];
+    leftBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    UIView *leftV = [[UIView alloc]initWithFrame:CGRectMake(-8, 0, 40, 21)];
     [leftV addSubview:leftBtn];
     UIBarButtonItem *leftitem = [[UIBarButtonItem alloc]initWithCustomView:leftV];
     self.navigationItem.leftBarButtonItem = leftitem;
+    
     
     
     self.navigationItem.title = @"经纪人注册";
@@ -110,11 +111,13 @@
     UIButton *quedingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     quedingBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [quedingBtn setTitle:@"确定" forState:UIControlStateNormal];
-    quedingBtn.backgroundColor = [UIColor orangeColor];
-    quedingBtn.frame = CGRectMake(270, 5, 30, 30);
+    [quedingBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    quedingBtn.frame = CGRectMake(270, 0, 35, 30);
+    [quedingBtn addTarget:self action:@selector(shouPickerView) forControlEvents:UIControlEventTouchUpInside];
+    
     
     //地区选择
-    UIView *backPickView = [[UIView alloc]initWithFrame:CGRectMake(0, 568, 320, 216+20)];
+    UIView *backPickView = [[UIView alloc]initWithFrame:CGRectMake(0, 568, 320, 216+30)];
     backPickView.backgroundColor = [UIColor whiteColor];
     [backPickView addSubview:quedingBtn];
     [backPickView addSubview:_pickeView];
@@ -132,11 +135,19 @@
     
 }
 
+
+//收pickerView
+-(void)shouPickerView{
+    NSLog(@"%s",__FUNCTION__);
+    
+    [self areaHidden];
+    
+    
+}
+
+//返回上一个界面
 -(void)fanhui{
     [self.navigationController popViewControllerAnimated:YES];
-    
-    
-    
 }
 
 
@@ -524,6 +535,12 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+
+-(void)setSjpBlock:(sjpBlock)sjpBlock{
+    _sjpBlock = sjpBlock;
 }
 
 

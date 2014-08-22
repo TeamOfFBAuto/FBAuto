@@ -237,11 +237,24 @@
     
     
     
+    
+    
+    
+    //点击pickerview右上边确定按钮 收键盘
+    [self.delegate setSjpBlock:^{
+        for (UITextField *tf in self.contenTfArray) {
+            [tf resignFirstResponder];
+        }
+        
+        for (UITextField *tf in self.contentTfArray1) {
+            [tf resignFirstResponder];
+        }
+    }];
+    
+    
+    
+    
 }
-
-
-
-
 
 
 
@@ -409,7 +422,7 @@
         GuserZhuce *guerzhuce = [[GuserZhuce alloc]init];
         guerzhuce.province = self.province;
         guerzhuce.city = self.city;
-        guerzhuce.token = @"testToken";
+        guerzhuce.token = [[NSUserDefaults standardUserDefaults]objectForKey:DEVICETOKEN];
         UITextField *tf = nil;
         
         for (int i = 0; i<6; i++) {
@@ -464,7 +477,7 @@
         GuserZhuce *userzc = [[GuserZhuce alloc]init];
         userzc.province = self.province1;
         userzc.city = self.city1;
-        userzc.token = @"testToken";
+        userzc.token = [[NSUserDefaults standardUserDefaults]objectForKey:DEVICETOKEN];;
         
         UITextField *tf = nil;
         for (int i = 0; i<8; i++) {
