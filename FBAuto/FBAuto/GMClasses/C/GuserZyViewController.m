@@ -19,6 +19,8 @@
 
 #import "FBDetail2Controller.h"
 
+#import "FBCityData.h"
+
 
 @interface GuserZyViewController ()
 
@@ -88,7 +90,11 @@
             self.saleTypeBtn.titleLabel.text = @"商家";
         }
         self.phoneNumLabel.text = guserModel.phone;
-        self.addressLabel.text = [NSString stringWithFormat:@"%@%@",guserModel.province,guserModel.city];
+        
+        NSString *sheng = [FBCityData cityNameForId:[guserModel.province intValue]];
+        NSString *shi = [FBCityData cityNameForId:[guserModel.city intValue]];
+        
+        self.addressLabel.text = [NSString stringWithFormat:@"%@%@",sheng,shi];
         [self.headImage sd_setImageWithURL:[NSURL URLWithString:guserModel.headimage] placeholderImage:[UIImage imageNamed:@"detail_test"]];
         
         NSLog(@"%@",self.phoneNumLabel.text);

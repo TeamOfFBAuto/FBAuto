@@ -464,9 +464,48 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
     
     if (component == 0) {
+        //个人
+        if (_gerenTableView.hidden == NO) {
+            
+            if ([_data[row][@"State"] isEqualToString:@"省份"]) {
+                self.province = @"";
+            }else{
+                self.province = _data[row][@"State"];
+                self.provinceIn = (9+row)*100;//上传
+            }
+        }
+        //商家
+        if ((_shangjiaTableView.hidden == NO)) {
+            if ([_data[row][@"State"] isEqualToString:@"省份"]) {
+                self.province1 = @"";
+            }else{
+                self.province1 = _data[row][@"State"];
+                self.provinceIn1 = (9+row)*100;
+            }
+            
+        }
         return _data[row][@"State"];
     } else if (component == 1) {
         NSArray * cities = _data[_flagRow][@"Cities"];
+        if (_gerenTableView.hidden == NO) {
+            if ([cities[row][@"city"] isEqualToString:@"市区县"]) {
+                self.city = @"";
+            }else{
+                self.city = cities[row][@"city"];
+                self.cityIn = self.provinceIn + row;
+            }
+            
+        }
+        if (_shangjiaTableView.hidden == NO) {
+            if ([cities[row][@"city"] isEqualToString:@"市区县"]) {
+                self.city1 = @"";
+            }else{
+                self.city1 = cities[row][@"city"];
+                self.cityIn1 = self.provinceIn + row;
+            }
+            
+        }
+        
         return cities[row][@"city"];
     }
     return 0;
@@ -474,58 +513,14 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
     
+
     if (component == 0) {
-        
-        _str2 = nil;
-        
         _flagRow = row;
-        
-        _str1 = _data[row][@"State"];
-        NSLog(@"%@",_str1);
-        
-        //给控件赋值str1
-        if ([_str1 isEqualToString:@"省份"]) {
-            _str1 = @"";
-        }
-        if (_gerenTableView.hidden == NO) {
-            self.province = _str1;
-            self.provinceIn = (9+row)*100;//上传
-        }
-        if ((_shangjiaTableView.hidden == NO)) {
-            self.province1 = _str1;
-            self.provinceIn1 = (9+row)*100;
-        }
-        
         _isChooseArea = YES;
-        if (row > 0) {//动态赋值城市
-            self.city =  _data[_flagRow][@"Cities"][row-1][@"city"];
-        }
-        
-        
-    } else if (component == 1) {
-        _str2 = _data[_flagRow][@"Cities"][row][@"city"];
-        if ([_str2 isEqualToString:@"市区县"]) {
-            _str2 = @"";
-        }
-        _str3 = [_str1 stringByAppendingString:_str2];
-        NSLog(@"%@",_str3);
-        
-        self.cityIn = self.provinceIn + row;
-        NSLog(@"------------------------%ld",(long)self.cityIn);
-        
-        //上传参数
-        if (_gerenTableView.hidden == NO) {
-            self.city = _str2;
-            self.cityIn = self.provinceIn + row;
-        }
-        if (_shangjiaTableView.hidden == NO) {
-            self.city1 = _str2;
-            self.cityIn1 = self.provinceIn + row;
-        }
+    }else if (component == 1){
         _isChooseArea = YES;
-        
-        
     }
+    
     [pickerView reloadAllComponents];
 }
 
@@ -539,9 +534,7 @@
 
 
 
--(void)setSjpBlock:(sjpBlock)sjpBlock{
-    _sjpBlock = sjpBlock;
-}
+
 
 
 @end

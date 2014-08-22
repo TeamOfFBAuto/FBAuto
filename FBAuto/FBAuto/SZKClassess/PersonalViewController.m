@@ -59,11 +59,7 @@
     
     
     
-//    if (self.userFaceImv) {
-//        if ([GlocalUserImage getUserFaceImage]) {
-//            [self.userFaceImv setImage:[GlocalUserImage getUserFaceImage]];
-//        }
-//    }
+
     
     //进入页面更新未读消息
     
@@ -161,14 +157,14 @@
     self.xiaoxiNumLabel.font = [UIFont systemFontOfSize:12];
     self.xiaoxiNumLabel.textColor = [UIColor whiteColor];
     self.xiaoxiNumLabel.textAlignment = NSTextAlignmentCenter;
-    self.xiaoxiNumLabel.text = @"12";
+    
     
     self.tongzhiNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
     self.tongzhiNumLabel.center = self.tongzhiRedPointView.center;
     self.tongzhiNumLabel.font = [UIFont systemFontOfSize:12];
     self.tongzhiNumLabel.textColor = [UIColor whiteColor];
     self.tongzhiNumLabel.textAlignment = NSTextAlignmentCenter;
-    self.tongzhiNumLabel.text = @"12";
+    
     
     
     
@@ -234,6 +230,13 @@
         self.xiaoxiRedPointView.hidden = NO;
     }
     
+    
+    
+    
+    
+    
+    
+    
     NSLog(@"未读条数:%d",number);
 }
 
@@ -250,9 +253,10 @@
              
             //公司名称
             self.nameLabel.text = [dataInfo objectForKey:@"name"];
-            NSLog(@"公司名称：%@",self.nameLabel);
+            NSLog(@"公司名称：%@",self.nameLabel.text);
             self.nameLabel1.text = [dataInfo objectForKey:@"fullname"];
-            NSLog(@"公司全称：%@",self.nameLabel1);
+            
+            NSLog(@"公司全称：%@",self.nameLabel1.text);
             [self.view reloadInputViews];
         }else{
             NSLog(@"请求用户信息失败");

@@ -13,6 +13,8 @@
 
 #import "GTimeSwitch.h"
 
+#import "FBCityData.h"
+
 @implementation GyhzyTableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -188,9 +190,15 @@
 
 -(void)configWithUserModel:(GuserModel*)userModel{
     self.nameLabel.text = userModel.name;
-    self.areaLable.text = [NSString stringWithFormat:@"%@%@",userModel.province,userModel.city];
+    
     self.phoneLabel.text = userModel.phone;
     self.dizhiLabel.text = userModel.address;
+    
+    NSString *sheng = [FBCityData cityNameForId:[userModel.province intValue]];
+    NSString *shi = [FBCityData cityNameForId:[userModel.city intValue]];
+    
+    self.areaLable.text = [NSString stringWithFormat:@"%@%@",sheng,shi];
+    
     self.jianjieLabel.text = userModel.intro;
     [self.jianjieLabel setMatchedFrame4LabelWithOrigin:CGPointMake(45, 12) width:266];
     [self.touxiangImageView sd_setImageWithURL:[NSURL URLWithString:userModel.headimage]];

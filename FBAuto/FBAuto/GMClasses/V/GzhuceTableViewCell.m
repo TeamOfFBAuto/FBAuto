@@ -240,16 +240,7 @@
     
     
     
-    //点击pickerview右上边确定按钮 收键盘
-    [self.delegate setSjpBlock:^{
-        for (UITextField *tf in self.contenTfArray) {
-            [tf resignFirstResponder];
-        }
-        
-        for (UITextField *tf in self.contentTfArray1) {
-            [tf resignFirstResponder];
-        }
-    }];
+
     
     
     
