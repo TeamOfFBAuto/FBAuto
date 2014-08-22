@@ -103,7 +103,7 @@
                 if (erroCode != 0) { //0代表无错误,  && erroCode != 1 1代表无结果
 
 
-                    NSDictionary *failDic = @{ERROR_INFO:erroInfo};
+                    NSDictionary *failDic = @{ERROR_INFO:erroInfo,ERROR_CODE:[NSString stringWithFormat:@"%d",erroCode]};
                     failBlock(failDic,connectionError);
                     
                     return ;

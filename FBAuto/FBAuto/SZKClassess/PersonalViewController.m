@@ -437,12 +437,18 @@
     NSURL *url = [NSURL URLWithString:api];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
+
     //清除UserDefaults里的数据
     NSUserDefaults *standUDef=[NSUserDefaults standardUserDefaults];
     [standUDef setObject:@""  forKey:USERAUTHKEY];
     [standUDef setObject:@""  forKey:USERID];
     [standUDef setObject:@""  forKey:USERNAME];
+    
+    [standUDef setObject:@"" forKey:XMPP_USERID];
+    
+    [standUDef setObject:@"" forKey:XMPP_PASS];
+
+    
     [standUDef setObject:NO forKey:@"switchOnorOff"];
     
     [standUDef synchronize];

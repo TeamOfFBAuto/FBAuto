@@ -140,15 +140,16 @@
     navigationView.backgroundColor = [UIColor clearColor];
     
     //编辑按钮
-    editButton =[[UIButton alloc]initWithFrame:CGRectMake(320 - 22 - 10,11,22,22)];
+    editButton =[[UIButton alloc]initWithFrame:CGRectMake(320 - 40,0,40,44)];
     [editButton addTarget:self action:@selector(clickToPublish:) forControlEvents:UIControlEventTouchUpInside];
+//    editButton.backgroundColor = [UIColor orangeColor];
     [editButton setImage:[UIImage imageNamed:@"xubxhe_fabu_44_44"] forState:UIControlStateNormal];
     [navigationView addSubview:editButton];
     
     [self.navigationController.navigationBar addSubview:navigationView];
     
     //搜索
-    searchView = [[LSearchView alloc]initWithFrame:CGRectMake(10, (44 - 30)/2.0, 320 - 3 * 10 - editButton.width, 30) placeholder:@"请输入车型、电话、姓名或公司名" logoImage:[UIImage imageNamed:@"sousuo_icon26_26"] maskViewShowInView:self.view searchBlock:^(SearchStyle actionStyle, NSString *searchText) {
+    searchView = [[LSearchView alloc]initWithFrame:CGRectMake(10, (44 - 30)/2.0, 320 - 3 * 10 - 22, 30) placeholder:@"请输入车型、电话、姓名或公司名" logoImage:[UIImage imageNamed:@"sousuo_icon26_26"] maskViewShowInView:self.view searchBlock:^(SearchStyle actionStyle, NSString *searchText) {
         
         [self searchStyle:actionStyle searchText:searchText];
         
@@ -411,6 +412,13 @@
         NSLog(@"failDic %@",failDic);
         
         [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
+        
+        
+        int errocode = [[failDic objectForKey:@"errocode"]integerValue];
+        if (errocode == 1) {
+            NSLog(@"结果为空");
+            [weakSelf reloadData:nil isReload:_table.isReloadData requestType:CAR_LIST];
+        }
         
         if (_table.isReloadData) {
             

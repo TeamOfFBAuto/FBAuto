@@ -12,7 +12,9 @@
 
 #define FBAUTO_CARSOURCE_TIME @"FBAUTO_CARSOURE_TIME"//车型数据请求时间
 
-#define ERROR_INFO @"ERRO_INFO" //错误信息
+#define ERROR_INFO @"erroinfo" //错误信息
+
+#define ERROR_CODE @"errocode" //错误代码
 
 #define NEED_REQUEST_CAR_BRAND @"NEED_REQUEST_CAR_BRAND" //需要请求车型数据
 

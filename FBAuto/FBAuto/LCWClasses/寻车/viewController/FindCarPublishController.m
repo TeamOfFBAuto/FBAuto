@@ -130,7 +130,7 @@
     line2.backgroundColor = [UIColor colorWithHexString:@"b4b4b4"];
     [secondBgView addSubview:line2];
     
-    [secondBgView addSubview:[self createLabelFrame:CGRectMake(10, 45*5, 100, 45.f) text:@"车源描述" alignMent:NSTextAlignmentLeft textColor:[UIColor blackColor]]];
+    [secondBgView addSubview:[self createLabelFrame:CGRectMake(10, 45*5, 100, 45.f) text:@"寻车描述" alignMent:NSTextAlignmentLeft textColor:[UIColor blackColor]]];
     
     descriptionTF = [[UITextField alloc]initWithFrame:CGRectMake(80 - 10, 45 * 5, 175, 45)];
     descriptionTF.delegate = self;

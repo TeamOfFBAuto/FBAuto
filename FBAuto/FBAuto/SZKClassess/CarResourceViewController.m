@@ -673,6 +673,12 @@
         
         [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
         
+        int errocode = [[failDic objectForKey:@"errocode"]integerValue];
+        if (errocode == 1) {
+            NSLog(@"结果为空");
+            [weakSelf reloadData:nil isReload:_table.isReloadData requestType:CAR_LIST];
+        }
+        
         if (_table.isReloadData) {
             
             _page --;

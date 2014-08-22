@@ -168,7 +168,10 @@
     NSString *descrip = descriptionTF.text;
     descrip = descrip ? descrip : @"无";
     
-    NSString *url = @"";
+    NSString *url = @"0";
+    
+    _photo = _photo ? _photo : @"";
+    
     if (self.actionStyle == Action_Add) {
         
         url = [NSString stringWithFormat:@"%@&authkey=%@&car=%@&spot_future=%d&color_out=%d&color_in=%d&carfrom=%d&cardiscrib=%@&price=%@&photo=%@",FBAUTO_CARSOURCE_ADD_SOURCE,[GMAPI getAuthkey],_car,_spot_future,_color_out,_color_in,_carfrom,descrip,priceTF.text,_photo];
@@ -1017,12 +1020,12 @@
 
 - (void)clickToPublish:(UIButton *)btn
 {
-    if (photosArray.count <= 0)
-    {
-        [self alertText:@"图片不能为空"];
-        
-        return;
-    }
+//    if (photosArray.count <= 0)
+//    {
+//        [self alertText:@"图片不能为空"];
+//        
+//        return;
+//    }
     
     Section_Button *btn1 = (Section_Button *)[secondBgView viewWithTag:100];
     
