@@ -304,7 +304,6 @@
     
     __weak typeof (self)weakSelf = self;
     __weak typeof (_tableView)btableview = _tableView;
-    
     //设置上下箭头的点击
     [cell setAddviewBlock:^{
         
@@ -334,7 +333,6 @@
         }else if (indexPathArray.count == 1){//last和flag为同一个
             if (weakSelf.flagHeight == 120) {
                 weakSelf.flagHeight = 60;
-                
             }else if (weakSelf.flagHeight == 60){
                 weakSelf.flagHeight = 120;
                 
@@ -369,7 +367,7 @@
                 
                 break;
             case 11://修改
-                
+            {
                 if (indexPath.row < _dataArray.count) {
                     CarSourceClass *aCar = [_dataArray objectAtIndex:indexPath.row];
                     
@@ -389,12 +387,17 @@
                         [weakSelf.navigationController pushViewController:detail animated:YES];
                     }
                 }
-                
-                
-                
+            }
+ 
                 break;
             case 12://刷新
-                
+            {
+                _page = 1;
+                weakSelf.lastIndexPath = nil;
+                self.flagIndexPath = nil;
+                weakSelf.flagHeight = 60;
+                [_tableView showRefreshHeader:YES];
+            }
                 break;
             case 13://分享
                 

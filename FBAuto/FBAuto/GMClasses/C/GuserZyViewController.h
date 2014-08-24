@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @class GyhzyTableViewCell;
 @class GuserModel;
-@interface GuserZyViewController : FBBaseViewController<UITableViewDataSource,UITableViewDelegate,RefreshDelegate>
+@interface GuserZyViewController : FBBaseViewController<UITableViewDataSource,UITableViewDelegate,RefreshDelegate,UIAlertViewDelegate>
 
 {
     RefreshTableView *_tableView;//主tableview

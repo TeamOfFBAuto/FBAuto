@@ -28,6 +28,17 @@
 
 @implementation GuserZyViewController
 
+
+
+- (void)dealloc
+{
+    
+    
+    NSLog(@"%s",__FUNCTION__);
+}
+
+
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -69,18 +80,18 @@
 //获取用户信息
 -(void)prepareUeserInfo{
     NSString *api = [NSString stringWithFormat:FBAUTO_GET_USER_INFORMATION,self.userId];
+    
     NSLog(@"获取用户信息 api === %@",api);
-    NSURL *url = [NSURL URLWithString:api];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        NSDictionary *dataInfo = [dic objectForKey:@"datainfo"];
-        
-        NSLog(@"%@",dic);
-        
+    
+    LCWTools *tool = [[LCWTools alloc]initWithUrl:api isPost:NO postData:nil];
+    [tool requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
+
+        NSLog(@"%@",dataInfo);
+
         GuserModel *guserModel = [[GuserModel alloc]initWithDic:dataInfo];
         self.guserModel = guserModel;
-        
+
         //商家信息
         self.nameLabel.text = guserModel.name;
         self.saleTypeBtn.titleLabel.text = guserModel.usertype;//商家类型
@@ -90,25 +101,30 @@
             self.saleTypeBtn.titleLabel.text = @"商家";
         }
         self.phoneNumLabel.text = guserModel.phone;
-        
+
         NSString *sheng = [FBCityData cityNameForId:[guserModel.province intValue]];
         NSString *shi = [FBCityData cityNameForId:[guserModel.city intValue]];
-        
+
         self.addressLabel.text = [NSString stringWithFormat:@"%@%@",sheng,shi];
         [self.headImage sd_setImageWithURL:[NSURL URLWithString:guserModel.headimage] placeholderImage:[UIImage imageNamed:@"detail_test"]];
-        
-        NSLog(@"%@",self.phoneNumLabel.text);
-        NSLog(@"%@",self.nameLabel.text);
-        NSLog(@"%@",self.addressLabel.text);
-        NSLog(@"%@",self.saleTypeBtn);
-        
-        
-        
-        [_tableView reloadData];
-        
+    } failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSString *str = [failDic objectForKey:ERROR_INFO];
+        UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:str delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [al show];
     }];
     
+    
 }
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+}
+
+
+
 
 //获取用户车源信息
 -(void)prepareUserCar{

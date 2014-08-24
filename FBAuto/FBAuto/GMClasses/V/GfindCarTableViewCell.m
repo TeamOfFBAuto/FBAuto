@@ -112,6 +112,12 @@
     
     NSLog(@"%f",height);
     
+    if (height == 60) {
+        [self.addBtn setImage:[UIImage imageNamed:@"jiantou_down18_10.png"] forState:UIControlStateNormal];
+    }else if (height == 120){
+        [self.addBtn setImage:[UIImage imageNamed:@"jiantou_up18_10.png"] forState:UIControlStateNormal];
+    }
+    
     return height;
 }
 

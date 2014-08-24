@@ -91,8 +91,8 @@
         self.phoneLabel.textColor = RGBCOLOR(129, 129, 129);
         self.phoneLabel.font = [UIFont systemFontOfSize:13];
         
-        self.dizhiLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(titleLabel1.frame)+5, titleLabel1.frame.origin.y, 260, titleLabel1.frame.size.height)];
-        self.dizhiLabel.font = [UIFont systemFontOfSize:13];
+        self.dizhiLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(titleLabel1.frame)+5, titleLabel1.frame.origin.y, 260, titleLabel1.frame.size.height+1)];
+        self.dizhiLabel.font = [UIFont systemFontOfSize:12];
         self.dizhiLabel.textColor = RGBCOLOR(129, 129, 129);
         
         

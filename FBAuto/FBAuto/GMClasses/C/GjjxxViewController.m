@@ -37,8 +37,34 @@
     
     NSLog(@"%s",__FUNCTION__);
     
-    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(gsave)];
-    self.navigationItem.rightBarButtonItem = rightBtn;
+//    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(gsave)];
+//    self.navigationItem.rightBarButtonItem = rightBtn;
+    
+    
+    UIView *customRbtn = [[UIView alloc]initWithFrame:CGRectMake(10, 0, 42, 23)];
+    customRbtn.layer.borderWidth = 0.5f;
+    customRbtn.layer.cornerRadius = 4;
+    customRbtn.layer.borderColor = [[UIColor whiteColor]CGColor];
+    
+    UILabel *title = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 42, 23)];
+    title.text = @"完成";
+    title.textColor = [UIColor whiteColor];
+    title.font = [UIFont systemFontOfSize:11];
+    title.center = customRbtn.center;
+    
+    [customRbtn addSubview:title];
+    UIBarButtonItem *customRightBtn = [[UIBarButtonItem alloc]initWithCustomView:customRbtn];
+    
+    
+    UIBarButtonItem * space_button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    space_button.width = -5;
+    NSLog(@"%s",__FUNCTION__);
+    
+    UITapGestureRecognizer *ggsave = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(gsave)];
+    [customRbtn addGestureRecognizer:ggsave];
+    self.navigationItem.rightBarButtonItems = @[space_button,customRightBtn];
+    
+    
     
     
     //框
