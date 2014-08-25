@@ -291,7 +291,7 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
     [formatter setDateStyle:NSDateFormatterMediumStyle];
     [formatter setTimeStyle:NSDateFormatterShortStyle];
-    [formatter setDateFormat:@"YYYY年MM月"];
+    [formatter setDateFormat:@"YYYY年MM月dd日"];
     NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[placetime doubleValue]];
     NSString *confromTimespStr = [formatter stringFromDate:confromTimesp];
     return confromTimespStr;

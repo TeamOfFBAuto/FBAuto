@@ -123,6 +123,7 @@
     FBChatViewController *chat = [[FBChatViewController alloc]init];
     XMPPMessageModel *aModel = [_dataArray objectAtIndex:indexPath.row];
     chat.chatWithUser = aModel.fromPhone;
+    chat.chatWithUserName = aModel.fromName;
     chat.chatUserId = aModel.fromId;
     chat.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:chat animated:YES];

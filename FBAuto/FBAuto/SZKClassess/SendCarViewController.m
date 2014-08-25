@@ -439,13 +439,11 @@
         
         UIImage * newImage = [SzkAPI scaleToSizeWithImage:eImage size:CGSizeMake(eImage.size.width>1024?1024:eImage.size.width,eImage.size.width>1024?eImage.size.height*1024/eImage.size.width:eImage.size.height)];
         
-        NSData *imageData=UIImageJPEGRepresentation(newImage,0.5);
+        NSData *imageData=UIImageJPEGRepresentation(newImage,1);
         
         NSString *photoName=[NSString stringWithFormat:@"FBAuto%d.png",i];
         
         NSLog(@"photoName:%@",photoName);
-        
-        NSLog(@"图片大小:%ld",[imageData length]);
         
         [uploadImageRequest addData:imageData withFileName:photoName andContentType:@"image/png" forKey:@"photo[]"];
     }
@@ -525,6 +523,7 @@
     [UIView animateWithDuration:0.5 animations:^{
         
         bigBgScroll.contentOffset = CGPointMake(0, iPhone5 ? 200 : 150 + 101);
+        bigBgScroll.scrollEnabled = NO;
     }];
 }
 
@@ -536,6 +535,7 @@
     [UIView animateWithDuration:0.5 animations:^{
         
         bigBgScroll.contentOffset = CGPointMake(0, 0);
+        bigBgScroll.scrollEnabled = YES;
     }];
 }
 
@@ -1135,7 +1135,9 @@
         //压缩图片 不展示原图
         UIImage *originImage = [info objectForKey:UIImagePickerControllerOriginalImage];
         
-        UIImage *scaleImage = [self scaleImage:originImage toScale:0.5];
+        
+        UIImage * scaleImage = [SzkAPI scaleToSizeWithImage:originImage size:CGSizeMake(originImage.size.width>1024?1024:originImage.size.width,originImage.size.width>1024?originImage.size.height*1024/originImage.size.width:originImage.size.height)];
+//        UIImage *scaleImage = [self scaleImage:originImage toScale:0.5];
         
         NSData *data;
         
@@ -1188,19 +1190,6 @@
         
         
         [self updateScrollViewAndPhotoButton:newImage imageUrl:nil];
-        
-        
-//        NSURL * url = [[mediaInfoArray objectAtIndex:i] objectForKey:@"UIImagePickerControllerReferenceURL"];
-//        
-//        NSString * url_string = [[url absoluteString] stringByReplacingOccurrencesOfString:@"/" withString:@""];
-//        
-//        url_string = [url_string stringByAppendingString:@".png"];
-//        
-//        [allAssesters addObject:url_string];
-//        
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
-////            [ZSNApi saveImageToDocWith:url_string WithImage:image];
-//        });
         
     }
     

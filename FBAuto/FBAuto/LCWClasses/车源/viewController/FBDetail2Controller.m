@@ -117,7 +117,12 @@
         //参数
         self.car_modle_label.text = carName;
         
-        self.car_realPrice_label.text = [NSString stringWithFormat:@"%@万元",[dic objectForKey:@"price"]];
+        NSString *price = [dic objectForKey:@"price"];
+        if (price.length == 0) {
+            price = @"0";
+        }
+        
+        self.car_realPrice_label.text = [NSString stringWithFormat:@"%@万元",price];
         self.car_timelimit_label.text = [dic objectForKey:@"spot_future"];
         self.car_outColor_Label.text = [dic objectForKey:@"color_out"];
         self.car_inColor_label.text = [dic objectForKey:@"color_in"];

@@ -92,7 +92,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.titleLabel.text = self.chatWithUser;
+    self.titleLabel.text = (self.chatWithUserName.length > 0) ? self.chatWithUserName : self.chatWithUser;
     
     UIButton *rightButton =[[UIButton alloc]initWithFrame:CGRectMake(0,8,30,21.5)];
     [rightButton addTarget:self action:@selector(clickToHome:) forControlEvents:UIControlEventTouchUpInside];
