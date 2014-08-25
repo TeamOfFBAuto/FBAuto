@@ -10,6 +10,8 @@
 #import "XMPPStatics.h"
 #import "RefreshTableView.h"
 
+#import <ShareSDK/ShareSDK.h>
+
 #define FBAUTO_CARSOURCE_TIME @"FBAUTO_CARSOURE_TIME"//车型数据请求时间
 
 #define ERROR_INFO @"erroinfo" //错误信息
@@ -41,6 +43,11 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 #pragma - mark 获取头像
 
 + (NSString *)headImageForUserId:(NSString *)userId;
+
+#pragma - mark 分享
+
++ (void)shareText:(NSString *)text  title:(NSString *)title image:(UIImage *)aImage linkUrl:(NSString *)linkUrl ShareType:(ShareType)aShareType;
+
 
 #pragma - mark 小工具
 

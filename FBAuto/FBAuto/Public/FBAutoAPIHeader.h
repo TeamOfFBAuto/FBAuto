@@ -178,4 +178,9 @@ alpha:(a)]
 
 #define FBAUTO_CHAT_OFFLINE @"http://fbautoapp.fblife.com/index.php?c=interface&a=pushmsg&uid=%@&optype=%@&fromuid=%@&fromphone=%@"//离线消息通知服务端
 
+// 分享相关接口========
+#define FBAUTO_SHARE_CAR_SOURCE @"http://fbautoapp.fblife.com/index.php?c=web&a=singleCheyuan&cid=%@"//车源分享
+
+#define FBAUTO_SHARE_CAR_FIND @"http://fbautoapp.fblife.com/index.php?c=web&a=singleXunche&xid=%@" //寻车分享
+
 #endif
