@@ -9,7 +9,9 @@
 #import "SJAvatarBrowser.h"
 static CGRect oldframe;
 @implementation SJAvatarBrowser
-+(void)showImage:(UIImageView *)avatarImageView{
++(void)showImage:(UIImageView *)avatarImageView imageUrl:(NSString *)imageUrl{
+    
+    NSLog(@"imageUrl %@",imageUrl);
     UIImage *image=avatarImageView.image;
     UIWindow *window=[UIApplication sharedApplication].keyWindow;
     UIView *backgroundView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
@@ -17,7 +19,7 @@ static CGRect oldframe;
     backgroundView.backgroundColor=[UIColor blackColor];
     backgroundView.alpha=0;
     UIImageView *imageView=[[UIImageView alloc]initWithFrame:oldframe];
-    imageView.image=image;
+    [imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:image];
     imageView.tag=1;
     [backgroundView addSubview:imageView];
     [window addSubview:backgroundView];

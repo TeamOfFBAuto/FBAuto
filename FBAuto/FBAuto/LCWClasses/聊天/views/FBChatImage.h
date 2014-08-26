@@ -21,6 +21,8 @@ typedef void(^ LoadFailBlock)(FBChatImage *chatImageView);//load失败
     UIActivityIndicatorView *indicator;
 }
 
+@property(nonatomic,retain)NSString *imageUrl;
+
 - (void)showBigImage:(ClickBlock )clickBlock;
 
 - (void)startLoading;

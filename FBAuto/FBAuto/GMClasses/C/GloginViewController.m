@@ -141,18 +141,16 @@
             NSString *userid = [datainfo objectForKey:@"uid"];
             NSString *username = [datainfo objectForKey:@"name"];
             NSString *authkey = [datainfo objectForKey:@"authkey"];
-            
-            //            NSString *phone = [datainfo objectForKey:@"phone"];
-            
+            NSString *open = [datainfo objectForKey:@"open"];
+                        
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             
             
             //聊天使用
             
             [defaults setObject:name forKey:XMPP_USERID];
-            //            [defaults setObject:[LCWTools md5:passw] forKey:XMPP_PASS];
             
-            [defaults setObject:passw forKey:XMPP_PASS];
+            [defaults setObject:open forKey:XMPP_PASS];
             
             [defaults setObject:@"60.18.147.4" forKey:XMPP_SERVER];
             [defaults setObject:userid forKey:USERID];

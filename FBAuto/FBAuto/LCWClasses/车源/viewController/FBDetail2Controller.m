@@ -237,10 +237,16 @@
     NSMutableArray *arr = [NSMutableArray array];
     for (NSString *url in imageUrlsArray) {
         
+        NSMutableString *str = [NSMutableString stringWithString:url];
+        
+        [str replaceOccurrencesOfString:@"small" withString:@"ori" options:0 range:NSMakeRange(0, str.length)];
+        
+        [arr addObject:str];
+        
     }
     
     FBPhotoBrowserController *browser = [[FBPhotoBrowserController alloc]init];
-    browser.imagesArray = imageUrlsArray;
+    browser.imagesArray = arr;
     browser.showIndex = (int)btn.tag - 100;
     browser.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:browser animated:YES];

@@ -568,6 +568,14 @@
                 [imageIdArr addObject:imageId];
             }
             
+            [weakChatV showBigImage:^(UIImageView *imageView) {
+                
+                NSMutableString *str = [NSMutableString stringWithString:imageLink];
+                [str replaceOccurrencesOfString:@"small" withString:@"ori" options:0 range:NSMakeRange(0, str.length)];
+                [SJAvatarBrowser showImage:imageView imageUrl:str];
+                
+            }];
+            
             [weakChatV stopLoadingWithFailBlock:nil];//停止菊花
             [weakChatV sd_setImageWithURL:[NSURL URLWithString:imageLink] placeholderImage:[UIImage imageNamed:@"detail_test"]];
             
@@ -636,18 +644,7 @@
         }
     }failBlock:^(NSDictionary *failDic, NSError *erro) {
         NSLog(@"failDic %@",failDic);
-//        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
-        
-        DXAlertView *alert = [[DXAlertView alloc]initWithTitle:[failDic objectForKey:ERROR_INFO] contentText:nil leftButtonTitle:nil rightButtonTitle:@"确定" isInput:NO];
-        [alert show];
-        
-        alert.leftBlock = ^(){
-            NSLog(@"确定");
-        };
-        alert.rightBlock = ^(){
-            NSLog(@"取消");
-            
-        };
+        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
     }];
 }
 
@@ -689,7 +686,7 @@
         
         [aImageView showBigImage:^(UIImageView *imageView) {
             
-            [SJAvatarBrowser showImage:imageView];
+            [SJAvatarBrowser showImage:imageView imageUrl:nil];
             
         }];
         
@@ -734,7 +731,10 @@
         
         [aImageView showBigImage:^(UIImageView *imageView) {
             
-            [SJAvatarBrowser showImage:imageView];
+            
+            NSMutableString *str = [NSMutableString stringWithString:url];
+            [str replaceOccurrencesOfString:@"small" withString:@"ori" options:0 range:NSMakeRange(0, str.length)];
+            [SJAvatarBrowser showImage:imageView imageUrl:str];
             
         }];
         
