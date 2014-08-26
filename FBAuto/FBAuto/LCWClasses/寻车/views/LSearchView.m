@@ -50,6 +50,8 @@
 
 - (void)cancelSearch
 {
+    maskView.hidden = YES;
+    searchBlock (Search_Cancel,nil);
     [_searchField resignFirstResponder];
 }
 
@@ -71,8 +73,8 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    maskView.hidden = YES;
-   searchBlock (Search_Cancel,nil);
+//    maskView.hidden = YES;
+//   searchBlock (Search_Cancel,nil);
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField

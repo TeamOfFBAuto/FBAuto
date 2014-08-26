@@ -75,8 +75,7 @@
     NSString *_lastRequest;//判断两次 请求接口是否一致,如果一致需要更新dataArray
     
     NSString *_searchKeyword;//搜索关键词
-    
-    NSArray *_dataArray;
+
     
     UIView *maskView;//遮罩
     
@@ -171,6 +170,35 @@
     // Dispose of any resources that can be recreated.
 }
 
+/**
+ *  清空筛选条件
+ */
+- (void)clearSearchCondition
+{
+    _car = @"000000000";
+    _spot_future = 0;
+    _color_out = 0;
+    _color_in = 0;
+    _carfrom = 0;
+    _usertype = 0;
+    _province = 0;
+    _city = 0;
+    _page = 1;
+    
+    [menu_Advanced removeFromSuperview];
+    menu_Advanced = nil;//高级
+    [menu_Standard removeFromSuperview];
+    menu_Standard = nil;//规格
+    [menu_Source removeFromSuperview];
+    menu_Source = nil;//来源
+    [menu_Timelimit removeFromSuperview];
+    menu_Timelimit = nil;//期限
+    [menu_Car removeFromSuperview];
+    menu_Car = nil;//车型选择
+    
+    [self conditionViews];
+}
+
 #pragma - mark 添加寻车信息
 
 - (void)createNavigationView
@@ -216,10 +244,18 @@
     }else if (aStyle == Search_Search)
     {
         if (text && ![text isEqualToString:@""]) {
-            FBSearchResultController *result = [[FBSearchResultController alloc]initWithStyle:Search_carSource];
-            result.searchKeyword = text;
-            result.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:result animated:YES];
+//            FBSearchResultController *result = [[FBSearchResultController alloc]initWithStyle:Search_carSource];
+//            result.searchKeyword = text;
+//            result.hidesBottomBarWhenPushed = YES;
+//            [self.navigationController pushViewController:result animated:YES];
+            
+            _searchKeyword = text;
+            
+            [self clearSearchCondition];
+            
+//            [self searchCarSourceWithKeyword:text page:1];
+            
+            [_table showRefreshHeader:YES];
             
             [self updateSearchViewNormal:YES];
         }
@@ -284,6 +320,11 @@
         [menuBgView addSubview:line];
     }
     
+    [self conditionViews];
+}
+
+- (void)conditionViews
+{
     menu_Advanced = [[Menu_Advanced alloc]initWithFrontView:menuBgView contentStyle:Content_All];
     
     [menu_Advanced selectBlock:^(BlockStyle style, NSString *colorName, NSString *colorId) {
@@ -349,6 +390,7 @@
         
         [self updateParam];
     }];
+
 }
 
 #pragma - mark 通过修改参数获取数据
@@ -368,14 +410,9 @@
     
     //比较两次请求关键词是否一致,如果不一致，则刷新数据
     
-    if (![_searchKeyword isEqualToString:keyword]) {
-        
-        _dataArray = nil;
-    }
-    
     _searchKeyword = keyword;
     
-    NSString *url = [NSString stringWithFormat:FBAUTO_CARSOURCE_SEARCH,keyword,_searchPage,KPageSize];
+    NSString *url = [NSString stringWithFormat:FBAUTO_CARSOURCE_SEARCH,keyword,_table.pageNum,KPageSize];
     
     NSLog(@"搜索车源列表 %@",url);
     
@@ -389,15 +426,6 @@
         NSDictionary *dataInfo = [result objectForKey:@"datainfo"];
         int total = [[dataInfo objectForKey:@"total"]intValue];
         
-        if (_searchPage < total) {
-            
-            _table.isHaveMoreData = YES;
-        }else
-        {
-            _table.isHaveMoreData = NO;
-        }
-        
-        
         NSArray *data = [dataInfo objectForKey:@"data"];
         
         NSMutableArray *arr = [NSMutableArray arrayWithCapacity:data.count];
@@ -409,17 +437,17 @@
             [arr addObject:aCar];
         }
         
-        [weakSelf reloadData:arr isReload:_table.isReloadData requestType:CAR_SEARCH];
+        [_table reloadData:arr total:total];
         
     } failBlock:^(NSDictionary *failDic, NSError *erro) {
         
         NSLog(@"failDic %@",failDic);
         
+        [_table loadFail];
+        
         if (_table.isReloadData) {
             
-            _searchPage --;
-            
-            [_table performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+//            [_table loadFail];
         }else
         {
             [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
@@ -619,7 +647,7 @@
 - (void)getCarSourceList
 {
     _car = (_car == nil) ? @"000000000" : _car;
-    NSString *url = [NSString stringWithFormat:@"%@&car=%@&spot_future=%d&color_out=%d&color_in=%d&carfrom=%d&usertype=%d&province=%d&city=%d&page=%d&ps=%d",FBAUTO_CARSOURCE_LIST,_car,_spot_future,_color_out,_color_in,_carfrom,_usertype,_province,_city,_page,KPageSize];
+    NSString *url = [NSString stringWithFormat:@"%@&car=%@&spot_future=%d&color_out=%d&color_in=%d&carfrom=%d&usertype=%d&province=%d&city=%d&page=%d&ps=%d",FBAUTO_CARSOURCE_LIST,_car,_spot_future,_color_out,_color_in,_carfrom,_usertype,_province,_city,_table.pageNum,KPageSize];
     
     NSLog(@"车源列表 %@",url);
     
@@ -639,14 +667,6 @@
             
             int total = [[dataInfo objectForKey:@"total"]intValue];
             
-            if (_page < total) {
-                
-                _table.isHaveMoreData = YES;
-            }else
-            {
-                _table.isHaveMoreData = NO;
-            }
-            
             NSArray *data = [dataInfo objectForKey:@"data"];
             
             NSMutableArray *arr = [NSMutableArray arrayWithCapacity:data.count];
@@ -658,12 +678,14 @@
                 [arr addObject:aCar];
             }
             
-            [weakSelf reloadData:arr isReload:_table.isReloadData requestType:CAR_LIST];
+//            [weakSelf reloadData:arr isReload:_table.isReloadData];
+            
+            [_table reloadData:arr total:total];
             
         }else
         {
-            _table.isHaveMoreData = NO;
-            [weakSelf reloadData:nil isReload:_table.isReloadData requestType:CAR_LIST];
+            
+            [_table reloadData:nil total:0];
         }
         
         
@@ -677,41 +699,12 @@
         int errocode = [[failDic objectForKey:@"errocode"]integerValue];
         if (errocode == 1) {
             NSLog(@"结果为空");
-            [weakSelf reloadData:nil isReload:_table.isReloadData requestType:CAR_LIST];
-        }
-        
-        if (_table.isReloadData) {
-            
-            _page --;
-            
-            [_table performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
+            [_table reloadData:nil total:0];
         }
         
     }];
 }
 
-/**
- *  刷新数据列表
- *
- *  @param dataArr  新请求的数据
- *  @param isReload 判断在刷新或者加载更多
- */
-- (void)reloadData:(NSArray *)dataArr isReload:(BOOL)isReload requestType:(NSString *)requestType
-{
-    
-    if (isReload) {
-        
-        _dataArray = dataArr;
-        
-    }else
-    {
-        NSMutableArray *newArr = [NSMutableArray arrayWithArray:_dataArray];
-        [newArr addObjectsFromArray:dataArr];
-        _dataArray = newArr;
-    }
-    
-    [_table performSelector:@selector(finishReloadigData) withObject:nil afterDelay:1.0];
-}
 
 - (void)clickToDetail:(NSString *)infoId car:(NSString *)car
 {
@@ -894,44 +887,34 @@
 {
     NSLog(@"loadNewData");
     
-    //    if (_isSearch) {
-    //
-    //        [self searchCarSourceWithKeyword:_searchKeyword page:1];
-    //
-    //    }else
-    //    {
-    _car = @"000000000";
-    _spot_future = 0;
-    _color_out = 0;
-    _color_in = 0;
-    _carfrom = 0;
-    _usertype = 0;
-    _province = 0;
-    _city = 0;
-    _page = 1;
-    [self getCarSourceList];
-    //    }
+    if (_searchKeyword.length > 0) {
+        
+        [self searchCarSourceWithKeyword:_searchKeyword page:_table.pageNum];
+        
+    }else
+    {
+         [self getCarSourceList];
+    }
 }
 
 - (void)loadMoreData
 {
     NSLog(@"loadMoreData");
     
-    //    if (_isSearch) {
-    //
-    //        _searchPage ++;
-    //        [self searchCarSourceWithKeyword:_searchKeyword page:_searchPage];
-    //
-    //    }else
-    //    {
-    _page ++;
-    [self getCarSourceList];
-    //    }
+    if (_searchKeyword.length > 0) {
+        
+        [self searchCarSourceWithKeyword:_searchKeyword page:_table.pageNum];
+        
+    }else
+    {
+        [self getCarSourceList];
+    }
+
 }
 
 - (void)didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CarSourceClass *aCar = (CarSourceClass *)[_dataArray objectAtIndex:indexPath.row];
+    CarSourceClass *aCar = (CarSourceClass *)[_table.dataArray objectAtIndex:indexPath.row];
     
     [self clickToDetail:aCar.id car:aCar.car];
 }
@@ -952,7 +935,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _dataArray.count;
+    return _table.dataArray.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -975,8 +958,8 @@
         cell.contentView.backgroundColor = [UIColor whiteColor];
     }
     
-    if (indexPath.row < _dataArray.count) {
-        CarSourceClass *aCar = [_dataArray objectAtIndex:indexPath.row];
+    if (indexPath.row < _table.dataArray.count) {
+        CarSourceClass *aCar = [_table.dataArray objectAtIndex:indexPath.row];
         [cell setCellDataWithModel:aCar];
     }
     

@@ -13,10 +13,17 @@
 -(id)initWithDic:(NSDictionary *)dic{
     self = [super init];
     if (self) {
-        [self setValuesForKeysWithDictionary:dic];
+        
+        if ([dic isKindOfClass:[NSDictionary class]]) {
+            [self setValuesForKeysWithDictionary:dic];
+        }
     }
     return self;
 }
 
+-(void)setValue:(id)value forUndefinedKey:(NSString *)key
+{
+    NSLog(@"forUndefinedKey %@",key);
+}
 
 @end

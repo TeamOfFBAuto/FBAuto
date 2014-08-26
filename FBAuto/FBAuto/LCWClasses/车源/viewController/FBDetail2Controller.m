@@ -227,8 +227,18 @@
 
 #pragma - mark click 事件
 
+/**
+ *  http://fbautoapp.fblife.com/resource/photo/dc/0a/thumb_50_ori.jpg
+ *
+ *  @param btn <#btn description#>
+ */
 - (void)clickToBigPhoto:(ClickImageView *)btn
 {
+    NSMutableArray *arr = [NSMutableArray array];
+    for (NSString *url in imageUrlsArray) {
+        
+    }
+    
     FBPhotoBrowserController *browser = [[FBPhotoBrowserController alloc]init];
     browser.imagesArray = imageUrlsArray;
     browser.showIndex = (int)btn.tag - 100;

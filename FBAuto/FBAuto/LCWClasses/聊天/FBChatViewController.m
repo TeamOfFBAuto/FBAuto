@@ -603,6 +603,54 @@
     
 }
 
+/**
+ *  添加好友
+ *
+ *  @param friendId userId
+ */
+- (void)addFriend:(NSString *)friendId
+{
+    NSLog(@"provinceId %@",friendId);
+    
+    LCWTools *tools = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_ADD,[GMAPI getAuthkey],friendId]isPost:NO postData:nil];
+    
+    [tools requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"result %@ erro %@",result,[result objectForKey:@"errinfo"]);
+        
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            
+            //            int erroCode = [[result objectForKey:@"errcode"]intValue];
+            NSString *erroInfo = [result objectForKey:@"errinfo"];
+            
+            DXAlertView *alert = [[DXAlertView alloc]initWithTitle:erroInfo contentText:nil leftButtonTitle:nil rightButtonTitle:@"确定" isInput:NO];
+            [alert show];
+            
+            alert.leftBlock = ^(){
+                NSLog(@"确定");
+            };
+            alert.rightBlock = ^(){
+                NSLog(@"取消");
+                
+            };
+            
+        }
+    }failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"failDic %@",failDic);
+//        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
+        
+        DXAlertView *alert = [[DXAlertView alloc]initWithTitle:[failDic objectForKey:ERROR_INFO] contentText:nil leftButtonTitle:nil rightButtonTitle:@"确定" isInput:NO];
+        [alert show];
+        
+        alert.leftBlock = ^(){
+            NSLog(@"确定");
+        };
+        alert.rightBlock = ^(){
+            NSLog(@"取消");
+            
+        };
+    }];
+}
+
 
 #pragma mark - 视图创建
 #pragma mark
@@ -1048,8 +1096,9 @@
 
 - (void)clickToAdd:(UIButton *)btn
 {
-    FBAddFriendsController *add = [[FBAddFriendsController alloc]init];
-    [self.navigationController pushViewController:add animated:YES];
+    
+    [self addFriend:self.chatUserId];
+
 }
 
 - (void)clickToHome:(UIButton *)btn
