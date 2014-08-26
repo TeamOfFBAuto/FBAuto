@@ -52,6 +52,10 @@
         _table.tableHeaderView = [self tableHeaderView];
     }
     
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 10)];
+    view.backgroundColor = [UIColor clearColor];
+    _table.tableFooterView = view;
+    
     [self getFriendlist];
     
     xmppServer = [XMPPServer shareInstance];
@@ -101,7 +105,11 @@
             NSMutableArray *dataArr = [NSMutableArray arrayWithCapacity:dataInfo.count];
             for (NSDictionary *aDic in dataInfo) {
                 FBFriendModel *aFriend = [[FBFriendModel alloc]initWithDictionary:aDic];
-                [dataArr addObject:aFriend];
+                
+                if (aFriend.buddyname.length > 0) {
+                    [dataArr addObject:aFriend];
+                }
+                
             }
             
             [weakSelf groupForFriends:dataArr];
