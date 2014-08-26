@@ -15,6 +15,9 @@
 
 #import "FBCityData.h"
 
+
+#import "GmPrepareNetData.h"
+
 @implementation GzhuceTableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -320,9 +323,15 @@
             UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请输入正确的手机号码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [al show];
         }else{
+            
+            
             NSLog(@"%@",tf.text);
+            
+            
             _yanzhengBtn1.userInteractionEnabled = NO;
-            NSString *str = [NSString stringWithFormat:FBAUTO_GET_VERIFICATION_CODE,tf.text,1];
+            NSString *str = [NSString stringWithFormat:FBAUTO_GET_VERIFICATION_CODE,tf.text,2];
+            
+            NSLog(@"%@",str);
             NSURL *url = [NSURL URLWithString:str];
             NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
             [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
@@ -433,23 +442,51 @@
         
         
         if ([guerzhuce.password isEqualToString:guerzhuce.password1] && [self indoGeren]) {
-            SzkLoadData *netr = [[SzkLoadData alloc]init];
+            
             NSString *str = [NSString stringWithFormat:FBAUTO_REGISTERED,guerzhuce.phone,guerzhuce.password,guerzhuce.name,(long)guerzhuce.province,(long)guerzhuce.city,1,guerzhuce.code,guerzhuce.token,@""];
-            
-            NSLog(@"个人注册接口======= %@",str);
-            
-            [netr SeturlStr:str block:^(NSArray *arrayinfo, NSString *errorindo, NSInteger errcode) {
-                if (errcode==0) {
-                    UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"注册成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                    [al show];
-                    NSLog(@"cccarray==%@",arrayinfo);
+            NSString *api = [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            NSURL *url = [NSURL URLWithString:api];
+            NSURLRequest *request = [NSURLRequest requestWithURL:url];
+            [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                if (data.length > 0) {
+                    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+                    if ([dic isKindOfClass:[NSDictionary class]]) {
+                        int erroCode = [[dic objectForKey:@"errcode"]intValue];
+                        NSString *erroInfo = [dic objectForKey:@"errinfo"];
+                        NSLog(@"个人注册接口 errcode:%d",erroCode);
+                        NSLog(@"个人注册接口 错误信息:%@",erroInfo);
+                        if (erroCode !=0) {
+                            UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:erroInfo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                            [al show];
+                        }else if (erroCode == 0){
+                            UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"注册成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                            al.tag = 133;
+                            [al show];
+                        }
+                        
+                    }
+                    
                 }else{
-                    NSLog(@"%@",errorindo);
-                    UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:errorindo message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                    [alertV show];
+                    NSLog(@"data 为空 connectionError %@",connectionError);
+                    
+                    NSString *errInfo = @"网络有问题,请检查网络";
+                    switch (connectionError.code) {
+                        case NSURLErrorNotConnectedToInternet:
+                            errInfo = @"无网络连接";
+                            break;
+                        case NSURLErrorTimedOut:
+                            errInfo = @"网络连接超时";
+                            break;
+                        default:
+                            break;
+                    }
+                    
                 }
-                
             }];
+            
+            
+            
+            
         }else if (![guerzhuce.password isEqualToString:guerzhuce.password1]){
             UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"重复密码和密码填写不一致" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [al show];
@@ -483,22 +520,58 @@
                 userzc.code = tf.text;
             }else if (i == 5){//重复密码
                 userzc.password1 = tf.text;
+            }else if (i == 0){
+                userzc.fullname = tf.text;
             }
         }
         
         
         if ([userzc.password isEqualToString:userzc.password1] && [self indoShangjia]) {
-            SzkLoadData *netr = [[SzkLoadData alloc]init];
+            
             NSString *str = [NSString stringWithFormat:FBAUTO_REGISTERED,userzc.phone,userzc.password,userzc.name,(long)userzc.province,(long)userzc.city,2,userzc.code,userzc.token,userzc.fullname];
-            NSLog(@"商家注册接口======= %@",str);
-            [netr SeturlStr:str block:^(NSArray *arrayinfo, NSString *errorindo, NSInteger errcode) {
-                if (errcode==0) {
-                    NSLog(@"cccarray==%@",arrayinfo);
+            NSString *api = [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            
+            NSLog(@"%@",str);
+            
+            NSURL *url = [NSURL URLWithString:api];
+            NSURLRequest *request = [NSURLRequest requestWithURL:url];
+            [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                if (data.length > 0) {
+                    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+                    if ([dic isKindOfClass:[NSDictionary class]]) {
+                        int erroCode = [[dic objectForKey:@"errcode"]intValue];
+                        NSString *erroInfo = [dic objectForKey:@"errinfo"];
+                        NSLog(@"商家注册接口 errcode:%d",erroCode);
+                        NSLog(@"商家注册接口 错误信息:%@",erroInfo);
+                        if (erroCode !=0) {
+                            UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:erroInfo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                            [al show];
+                        }else if (erroCode == 0){
+                            UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"注册成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                            al.tag = 134;
+                            [al show];
+                        }
+                        
+                    }
+                    
                 }else{
-                    UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:errorindo message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                    [alertV show];
+                    NSLog(@"data 为空 connectionError %@",connectionError);
+                    
+                    NSString *errInfo = @"网络有问题,请检查网络";
+                    switch (connectionError.code) {
+                        case NSURLErrorNotConnectedToInternet:
+                            errInfo = @"无网络连接";
+                            break;
+                        case NSURLErrorTimedOut:
+                            errInfo = @"网络连接超时";
+                            break;
+                        default:
+                            break;
+                    }
+                    
                 }
             }];
+            
             
         }else if (![userzc.password isEqualToString:userzc.password1]){
             UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"重复密码和密码填写不一致" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -576,9 +649,16 @@
 
 #pragma mark - UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 0) {
-        [self.delegate.navigationController popViewControllerAnimated:YES];
+    if (alertView.tag == 133) {//个人注册成功
+        if (buttonIndex == 0) {
+            [self.delegate.navigationController popViewControllerAnimated:YES];
+        }
+    }else if (alertView.tag == 134){//商家注册成功
+        if (buttonIndex == 0) {
+            [self.delegate.navigationController popViewControllerAnimated:YES];
+        }
     }
+    
 }
 
 

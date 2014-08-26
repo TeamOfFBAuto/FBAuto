@@ -417,10 +417,6 @@
             
         }else
         {
-//            NSString *letter = [firstLetterArray objectAtIndex:indexPath.section - 1];
-//            NSArray *arr = [cityDic objectForKey:letter];
-//            
-//            City *aCity = [arr objectAtIndex:indexPath.row];
             
             NSString *letter = [firstLetterArray objectAtIndex:indexPath.section - 1];
             
@@ -463,6 +459,13 @@
     if (tableView == secondTable) {
         
         if (indexPath.section == 0) {
+            
+            NSLog(@"全国");
+            
+            cityBlock(@"全国",@"000",@"000");
+            
+            [self hidden];
+            
             return;
         }
         
@@ -489,7 +492,7 @@
     }else if (tableView == colorTable)
     {
         NSString *colorName = [colorArray objectAtIndex:indexPath.row];
-        selectBlock(blockStyle,colorName,[NSString stringWithFormat:@"%ld",indexPath.row]);
+        selectBlock(blockStyle,colorName,[NSString stringWithFormat:@"%d",indexPath.row]);
         [self hidden];
         
     }else

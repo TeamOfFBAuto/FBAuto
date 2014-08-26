@@ -27,9 +27,11 @@
         self.image = image;
         
         UIButton *delete = [UIButton buttonWithType:UIButtonTypeCustom];
-        delete.frame = CGRectMake(self.width - 20, 0, 20, 20);
+        delete.frame = CGRectMake(self.width - 40, 0, 40, 40);
         [delete addTarget:self action:@selector(clickToDelete:) forControlEvents:UIControlEventTouchUpInside];
-        [delete setBackgroundImage:[UIImage imageNamed:@"quxiao40_40"] forState:UIControlStateNormal];
+        [delete setImage:[UIImage imageNamed:@"quxiao40_40"] forState:UIControlStateNormal];
+        delete.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+        delete.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
         [self addSubview:delete];
     }
     return self;

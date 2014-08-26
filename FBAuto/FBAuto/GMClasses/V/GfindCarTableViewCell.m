@@ -55,7 +55,7 @@
     [self.contentView addSubview:_cLabel];
     
     //时间label
-    self.tLabel = [[UILabel alloc]initWithFrame:CGRectMake(_cLabel.frame.origin.x, CGRectGetMaxY(_cLabel.frame)+8, 100, 13)];
+    self.tLabel = [[UILabel alloc]initWithFrame:CGRectMake(_cLabel.frame.origin.x, CGRectGetMaxY(_cLabel.frame)+8, 120, 13)];
     _tLabel.backgroundColor = [UIColor clearColor];
     _tLabel.font = [UIFont systemFontOfSize:13];
     _tLabel.textColor = [UIColor grayColor];

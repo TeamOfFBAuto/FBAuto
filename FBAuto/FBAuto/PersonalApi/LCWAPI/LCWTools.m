@@ -291,7 +291,7 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
     [formatter setDateStyle:NSDateFormatterMediumStyle];
     [formatter setTimeStyle:NSDateFormatterShortStyle];
-    [formatter setDateFormat:@"YYYY年MM月"];
+    [formatter setDateFormat:@"YYYY年MM月dd日"];
     NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[placetime doubleValue]];
     NSString *confromTimespStr = [formatter stringFromDate:confromTimesp];
     return confromTimespStr;
@@ -359,6 +359,67 @@
     }
     return text;
 }
+
+#pragma - mark 分享
+
++ (void)shareText:(NSString *)text  title:(NSString *)title image:(UIImage *)aImage linkUrl:(NSString *)linkUrl ShareType:(ShareType)aShareType{
+    
+    //创建分享内容
+    
+    id<ISSContent> publishContent = [ShareSDK content:text
+                                       defaultContent:@"e族汽车分享"
+                                                image:[ShareSDK pngImageWithImage:aImage]                                                title:title
+                                                  url:linkUrl
+                                          description:nil
+                                            mediaType:SSPublishContentMediaTypeNews];
+    
+    //创建弹出菜单容器
+    id<ISSContainer> container = [ShareSDK container];
+    
+    id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
+                                                         allowCallback:YES
+                                                         authViewStyle:SSAuthViewStyleFullScreenPopup
+                                                          viewDelegate:nil
+                                               authManagerViewDelegate:nil];
+    
+    //    //在授权页面中添加关注官方微博
+    //    [authOptions setFollowAccounts:[NSDictionary dictionaryWithObjectsAndKeys:
+    //                                    [ShareSDK userFieldWithType:SSUserFieldTypeName value:@"ShareSDK"],
+    //                                    SHARE_TYPE_NUMBER(ShareTypeSinaWeibo),
+    //                                    [ShareSDK userFieldWithType:SSUserFieldTypeName value:@"ShareSDK"],
+    //                                    SHARE_TYPE_NUMBER(ShareTypeTencentWeibo),
+    //
+    //                                    nil]];
+    
+    //显示分享菜单
+    [ShareSDK showShareViewWithType:aShareType
+                          container:container
+                            content:publishContent
+                      statusBarTips:YES
+                        authOptions:authOptions
+                       shareOptions:[ShareSDK defaultShareOptionsWithTitle:nil
+                                                           oneKeyShareList:nil
+                                                            qqButtonHidden:NO
+                                                     wxSessionButtonHidden:NO
+                                                    wxTimelineButtonHidden:NO
+                                                      showKeyboardOnAppear:NO
+                                                         shareViewDelegate:nil
+                                                       friendsViewDelegate:nil
+                                                     picViewerViewDelegate:nil]
+                             result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+                                 
+                                 if (state == SSPublishContentStateSuccess)
+                                 {
+                                     NSLog(NSLocalizedString(@"TEXT_SHARE_SUC", @"发表成功"));
+                                 }
+                                 else if (state == SSPublishContentStateFail)
+                                 {
+                                     NSLog(@"分享失败!error code == %d, error code == %@ 原因:分享图片错误", [error errorCode], [error errorDescription]);
+                                     
+                                 }
+                             }];
+}
+
 
 #pragma - mark CoreData数据管理
 

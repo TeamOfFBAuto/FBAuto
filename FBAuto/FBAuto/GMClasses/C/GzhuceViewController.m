@@ -42,16 +42,18 @@
     //分配内存
     self.contenTfArray = [[NSMutableArray alloc]init];
     
-    //自定义navigation
+    //自定义返回按钮
     UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [leftBtn setImage:[UIImage imageNamed:@"fanhui_24_42.png"] forState:UIControlStateNormal];
-    leftBtn.frame = CGRectMake(-8, 0, 40, 21);
     [leftBtn addTarget:self action:@selector(fanhui) forControlEvents:UIControlEventTouchUpInside];
-    leftBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    UIView *leftV = [[UIView alloc]initWithFrame:CGRectMake(-8, 0, 40, 21)];
-    [leftV addSubview:leftBtn];
-    UIBarButtonItem *leftitem = [[UIBarButtonItem alloc]initWithCustomView:leftV];
-    self.navigationItem.leftBarButtonItem = leftitem;
+//    leftBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    leftBtn.frame = CGRectMake(0, 0, 52, 21);
+    UIBarButtonItem *aa = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
+    UIBarButtonItem * space_button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    space_button.width = -27;
+    
+    self.navigationItem.leftBarButtonItems = @[space_button,aa];
+    
     
     
     

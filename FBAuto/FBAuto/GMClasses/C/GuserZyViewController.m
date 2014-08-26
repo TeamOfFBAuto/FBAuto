@@ -21,6 +21,7 @@
 
 #import "FBCityData.h"
 
+#import "DXAlertView.h"
 
 @interface GuserZyViewController ()
 
@@ -62,6 +63,13 @@
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
+    
+    UIButton *rightButton2 =[[UIButton alloc]initWithFrame:CGRectMake(0,8,30,21.5)];
+    [rightButton2 addTarget:self action:@selector(clickToAdd:) forControlEvents:UIControlEventTouchUpInside];
+    [rightButton2 setImage:[UIImage imageNamed:@"tianjia44_44"] forState:UIControlStateNormal];
+    UIBarButtonItem *save_item2=[[UIBarButtonItem alloc]initWithCustomView:rightButton2];
+    self.navigationItem.rightBarButtonItems = @[save_item2];
+    
     _page = 1;
     [self prepareUeserInfo];//获取用户信息
     [self prepareUserCar];//获取用户车源信息
@@ -74,6 +82,11 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)clickToAdd:(id)sender
+{
+    [self addFriend:self.userId];
 }
 
 #pragma mark - 请求网络数据
@@ -177,14 +190,59 @@
         }
         
     }];
-    
-    
-    
-    
-    
+   
     
     
 }
+
+/**
+ *  添加好友
+ *
+ *  @param friendId userId
+ */
+- (void)addFriend:(NSString *)friendId
+{
+    NSLog(@"provinceId %@",friendId);
+    
+    LCWTools *tools = [[LCWTools alloc]initWithUrl:[NSString stringWithFormat:FBAUTO_FRIEND_ADD,[GMAPI getAuthkey],friendId]isPost:NO postData:nil];
+    
+    [tools requestCompletion:^(NSDictionary *result, NSError *erro) {
+        NSLog(@"result %@ erro %@",result,[result objectForKey:@"errinfo"]);
+        
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            
+            //            int erroCode = [[result objectForKey:@"errcode"]intValue];
+            NSString *erroInfo = [result objectForKey:@"errinfo"];
+            
+            DXAlertView *alert = [[DXAlertView alloc]initWithTitle:erroInfo contentText:nil leftButtonTitle:nil rightButtonTitle:@"确定" isInput:NO];
+            [alert show];
+            
+            alert.leftBlock = ^(){
+                NSLog(@"确定");
+            };
+            alert.rightBlock = ^(){
+                NSLog(@"取消");
+                
+            };
+            
+        }
+    }failBlock:^(NSDictionary *failDic, NSError *erro) {
+        NSLog(@"failDic %@",failDic);
+        //        [LCWTools showMBProgressWithText:[failDic objectForKey:ERROR_INFO] addToView:self.view];
+        
+        DXAlertView *alert = [[DXAlertView alloc]initWithTitle:[failDic objectForKey:ERROR_INFO] contentText:nil leftButtonTitle:nil rightButtonTitle:@"确定" isInput:NO];
+        [alert show];
+        
+        alert.leftBlock = ^(){
+            NSLog(@"确定");
+        };
+        alert.rightBlock = ^(){
+            NSLog(@"取消");
+            
+        };
+    }];
+}
+
 
 
 #pragma mark - UITableViewDataSource

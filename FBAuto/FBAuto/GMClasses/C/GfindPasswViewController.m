@@ -8,6 +8,9 @@
 
 #import "GfindPasswViewController.h"
 
+
+#import "GmPrepareNetData.h"
+
 #import "SzkLoadData.h"
 
 @interface GfindPasswViewController ()
@@ -36,6 +39,18 @@
     if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0)) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
+    
+    //自定义返回按钮
+    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [leftBtn setImage:[UIImage imageNamed:@"fanhui_24_42.png"] forState:UIControlStateNormal];
+    [leftBtn addTarget:self action:@selector(fanhui) forControlEvents:UIControlEventTouchUpInside];
+    //    leftBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    leftBtn.frame = CGRectMake(0, 0, 52, 21);
+    UIBarButtonItem *aa = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
+    UIBarButtonItem * space_button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    space_button.width = -27;
+    
+    self.navigationItem.leftBarButtonItems = @[space_button,aa];
     
     
     self.titleLabel.text = @"找回密码";
@@ -100,6 +115,13 @@
     
 }
 
+
+
+//返回上一个界面
+-(void)fanhui{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 //获取验证码
 -(void)yanzhengma{
     if (self.phonetf.text.length != 11) {
@@ -147,21 +169,35 @@
 //重置密码
 -(void)zhaohui{
     
-    SzkLoadData *szk = [[SzkLoadData alloc]init];
+
+    
     NSString *str = [NSString stringWithFormat:FBAUTO_MODIFY_FIND_PASSWORD,self.phonetf.text,self.yanzhengtf.text,self.passWordtf.text];
-    [szk SeturlStr:str block:^(NSArray *arrayinfo, NSString *errorindo, NSInteger errcode) {
-        
-        if (errcode==0) {
-            UIAlertView *aler = [[UIAlertView alloc]initWithTitle:@"重置成功" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            aler.tag = 2000;
-            [aler show];
+    NSString *api = [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL *url = [NSURL URLWithString:api];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if (data.length>0) {
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            if ([dic isKindOfClass:[NSDictionary class]]) {
+                int errcode = [[dic objectForKey:@"errcode"]intValue];
+                NSString *errinfo = [dic objectForKey:@"errinfo"];
+                NSLog(@"errcode %d",errcode);
+                if (errcode !=0) {
+                    UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:errinfo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    [al show];
+                }else if (errcode == 0){
+                    UIAlertView *aler = [[UIAlertView alloc]initWithTitle:@"重置成功" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    aler.tag = 2000;
+                    [aler show];
+                }
+            }
         }else{
-            UIAlertView *alertV=[[UIAlertView alloc]initWithTitle:errorindo message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alertV show];
-            
-            
+            UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请检查网络连接" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [al show];
         }
     }];
+    
+    
     
 }
 

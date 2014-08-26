@@ -18,6 +18,11 @@
 
 #import "DXAlertView.h"
 
+#import "LShareSheetView.h"
+#import <ShareSDK/ShareSDK.h>
+
+#import "FBFriendsController.h"
+
 @interface GfindCarViewController ()<RefreshDelegate>
 {
     int _page;//第几页
@@ -401,6 +406,11 @@
                 break;
             case 13://分享
                 
+            {
+                CarSourceClass *aCar = [_dataArray objectAtIndex:indexPath.row];
+                [weakSelf clickToShareTitle:aCar.car_name infoId:aCar.id carId:aCar.car];
+            }
+                
                 break;
             default:
                 break;
@@ -430,6 +440,83 @@
     // Dispose of any resources that can be recreated.
 }
 
+//车源分享
+- (void)clickToShareTitle:(NSString *)title infoId:(NSString *)ainfoId carId:(NSString *)carId
+{
+    NSLog(@"分享");
+    LShareSheetView *shareView = [[LShareSheetView alloc]initWithFrame:self.view.frame];
+    [shareView actionBlock:^(NSInteger buttonIndex, NSString *shareStyle) {
+        
+        NSString *contentText;
+        NSString *shareUrl;
+        if (self.gtype == 2) {
+            //车源
+            
+            contentText = [NSString stringWithFormat:@"我在e族汽车上发了一辆新车，有兴趣的来看(%@）。",title];
+            shareUrl = [NSString stringWithFormat:FBAUTO_SHARE_CAR_SOURCE,ainfoId];
+            
+        }else if (self.gtype == 3)
+        {
+            //寻车
+            contentText = [NSString stringWithFormat:@"我在e族汽车上发布了一条寻车信息，有车源的朋友来看看，（%@）",title];
+            
+            shareUrl = [NSString stringWithFormat:FBAUTO_SHARE_CAR_FIND,ainfoId];
+        }
+
+        NSString *contentWithUrl = [NSString stringWithFormat:@"%@%@",contentText,shareUrl];
+        
+        UIImage *aImage = [UIImage imageNamed:@"icon114"];
+        
+        
+        buttonIndex -= 100;
+        
+        NSLog(@"share %d %@",buttonIndex,shareStyle);
+        switch (buttonIndex) {
+            case 0:
+            {
+                NSLog(@"微信");
+                [LCWTools shareText:contentText title:title image:aImage linkUrl:shareUrl ShareType:ShareTypeWeixiSession];
+            }
+                break;
+            case 1:
+            {
+                NSLog(@"QQ");
+                [LCWTools shareText:contentText title:title image:aImage linkUrl:shareUrl ShareType:ShareTypeQQ];
+            }
+                break;
+            case 2:
+            {
+                NSLog(@"朋友圈");
+                [LCWTools shareText:contentText title:title image:aImage linkUrl:shareUrl ShareType:ShareTypeWeixiTimeline];
+            }
+                break;
+            case 3:
+            {
+                NSLog(@"微博");
+                
+                [LCWTools shareText:contentWithUrl title:title image:aImage linkUrl:shareUrl ShareType:ShareTypeSinaWeibo];
+            }
+                break;
+            case 4:
+            {
+                NSLog(@"站内好友");
+                
+                FBFriendsController *friend = [[FBFriendsController alloc]init];
+                friend.isShare = YES;
+                //分享的内容  {@"text",@"infoId"}
+                
+                NSString *infoId = [NSString stringWithFormat:@"%@,%@",ainfoId,carId];
+                friend.shareContent = @{@"text": contentText,@"infoId":infoId};
+                [self.navigationController pushViewController:friend animated:YES];
+                
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }];
+}
 
 
 @end
