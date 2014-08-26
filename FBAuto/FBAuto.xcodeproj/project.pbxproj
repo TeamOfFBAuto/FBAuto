@@ -2854,9 +2854,9 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
+
+
 
 
 
@@ -2874,15 +2874,18 @@
 
 				PROVISIONING_PROFILE = "28b23bd8-a16c-4a4b-b1d8-9c2ffabe0318";
 
-=======
+
 				PROVISIONING_PROFILE = "28b23bd8-a16c-4a4b-b1d8-9c2ffabe0318";
->>>>>>> FETCH_HEAD
-=======
+
+
 				PROVISIONING_PROFILE = "28b23bd8-a16c-4a4b-b1d8-9c2ffabe0318";
->>>>>>> FETCH_HEAD
-=======
+
+
 				PROVISIONING_PROFILE = "28b23bd8-a16c-4a4b-b1d8-9c2ffabe0318";
->>>>>>> FETCH_HEAD
+
+
+				PROVISIONING_PROFILE = "28b23bd8-a16c-4a4b-b1d8-9c2ffabe0318";
+
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
@@ -2921,9 +2924,10 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
+
+
+
 
 
 
@@ -2941,15 +2945,18 @@
 
 				PROVISIONING_PROFILE = "28b23bd8-a16c-4a4b-b1d8-9c2ffabe0318";
 
-=======
+
 				PROVISIONING_PROFILE = "28b23bd8-a16c-4a4b-b1d8-9c2ffabe0318";
->>>>>>> FETCH_HEAD
-=======
+
+
 				PROVISIONING_PROFILE = "28b23bd8-a16c-4a4b-b1d8-9c2ffabe0318";
->>>>>>> FETCH_HEAD
-=======
+
+
 				PROVISIONING_PROFILE = "28b23bd8-a16c-4a4b-b1d8-9c2ffabe0318";
->>>>>>> FETCH_HEAD
+
+
+				PROVISIONING_PROFILE = "28b23bd8-a16c-4a4b-b1d8-9c2ffabe0318";
+
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
