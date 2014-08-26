@@ -116,13 +116,19 @@
     [quedingBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     quedingBtn.frame = CGRectMake(270, 0, 35, 30);
     [quedingBtn addTarget:self action:@selector(shouPickerView) forControlEvents:UIControlEventTouchUpInside];
-    
+    //上下横线
+    UIView *shangxian = [[UIView alloc]initWithFrame:CGRectMake(270, 5, 35, 0.5)];
+    shangxian.backgroundColor = [UIColor blackColor];
+    UIView *xiaxian = [[UIView alloc]initWithFrame:CGRectMake(270, 25, 35, 0.5)];
+    xiaxian.backgroundColor = [UIColor blackColor];
     
     //地区选择
     UIView *backPickView = [[UIView alloc]initWithFrame:CGRectMake(0, 568, 320, 216+30)];
     backPickView.backgroundColor = [UIColor whiteColor];
-    [backPickView addSubview:quedingBtn];
     [backPickView addSubview:_pickeView];
+    [backPickView addSubview:shangxian];
+    [backPickView addSubview:xiaxian];
+    [backPickView addSubview:quedingBtn];
     self.backPickView = backPickView;
     [self.view addSubview:self.backPickView];
     
