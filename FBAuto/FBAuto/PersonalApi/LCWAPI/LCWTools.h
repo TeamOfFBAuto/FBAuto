@@ -29,6 +29,8 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
     NSString *requestUrl;
     NSData *requestData;
     BOOL isPostRequest;//是否是post请求
+    
+    NSString *_downUrl;//更新地址
 }
 + (id)shareInstance;
 
@@ -39,6 +41,8 @@ typedef void(^ urlRequestBlock)(NSDictionary *result,NSError *erro);
 - (id)initWithUrl:(NSString *)url isPost:(BOOL)isPost postData:(NSData *)postData;//初始化请求
 
 - (void)requestCompletion:(void(^)(NSDictionary *result,NSError *erro))completionBlock failBlock:(void(^)(NSDictionary *failDic,NSError *erro))failedBlock;//处理请求结果
+
+- (void)versionForAppid:(NSString *)appid Block:(void(^)(BOOL isNewVersion,NSString *updateUrl,NSString *updateContent))version;
 
 #pragma - mark 获取头像
 

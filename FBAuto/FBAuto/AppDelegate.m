@@ -139,6 +139,14 @@
     //发送未读消息通知
     [[NSNotificationCenter defaultCenter]postNotificationName:@"unReadNumber" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateMessageCount:) name:@"fromUnread" object:nil];
+    
+    //版本更新
+     //test FBLife 605673005 fbauto
+    [[LCWTools shareInstance]versionForAppid:@"904576362" Block:^(BOOL isNewVersion, NSString *updateUrl, NSString *updateContent) {
+       
+        NSLog(@"updateContent %@ %@",updateUrl,updateContent);
+        
+    }];
 
     self.window.rootViewController=tabbar;
     self.window.backgroundColor = [UIColor whiteColor];
