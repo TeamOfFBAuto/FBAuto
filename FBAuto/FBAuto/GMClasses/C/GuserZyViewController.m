@@ -273,6 +273,7 @@
     
     cell.separatorInset = UIEdgeInsetsZero;
     
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
